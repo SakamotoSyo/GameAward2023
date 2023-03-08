@@ -1,9 +1,9 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UniRx;
 
 public class EnemyController : MonoBehaviour, IAddDamage
 {
-    [SerializeField, Tooltip("Å‘å")]
+    [SerializeField, Tooltip("æœ€å¤§")]
     private float _maxHealth = 5f;
 
     private ReactiveProperty<float> _health = new();
@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     }
 
     /// <summary>
-    /// health‚Ì’l‚ğŠÄ‹‚µA0ˆÈ‰º‚É‚È‚Á‚½‚ÉSubscribe‚·‚é
+    /// healthã®å€¤ã‚’ç›£è¦–ã—ã€0ä»¥ä¸‹ã«ãªã£ãŸæ™‚ã«Subscribeã™ã‚‹
     /// </summary>
     private void HealthObserver()
     {
@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
             .Where(health => health <= 0)
             .Subscribe(_ =>
             {
-                Debug.Log("Enemy‚Ì‘Ì—Í‚ª0‚É‚È‚Á‚½");
+                Debug.Log("Enemyã®ä½“åŠ›ãŒ0ã«ãªã£ãŸ");
                 gameObject.SetActive(false);
             })
             .AddTo(this);

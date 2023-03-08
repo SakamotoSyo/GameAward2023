@@ -1,7 +1,7 @@
-public interface IAddDamage
+ï»¿public interface IAddDamage
 {
     /// <summary>
-    /// ƒ_ƒ[ƒW‚ğó‚¯‚½‚Ìˆ—‚ğ‘‚­ƒƒ\ƒbƒh
+    /// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸæ™‚ã®å‡¦ç†ã‚’æ›¸ããƒ¡ã‚½ãƒƒãƒ‰
     /// </summary>
     public void AddDamage(float damage);
 }
