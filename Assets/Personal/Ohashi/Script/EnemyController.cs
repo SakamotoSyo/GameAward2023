@@ -6,7 +6,11 @@ public class EnemyController : MonoBehaviour, IAddDamage
     [SerializeField, Tooltip("最大")]
     private float _maxHealth = 5f;
 
+    public float MaxHealth => _maxHealth;
+
     private ReactiveProperty<float> _health = new();
+
+    public IReadOnlyReactiveProperty<float> Health => _health;
 
 
     private void Start()
