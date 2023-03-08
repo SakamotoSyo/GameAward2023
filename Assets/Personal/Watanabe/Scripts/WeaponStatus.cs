@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class WeaponStatus : MonoBehaviour
 {
+    [SerializeField] private SkillName _skillName;
+    [SerializeField] private SkillDataBase _skillData;
+
     [Header("武器のステータス一覧")]
-    [Tooltip("上から、攻撃力、会心、Test")]
-    [SerializeField] private float[] _values = new float[3];
+    [SerializeField] private List<float> _values = new();
     [Tooltip("上昇値")]
     [SerializeField] private float _updateValue = 1f;
     [Tooltip("会心の確率(5～50)")]
@@ -29,20 +32,15 @@ public class WeaponStatus : MonoBehaviour
         get => _values[2];
         protected set => _values[2] = value;
     }
-    public int ProbCritical
+
+    private async void Start()
     {
-        get => _probCritical;
-        protected set => _probCritical = value;
-    }
+        ISkill skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
+               .SkillObj.GetComponent<ISkill>();
 
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
+        await skill.StartSkill();
+        PlayUpdate(skill.SkillResult());
+        skill.SkillEnd();
     }
 
     public void SwitchValue(int index)
@@ -51,15 +49,15 @@ public class WeaponStatus : MonoBehaviour
         Debug.Log($"{index + 1}番目の値を更新します");
     }
 
-    public void PlayUpdate()
+    private void PlayUpdate(float value)
     {
         for (int i = 0; i < _updating.Length; i++)
         {
             if (_updating[i])
-                _values[i] += _updateValue;
+                _values[i] += _updateValue * value;
 
             _updating[i] = false;
         }
-        Debug.Log("武器のステータスが更新されました");
+        Debug.Log($"武器の指定したステータスが{value}倍になりました");
     }
 }
