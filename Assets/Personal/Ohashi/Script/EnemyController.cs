@@ -3,8 +3,14 @@ using UniRx;
 
 public class EnemyController : MonoBehaviour, IAddDamage
 {
-    [SerializeField, Tooltip("最大")]
+    [SerializeField, Tooltip("マックス時のHealth")]
     private float _maxHealth = 5f;
+
+    [SerializeField, Tooltip("ダメージテキストのクラス")]
+    private DamageTextController _damegeController;
+
+    [SerializeField, Tooltip("ダメージテキストを生成する座標")]
+    private Transform _damagePos;
 
     public float MaxHealth => _maxHealth;
 
@@ -21,7 +27,11 @@ public class EnemyController : MonoBehaviour, IAddDamage
     {
         _health.Value -= damage;
         Debug.Log($"Enemyは{damage}ダメージ受けた");
-        if(_health.Value <= 0)
+        var damageController = Instantiate(_damegeController, 
+            _damagePos.position,
+            Quaternion.identity);
+        damageController.TextInit(damage);
+        if (_health.Value <= 0)
         {
             Debug.Log("Enemyの体力が0になった");
             gameObject.SetActive(false);
