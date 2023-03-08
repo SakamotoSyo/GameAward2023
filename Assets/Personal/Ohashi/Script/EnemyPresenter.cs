@@ -1,12 +1,12 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UniRx;
 
 public class EnemyPresenter : MonoBehaviour
 {
-    [SerializeField, Tooltip("ƒ‚ƒfƒ‹")]
+    [SerializeField, Tooltip("ãƒ¢ãƒ‡ãƒ«")]
     private EnemyController _enemyModel;
 
-    [SerializeField, Tooltip("ƒGƒlƒ~[‚Ìview")]
+    [SerializeField, Tooltip("ã‚¨ãƒãƒŸãƒ¼ã®view")]
     private EnemyView _enemyView;
 
     private void Start()
@@ -15,13 +15,13 @@ public class EnemyPresenter : MonoBehaviour
     }
 
     /// <summary>
-    /// Halth‚Ì’l‚ğŠÄ‹‚µA•ÏX‚³‚ê‚½‚Æ‚«Subscribe‚·‚é
+    /// Halthã®å€¤ã‚’ç›£è¦–ã—ã€å¤‰æ›´ã•ã‚ŒãŸã¨ãSubscribeã™ã‚‹
     /// </summary>
     private void EnemyHealthObserver()
     {
         _enemyModel.Health
             .Subscribe(health => _enemyView.HealthText(health))
             .AddTo(this);
-    }
+    }   
 
 }

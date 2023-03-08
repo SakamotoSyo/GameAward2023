@@ -1,13 +1,13 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyView : MonoBehaviour
 {
-    [SerializeField, Tooltip("Helth‚ğ•\¦‚·‚éƒeƒLƒXƒg")]
+    [SerializeField, Tooltip("Helthã‚’è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆ")]
     private Text _healthText;
 
     /// <summary>
-    /// ƒGƒlƒ~[‚Ìc‚è‘Ì—Í‚ğƒeƒLƒXƒg‚É•\¦‚·‚é
+    /// ã‚¨ãƒãƒŸãƒ¼ã®æ®‹ã‚Šä½“åŠ›ã‚’ãƒ†ã‚­ã‚¹ãƒˆã«è¡¨ç¤ºã™ã‚‹
     /// </summary>
     public void HealthText(float health)
     {
