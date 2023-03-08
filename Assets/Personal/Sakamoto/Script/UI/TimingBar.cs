@@ -8,20 +8,19 @@ using Cysharp.Threading.Tasks;
 public class TimingBar : MonoBehaviour, ISkill
 {
     [SerializeField] private RectTransform _timingTransform;
+    [Tooltip("タイミングバーの設定する最大値")]
     [SerializeField] private GameObject _timeObj;
     [Tooltip("成功したときの倍率")]
     [SerializeField] private float _successRate = 1.1f;
     [Tooltip("UIのタイミングバーの長さ")]
+    [SerializeField] private float _maxTime;
     private float _timingBarWidth;
-    [Tooltip("タイミングバーの設定する最大値")]
-    private float _maxTime;
     [Tooltip("スキルが成功したかどうか")]
     private bool _isSuccess = false;
     [Tooltip("スキルが終わったどうか")]
     private bool _isSkillFinished = false;
     private float _nowTiming;
     private IDisposable _skillDispose;
-
 
     private void Start()
     {
@@ -35,7 +34,7 @@ public class TimingBar : MonoBehaviour, ISkill
         DOTween.To(() => 0,
         x =>
         {
-            _nowTiming = x;
+            _nowTiming = x; 
             _timingTransform.SetWidth(GetWidth(x));
         },
         _maxTime, 1f).SetLoops(-1);
@@ -44,7 +43,6 @@ public class TimingBar : MonoBehaviour, ISkill
              .Subscribe(_ => TestButtonEvent()).AddTo(this);
         //スキルが終わるまで待機する
         await UniTask.WaitUntil(() => _isSkillFinished == true);
-        SkillEnd();
     }
 
     /// <summary>
@@ -75,11 +73,11 @@ public class TimingBar : MonoBehaviour, ISkill
             if (90 <= _nowTiming)
             {
                 _isSuccess = true;
-                Debug.Log("成功");
+                Debug.Log($"成功{_nowTiming}de{GetWidth(90)}");
             }
             else
             {
-
+                Debug.Log($"失敗{_nowTiming}と{_maxTime}");
             }
 
             _isSkillFinished = true;
