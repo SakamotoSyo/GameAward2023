@@ -33,5 +33,6 @@ public class EnemyController : MonoBehaviour, IAddDamage
     public void AddDamage(float damage)
     {
         _health.Value -= damage;
+        Debug.Log($"Enemyは{damage}ダメージ受けた");
     }
 }
