@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening.Core.Easing;
+using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEditor;
 
 public class WeaponStatus : MonoBehaviour
 {
@@ -20,11 +23,13 @@ public class WeaponStatus : MonoBehaviour
 
     private ISkill _skill;
     private readonly List<int> _defaultValue = new();
-    private readonly bool[] _updating = new bool[] {false, false, false};
+    private readonly bool[] _updating = new bool[] { false, false, false };
+
+    bool _isAttack = false; //高井が書き加えました
 
     //以下UI表示用
     public int AttackValue
-    { 
+    {
         get => _values[0];
         protected set => _values[0] = value;
     }
@@ -45,19 +50,24 @@ public class WeaponStatus : MonoBehaviour
 
     private async void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) || _isAttack)
         {
             ResetValues();
 
             if (_type == AttackType.Normal)
             {
+                _isAttack = false;
+
                 if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
                 {
                     enemy.AddDamage(_values[0]);
+                    
                 }
             }
             else if (_type == AttackType.Skill)
             {
+                _isAttack = false;
+
                 _skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
                        .SkillObj.GetComponent<ISkill>();
 
@@ -75,6 +85,15 @@ public class WeaponStatus : MonoBehaviour
             }
         }
     }
+
+    // 高井が書き加えました-------
+    public void OnCallAttack(int type)
+    {
+        if (type < 0 || type > Enum.GetValues(typeof(AttackType)).Length) { return; }
+        _type = (AttackType)Enum.ToObject(typeof(AttackType), type);
+        _isAttack = true;
+    }
+    //----------------------------
 
     private void ResetValues()
     {

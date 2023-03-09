@@ -17,10 +17,10 @@ public class ActionSelectUIController : MonoBehaviour
     GameObject _savePanel;
     public void OnSelectAction(GameObject panel)
     {
-        if(_savePanel) { _savePanel.SetActive(false); }
-        
+        if (_savePanel) { _savePanel.SetActive(false); }
+
         panel.SetActive(true);
-        _savePanel= panel;
+        _savePanel = panel;
     }
 }
 
