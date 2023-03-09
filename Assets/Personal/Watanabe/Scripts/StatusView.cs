@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class StatusView : MonoBehaviour
 {
     [SerializeField] private Text _attackValue = default;
-    [SerializeField] private Text _criticalValue = default;
     [SerializeField] private Text _testValue = default;
 
     private WeaponStatus _status = default;
@@ -17,7 +16,6 @@ public class StatusView : MonoBehaviour
     private void Update()
     {
         _attackValue.text = $"Attack : {_status.AttackValue}";
-        _criticalValue.text = $"Critical : {_status.CriticalValue}";
         _testValue.text = $"Test : {_status.TestValue}";
     }
 }
