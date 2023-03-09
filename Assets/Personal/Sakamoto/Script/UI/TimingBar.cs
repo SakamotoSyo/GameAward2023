@@ -12,8 +12,8 @@ public class TimingBar : MonoBehaviour, ISkill
     [SerializeField] private GameObject _timeObj;
     [Tooltip("成功したときの倍率")]
     [SerializeField] private float _successRate = 1.1f;
-    [Tooltip("UIのタイミングバーの長さ")]
     [SerializeField] private float _maxTime;
+    [Tooltip("UIのタイミングバーの長さ")]
     private float _timingBarWidth;
     [Tooltip("スキルが成功したかどうか")]
     private bool _isSuccess = false;
@@ -96,9 +96,9 @@ public class TimingBar : MonoBehaviour, ISkill
         throw new NotImplementedException();
     }
 
-    public string SkillEffectPlayerAnim()
+    public string SkillEffectAnimName()
     {
-        return "Skill";
+        return "TimingSkill";
     }
 }
 

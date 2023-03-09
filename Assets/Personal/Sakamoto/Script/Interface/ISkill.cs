@@ -21,5 +21,5 @@ public interface ISkill
     /// </summary>
     public void SkillEnd();
 
-    public string SkillEffectPlayerAnim();
+    public string SkillEffectAnimName();
 }

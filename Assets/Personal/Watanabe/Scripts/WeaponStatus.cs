@@ -9,6 +9,7 @@ public class WeaponStatus : MonoBehaviour
     [SerializeField] private SkillName _skillName;
     [SerializeField] private SkillDataBase _skillData;
     [SerializeField] private Animator _playerAnim;
+    [SerializeField] private Animator _enemyAnim;
 
     [Header("武器のステータス一覧")]
     [SerializeField] private List<int> _values = new();
@@ -61,9 +62,11 @@ public class WeaponStatus : MonoBehaviour
                 _skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
                        .SkillObj.GetComponent<ISkill>();
 
-                _playerAnim.SetBool(_skill.SkillEffectPlayerAnim(), true);
+                _playerAnim.SetBool(_skill.SkillEffectAnimName(), true);
                 await _skill.StartSkill();
-                _playerAnim.SetBool(_skill.SkillEffectPlayerAnim(), false);
+                _playerAnim.SetBool(_skill.SkillEffectAnimName(), false);
+                _enemyAnim.SetTrigger(_skill.SkillEffectAnimName());
+
                 _values[0] += (int)(_updateValue * _skill.SkillResult());
                 //PlayUpdate(skill.SkillResult());
 
@@ -75,7 +78,6 @@ public class WeaponStatus : MonoBehaviour
             }
         }
     }
-
     private void ResetValues()
     {
         for (int i = 0; i < _values.Count; i++)
