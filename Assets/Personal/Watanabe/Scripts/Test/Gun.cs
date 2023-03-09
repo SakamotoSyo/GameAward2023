@@ -7,7 +7,12 @@ public class Gun : ISkill
     [SerializeField] private float _attack = 1f;
     [SerializeField] private float _critical = 1f;
 
-    public string SkillEffectPlayerAnim()
+    public string SkillEffectEnemyAnim()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public string SkillEffectAnimName()
     {
         throw new System.NotImplementedException();
     }
