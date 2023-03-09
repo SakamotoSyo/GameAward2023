@@ -304,7 +304,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: -27.4, y: 0}
-  m_SizeDelta: {x: 155, y: 142.95}
+  m_SizeDelta: {x: 0, y: 142.95}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7047029764043424809
 CanvasRenderer:
@@ -354,6 +354,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7047029764546867359}
   - component: {fileID: 7047029764546867328}
+  - component: {fileID: -6961678423435224671}
+  - component: {fileID: 8155035869917788129}
   m_Layer: 0
   m_Name: HpBar
   m_TagString: Untagged
@@ -398,3 +400,27 @@ MonoBehaviour:
   _timeObj: {fileID: 7047029762812874746}
   _successRate: 1.1
   _maxTime: 100
+--- !u!114 &-6961678423435224671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7047029764546867356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb5e5014f40d6948815a7be8b174ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8155035869917788129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7047029764546867356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb219b23cdf4b314f94a27bca3cc8012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

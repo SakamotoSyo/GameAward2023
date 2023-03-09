@@ -20,4 +20,6 @@ public interface ISkill
     /// ŠO‚©‚çŒÄ‚Î‚È‚­‚Ä‚æ‚¢
     /// </summary>
     public void SkillEnd();
+
+    public string SkillEffectPlayerAnim();
 }

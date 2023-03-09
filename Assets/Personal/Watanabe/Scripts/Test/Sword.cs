@@ -7,6 +7,11 @@ public class Sword : ISkill
     [SerializeField] private float _attack = 1f;
     [SerializeField] private float _critical = 1f;
 
+    public string SkillEffectPlayerAnim()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void SkillEnd()
     {
         throw new System.NotImplementedException();
