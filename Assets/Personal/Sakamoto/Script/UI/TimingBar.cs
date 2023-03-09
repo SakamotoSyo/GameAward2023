@@ -95,6 +95,11 @@ public class TimingBar : MonoBehaviour, ISkill
     {
         throw new NotImplementedException();
     }
+
+    public string SkillEffectPlayerAnim()
+    {
+        return "Skill";
+    }
 }
 
 public static class UIExtensions

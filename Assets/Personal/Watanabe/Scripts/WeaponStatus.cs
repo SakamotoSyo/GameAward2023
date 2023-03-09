@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class WeaponStatus : MonoBehaviour
 {
+    public ISkill Skill => _skill;
+
     [SerializeField] private AttackType _type = AttackType.Normal;
     [SerializeField] private SkillName _skillName;
     [SerializeField] private SkillDataBase _skillData;
+    [SerializeField] private Animator _playerAnim;
 
     [Header("武器のステータス一覧")]
     [SerializeField] private List<int> _values = new();
@@ -15,6 +18,7 @@ public class WeaponStatus : MonoBehaviour
     [Range(5, 50)]
     [SerializeField] private int _probCritical = 10;
 
+    private ISkill _skill;
     private readonly List<int> _defaultValue = new();
     private readonly bool[] _updating = new bool[] {false, false, false};
 
@@ -54,19 +58,20 @@ public class WeaponStatus : MonoBehaviour
             }
             else if (_type == AttackType.Skill)
             {
-                ISkill skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
+                _skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
                        .SkillObj.GetComponent<ISkill>();
 
-                await skill.StartSkill();
-
-                _values[0] += (int)(_updateValue * skill.SkillResult());
+                _playerAnim.SetBool(_skill.SkillEffectPlayerAnim(), true);
+                await _skill.StartSkill();
+                _playerAnim.SetBool(_skill.SkillEffectPlayerAnim(), false);
+                _values[0] += (int)(_updateValue * _skill.SkillResult());
                 //PlayUpdate(skill.SkillResult());
 
                 if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
                 {
                     enemy.AddDamage(_values[0]);
                 }
-                skill.SkillEnd();
+                _skill.SkillEnd();
             }
         }
     }
