@@ -62,11 +62,9 @@ public class WeaponStatus : MonoBehaviour
                 _skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
                        .SkillObj.GetComponent<ISkill>();
 
-                _playerAnim.SetBool(_skill.SkillEffectAnimName(), true);
+                AnimBool(true);
                 await _skill.StartSkill();
-                _playerAnim.SetBool(_skill.SkillEffectAnimName(), false);
-                _enemyAnim.SetTrigger(_skill.SkillEffectAnimName());
-
+                AnimBool(false);
                 _values[0] += (int)(_updateValue * _skill.SkillResult());
                 //PlayUpdate(skill.SkillResult());
 
@@ -78,6 +76,13 @@ public class WeaponStatus : MonoBehaviour
             }
         }
     }
+
+    private void AnimBool(bool setActive)
+    {
+        _playerAnim.SetBool(_skill.SkillEffectAnimName(), setActive);
+        _enemyAnim.SetBool(_skill.SkillEffectAnimName(), !setActive);
+    }
+
     private void ResetValues()
     {
         for (int i = 0; i < _values.Count; i++)
