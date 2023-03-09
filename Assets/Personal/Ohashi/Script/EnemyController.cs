@@ -23,7 +23,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
         _health.Value = _maxHealth;
     }
 
-    public void AddDamage(float damage)
+    public void AddDamage(int damage)
     {
         _health.Value -= damage;
         Debug.Log($"Enemyは{damage}ダメージ受けた");
