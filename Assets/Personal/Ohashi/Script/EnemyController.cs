@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UniRx;
+using DG.Tweening;
 
 public class EnemyController : MonoBehaviour, IAddDamage
 {
@@ -18,15 +19,28 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public IReadOnlyReactiveProperty<float> Health => _health;
 
+    private SpriteRenderer _renderer;
+
     private void Start()
     {
         _health.Value = _maxHealth;
+        _renderer = GetComponent<SpriteRenderer>();
+    }
+
+    /// <summary>
+    /// ダメージを受けた時のアニメーション
+    /// </summary>
+    private void DamageAnimation()
+    {
+        _renderer.DOColor(Color.red, 0.3f)
+            .OnComplete(() => _renderer.DOColor(Color.white, 0.3f));
     }
 
     public void AddDamage(int damage)
     {
         _health.Value -= damage;
         Debug.Log($"Enemyは{damage}ダメージ受けた");
+        DamageAnimation();
         var damageController = Instantiate(_damegeController, 
             _damagePos.position,
             Quaternion.identity);
