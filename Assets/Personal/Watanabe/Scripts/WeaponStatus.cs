@@ -133,6 +133,7 @@ public class WeaponStatus : MonoBehaviour
         if (num <= _probCritical)
         {
             _values[0] = (int)(_values[0] * _criticalMultiplier);
+            _onCritical?.Invoke();
             _source.PlayOneShot(_clip[(int)AttackType.Critical]);
         }
         else 
