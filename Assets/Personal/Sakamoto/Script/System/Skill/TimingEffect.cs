@@ -15,6 +15,7 @@ public class TimingEffect :MonoBehaviour, ISkill
     [SerializeField] private GameObject _notesInsObj;
     [Tooltip("–îˆó‚ÌPrefab")]
     [SerializeField] private GameObject _arrowPrefab;
+    [SerializeField] private WeaponStatus _weaponStatus;
     [Tooltip("1‚ª‚Ò‚Á‚½‚è‚¾‚Æ‚µ‚Ä‚Ç‚Ì’ö“x‚Ì”ÍˆÍ‚ğ¬Œ÷‚Æ‚·‚é‚©")]
     private float _successRange = 0.1f;
 
@@ -32,6 +33,10 @@ public class TimingEffect :MonoBehaviour, ISkill
     {
         _skillObj.SetActive(false);
         foreach (Transform c in _notesBackInsObj.transform) 
+        {
+            Destroy(c.gameObject);
+        } 
+        foreach (Transform c in _notesInsObj.transform) 
         {
             Destroy(c.gameObject);
         }
@@ -52,7 +57,7 @@ public class TimingEffect :MonoBehaviour, ISkill
             Obj.transform.SetParent(_notesBackInsObj.transform);
             obj2.transform.SetParent(_notesInsObj.transform);
             var timingCs = Obj.GetComponent<TimingArrowScript>();
-            timingCs.SetSuccessRange(_successRange);
+            timingCs.Init(_successRange, _weaponStatus);
             await timingCs.StartEffect();
         }
     }

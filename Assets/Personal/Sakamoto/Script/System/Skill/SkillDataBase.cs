@@ -18,5 +18,6 @@ public class SkillDataBase : MonoBehaviour
 public enum SkillName
 {
     Timing,
+    Gauge,
 
 }

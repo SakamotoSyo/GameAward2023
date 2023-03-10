@@ -9,6 +9,7 @@ public class TimingArrowScript : MonoBehaviour
     [SerializeField] private GameObject _imageObj;
     [Tooltip("–îˆó‚Ì•ûŒü")]
     [SerializeField] private string _inputName;
+    private WeaponStatus _weaponStatus;
     private Tween _tween;
     private float _successRange;
     private float _nowNotes;
@@ -23,11 +24,9 @@ public class TimingArrowScript : MonoBehaviour
         {
             _tween.Kill();
             _tween = null;
-            var enemyObj = GameObject.FindGameObjectsWithTag("Enemy");
-            if (enemyObj[0].TryGetComponent<IAddDamage>(out IAddDamage enemy)
-                && (0.8 - _successRange < _nowNotes && _nowNotes < 0.8 + _successRange))
+            if (0.8 - _successRange < _nowNotes && _nowNotes < 0.8 + _successRange)
             {
-                enemy.AddDamage(10);
+                _weaponStatus.EnemyDamage();
                 Debug.Log("¬Œ÷");
             }
             else 
@@ -55,8 +54,9 @@ public class TimingArrowScript : MonoBehaviour
         await _tween;
     }
 
-    public void SetSuccessRange(float range) 
+    public void Init(float range, WeaponStatus weapon) 
     {
+        _weaponStatus = weapon;
         _successRange = range;
     }
 }
