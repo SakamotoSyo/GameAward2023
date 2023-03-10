@@ -21,10 +21,13 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     private SpriteRenderer _renderer;
 
+    private Animator _animator;
+
     private void Start()
     {
         _health.Value = _maxHealth;
         _renderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     /// <summary>
@@ -32,6 +35,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     /// </summary>
     private void DamageAnimation()
     {
+        _animator.Play("Damage");
         _renderer.DOColor(Color.red, 0.3f)
             .OnComplete(() => _renderer.DOColor(Color.white, 0.3f));
     }
