@@ -20,7 +20,8 @@ public class WeaponStatus : MonoBehaviour
     [Tooltip("会心の確率(5～50)")]
     [Range(5, 50)]
     [SerializeField] private int _probCritical = 10;
-
+    [SerializeField] private AudioClip[] _clip;//大橋が書き加えました
+    private AudioSource _source;//大橋が書き加えました
     private ISkill _skill;
     private readonly List<int> _defaultValue = new();
     private readonly bool[] _updating = new bool[] { false, false, false };
@@ -41,6 +42,7 @@ public class WeaponStatus : MonoBehaviour
 
     private void Start()
     {
+        _source = GetComponent<AudioSource>();//大橋
         for (int i = 0; i < _values.Count; i++)
         {
             _defaultValue.Add(0);
@@ -53,7 +55,6 @@ public class WeaponStatus : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) || _isAttack)
         {
             ResetValues();
-
             if (_type == AttackType.Normal)
             {
                 _isAttack = false;
@@ -82,6 +83,7 @@ public class WeaponStatus : MonoBehaviour
                 }
                 _skill.SkillEnd();
             }
+            _source.PlayOneShot(_clip[(int)_type]);//大橋が書き換えました
         }
     }
 
