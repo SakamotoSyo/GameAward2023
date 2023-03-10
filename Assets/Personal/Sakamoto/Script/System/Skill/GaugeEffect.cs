@@ -5,7 +5,7 @@ using UniRx;
 using UniRx.Triggers;
 using Cysharp.Threading.Tasks;
 
-public class TimingBar : MonoBehaviour, ISkill
+public class GaugeEffect : MonoBehaviour, ISkill
 {
     [SerializeField] private RectTransform _timingTransform;
     [Tooltip("タイミングバーの設定する最大値")]
@@ -13,6 +13,7 @@ public class TimingBar : MonoBehaviour, ISkill
     [Tooltip("成功したときの倍率")]
     [SerializeField] private float _successRate = 1.1f;
     [SerializeField] private float _maxTime;
+    [SerializeField] private WeaponStatus _weaponStatus;
     [Tooltip("UIのタイミングバーの長さ")]
     private float _timingBarWidth;
     [Tooltip("スキルが成功したかどうか")]
@@ -59,6 +60,7 @@ public class TimingBar : MonoBehaviour, ISkill
         _isSuccess = false;
         _isSkillFinished = false;
         _timeObj.SetActive(false);
+        _weaponStatus.EnemyDamage();
         Debug.Log("購読を終了します");
         _skillDispose.Dispose();
     }

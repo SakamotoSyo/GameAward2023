@@ -2756,6 +2756,7 @@ MonoBehaviour:
   _maxHealth: 100000
   _damegeController: {fileID: 3563891869913398238, guid: 8bf5d86742431e3498aadf0af6f1fbf5, type: 3}
   _damagePos: {fileID: 1090746759724906897}
+  _isInvincible: 0
 --- !u!70 &1090746760234958428
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2859,7 +2860,7 @@ GameObject:
   - component: {fileID: 1117128914}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
