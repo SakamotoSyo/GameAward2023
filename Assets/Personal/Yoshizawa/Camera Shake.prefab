@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6441879622741380848}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.061477244, y: -0.3147849, z: 12.100027}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -57,8 +57,8 @@ MonoBehaviour:
     m_ImpulseType: 3
     m_DissipationRate: 0.25
     m_RawSignal: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
-    m_AmplitudeGain: 1.5
-    m_FrequencyGain: 3
+    m_AmplitudeGain: 50
+    m_FrequencyGain: 20
     m_RepeatMode: 0
     m_Randomize: 1
     m_TimeEnvelope:
@@ -79,7 +79,7 @@ MonoBehaviour:
       m_DecayTime: 0.1
       m_ScaleWithImpact: 1
       m_HoldForever: 0
-    m_ImpactRadius: 100
+    m_ImpactRadius: 1000
     m_DirectionMode: 0
     m_DissipationMode: 2
     m_DissipationDistance: 1000
