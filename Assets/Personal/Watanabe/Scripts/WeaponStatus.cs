@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 
 public class WeaponStatus : MonoBehaviour
@@ -14,6 +15,8 @@ public class WeaponStatus : MonoBehaviour
     [SerializeField] private Animator _playerEffectAnim;
     [SerializeField] private Animator _enemyEffectAnim;
     [SerializeField] private bool _isClick = false;
+    [SerializeField] private bool _isMove = false;
+    [SerializeField] private UnityEvent _onCritical;
 
     [Header("武器のステータス一覧")]
     [SerializeField] private List<int> _values = new();
@@ -22,6 +25,8 @@ public class WeaponStatus : MonoBehaviour
     [Tooltip("会心の確率(5～50)")]
     [Range(5, 50)]
     [SerializeField] private int _probCritical = 10;
+    [Tooltip("会心の一撃が出たときにかかる攻撃力の倍率")]
+    [SerializeField] private float _criticalMultiplier;
     [SerializeField] private AudioClip[] _clip;//大橋が書き加えました
     private AudioSource _source;//大橋が書き加えました
     private ISkill _skill;
@@ -56,43 +61,12 @@ public class WeaponStatus : MonoBehaviour
     {
         if (_isClick)
         {
+            //MouseMock用
             ClickAction();
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Return) || _isAttack)
-            {
-                ResetValues();
-                if (_type == AttackType.Normal)
-                {
-                    _isAttack = false;
-
-                    if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
-                    {
-                        enemy.AddDamage(_values[0] * _updateValue);
-                    }
-                }
-                else if (_type == AttackType.Skill)
-                {
-                    _isAttack = false;
-
-                    _skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
-                           .SkillObj.GetComponent<ISkill>();
-
-                    AnimBool(true);
-                    await _skill.StartSkill();
-                    AnimBool(false);
-                    _values[0] += (int)(_updateValue * _skill.SkillResult());
-                    //PlayUpdate(skill.SkillResult());
-
-                    if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
-                    {
-                        enemy.AddDamage(_values[0] * _updateValue);
-                    }
-                    _skill.SkillEnd();
-                }
-                _source.PlayOneShot(_clip[(int)_type]);//大橋が書き換えました
-            }
+            ButtonSelectAction();
         }
     }
 
@@ -101,15 +75,9 @@ public class WeaponStatus : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !_isAttack)
         {
             ResetValues();
-
             _isAttack = true;
-
-            if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
-            {
-                enemy.AddDamage(_values[0] * _updateValue);
-                _isAttack = false;
-            }
-            _source.PlayOneShot(_clip[(int)_type]);//大橋が書き換えました
+            EnemyDamage();
+            _isAttack = false;
         }
         else if (Input.GetMouseButtonDown(1) && !_isAttack)
         {
@@ -123,17 +91,59 @@ public class WeaponStatus : MonoBehaviour
             await _skill.StartSkill();
             AnimBool(false);
             _values[0] += (int)(_updateValue * _skill.SkillResult());
-            //PlayUpdate(skill.SkillResult());
-
-            if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
-            {
-                enemy.AddDamage(_values[0] * _updateValue);
-            }
+            EnemyDamage();
             _skill.SkillEnd();
             _isAttack = false;
-            _source.PlayOneShot(_clip[(int)_type]);//大橋が書き換えました
         }
 
+    }
+
+    public async void ButtonSelectAction() 
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || _isAttack)
+        {
+            ResetValues();
+            if (_type == AttackType.Normal)
+            {
+                _isAttack = false;
+                EnemyDamage();
+            }
+            else if (_type == AttackType.Skill)
+            {
+                _isAttack = false;
+                _skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
+                       .SkillObj.GetComponent<ISkill>();
+
+                AnimBool(true);
+                await _skill.StartSkill();
+                AnimBool(false);
+                _values[0] = (int)(_values[0] * _skill.SkillResult());
+                EnemyDamage();
+                _skill.SkillEnd();
+            }
+           
+        }
+    }
+
+
+    private void EnemyDamage() 
+    {
+        //会心の一撃
+        var num = UnityEngine.Random.Range(1, 101);
+        if (num <= _probCritical)
+        {
+            _values[0] = (int)(_values[0] * _criticalMultiplier);
+            _source.PlayOneShot(_clip[(int)AttackType.Critical]);
+        }
+        else 
+        {
+            _source.PlayOneShot(_clip[(int)_type]);
+        }
+
+        if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
+        {
+            enemy.AddDamage(_values[0]);
+        }
     }
 
 
@@ -165,4 +175,5 @@ public enum AttackType
 {
     Normal,
     Skill,
+    Critical,
 }
