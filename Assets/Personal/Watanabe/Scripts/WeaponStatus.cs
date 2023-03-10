@@ -103,6 +103,8 @@ public class WeaponStatus : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) || _isAttack)
         {
             ResetValues();
+            _playerAnim.Play("Player Attack");  // 吉澤が付け足しました。
+
             if (_type == AttackType.Normal)
             {
                 _isAttack = false;
