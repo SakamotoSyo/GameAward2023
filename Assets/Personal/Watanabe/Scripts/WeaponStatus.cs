@@ -60,7 +60,7 @@ public class WeaponStatus : MonoBehaviour
 
                 if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
                 {
-                    enemy.AddDamage(_values[0]);
+                    enemy.AddDamage(_values[0] * _updateValue);
                 }
             }
             else if (_type == AttackType.Skill)
