@@ -13,6 +13,9 @@ public class EnemyController : MonoBehaviour, IAddDamage
     [SerializeField, Tooltip("ダメージテキストを生成する座標")]
     private Transform _damagePos;
 
+    [SerializeField, Tooltip("敵を無敵にする")]
+    private bool _isInvincible;
+
     public float MaxHealth => _maxHealth;
 
     private ReactiveProperty<float> _health = new();
@@ -42,10 +45,12 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public void AddDamage(int damage)
     {
-        _health.Value -= damage;
-        Debug.Log($"Enemyは{damage}ダメージ受けた");
+        if (!_isInvincible)
+        {
+            _health.Value -= damage;
+        }
         DamageAnimation();
-        var damageController = Instantiate(_damegeController, 
+        var damageController = Instantiate(_damegeController,
             _damagePos.position,
             Quaternion.identity);
         damageController.TextInit(damage);

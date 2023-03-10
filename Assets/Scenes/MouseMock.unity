@@ -1928,6 +1928,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 324534238, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
+      propertyPath: m_Volume
+      value: 0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 5894325663539147744, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
       propertyPath: _type
       value: 1
@@ -1949,6 +1953,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5894325663539147744, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
+      propertyPath: _probCritical
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894325663539147744, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
+      propertyPath: _clip.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894325663539147744, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
       propertyPath: _enemyEffectAnim
       value: 
       objectReference: {fileID: 1979322137}
@@ -1956,6 +1968,14 @@ PrefabInstance:
       propertyPath: _playerEffectAnim
       value: 
       objectReference: {fileID: 730399348}
+    - target: {fileID: 5894325663539147744, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
+      propertyPath: _clip.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: a40f3530a4c7099418876201711e774b, type: 3}
+    - target: {fileID: 5894325663539147744, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
+      propertyPath: _criticalMultiplier
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 5894325663539147745, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
       propertyPath: m_Enabled
       value: 0
