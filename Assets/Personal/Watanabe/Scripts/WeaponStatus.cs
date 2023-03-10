@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class WeaponStatus : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class WeaponStatus : MonoBehaviour
     [SerializeField] private Animator _playerAnim;
     [SerializeField] private Animator _playerEffectAnim;
     [SerializeField] private Animator _enemyEffectAnim;
+    [SerializeField] private bool _isClick = false;
 
     [Header("武器のステータス一覧")]
     [SerializeField] private List<int> _values = new();
@@ -52,40 +54,88 @@ public class WeaponStatus : MonoBehaviour
 
     private async void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || _isAttack)
+        if (_isClick)
+        {
+            ClickAction();
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Return) || _isAttack)
+            {
+                ResetValues();
+                if (_type == AttackType.Normal)
+                {
+                    _isAttack = false;
+
+                    if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
+                    {
+                        enemy.AddDamage(_values[0] * _updateValue);
+                    }
+                }
+                else if (_type == AttackType.Skill)
+                {
+                    _isAttack = false;
+
+                    _skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
+                           .SkillObj.GetComponent<ISkill>();
+
+                    AnimBool(true);
+                    await _skill.StartSkill();
+                    AnimBool(false);
+                    _values[0] += (int)(_updateValue * _skill.SkillResult());
+                    //PlayUpdate(skill.SkillResult());
+
+                    if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
+                    {
+                        enemy.AddDamage(_values[0] * _updateValue);
+                    }
+                    _skill.SkillEnd();
+                }
+                _source.PlayOneShot(_clip[(int)_type]);//大橋が書き換えました
+            }
+        }
+    }
+
+    public async void ClickAction()
+    {
+        if (Input.GetMouseButtonDown(0) && !_isAttack)
         {
             ResetValues();
-            if (_type == AttackType.Normal)
+
+            _isAttack = true;
+
+            if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
             {
+                enemy.AddDamage(_values[0] * _updateValue);
                 _isAttack = false;
-
-                if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
-                {
-                    enemy.AddDamage(_values[0] * _updateValue);
-                }
-            }
-            else if (_type == AttackType.Skill)
-            {
-                _isAttack = false;
-
-                _skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
-                       .SkillObj.GetComponent<ISkill>();
-
-                AnimBool(true);
-                await _skill.StartSkill();
-                AnimBool(false);
-                _values[0] += (int)(_updateValue * _skill.SkillResult());
-                //PlayUpdate(skill.SkillResult());
-
-                if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
-                {
-                    enemy.AddDamage(_values[0]);
-                }
-                _skill.SkillEnd();
             }
             _source.PlayOneShot(_clip[(int)_type]);//大橋が書き換えました
         }
+        else if (Input.GetMouseButtonDown(1) && !_isAttack)
+        {
+            ResetValues();
+            _isAttack = true;
+
+            _skill = _skillData.SkillList.Find(x => x.SkillName == _skillName)
+                   .SkillObj.GetComponent<ISkill>();
+
+            AnimBool(true);
+            await _skill.StartSkill();
+            AnimBool(false);
+            _values[0] += (int)(_updateValue * _skill.SkillResult());
+            //PlayUpdate(skill.SkillResult());
+
+            if (FindObjectOfType<EnemyController>().TryGetComponent<IAddDamage>(out IAddDamage enemy))
+            {
+                enemy.AddDamage(_values[0] * _updateValue);
+            }
+            _skill.SkillEnd();
+            _isAttack = false;
+            _source.PlayOneShot(_clip[(int)_type]);//大橋が書き換えました
+        }
+
     }
+
 
     private void AnimBool(bool setActive)
     {
