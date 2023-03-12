@@ -45,7 +45,7 @@ public class TimingArrowScript : MonoBehaviour
                       transform.localScale = x;
                       _nowNotes = x.x;
                   },
-                  new Vector3(0.7f, 0.7f, 0.7f), 2f)
+                  new Vector3(0.7f, 0.7f, 0.7f), 1.5f)
                   .OnComplete(() => 
                   {
                       _tween = null;
