@@ -124,7 +124,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: WeaponStatus, Assembly-CSharp
-        m_MethodName: OnCallAttack
+        m_MethodName: SelectType
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -528,7 +528,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: WeaponStatus, Assembly-CSharp
-        m_MethodName: OnCallAttack
+        m_MethodName: SelectType
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1802,7 +1802,7 @@ GameObject:
   - component: {fileID: 5905269093058079886}
   - component: {fileID: 5905269093058079887}
   m_Layer: 5
-  m_Name: ===BattleCanvas===
+  m_Name: BattleCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1998,7 +1998,7 @@ RectTransform:
   m_GameObject: {fileID: 5905269093267058030}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5905269092754660086}
