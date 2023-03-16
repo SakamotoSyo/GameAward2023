@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerView : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Text _currentHpText;
+    [SerializeField] private Text _maxMpText;
+
+    public void SetCurrentHp(float num) 
     {
-        
+        _currentHpText.text = num.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetMaxHp(float num) 
     {
-        
+        _maxMpText.text = num.ToString();
     }
 }
