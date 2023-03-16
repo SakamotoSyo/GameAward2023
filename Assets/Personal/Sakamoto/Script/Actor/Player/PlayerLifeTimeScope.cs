@@ -6,6 +6,13 @@ using VContainer.Unity;
 
 public class PlayerLifeTimeScope : LifetimeScope
 {
-    //[SerializeField] private 
-   
+    [SerializeField] private PlayerView _playerView;
+
+    protected override void Configure(IContainerBuilder builder)
+    {
+        builder.Register<IPlayerStatus, PlayerStatus>(Lifetime.Singleton);
+        builder.RegisterComponent(_playerView);
+        builder.RegisterEntryPoint<PlayerPresenter>();
+    }
+
 }
