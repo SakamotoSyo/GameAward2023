@@ -9,6 +9,12 @@ public class ActorStatusBase :IStatusBase
     private ReactiveProperty<float> _maxHp = new();
     private ReactiveProperty<float> _currentHp = new();
 
+    public void Init() 
+    {
+        _maxHp.Value = 50;
+        _currentHp.Value = 50;
+    }
+
     public void AddDamage(float damage) 
     {
         _currentHp.Value = damage;
