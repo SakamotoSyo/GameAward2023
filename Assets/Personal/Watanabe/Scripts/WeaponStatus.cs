@@ -16,6 +16,7 @@ public class WeaponStatus : MonoBehaviour
     [SerializeField] private Animator _enemyEffectAnim;
     [SerializeField] private bool _isClick = false;
     [SerializeField] private bool _isMove = false;
+    [SerializeField] private float _cameraShakeMagnification = 2f;
     [SerializeField] private UnityEvent _onCritical;
 
     [Header("武器のステータス一覧")]
@@ -30,6 +31,7 @@ public class WeaponStatus : MonoBehaviour
     [SerializeField] private AudioClip[] _clip;//大橋が書き加えました
     private AudioSource _source;//大橋が書き加えました
     private ISkill _skill;
+    private CameraShake _cameraShake = null;  // Added by 吉澤
     private readonly List<int> _defaultValue = new();
     private readonly bool[] _updating = new bool[] { false, false, false };
 
@@ -55,7 +57,10 @@ public class WeaponStatus : MonoBehaviour
             _defaultValue.Add(0);
             _defaultValue[i] = _values[i];
         }
-        
+
+        // Added by 吉澤
+        _cameraShake = FindObjectOfType<CameraShake>();
+        //==========
     }
 
     private async void Update()
@@ -145,12 +150,14 @@ public class WeaponStatus : MonoBehaviour
         {
             _values[0] = (int)(_values[0] * _criticalMultiplier);
             //会心のときイベントを発行
-            _onCritical?.Invoke();
+            //_onCritical?.Invoke();
+            _cameraShake?.CameraShakeMagnitude(_cameraShakeMagnification);  // Added by 吉澤
             _source.PlayOneShot(_clip[(int)AttackType.Critical]);
         }
         else 
         {
             _source.PlayOneShot(_clip[(int)_type]);
+            _cameraShake.IsReset = true;  // Added by 吉澤
         }
         var enemyObj = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemyObj[0].TryGetComponent<IAddDamage>(out IAddDamage enemy))
