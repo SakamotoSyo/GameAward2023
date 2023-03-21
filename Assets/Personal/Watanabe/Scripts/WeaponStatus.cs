@@ -150,7 +150,7 @@ public class WeaponStatus : MonoBehaviour
         {
             _values[0] = (int)(_values[0] * _criticalMultiplier);
             //会心のときイベントを発行
-            //_onCritical?.Invoke();
+            _onCritical?.Invoke();
             _cameraShake?.CameraShakeMagnitude(_cameraShakeMagnification);  // Added by 吉澤
             _source.PlayOneShot(_clip[(int)AttackType.Critical]);
         }
