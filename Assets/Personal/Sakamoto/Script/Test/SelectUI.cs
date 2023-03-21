@@ -29,6 +29,8 @@ public class SelectUI : MonoBehaviour
             UiMove(false);
             _lotateNum = (_lotateNum - 1) % 4;
         }
+
+        TestAttack();
     }
 
     private void UiMove(bool num)
@@ -58,9 +60,32 @@ public class SelectUI : MonoBehaviour
                        x => _actionUi[j].transform.localPosition = x,
                      _actionUiPos[nextMoveNum].transform.localPosition, 1f);
 
-            DOTween.To(() => _actionUi[i].transform.localScale,
-                       x => _actionUi[i].transform.localScale = x,
+            DOTween.To(() => _actionUi[j].transform.localScale,
+                       x => _actionUi[j].transform.localScale = x,
                        _actionUiPos[nextMoveNum].transform.localScale, 1f);
+
+            if (i == 0) 
+            {
+                _actionUi[nextMoveNum].SetAsLastSibling();
+            }
+        }
+    }
+
+    public void TestAttack() 
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            var num = _lotateNum % _actionUi.Length;
+            if (num < 0)
+            {
+                num += _actionUi.Length;
+            }
+
+
+            if (_actionUi[num] == _actionUi[0]) 
+            {
+                GameObject.Find("Weapon").GetComponent<WeaponStatus>().SelectType(0);
+            }
         }
     }
 }
