@@ -12,7 +12,7 @@ public class SelectUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -23,41 +23,44 @@ public class SelectUI : MonoBehaviour
         {
             UiMove(true);
             _lotateNum = (_lotateNum + 1) % 4;
-        } 
-        else if(Input.GetButtonDown("Right"))
+        }
+        else if (Input.GetButtonDown("Right"))
         {
             UiMove(false);
             _lotateNum = (_lotateNum - 1) % 4;
         }
     }
 
-    private void UiMove(bool num) 
+    private void UiMove(bool num)
     {
 
         for (int i = 0; i < _actionUi.Length; i++)
         {
             int j = i;
-            Debug.Log(j);
             var nextMoveNum = 0;
             if (num)
             {
                 //ŽžŒv‰ñ‚è‚Ìˆ—
-                nextMoveNum = ((i + 1) + _lotateNum) % 4;
+                nextMoveNum = ((i + 1) + _lotateNum) % _actionUi.Length;
             }
             else
             {
                 //”¼ŽžŒv‰ñ‚è
-                nextMoveNum = ((i - 1) + _lotateNum) % 4;
-                if (nextMoveNum < 0) 
-                {
-                    nextMoveNum += 4;
-                }
+                nextMoveNum = ((i - 1) + _lotateNum) % _actionUi.Length;
             }
-            
-            Debug.Log(nextMoveNum);
+
+            if (nextMoveNum < 0)
+            {
+                nextMoveNum += _actionUi.Length;
+            }
+
             DOTween.To(() => _actionUi[j].transform.localPosition,
                        x => _actionUi[j].transform.localPosition = x,
                      _actionUiPos[nextMoveNum].transform.localPosition, 1f);
+
+            DOTween.To(() => _actionUi[i].transform.localScale,
+                       x => _actionUi[i].transform.localScale = x,
+                       _actionUiPos[nextMoveNum].transform.localScale, 1f);
         }
     }
 }
