@@ -10,19 +10,28 @@ public class EnemyController : MonoBehaviour, IAddDamage
     private Transform _damagePos;
 
     [SerializeField]
+    private SpriteRenderer _renderer;
+
+    [SerializeField]
+    private Animator _animator;
+
+    [SerializeField]
     private EnemyHealth _enemyHealth;
+
+    [SerializeField]
+    private EnemyAttack _enemyAttack;
 
     public EnemyHealth EnemyHealth => _enemyHealth;
 
-    private SpriteRenderer _renderer;
-
-    private Animator _animator;
-
     private void Start()
     {
-        _renderer = GetComponent<SpriteRenderer>();
-        _animator = GetComponent<Animator>();
         _enemyHealth.Init(_renderer, _animator, gameObject);
+        _enemyAttack.Init(_animator);
+    }
+
+    public void Attack(PlayerController playerController)
+    {
+        _enemyAttack.Attack(playerController);
     }
 
     public void AddDamage(int damage)

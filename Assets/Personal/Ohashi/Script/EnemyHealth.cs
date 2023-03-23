@@ -38,7 +38,7 @@ public class EnemyHealth
     /// </summary>
     public void DamageAnimation()
     {
-        //_animator.Play("Damage");
+        _animator.Play("Damage");
         _renderer.DOColor(Color.red, 0.3f)
             .OnComplete(() => _renderer.DOColor(Color.white, 0.3f));
     }
