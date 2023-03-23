@@ -5,32 +5,32 @@ public class SkillDelay : MonoBehaviour
     [Tooltip("Time.timeScaleをどれくらい下げるか")]
     [Range(0.1f, 1f)]
     [SerializeField] private float _delayScale = 0.1f;
+    [Tooltip("Delayの実行時間")]
     [SerializeField] private float _delayTime = 1f;
+    [Tooltip("Animationの再生を遅らせる(テスト)")]
     [SerializeField] private SlowAnim _slow = default;
 
-    //private Rigidbody2D _rb2d = default;
     private float _delaying = 0f;
     private bool _isDelay = false;
 
-    private void Start()
-    {
-        //RigidBody.InterpolateをInterpolateにすることで、
-        //スロー中の物理演算を滑らかに行う
-        //_rb2d = GetComponent<Rigidbody2D>();
-        //_rb2d.interpolation = RigidbodyInterpolation2D.Interpolate;
-    }
-
     private void Update()
     {
-        //以下テスト
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!_slow.IsDelay)
-                _slow.DelayAnimation();
+            //Animationを単体でDelayさせるテスト
+            if (_slow != null)
+            {
+                if (!_slow.IsDelay)
+                    _slow.DelayAnimation();
+            }
         }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+            Delay();
 
         if (_isDelay)
         {
+            //一定時間経ったらDelay解除
             _delaying += Time.unscaledDeltaTime;
             if (_delaying >= _delayTime)
             {
@@ -51,7 +51,7 @@ public class SkillDelay : MonoBehaviour
         Debug.Log("delay");
     }
 
-    /// <summary> 元に戻す </summary>
+    /// <summary> Delayを元に戻す </summary>
     private void DelayReset()
     {
         Time.timeScale = 1f;
