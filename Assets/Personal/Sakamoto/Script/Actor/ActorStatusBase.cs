@@ -4,8 +4,11 @@ using UnityEngine;
 using UniRx;
 using System;
 
-public class ActorStatusBase :IStatusBase
+public class ActorStatusBase
 {
+    public IReactiveProperty<float> MaxHp => _maxHp;
+    public IReactiveProperty<float> CurrentHp => _currentHp;
+
     private ReactiveProperty<float> _maxHp = new();
     private ReactiveProperty<float> _currentHp = new();
 
@@ -29,15 +32,5 @@ public class ActorStatusBase :IStatusBase
     public bool DownJudge(float damage)
     {
         return 0 < _currentHp.Value - damage;
-    }
-
-    public IReactiveProperty<float> GetMaxHpOb()
-    {
-        return _maxHp;
-    }
-
-    public IReactiveProperty<float> GetCurrentHpOb()
-    {
-        return _currentHp;
     }
 }

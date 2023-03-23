@@ -9,11 +9,11 @@ using VContainer.Unity;
 public class PlayerPresenter :IStartable, IDisposable
 {
     private PlayerView _playerView;
-    private IPlayerStatus _playerStatus;
+    private PlayerStatus _playerStatus;
     private CompositeDisposable _compositeDisposable = new();
 
     [Inject]
-    PlayerPresenter(IPlayerStatus playerStatus, PlayerView playerView, PlayerController playerController) 
+    PlayerPresenter(PlayerStatus playerStatus, PlayerView playerView, PlayerController playerController) 
     {
         _playerStatus = playerStatus;
         _playerView = playerView;
@@ -22,8 +22,8 @@ public class PlayerPresenter :IStartable, IDisposable
 
     public void Start()
     {
-        _playerStatus.GetStatusBase().GetMaxHpOb().Subscribe(_playerView.SetMaxHp).AddTo(_compositeDisposable);
-        _playerStatus.GetStatusBase().GetCurrentHpOb().Subscribe(_playerView.SetCurrentHp).AddTo(_compositeDisposable);
+        _playerStatus.MaxHp.Subscribe(_playerView.SetMaxHp).AddTo(_compositeDisposable);
+        _playerStatus.CurrentHp.Subscribe(_playerView.SetCurrentHp).AddTo(_compositeDisposable);
     }
 
     public void Dispose()

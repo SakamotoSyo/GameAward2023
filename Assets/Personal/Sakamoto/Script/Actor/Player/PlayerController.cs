@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SakamotoTest;
 
 public class PlayerController : MonoBehaviour
 {
-    private IPlayerStatus _playerStatus;
-    private IStatusBase _statusBase;
+    public PlayerStatus PlayerStatus => _playerStatus;
+
+    private PlayerStatus _playerStatus;
     private PlayerAnimation _playerAnimation = new();
 
     private void Start()
     {
-        _statusBase = _playerStatus.GetStatusBase();
+        
     }
 
     /// <summary>
@@ -18,9 +20,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void AddDamage(float damage) 
     {
-        if (_statusBase.DownJudge(damage))
+        if (_playerStatus.DownJudge(damage))
         {
-            _playerStatus.GetStatusBase().AddDamage(damage);
+            _playerStatus.AddDamage(damage);
         }
         else 
         {
@@ -29,7 +31,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public void SetPlayerStatus(IPlayerStatus playerStatus) 
+    public void SetPlayerStatus(PlayerStatus playerStatus) 
     {
         _playerStatus = playerStatus;
     }
