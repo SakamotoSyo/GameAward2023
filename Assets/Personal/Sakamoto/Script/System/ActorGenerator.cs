@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ActorGenerator : MonoBehaviour
 {
+    public PlayerController PlayerController => _playerController;
+
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Transform _playerInsPos;
     private PlayerController _playerController;
