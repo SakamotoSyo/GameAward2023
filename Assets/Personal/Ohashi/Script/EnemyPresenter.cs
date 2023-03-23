@@ -19,7 +19,7 @@ public class EnemyPresenter : MonoBehaviour
     /// </summary>
     private void EnemyHealthObserver()
     {
-        _enemyModel.Health
+        _enemyModel.EnemyHealth.Health
             .Subscribe(health => _enemyView.HealthText(health))
             .AddTo(this);
     }   
