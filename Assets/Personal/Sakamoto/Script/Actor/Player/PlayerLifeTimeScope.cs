@@ -11,7 +11,7 @@ public class PlayerLifeTimeScope : LifetimeScope
 
     protected override void Configure(IContainerBuilder builder)
     {
-        builder.Register<IPlayerStatus, PlayerStatus>(Lifetime.Singleton);
+        builder.Register<PlayerStatus>(Lifetime.Singleton);
         builder.RegisterComponent(_playerView);
         builder.RegisterComponent(_playerController);
         builder.RegisterEntryPoint<PlayerPresenter>();
