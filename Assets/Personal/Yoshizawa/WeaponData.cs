@@ -1,13 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 // 日本語対応
-public class WeaponData
+public struct WeaponData
 {
-    public WeaponData()
+    public float OffensivePower;
+    public float WeaponWeight;
+    public float CriticalRate;
+    public AttributeType Attribute;
+
+    public WeaponData(float power, float weight, float rate, AttributeType type)
     {
-        
+        OffensivePower = power;
+        WeaponWeight = weight;
+        CriticalRate = rate;
+        Attribute = type;
     }
 
     public enum AttributeType
@@ -16,19 +20,5 @@ public class WeaponData
         Fire,
         Water,
         Wood,
-    }
-}
-
-struct WeaponParameter
-{
-    public float OffensivePower;
-    public float WeaponWeight;
-    public float CriticalRate;
-
-    public WeaponParameter(float power, float weight, float rate)
-    {
-        OffensivePower = power;
-        WeaponWeight = weight;
-        CriticalRate = rate;
     }
 }
