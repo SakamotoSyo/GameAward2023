@@ -58,11 +58,11 @@ public class SelectUI : MonoBehaviour
 
             DOTween.To(() => _actionUi[j].transform.localPosition,
                        x => _actionUi[j].transform.localPosition = x,
-                     _actionUiPos[nextMoveNum].transform.localPosition, 1f);
+                     _actionUiPos[nextMoveNum].transform.localPosition, 0.5f);
 
             DOTween.To(() => _actionUi[j].transform.localScale,
                        x => _actionUi[j].transform.localScale = x,
-                       _actionUiPos[nextMoveNum].transform.localScale, 1f);
+                       _actionUiPos[nextMoveNum].transform.localScale, 0.5f);
 
             if (i == 0) 
             {
