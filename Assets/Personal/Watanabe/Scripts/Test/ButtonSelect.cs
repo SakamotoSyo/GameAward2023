@@ -8,9 +8,12 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private Transform[] _start = new Transform[3];
     [SerializeField] private Transform[] _movePos = new Transform[3];
     [SerializeField] private int _index = 0;
+    [SerializeField] private int _beforeIndex = 0;
 
-    
     private Selectable _selectable = default;
+
+    public int Index { get => _index; set => _index = value; }
+    public Selectable Selected { get => _selectable; set => _selectable = value; }
 
     private void Start()
     {
@@ -32,7 +35,6 @@ public class ButtonSelect : MonoBehaviour
         {
             UIMove(1);
         }
-
     }
 
     private void UIMove(int num)
@@ -59,6 +61,39 @@ public class ButtonSelect : MonoBehaviour
         _selectable.Select();
 
         _selectable.transform.DOLocalMove(_movePos[_index].transform.localPosition, 0.1f);
+    }
+
+    public void UIMoveByMouse(int index)
+    {
+        _beforeIndex = _index;
+        Debug.Log(_beforeIndex);
+
+        //条件分岐の判定順の都合上、以下のように書いている
+        if (index == 2 && _beforeIndex == 0)
+        {
+            UIMove(0);
+            Debug.Log("うえ");
+        }
+        else if (index == 0 && _beforeIndex == 2)
+        {
+            UIMove(1);
+            Debug.Log("した");
+        }
+
+        else if (index < _beforeIndex)
+        {
+            UIMove(0);
+            Debug.Log("うえ");
+        }
+        else if (index > _beforeIndex)
+        {
+            UIMove(1);
+            Debug.Log("した");
+        }
+        else if (index == _beforeIndex)
+        {
+            Debug.Log("おなじ");
+        }
     }
 
     public void Test()
