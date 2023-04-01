@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_playerStatus.DownJudge(damage))
         {
+            //アニメーションがあったらここでダメージを受ける処理を呼ぶ
             _playerStatus.AddDamage(damage);
         }
         else 

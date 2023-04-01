@@ -10,6 +10,7 @@ public class PlayerPresenter :IStartable, IDisposable
 {
     private PlayerView _playerView;
     private PlayerStatus _playerStatus;
+    /// <summary>w“Ç‚µ‚Ä‚¢‚é‚à‚Ì‚ğ‚Ü‚Æ‚ß‚ÄDispose‚µ‚½‚¢‚Æ‚«‚Ég‚¤‹@”\</summary>
     private CompositeDisposable _compositeDisposable = new();
 
     [Inject]
