@@ -23,18 +23,21 @@ public class ActorGenerator : MonoBehaviour
         PlayerGeneration();
     }
 
-    public void PlayerGeneration() 
+    public PlayerController PlayerGeneration() 
     {
         var playerObj = Instantiate(_playerPrefab);
         playerObj.transform.SetParent(_playerInsPos.transform);
         _playerController = playerObj.GetComponent<PlayerController>();
+        return _playerController;
     }
 
-    public void EnemyGenetation(List<GameObject> enemyList)
+    public List<EnemyController> EnemyGenetation(List<GameObject> enemyList)
     {
         for (int i = 0; i < enemyList.Count; i++)
         {
             _enemyControllerList.Add(enemyList[i].GetComponent<EnemyController>());
         }
+
+        return _enemyControllerList;
     }
 }
