@@ -19,6 +19,9 @@ public class TestMusyokuSkill : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _backGround;
 
+    [SerializeField]
+    private ParticleSystem _effect;
+
     /// <summary>
     /// 無職転生のスキル
     /// </summary>
@@ -50,7 +53,11 @@ public class TestMusyokuSkill : MonoBehaviour
         //待つ
         sequence.AppendInterval(0.5f);
         //敵のダメージのメソッドを呼ぶ
-        sequence.AppendCallback(() => _enemyController.AddDamage(10000));
+        sequence.AppendCallback(() =>
+        {
+            _effect.Play();
+            _enemyController.AddDamage(10000);
+        });
         //待つ
         sequence.AppendInterval(1f);
         //もとの位置に戻る
