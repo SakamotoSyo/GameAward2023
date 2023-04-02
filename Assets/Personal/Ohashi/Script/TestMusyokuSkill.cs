@@ -10,23 +10,29 @@ public class TestMusyokuSkill : MonoBehaviour
     [SerializeField]
     private EnemyController _enemyController;
 
-    [SerializeField]
+    [SerializeField, Tooltip("プレイヤーを黒くする用のオブジェクト")]
     private GameObject _blackPlayer;
 
-    [SerializeField]
+    [SerializeField, Tooltip("を黒くする敵を用のオブジェクト")]
     private GameObject _blackEnemy;
 
     [SerializeField]
     private SpriteRenderer _backGround;
 
     [SerializeField]
-    private ParticleSystem _effect;
+    private ParticleSystem _explosionEffect;
+
+    [SerializeField]
+    private ParticleSystem[] _swordEffects;
+
+    private int _count = 1;
 
     /// <summary>
     /// 無職転生のスキル
     /// </summary>
     public void Skill()
     {
+        _count = 0;
         _fadePanel.enabled = true;
         var sequence = DOTween.Sequence();
         //フェードアウト
@@ -55,7 +61,7 @@ public class TestMusyokuSkill : MonoBehaviour
         //敵のダメージのメソッドを呼ぶ
         sequence.AppendCallback(() =>
         {
-            _effect.Play();
+            _explosionEffect.Play();
             _enemyController.AddDamage(10000);
         });
         //待つ
@@ -64,5 +70,18 @@ public class TestMusyokuSkill : MonoBehaviour
         sequence.Append(transform.DOMoveX(-5.5f, 0.5f));
         //フェードのパネルを非アクティブにする
         sequence.AppendCallback(() => _fadePanel.enabled = false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //接触したら斬撃Effectを出す
+        if (collision.gameObject.TryGetComponent<IAddDamage>(out IAddDamage addDamage) && _count == 0)
+        {
+            _count++;
+            foreach (var swordEffect in _swordEffects)
+            {
+                swordEffect.Play();
+            }
+        }
     }
 }
