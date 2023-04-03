@@ -10,11 +10,14 @@ public class TestMusyokuSkill : MonoBehaviour
     [SerializeField]
     private EnemyController _enemyController;
 
-    [SerializeField, Tooltip("プレイヤーを黒くする用のオブジェクト")]
-    private GameObject _blackPlayer;
+    [SerializeField, Tooltip("プレイヤーを黒くする用のスプライト")]
+    private SpriteRenderer _blackPlayer;
 
-    [SerializeField, Tooltip("を黒くする敵を用のオブジェクト")]
-    private GameObject _blackEnemy;
+    [SerializeField, Tooltip("敵を黒くする用のスプライト")]
+    private SpriteRenderer _blackEnemy;
+
+    [SerializeField, Tooltip("敵のふちを青くする用のスプライト")]
+    private SpriteRenderer _blueEnemy;
 
     [SerializeField]
     private SpriteRenderer _backGround;
@@ -49,24 +52,34 @@ public class TestMusyokuSkill : MonoBehaviour
         //全体の色を黒くしてフェードをやめる
         sequence.AppendCallback(() =>
         {
-            _backGround.color = new Color(0.1f, 0.1f, 0.1f, 1);
-            _blackPlayer.SetActive(true);
-            _blackEnemy.SetActive(true);
-            _fadePanel.color = new Color(0, 0, 0, 0);
+            _backGround.color = new Color(0, 0, 0, 0.9f);
+            _blackPlayer.enabled = true;
+            _blackEnemy.enabled = true;
+            _blueEnemy.enabled = true;
+            _fadePanel.color = Color.clear;
         });
+
+        sequence.Append(_blackPlayer.DOFade(1, 0))
+            .Join(_blackEnemy.DOFade(1, 0))
+            .Join(_blueEnemy.DOFade(1, 0));
         //プレイヤーを動かす
         sequence.Append(transform.DOMoveX(_moveX, 0.3f));
         //待つ
-        sequence.AppendInterval(1f);
+        sequence.AppendInterval(0.5f);
+
+        sequence.Append(_blackPlayer.DOFade(0, 1f))
+            .Join(_blackEnemy.DOFade(0, 1f))
+            .Join(_blueEnemy.DOFade(0, 1f))
+            .Join(_backGround.DOFade(0, 1f));
         //全体の色を元に戻す
         sequence.AppendCallback(() =>
         {
-            _backGround.color = Color.white;
-            _blackPlayer.SetActive(false);
-            _blackEnemy.SetActive(false);
+            _blackPlayer.enabled = false;
+            _blackEnemy.enabled = false;
+            _blueEnemy.enabled = false;
         });
         //待つ
-        sequence.AppendInterval(_appendInterval);
+        //sequence.AppendInterval(_appendInterval);
         //敵のダメージのメソッドを呼ぶ
         sequence.AppendCallback(() =>
         {
