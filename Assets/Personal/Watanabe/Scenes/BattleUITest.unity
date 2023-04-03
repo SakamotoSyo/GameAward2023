@@ -257,7 +257,7 @@ RectTransform:
   m_Children:
   - {fileID: 733739667}
   m_Father: {fileID: 1928414777}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -607,7 +607,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 925392235}
-  - {fileID: 712671167}
   - {fileID: 1823073004}
   - {fileID: 1581801700}
   - {fileID: 1594495872}
@@ -879,8 +878,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1928414777}
-  m_RootOrder: 1
+  m_Father: {fileID: 1335720394}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -958,7 +957,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1383862634}
-  - {fileID: 1223467274}
   - {fileID: 853291764}
   - {fileID: 999696792}
   - {fileID: 1360277003}
@@ -1000,8 +998,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 265463394}
-  m_RootOrder: 1
+  m_Father: {fileID: 925392235}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1483,7 +1481,7 @@ RectTransform:
   m_Children:
   - {fileID: 903629227}
   m_Father: {fileID: 674221948}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1766,7 +1764,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 712671167}
   m_Father: {fileID: 265463394}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1828,18 +1827,6 @@ MonoBehaviour:
   _onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 925392238}
-        m_TargetAssemblyTypeName: ClickEvent, Assembly-CSharp
-        m_MethodName: Test
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1396732393}
         m_TargetAssemblyTypeName: BattleSelect, Assembly-CSharp
         m_MethodName: MovePos
@@ -1852,6 +1839,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _info: "Stage3\n\u6575\uFF1A4\u4F53\n\n\u5C5E\u6027\uFF1A\u706B2\u3001\u6C342"
 --- !u!1 &999696791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,7 +1873,7 @@ RectTransform:
   m_Children:
   - {fileID: 737494885}
   m_Father: {fileID: 674221948}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2175,7 +2163,7 @@ RectTransform:
   m_Children:
   - {fileID: 839096410}
   m_Father: {fileID: 1928414777}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2294,8 +2282,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 674221948}
-  m_RootOrder: 1
+  m_Father: {fileID: 1383862634}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2408,7 +2396,7 @@ RectTransform:
   m_Children:
   - {fileID: 1759543387}
   m_Father: {fileID: 1928414777}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2527,7 +2515,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 575073104}
   m_Father: {fileID: 1928414777}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2589,18 +2578,6 @@ MonoBehaviour:
   _onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1335720397}
-        m_TargetAssemblyTypeName: ClickEvent, Assembly-CSharp
-        m_MethodName: Test
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1396732393}
         m_TargetAssemblyTypeName: BattleSelect, Assembly-CSharp
         m_MethodName: MovePos
@@ -2613,6 +2590,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _info: "Stage2\n\u6575\uFF1A3\u4F53\n\n\u5C5E\u6027\uFF1A\u706B2\u3001\u6C341"
 --- !u!1 &1360277002
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,7 +2624,7 @@ RectTransform:
   m_Children:
   - {fileID: 534252148}
   m_Father: {fileID: 674221948}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2765,7 +2743,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1223467274}
   m_Father: {fileID: 674221948}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2827,18 +2806,6 @@ MonoBehaviour:
   _onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1383862637}
-        m_TargetAssemblyTypeName: ClickEvent, Assembly-CSharp
-        m_MethodName: Test
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1396732393}
         m_TargetAssemblyTypeName: BattleSelect, Assembly-CSharp
         m_MethodName: MovePos
@@ -2851,6 +2818,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _info: "Stage1\n\u6575\uFF1A3\u4F53\n\n\u5C5E\u6027\uFF1A\u706B3"
 --- !u!1 &1396732390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2919,7 +2887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f995b6b773c6be41b6dc39c9d8545a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pos: {fileID: 1968150200}
+  _infoText: {fileID: 775451307}
   _battles:
   - {fileID: 674221948}
   - {fileID: 1928414777}
@@ -2955,8 +2923,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1770784042}
-  m_RootOrder: 1
+  m_Father: {fileID: 1819619426}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3038,7 +3006,7 @@ RectTransform:
   m_Children:
   - {fileID: 461094358}
   m_Father: {fileID: 265463394}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -3160,7 +3128,7 @@ RectTransform:
   m_Children:
   - {fileID: 1806355743}
   m_Father: {fileID: 265463394}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -3442,7 +3410,7 @@ RectTransform:
   m_Children:
   - {fileID: 1670239982}
   m_Father: {fileID: 1770784042}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -3564,7 +3532,7 @@ RectTransform:
   m_Children:
   - {fileID: 1893654746}
   m_Father: {fileID: 1770784042}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -3762,7 +3730,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1819619426}
-  - {fileID: 1525930188}
   - {fileID: 1726635988}
   - {fileID: 2112453432}
   - {fileID: 1723732883}
@@ -3884,7 +3851,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1525930188}
   m_Father: {fileID: 1770784042}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3946,18 +3914,6 @@ MonoBehaviour:
   _onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1819619429}
-        m_TargetAssemblyTypeName: ClickEvent, Assembly-CSharp
-        m_MethodName: Test
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1396732393}
         m_TargetAssemblyTypeName: BattleSelect, Assembly-CSharp
         m_MethodName: MovePos
@@ -3970,6 +3926,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _info: "Stage4\n\u6575\uFF1A6\u4F53\n\n\u5C5E\u6027\uFF1A\u706B2\u3001\u6C342\u3001\u67282"
 --- !u!1 &1820066274
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,7 +4064,7 @@ RectTransform:
   m_Children:
   - {fileID: 1672975370}
   m_Father: {fileID: 265463394}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -4372,7 +4329,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1335720394}
-  - {fileID: 575073104}
   - {fileID: 204045252}
   - {fileID: 1194672255}
   - {fileID: 1274906904}
@@ -4565,7 +4521,7 @@ RectTransform:
   m_Children:
   - {fileID: 253126268}
   m_Father: {fileID: 1770784042}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
