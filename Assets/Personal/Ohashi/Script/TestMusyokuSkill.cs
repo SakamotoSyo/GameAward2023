@@ -25,6 +25,12 @@ public class TestMusyokuSkill : MonoBehaviour
     [SerializeField]
     private ParticleSystem[] _swordEffects;
 
+    [SerializeField, Tooltip("プレイヤーの最終地点")]
+    private float _moveX = 8f;
+
+    [SerializeField, Tooltip("攻撃後インターバル")]
+    private float _appendInterval = 0.2f;
+
     private int _count = 1;
 
     /// <summary>
@@ -36,7 +42,10 @@ public class TestMusyokuSkill : MonoBehaviour
         _fadePanel.enabled = true;
         var sequence = DOTween.Sequence();
         //フェードアウト
-        sequence.Append(_fadePanel.DOFade(1f, 1f));
+        sequence.Append(_fadePanel.DOFade(1f, 1f))
+            .Join(transform.DORotate(new Vector3(0, 0, -11), 0.5f));
+        //待つ
+        sequence.AppendInterval(0.3f);
         //全体の色を黒くしてフェードをやめる
         sequence.AppendCallback(() =>
         {
@@ -46,7 +55,7 @@ public class TestMusyokuSkill : MonoBehaviour
             _fadePanel.color = new Color(0, 0, 0, 0);
         });
         //プレイヤーを動かす
-        sequence.Append(transform.DOMoveX(5.5f, 0.5f));
+        sequence.Append(transform.DOMoveX(_moveX, 0.3f));
         //待つ
         sequence.AppendInterval(1f);
         //全体の色を元に戻す
@@ -57,7 +66,7 @@ public class TestMusyokuSkill : MonoBehaviour
             _blackEnemy.SetActive(false);
         });
         //待つ
-        sequence.AppendInterval(0.5f);
+        sequence.AppendInterval(_appendInterval);
         //敵のダメージのメソッドを呼ぶ
         sequence.AppendCallback(() =>
         {
@@ -65,7 +74,8 @@ public class TestMusyokuSkill : MonoBehaviour
             _enemyController.AddDamage(10000);
         });
         //待つ
-        sequence.AppendInterval(1f);
+        sequence.AppendInterval(0.5f);
+        sequence.Append(transform.DORotate(Vector3.zero, 0.5f));
         //もとの位置に戻る
         sequence.Append(transform.DOMoveX(-5.5f, 0.5f));
         //フェードのパネルを非アクティブにする
