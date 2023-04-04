@@ -66,7 +66,6 @@ public class ButtonSelect : MonoBehaviour
     public void UIMoveByMouse(int index)
     {
         _beforeIndex = _index;
-        Debug.Log(_beforeIndex);
 
         //条件分岐の判定順の都合上、以下のように書いている
         if (index == 2 && _beforeIndex == 0)
@@ -89,10 +88,6 @@ public class ButtonSelect : MonoBehaviour
         {
             UIMove(1);
             Debug.Log("した");
-        }
-        else if (index == _beforeIndex)
-        {
-            Debug.Log("おなじ");
         }
     }
 
