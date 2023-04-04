@@ -18,14 +18,12 @@ public class DamageTextController : MonoBehaviour
 
     private int _damage;
 
-    private void Start()
+    private void OnEnable()
     {
         //仮の条件
-        if(_damage >= 100)
+        if (_damage >= 100)
         {
-            _damageText.DOCounter(0, _damage, 0.2f);
-            transform.DOScale(new Vector3(0.02f, 0.02f, 0), 0.2f);
-            DamageAnimation();
+            BigDamageAnimation();
         }
         else
         {
@@ -47,9 +45,16 @@ public class DamageTextController : MonoBehaviour
     /// </summary>
     private void DamageAnimation()
     {
-        transform.DOLocalMoveY(_distanceY, _distanceYTime);
+        float f = Random.Range(0.3f, 2f);
+        transform.DOLocalMoveY(f, _distanceYTime);
         _damageText.DOFade(0, _fadeTime)
             .SetDelay(_distanceYTime)
             .OnComplete(() => Destroy(gameObject));
+    }
+    private void BigDamageAnimation()
+    {
+        _damageText.DOCounter(0, _damage, 0.2f);
+        transform.DOScale(new Vector3(0.02f, 0.02f, 0), 0.2f);
+        DamageAnimation();
     }
 }
