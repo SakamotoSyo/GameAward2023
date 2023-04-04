@@ -5,6 +5,7 @@ using DG.Tweening;
 public class BattleSelect : MonoBehaviour
 {
     [SerializeField] private Text _infoText = default;
+    [SerializeField] private Color _selecting = Color.white;
     [SerializeField] private Transform[] _battles = new Transform[4];
 
     private int _index = 0;
@@ -43,7 +44,7 @@ public class BattleSelect : MonoBehaviour
             {
                 _battles[i].transform.DOLocalMoveX(-500f, 1f);
 
-                _battles[i].GetChild(0).GetComponent<Image>().color = Color.yellow;
+                _battles[i].GetChild(0).GetComponent<Image>().color = _selecting;
                 for (int j = 1; j < _battles[i].childCount; j++)
                 {
                     _battles[i].GetChild(j).gameObject.SetActive(true);

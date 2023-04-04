@@ -9,7 +9,7 @@ public class ClickEvent : MonoBehaviour, IPointerClickHandler
     [Multiline(6)]
     [SerializeField] private string _info = "";
 
-    public string Info { get => _info; protected set => _info = value;}
+    public string Info { get => _info; protected set => _info = value; }
 
     public void OnPointerClick(PointerEventData eventData)
     {

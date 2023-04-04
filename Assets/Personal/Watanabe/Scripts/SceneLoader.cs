@@ -7,7 +7,8 @@ public class SceneLoader : MonoBehaviour
     private readonly Dictionary<SceneName, string> _scenes = new()
     {
         [SceneName.TitleScene] = "Title",
-        [SceneName.GameScene] = "InGame",
+        [SceneName.HomeScene] = "Home",
+        [SceneName.RankScene] = "RankScene",
         [SceneName.ResultScene] = "Result",
     };
 
@@ -17,11 +18,18 @@ public class SceneLoader : MonoBehaviour
 
         SceneManager.LoadScene(_scenes[sceneName]);
     }
+
+    public void Load(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
 
 public enum SceneName
 {
+    //ランクシーン名は仮
     TitleScene,
-    GameScene,
+    HomeScene,
+    RankScene,
     ResultScene,
 }
