@@ -2,8 +2,12 @@
 using UnityEngine.UI;
 using DG.Tweening;
 
+/// <summary> どのステージに挑戦するかを選ぶ </summary>
 public class BattleSelect : MonoBehaviour
 {
+    [Tooltip("DOTweenの再生速度")]
+    [Range(0.2f, 2f)]
+    [SerializeField] private float _playSpeed = 1f;
     [SerializeField] private Text _infoText = default;
     [SerializeField] private Color _selecting = Color.white;
     [SerializeField] private Transform[] _battles = new Transform[4];
@@ -26,12 +30,12 @@ public class BattleSelect : MonoBehaviour
                 if (_index < num)
                 {
                     _battles[i].transform.DOLocalMoveX(
-                        _battles[i].transform.localPosition.x + (-430f * n), 1f);
+                        _battles[i].transform.localPosition.x + (-430f * n), _playSpeed);
                 }
                 else if (_index > num)
                 {
                     _battles[i].transform.DOLocalMoveX(
-                        _battles[i].transform.localPosition.x + (430f * n), 1f);
+                        _battles[i].transform.localPosition.x + (430f * n), _playSpeed);
                 }
 
                 _battles[i].GetChild(0).GetComponent<Image>().color = Color.white;
@@ -42,7 +46,7 @@ public class BattleSelect : MonoBehaviour
             }
             else
             {
-                _battles[i].transform.DOLocalMoveX(-500f, 1f);
+                _battles[i].transform.DOLocalMoveX(-500f, _playSpeed);
 
                 _battles[i].GetChild(0).GetComponent<Image>().color = _selecting;
                 for (int j = 1; j < _battles[i].childCount; j++)

@@ -1,9 +1,9 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class Fade : MonoBehaviour
 {
