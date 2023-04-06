@@ -7,13 +7,15 @@ public struct WeaponData
     public float DurableValue;
     public AttributeType Attribute;
 
-    public WeaponData(float power, float weight, float rate, float value, AttributeType type = AttributeType.None)
+    /// <summary>武器のパラメータを格納する構造体 | 属性は初期設定だと無属性</summary>
+    public WeaponData(float offensivePower, float weaponWeight,
+        float criticalRate, float durableValue, AttributeType attributeType = AttributeType.None)
     {
-        OffensivePower = power;
-        WeaponWeight = weight;
-        CriticalRate = rate;
-        DurableValue = value;
-        Attribute = type;
+        OffensivePower = offensivePower;
+        WeaponWeight = weaponWeight;
+        CriticalRate = criticalRate;
+        DurableValue = durableValue;
+        Attribute = attributeType;
     }
 
     public enum AttributeType
