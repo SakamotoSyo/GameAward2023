@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using DG.Tweening;
 
-/// <summary> どのステージに挑戦するかを選ぶ </summary>
+/// <summary> 全4ステージからどのステージに挑戦するかを選ぶ </summary>
 public class BattleSelect : MonoBehaviour
 {
     [Tooltip("DOTweenの再生速度")]
