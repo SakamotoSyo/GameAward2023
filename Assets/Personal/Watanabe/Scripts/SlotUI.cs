@@ -76,23 +76,19 @@ public class SlotUI : MonoBehaviour
         if (index == 3 && _beforeIndex == 0)
         {
             UIMove(0);
-            Debug.Log("うえ");
         }
         else if (index == 0 && _beforeIndex == 3)
         {
             UIMove(1);
-            Debug.Log("した");
         }
 
         else if (index < _beforeIndex)
         {
             UIMove(0);
-            Debug.Log("うえ");
         }
         else if (index > _beforeIndex)
         {
             UIMove(1);
-            Debug.Log("した");
         }
     }
 }
