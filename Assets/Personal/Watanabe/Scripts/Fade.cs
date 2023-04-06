@@ -14,9 +14,12 @@ public class Fade : MonoBehaviour
 
     private EventSystem _system = default;
 
+    public static Fade Instance = default;
+
     private void Start()
     {
         _system = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        Instance = this;
         FadeIn();
     }
 

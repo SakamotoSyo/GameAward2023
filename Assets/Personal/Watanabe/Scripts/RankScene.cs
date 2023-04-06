@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary> ランクのText表示 </summary>
 public class RankScene : MonoBehaviour
 {
     [SerializeField] private Text _rankText = default;
