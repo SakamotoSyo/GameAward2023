@@ -14,15 +14,13 @@ public class ButtonSelect : MonoBehaviour
 
     private Selectable _selectable = default;
 
-    public int Index { get => _index; set => _index = value; }
-    public Selectable Selected { get => _selectable; set => _selectable = value; }
-
     private void Start()
     {
         _selectable = _select[0];
         _selectable.Select();
 
-        _selectable.transform.DOLocalMove(_movePos[_index].transform.localPosition, 0.1f);
+        _selectable.transform.DOLocalMove(
+            _movePos[_index].transform.localPosition, 0.1f);
     }
 
     private void Update()
@@ -41,7 +39,8 @@ public class ButtonSelect : MonoBehaviour
 
     private void UIMove(int num)
     {
-        _selectable.transform.DOLocalMove(_start[_index].transform.localPosition, 0.1f);
+        _selectable.transform.DOLocalMove(
+            _start[_index].transform.localPosition, 0.1f);
 
         if (num == 0)
         {
@@ -70,11 +69,12 @@ public class ButtonSelect : MonoBehaviour
         _beforeIndex = _index;
 
         //条件分岐の判定順の都合上、以下のように書いている
-        if (index == 2 && _beforeIndex == 0)
+
+        if (index == _select.Length - 1 && _beforeIndex == 0)
         {
             UIMove(0);
         }
-        else if (index == 0 && _beforeIndex == 2)
+        else if (index == 0 && _beforeIndex == _select.Length - 1)
         {
             UIMove(1);
         }
