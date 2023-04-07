@@ -5,68 +5,37 @@ using UnityEngine.UI;
 
 public class WeaponSlot : MonoBehaviour, IPointerClickHandler
 {
-    [Tooltip("このスロットに装備があるか")]
+    [SerializeField] private int _index = 0;
+    [Tooltip("このスロットに装備があるか(trueなら装備している)")]
     [SerializeField] private bool _isEquip = false;
-    [Header("各Event")]
-    [SerializeField] private UnityEvent _onClick = default;
     [SerializeField] private UnityEvent _onEquip = default;
-    [SerializeField] private UnityEvent _onChange = default;
+    [Tooltip("武器パラメータ(仮)")]
+    [Multiline(6)]
+    [SerializeField] private string _parameter = "";
 
-    private Color _selectable = Color.white;
-    private Color _unSelectable = Color.gray;
-    private Button[] _equipButtons = new Button[2];
+    private Color _color = Color.cyan;
 
-    private void Awake()
-    {
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        for (int i = 0; i < _equipButtons.Length; i++)
-        {
-            _equipButtons[i] = 
-                gameObject.transform.GetChild(0).
-                gameObject.transform.GetChild(i).GetComponent<Button>();
-        }
-    }
+    public string Parameter { get => _parameter; protected set => _parameter = value; }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        //Panelにパラメータ反映
         Click();
     }
 
     public void Click()
     {
-        _onClick?.Invoke();
+        _onEquip?.Invoke();
+        //if (_isEquip)
+        //{
+        //    _onEquip?.Invoke();
+        //}
         SetButtons();
-
-        if (_isEquip)
-        {
-            //していなかったら、武器を装備する
-            _onEquip?.Invoke();
-
-            _equipButtons[1].interactable = false;
-            _equipButtons[1].GetComponent<Image>().color = _unSelectable;
-
-            _equipButtons[0].interactable = true;
-            _equipButtons[0].GetComponent<Image>().color = _selectable;
-        }
-        else
-        {
-            //装備していたら、武器の変更が可能
-            _onChange?.Invoke();
-
-            _equipButtons[0].interactable = false;
-            _equipButtons[0].GetComponent<Image>().color = _unSelectable;
-
-            _equipButtons[1].interactable = true;
-            _equipButtons[1].GetComponent<Image>().color = _selectable;
-        }
     }
 
     private void SetButtons()
     {
-        gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        for (int i = 0; i < _equipButtons.Length; i++)
-        {
-            _equipButtons[i].gameObject.SetActive(true);
-        }
+        //パラメータを取得、反映させる
+        gameObject.GetComponent<Image>().color = _color;
     }
 }

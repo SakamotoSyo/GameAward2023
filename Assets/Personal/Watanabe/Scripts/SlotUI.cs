@@ -4,6 +4,7 @@ using UnityEngine.UI;
 /// <summary> 戦闘準備の武器スロットで使う </summary>
 public class SlotUI : MonoBehaviour
 {
+    [SerializeField] private Text _param = default;
     [SerializeField] private Image[] _weapons = new Image[4];
     [Header("↓確認用")]
     [SerializeField] private int _index = 0;
@@ -11,12 +12,6 @@ public class SlotUI : MonoBehaviour
 
     private Image _select = default;
     public int Index { get => _index; set => _index = value; }
-
-    private void Start()
-    {
-        _select = _weapons[0];
-        ViewUI();
-    }
 
     private void Update()
     {
@@ -65,6 +60,19 @@ public class SlotUI : MonoBehaviour
         if (_select.TryGetComponent(out WeaponSlot slot))
         {
             slot.Click();
+        }
+    }
+
+    public void Unlock(int index)
+    {
+        foreach (var weapon in _weapons)
+        {
+            weapon.GetComponent<Image>().color = Color.white;
+        }
+
+        if (_weapons[index].TryGetComponent(out WeaponSlot slot))
+        {
+            _param.text = slot.Parameter;
         }
     }
 

@@ -307,7 +307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62608eb3cf5ddd348a5cd55b0faac426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _select: {fileID: 4169106390388333554}
   _index: 1
 --- !u!1 &4169106389855183881
 GameObject:
@@ -511,6 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518e7bcdd4cd04443aab3fd0bbb6810c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isHome: 1
   _select:
   - {fileID: 4169106390496598892}
   - {fileID: 4169106389553155644}
@@ -657,7 +657,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: RankScene
+          m_StringArgument: RankSelect
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &4169106390496598895
@@ -672,7 +672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62608eb3cf5ddd348a5cd55b0faac426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _select: {fileID: 4169106390388333554}
   _index: 0
 --- !u!1 &4169106390583739381
 GameObject:
@@ -973,5 +972,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62608eb3cf5ddd348a5cd55b0faac426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _select: {fileID: 4169106390388333554}
   _index: 2
