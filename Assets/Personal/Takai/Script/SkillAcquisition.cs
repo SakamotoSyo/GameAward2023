@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class SkillAcquisition : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private List<ISkillBase> _skills;
+
+    public void OnSkillRead()
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnSkillGet()
     {
         
     }
