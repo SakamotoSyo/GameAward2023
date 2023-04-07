@@ -455,9 +455,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
+      propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
       propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 612131804}
+      objectReference: {fileID: 612131805}
     - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
       propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -471,8 +475,12 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
+      propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
       propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: FadeOut
+      value: Load
       objectReference: {fileID: 0}
     - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
       propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -480,10 +488,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
       propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Fade, Assembly-CSharp
+      value: SceneLoader, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
       propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Fade, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
+      propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: Fade, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
@@ -514,6 +526,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed281147e77243846947516965bc36f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &612131805 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3427665085080179671, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
+  m_PrefabInstance: {fileID: 612131802}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5179bbbc98039f47801cf0bd82e190d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &612291501
@@ -681,6 +704,7 @@ GameObject:
   - component: {fileID: 894716250}
   - component: {fileID: 894716249}
   - component: {fileID: 894716252}
+  - component: {fileID: 894716253}
   m_Layer: 5
   m_Name: Button (Legacy) (3)
   m_TagString: Untagged
@@ -765,6 +789,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 894716253}
+        m_TargetAssemblyTypeName: ChallengeRank, Assembly-CSharp
+        m_MethodName: SetRank
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &894716250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,6 +852,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _index: 3
+--- !u!114 &894716253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894716247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d0c599bc411884cb6973825bc925df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _challenge: 4
 --- !u!1 &916258906
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,6 +878,7 @@ GameObject:
   - component: {fileID: 916258909}
   - component: {fileID: 916258908}
   - component: {fileID: 916258911}
+  - component: {fileID: 916258912}
   m_Layer: 5
   m_Name: Button (Legacy) (4)
   m_TagString: Untagged
@@ -913,6 +963,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 916258912}
+        m_TargetAssemblyTypeName: ChallengeRank, Assembly-CSharp
+        m_MethodName: SetRank
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &916258909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -964,6 +1026,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _index: 4
+--- !u!114 &916258912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916258906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d0c599bc411884cb6973825bc925df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _challenge: 5
 --- !u!1 &987815337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,6 +1236,7 @@ GameObject:
   - component: {fileID: 1312932331}
   - component: {fileID: 1312932330}
   - component: {fileID: 1312932333}
+  - component: {fileID: 1312932334}
   m_Layer: 5
   m_Name: Button (Legacy) (2)
   m_TagString: Untagged
@@ -1245,6 +1321,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1312932334}
+        m_TargetAssemblyTypeName: ChallengeRank, Assembly-CSharp
+        m_MethodName: SetRank
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1312932331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,6 +1384,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _index: 2
+--- !u!114 &1312932334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312932328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d0c599bc411884cb6973825bc925df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _challenge: 3
 --- !u!1 &1382013034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,6 +1624,7 @@ GameObject:
   - component: {fileID: 1702470119}
   - component: {fileID: 1702470118}
   - component: {fileID: 1702470121}
+  - component: {fileID: 1702470122}
   m_Layer: 5
   m_Name: Button (Legacy) (1)
   m_TagString: Untagged
@@ -1607,6 +1709,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1702470122}
+        m_TargetAssemblyTypeName: ChallengeRank, Assembly-CSharp
+        m_MethodName: SetRank
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1702470119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1658,6 +1772,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _index: 1
+--- !u!114 &1702470122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702470116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d0c599bc411884cb6973825bc925df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _challenge: 2
 --- !u!1 &1865299274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1671,6 +1798,7 @@ GameObject:
   - component: {fileID: 1865299277}
   - component: {fileID: 1865299276}
   - component: {fileID: 1865299279}
+  - component: {fileID: 1865299280}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -1755,6 +1883,18 @@ MonoBehaviour:
           m_StringArgument: BattleSelectUI
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1865299280}
+        m_TargetAssemblyTypeName: ChallengeRank, Assembly-CSharp
+        m_MethodName: SetRank
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1865299277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1806,6 +1946,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _index: 0
+--- !u!114 &1865299280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865299274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d0c599bc411884cb6973825bc925df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _challenge: 1
 --- !u!1 &1928347676
 GameObject:
   m_ObjectHideFlags: 0
