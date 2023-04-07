@@ -19,8 +19,8 @@ public class ContinuousAttack : MonoBehaviour
     [SerializeField, Header("攻撃間隔")]
     private float _attackInterval = 0.3f;
     private float _defaultAttackInterval = 0f;
-    [SerializeField, Header("攻撃間隔減少倍率"), Range(0f, 1f)]
-    private float _attackSpeedIncreaseMultiplier = 0.05f;
+    [SerializeField, Header("攻撃間隔減少値"), Range(0f, 1f)]
+    private float _attackIntervalReductionValue = 0.05f;
     [SerializeField, Header("攻撃回数")]
     private float _numberOfAttacks = 10f;
     private int _count = 0;
@@ -83,7 +83,7 @@ public class ContinuousAttack : MonoBehaviour
 
         if (_count < _numberOfAttacks)
         {
-            _attackInterval = Mathf.Clamp(_attackInterval - _attackSpeedIncreaseMultiplier, 0.1f, _attackInterval);
+            _attackInterval = Mathf.Clamp(_attackInterval - _attackIntervalReductionValue, 0.1f, _attackInterval);
             SlashAttack();
         }
     }
