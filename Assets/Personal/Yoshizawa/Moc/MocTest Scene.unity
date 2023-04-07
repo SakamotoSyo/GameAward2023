@@ -972,12 +972,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4571d8e92c6967d49989f8d6ebe7532a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _approachTime: 1
+  _approachTime: 0.3
   _leaveTime: 1
   _attackStartPositionX: 3
-  _attackInterval: 0.3
-  _numberOfAttacks: 10
+  _startDelayTime: 0.7
+  _attackInterval: 0.5
+  _attackIntervalReductionValue: 0.03
+  _numberOfAttacks: 20
   _lastAttackChargeTime: 1
+  _lastAttackDegree: 20
+  _lastAttackScale: 2
   _slashParticle:
   - {fileID: 5443171176820044936, guid: 0fc8a9b105120a547981b35269bd3994, type: 3}
   - {fileID: 187088321675753859, guid: ce6e80c2c825f5a41ba70bc6752af556, type: 3}
