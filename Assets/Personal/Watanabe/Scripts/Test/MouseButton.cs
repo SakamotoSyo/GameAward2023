@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MouseButton : MonoBehaviour, IPointerEnterHandler
 {
@@ -9,30 +8,26 @@ public class MouseButton : MonoBehaviour, IPointerEnterHandler
 
     /// <summary> HomeSceneの場合はこっち </summary>
     private ButtonSelect _select = default;
-    /// <summary> 戦闘準備シーンの場合はこっち </summary>
-    private SlotUI _slot = default;
+    /// <summary> RankSelectSceneの場合はこっち </summary>
+    private RankSelect _rank = default;
+
+    public int Index { get => _index; protected set => _index = value; }
 
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "HomeScene")
         {
-            _select = GameObject.Find("ButtonSelect").GetComponent<ButtonSelect>();
+            _select = gameObject.transform.GetComponentInParent<ButtonSelect>();
         }
-        else if (SceneManager.GetActiveScene().name == "BattlePreparation")
+        else if (SceneManager.GetActiveScene().name == "RankSelect")
         {
-            _slot = GameObject.Find("WeaponList").GetComponent<SlotUI>();
+            _rank = gameObject.transform.GetComponentInParent<RankSelect>();
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (gameObject.TryGetComponent(out Button button))
-        {
-            _select.UIMoveByMouse(_index);
-        }
-        else if (gameObject.TryGetComponent(out Image image))
-        {
-            _slot.UIMoveByMouse(_index);
-        }
+        _select?.UIMoveByMouse(_index);
+        _rank?.UIMoveByMouse(_index);
     }
 }
