@@ -5,17 +5,18 @@ using UnityEngine.UI;
 
 public class WeaponSlot : MonoBehaviour, IPointerClickHandler
 {
+    [Tooltip("このスロットに装備があるか")]
+    [SerializeField] private bool _isEquip = false;
+    [Header("各Event")]
     [SerializeField] private UnityEvent _onClick = default;
     [SerializeField] private UnityEvent _onEquip = default;
     [SerializeField] private UnityEvent _onChange = default;
-    [Tooltip("このスロットに装備があるか")]
-    [SerializeField] private bool _isEquip = false;
 
     private Color _selectable = Color.white;
     private Color _unSelectable = Color.gray;
     private Button[] _equipButtons = new Button[2];
 
-    private void Start()
+    private void Awake()
     {
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
         for (int i = 0; i < _equipButtons.Length; i++)
@@ -27,6 +28,11 @@ public class WeaponSlot : MonoBehaviour, IPointerClickHandler
     }
 
     public void OnPointerClick(PointerEventData eventData)
+    {
+        Click();
+    }
+
+    public void Click()
     {
         _onClick?.Invoke();
         SetButtons();
