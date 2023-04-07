@@ -14,13 +14,22 @@ public class ContinuousAttack : MonoBehaviour
     private float _defaultPositionX = 0f;
     [SerializeField, Header("敵に攻撃を開始するX座標")]
     private float _attackStartPositionX = 1f;
+    [SerializeField, Header("攻撃開始までの時間")]
+    private float _startDelayTime = 1f;
     [SerializeField, Header("攻撃間隔")]
     private float _attackInterval = 0.3f;
+    private float _defaultAttackInterval = 0f;
+    [SerializeField, Header("攻撃間隔減少倍率"), Range(0f, 1f)]
+    private float _attackSpeedIncreaseMultiplier = 0.05f;
     [SerializeField, Header("攻撃回数")]
     private float _numberOfAttacks = 10f;
     private int _count = 0;
     [SerializeField, Header("最後の攻撃を行う時にかかる溜め時間")]
     private float _lastAttackChargeTime = 1f;
+    [SerializeField, Header("最後に発生させる斬撃の角度")]
+    private float _lastAttackDegree = 20f;
+    [SerializeField, Header("最後に発生させる斬撃の拡大倍率")]
+    private float _lastAttackScale = 2f;
     [SerializeField]
     private GameObject[] _slashParticle = null;
     private int _random = 0;
@@ -29,25 +38,30 @@ public class ContinuousAttack : MonoBehaviour
     private void Start()
     {
         _defaultPositionX = transform.position.x;
-        //ContinuousAttackSkill(transform);
+        _defaultAttackInterval = _attackInterval;
     }
 
     public void ContinuousAttackSkill(Transform transform)
     {
         _sequence = DOTween.Sequence();
         _sequence.Append(transform.DOMoveX(_attackStartPositionX, _approachTime));
-        // ↓Add
+        _sequence.AppendInterval(_startDelayTime);
         SlashAttack();
         _sequence.AppendInterval(_lastAttackChargeTime);
         _sequence.AppendCallback(() =>
         {
-            GameObject lastAttackParticle = Instantiate(_slashParticle[0], transform.position, Quaternion.identity);
-            lastAttackParticle.transform.localScale = Vector3.one * 1.4f;
+            GameObject lastAttackParticle1 = Instantiate(_slashParticle[0],
+                transform.position, Quaternion.AngleAxis(_lastAttackDegree, Vector2.right));
+            lastAttackParticle1.transform.localScale = Vector3.one * 2f;
+            GameObject lastAttackParticle2 = Instantiate(_slashParticle[2],
+                transform.position, Quaternion.AngleAxis(-_lastAttackDegree, Vector2.right));
+            lastAttackParticle2.transform.localScale = Vector3.one * 2f;
         });
-        // ↑Add
+        _sequence.AppendInterval(_slashParticle[0].GetComponent<ParticleSystem>().main.startLifetime.constant + 0.5f);
         _sequence.Append(transform.DOMoveX(_defaultPositionX, _leaveTime)).OnComplete(() =>
         {
             _count = 0;
+            _attackInterval = _defaultAttackInterval;
             _sequence.Kill();
         });
     }
@@ -69,41 +83,8 @@ public class ContinuousAttack : MonoBehaviour
 
         if (_count < _numberOfAttacks)
         {
+            _attackInterval = Mathf.Clamp(_attackInterval - _attackSpeedIncreaseMultiplier, 0.1f, _attackInterval);
             SlashAttack();
         }
     }
-
-    //public void ContinuousAttackSkill(Transform transform)
-    //{
-    //    _sequence.Append(transform.DOMoveX(_attackPositionX, _approachTime));
-    //    _sequence.AppendCallback(() =>
-    //    {
-    //        StartCoroutine(SlashAttack());
-    //    });
-    //    _sequence.Append(transform.DOMoveX(_defaultPositionX, _leaveTime)).OnComplete(() =>
-    //    {
-    //        _count = 0;
-    //        _isReturnPosition = false;
-    //    });
-    //}
-
-    //private IEnumerator SlashAttack()
-    //{
-    //    _count++;
-    //    _random = Random.Range(0, _slashParticle.Length);
-    //    _randomRotationDegree = Random.Range(10f, 60f);
-    //    GameObject go = _slashParticle[_random];
-    //    Instantiate(go, transform.position, Quaternion.AngleAxis(_randomRotationDegree, Vector2.right));
-    //    bool isComponentAssigned = go.TryGetComponent(out ParticleSystem particle);
-    //    yield return new WaitForSeconds(isComponentAssigned ? particle.main.startLifetime.constant : 0.3f);
-
-    //    if (_count < _numberOfAttacks)
-    //    {
-    //        StartCoroutine(SlashAttack());
-    //    }
-
-    //    yield return new WaitForSeconds(1f);
-    //    GameObject lastAttackParticle = Instantiate(_slashParticle[0], transform.position, Quaternion.identity);
-    //    lastAttackParticle.transform.localScale = Vector3.one * 1.4f;
-    //}
 }
