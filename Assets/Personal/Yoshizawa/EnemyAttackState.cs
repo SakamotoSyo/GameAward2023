@@ -4,7 +4,7 @@ using UnityEngine;
 using State = StateMachine<StateController>.State;
 
 // 日本語対応
-public class EnemyStateAttack : State
+public class EnemyAttackState : State
 {
     protected override void OnEnter(State currentState)
     {

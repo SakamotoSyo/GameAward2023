@@ -18,17 +18,19 @@ public class StateController : MonoBehaviour
         Player2Enemy,
         Enemy2Enemy,
         Enemy2Player,
+        Any2Start
     }
 
     private void Start()
     {
         _stateMachine = new(this);
         _stateMachine.Start<BattleStartState>();
-        _stateMachine.AddTransition<BattleStartState, PlayerStateAttack>((int)TransitionCondition.Start2Player);
-        _stateMachine.AddTransition<BattleStartState, EnemyStateAttack>((int)TransitionCondition.Start2Enemy);
-        _stateMachine.AddTransition<PlayerStateAttack, EnemyStateAttack>((int)TransitionCondition.Player2Enemy);
-        _stateMachine.AddTransition<EnemyStateAttack, EnemyStateAttack>((int)TransitionCondition.Enemy2Enemy);
-        _stateMachine.AddTransition<EnemyStateAttack, PlayerStateAttack>((int)TransitionCondition.Enemy2Player);
+        _stateMachine.AddTransition<BattleStartState, PlayerAttackState>((int)TransitionCondition.Start2Player);
+        _stateMachine.AddTransition<BattleStartState, EnemyAttackState>((int)TransitionCondition.Start2Enemy);
+        _stateMachine.AddTransition<PlayerAttackState, EnemyAttackState>((int)TransitionCondition.Player2Enemy);
+        _stateMachine.AddTransition<EnemyAttackState, EnemyAttackState>((int)TransitionCondition.Enemy2Enemy);
+        _stateMachine.AddTransition<EnemyAttackState, PlayerAttackState>((int)TransitionCondition.Enemy2Player);
+        _stateMachine.AddAnyTranstion<BattleStartState>((int)TransitionCondition.Any2Start);
     }
 
     private void Update()
