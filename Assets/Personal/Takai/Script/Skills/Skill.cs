@@ -18,11 +18,17 @@ public class Skill : MonoBehaviour, ISkillBase
         SkillName = "Skill1";
         RequiredSP = 3;
         Damage = 5;
+        Type = WeponType.LargeSword;
     }
 
-    public void GetSkill()
+    public void SendSkill()
     {
-        
+        SkillAcquisition skillAcquisition = new SkillAcquisition();
+
+        Skill skill = new Skill();
+        skill.SetUp();
+
+        skillAcquisition.AddSkill(skill);
     }
 
     public void UseSkill()

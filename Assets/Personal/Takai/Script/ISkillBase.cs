@@ -7,7 +7,7 @@ public interface ISkillBase
     WeponType Type { get; set; }
 
     void SetUp();
-    void GetSkill();
+    void SendSkill();
     void UseSkill();
     void SkillEffect();
 }
