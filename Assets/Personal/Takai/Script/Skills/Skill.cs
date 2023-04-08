@@ -2,16 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill : MonoBehaviour
+public class Skill : MonoBehaviour, ISkillBase
 {
-    // Start is called before the first frame update
-    void Start()
+    private ISkillBase _skillBaseImplementation;
+    public int SkillId { get; set; }
+    public string SkillName { get; set; }
+    public int RequiredSP { get; set; }
+    public int Damage { get; set; }
+    
+    public WeponType Type { get; set; }
+    
+    public void SetUp()
+    {
+        SkillId = 1;
+        SkillName = "Skill1";
+        RequiredSP = 3;
+        Damage = 5;
+    }
+
+    public void GetSkill()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UseSkill()
+    {
+    }
+
+    public void SkillEffect()
     {
         
     }
