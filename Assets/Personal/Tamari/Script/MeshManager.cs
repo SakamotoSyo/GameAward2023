@@ -24,6 +24,8 @@ public class MeshManager : MonoBehaviour
 
     Vector3 _closeMesh;
 
+    [SerializeField, Tooltip("‹à‘®‚ð’@‚­‰¹")]
+    private string _blacksmithSe;
     void Start()
     {
         _meshFilter = gameObject.GetComponent<MeshFilter>();
@@ -88,6 +90,7 @@ public class MeshManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            SoundManager.Instance.CriAtomPlay(CueSheet.CueSheet_0, _blacksmithSe);
             Vector3 mousePos = Input.mousePosition;
             var worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
