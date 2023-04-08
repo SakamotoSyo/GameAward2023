@@ -37,26 +37,28 @@ public class RankScene : MonoBehaviour
 
         for (int i = 0; i < _battles.Length; i++)
         {
+            var battle = _battles[i];
+
             if (i != num)
             {
                 if (_index < num)
                 {
-                    _battles[i].transform.DOLocalMoveX(
-                        _battles[i].transform.localPosition.x + (-600f * n), _playSpeed);
+                    battle.transform.DOLocalMoveX(
+                        battle.transform.localPosition.x + (-600f * n), _playSpeed);
                 }
                 else if (_index > num)
                 {
-                    _battles[i].transform.DOLocalMoveX(
-                        _battles[i].transform.localPosition.x + (600f * n), _playSpeed);
+                    battle.transform.DOLocalMoveX(
+                        battle.transform.localPosition.x + (600f * n), _playSpeed);
                 }
 
-                _battles[i].GetComponent<Image>().color = Color.white;
+                battle.GetComponent<Image>().color = Color.white;
             }
             else
             {
-                _battles[i].transform.DOLocalMoveX(-500f, _playSpeed);
+                battle.transform.DOLocalMoveX(-500f, _playSpeed);
 
-                _battles[i].GetComponent<Image>().color = _selecting;
+                battle.GetComponent<Image>().color = _selecting;
             }
         }
         _index = num;
