@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using State = StateMachine<BattleStateController>.State;
 
-public class PlayerAttackState : State
+namespace SakamotoTest
 {
-    protected override void OnEnter(State currentState)
+    public class PlayerAttackState : State
     {
-        Owner.ComanndObj.SetActive(true);
+        protected override void OnEnter(State currentState)
+        {
+            Owner.ComanndObj.SetActive(true);
+        }
+
+        protected override void OnExit(State nextState)
+        {
+            Owner.ComanndObj.SetActive(false);
+        }
     }
 
-    protected override void OnExit(State nextState)
-    {
-        Owner.ComanndObj.SetActive(false);
-    }
 }
