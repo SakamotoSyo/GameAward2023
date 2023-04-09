@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using State = StateMachine<BattleStateController>.State;
 
-public class EnemyAttackState : MonoBehaviour
+
+namespace SakamotoTest
 {
-    // Start is called before the first frame update
-    void Start()
+    public class EnemyAttackState : State
     {
-        
-    }
+        protected override void OnEnter(State currentState)
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
     }
 }
