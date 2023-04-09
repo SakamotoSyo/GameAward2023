@@ -6,18 +6,25 @@ using State = StateMachine<StateController>.State;
 // 日本語対応
 public class BattleStartState : State
 {
+    public bool IsBattleStart { get; private set; } = false;
+
     protected override void OnEnter(State currentState)
     {
-        base.OnEnter(currentState);
+        IsBattleStart = true;
+        Debug.Log($"{currentState}に入りました。");
     }
 
     protected override void OnUpdate()
     {
-        base.OnUpdate();
+        if (IsBattleStart)
+        {
+            Owner.StateMachine.Dispatch((int)StateController.TransitionCondition.Player2Enemy);
+        }
     }
 
     protected override void OnExit(State nextState)
     {
-        base.OnExit(nextState);
+        IsBattleStart = false;
+        Debug.Log($"{nextState}に遷移するまで、3 2 1...");
     }
 }

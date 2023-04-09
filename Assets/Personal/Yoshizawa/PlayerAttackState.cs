@@ -8,7 +8,7 @@ public class PlayerAttackState : State
 {
     protected override void OnEnter(State currentState)
     {
-        
+        Debug.Log($"{currentState}に入りました。");
     }
 
     protected override void OnUpdate()
@@ -18,6 +18,6 @@ public class PlayerAttackState : State
 
     protected override void OnExit(State nextState)
     {
-        
+        Debug.Log($"{nextState}に遷移するまで、3 2 1...");
     }
 }

@@ -1,21 +1,19 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-//‰ü‘P“_
+//æ”¹å–„ç‚¹
 public class StateMachine<TOwner>
 {
-
     public abstract class State 
     {
-        /// <summary>ƒXƒe[ƒg‚ğŠÇ—‚µ‚Ä‚¢‚éƒXƒe[ƒgƒ}ƒVƒ“</summary>
+        /// <summary>ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ç®¡ç†ã—ã¦ã„ã‚‹ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³</summary>
         protected StateMachine<TOwner> StateMachine => stateMachine;
         internal StateMachine<TOwner> stateMachine;
-        /// <summary>‘JˆÚ‚Ìˆê——</summary>
+        /// <summary>é·ç§»ã®ä¸€è¦§</summary>
         internal Dictionary<int, State> transitions = new Dictionary<int, State>();
 
-        /// <summary>‚±‚ÌƒXƒe[ƒg‚ÌƒI[ƒi[</summary>
+        /// <summary>ã“ã®ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚ªãƒ¼ãƒŠãƒ¼</summary>
         protected TOwner Owner => stateMachine.Owner;
 
         internal void Enter(State currentState) 
@@ -38,16 +36,16 @@ public class StateMachine<TOwner>
         protected virtual void OnExit(State nextState){ }
     }
 
-    /// <summary>Œ»İ‚ÌƒXƒe[ƒg</summary>
+    /// <summary>ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆ</summary>
     public State CurrentState { get; private set; }
 
-    //ƒXƒe[ƒgƒŠƒXƒg
+    //ã‚¹ãƒ†ãƒ¼ãƒˆãƒªã‚¹ãƒˆ
     private LinkedList<State> states = new LinkedList<State>();
 
-    /// <summary>“K“–‚ÈState‚É‘JˆÚ‚·‚é‚½‚ß‚Ì‚©‚ç‚ÌƒNƒ‰ƒX</summary>
+    /// <summary>é©å½“ãªStateã«é·ç§»ã™ã‚‹ãŸã‚ã®ã‹ã‚‰ã®ã‚¯ãƒ©ã‚¹</summary>
     public sealed class AnyState : State { }
 
-    /// <summary>‚±‚ÌƒXƒe[ƒgƒ}ƒVƒ“‚ÌƒI[ƒi[</summary>
+    /// <summary>ã“ã®ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ã®ã‚ªãƒ¼ãƒŠãƒ¼</summary>
     public TOwner Owner { get; }
 
     public StateMachine(TOwner owner) 
@@ -56,7 +54,7 @@ public class StateMachine<TOwner>
     }
 
     /// <summary>
-    /// ƒXƒe[ƒg‚ğ’Ç‰Á‚·‚é
+    /// ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¿½åŠ ã™ã‚‹
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -69,7 +67,7 @@ public class StateMachine<TOwner>
     }
 
     /// <summary>
-    /// w’è‚µ‚½State‚ğæ“¾A‚È‚¯‚ê‚Î¶¬
+    /// æŒ‡å®šã—ãŸStateã‚’å–å¾—ã€ãªã‘ã‚Œã°ç”Ÿæˆ
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -87,11 +85,11 @@ public class StateMachine<TOwner>
     }
 
     /// <summary>
-    /// ‘JˆÚ‚ğ’è‹`‚·‚é‚½‚ß‚Ìƒƒ\ƒbƒh
+    /// é·ç§»ã‚’å®šç¾©ã™ã‚‹ãŸã‚ã®ãƒ¡ã‚½ãƒƒãƒ‰
     /// </summary>
-    /// <typeparam name="Tdo">‘JˆÚŒ³</typeparam>
-    /// <typeparam name="Tto">‘JˆÚæ</typeparam>
-    /// <param name="eventID">ƒCƒxƒ“ƒgID</param>
+    /// <typeparam name="Tdo">é·ç§»å…ƒ</typeparam>
+    /// <typeparam name="Tto">é·ç§»å…ˆ</typeparam>
+    /// <param name="eventID">ã‚¤ãƒ™ãƒ³ãƒˆID</param>
     public void AddTransition<TFrom, Tto>(int eventId)
         where TFrom : State, new()
         where Tto : State, new()
@@ -99,7 +97,7 @@ public class StateMachine<TOwner>
         var from = GetOrAddState<TFrom>();
         if (from.transitions.ContainsKey(eventId)) 
         {
-            throw new System.ArgumentException($"ƒXƒe[ƒg{nameof(TFrom)}‚É‘Î‚µ‚ÄƒCƒxƒ“ƒgID{eventId.ToString()}‚Ì‘JˆÚ‚Í’è‹`Ï‚İ‚Å‚·");
+            throw new System.ArgumentException($"ã‚¹ãƒ†ãƒ¼ãƒˆ{nameof(TFrom)}ã«å¯¾ã—ã¦ã‚¤ãƒ™ãƒ³ãƒˆID{eventId}ã®é·ç§»ã¯å®šç¾©æ¸ˆã¿ã§ã™");
         }
 
         var to = GetOrAddState<Tto>();
@@ -107,7 +105,7 @@ public class StateMachine<TOwner>
     }
 
     /// <summary>
-    /// ‚Ç‚ÌƒXƒe[ƒg‚©‚ç‚Å‚à“Á’è‚ÌƒXƒe[ƒg‚É‘JˆÚ‚Å‚«‚éƒCƒxƒ“ƒg‚ğ’Ç‰Á‚·‚é
+    /// ã©ã®ã‚¹ãƒ†ãƒ¼ãƒˆã‹ã‚‰ã§ã‚‚ç‰¹å®šã®ã‚¹ãƒ†ãƒ¼ãƒˆã«é·ç§»ã§ãã‚‹ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¿½åŠ ã™ã‚‹
     /// </summary>
     public void AddAnyTranstion<Tto>(int eventId) where Tto : State, new() 
     {
@@ -115,7 +113,7 @@ public class StateMachine<TOwner>
     }
 
     /// <summary>
-    /// ƒXƒe[ƒgƒ}ƒVƒ“‚ÌÀs‚ğŠJn‚·‚éiƒWƒFƒlƒŠƒbƒN”Åj
+    /// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ã®å®Ÿè¡Œã‚’é–‹å§‹ã™ã‚‹ï¼ˆã‚¸ã‚§ãƒãƒªãƒƒã‚¯ç‰ˆï¼‰
     /// </summary>
     public void Start<TFirst>() where TFirst : State, new()
     {
@@ -134,9 +132,9 @@ public class StateMachine<TOwner>
     }
 
     /// <summary>
-    /// ‘JˆÚƒCƒxƒ“ƒg‚ğ”­s‚·‚é
+    /// é·ç§»ã‚¤ãƒ™ãƒ³ãƒˆã‚’ç™ºè¡Œã™ã‚‹
     /// </summary>
-    /// <param name="eventId">ƒCƒxƒ“ƒgID</param>
+    /// <param name="eventId">ã‚¤ãƒ™ãƒ³ãƒˆID</param>
     public void Dispatch(int eventId) 
     {
         State to;
@@ -153,9 +151,9 @@ public class StateMachine<TOwner>
     }
 
     /// <summary>
-    /// ƒXƒe[ƒg‚ğ•ÏX‚·‚é
+    /// ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¤‰æ›´ã™ã‚‹
     /// </summary>
-    /// <param name="nextState">‘JˆÚæ‚ÌƒXƒe[ƒg</param>
+    /// <param name="nextState">é·ç§»å…ˆã®ã‚¹ãƒ†ãƒ¼ãƒˆ</param>
     public void Change(State nextState) 
     {
         CurrentState.Exit(nextState);
