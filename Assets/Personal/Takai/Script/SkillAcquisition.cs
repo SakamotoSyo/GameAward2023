@@ -1,11 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillAcquisition
+public class SkillAcquisition : MonoBehaviour
 {
-    private List<ISkillBase> _skills;
-
+    private List<ISkillBase> _skills = new List<ISkillBase>();
     public void AddSkill(ISkillBase skill)
     {
         if (_skills == null)
@@ -15,26 +15,30 @@ public class SkillAcquisition
 
         _skills.Add(skill);
     }
-    
-    public void OnSkillRead(int lv,WeponType type)
+
+    public void OnSkillRead(String name)
     {
+        Debug.Log(_skills.Count);
+        
+        WeaponType type = (WeaponType)Enum.Parse(typeof(WeaponType), name);
+        
         foreach (var s in _skills)
         {
-            if (s.Type != type) {return;}
-            
+            if (s.Type != type)
+            {
+                return;
+            }
+
             int sp = s.RequiredSP;
 
-            if (sp <= lv)
-            {
-                OnSkillGet(s);
-            }
+            OnSkillGet(s);
         }
     }
 
     void OnSkillGet(ISkillBase skill)
     {
-        IPlayerSkillData playerSkillData = new IPlayerSkillData();
-        
+        IPlayerSkillData playerSkillData = FindObjectOfType<IPlayerSkillData>();
+
         playerSkillData.AddSkill(skill);
     }
 }
