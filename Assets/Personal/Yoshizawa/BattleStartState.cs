@@ -6,7 +6,7 @@ using State = StateMachine<StateController>.State;
 // 日本語対応
 public class BattleStartState : State
 {
-    public bool IsBattleStart { get; private set; } = false;
+    public static bool IsBattleStart { get; private set; } = false;
 
     protected override void OnEnter(State currentState)
     {
@@ -18,7 +18,7 @@ public class BattleStartState : State
     {
         if (IsBattleStart)
         {
-            Owner.StateMachine.Dispatch((int)StateController.TransitionCondition.Player2Enemy);
+            
         }
     }
 
