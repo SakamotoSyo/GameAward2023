@@ -53,7 +53,6 @@ public class DamageTextController : MonoBehaviour
     }
     private void BigDamageAnimation()
     {
-        Debug.Log("aa");
         _damageText.DOCounter(0, _damage, 0.2f);
         transform.DOScale(new Vector3(0.015f, 0.015f, 0), 0.2f);
         DamageAnimation();
