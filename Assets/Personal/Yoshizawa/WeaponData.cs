@@ -9,12 +9,12 @@ public class WeaponData
     public float MaxDurable;
     public float CurrentDurable;
     public AttributeType Attribute;
-    public WeponType WeponType;
+    public WeaponType WeaponType;
     
 
     /// <summary>武器のパラメータを格納する構造体 | 属性は初期設定だと無属性</summary>
     //public WeaponData(float offensivePower, float weaponWeight,
-    //    float criticalRate, float durableValue, AttributeType attributeType = AttributeType.None, WeponType weponType = WeponType.GreatSword)
+    //    float criticalRate, float durableValue, AttributeType attributeType = AttributeType.None, WeaponType weponType = WeaponType.GreatSword)
     //{
     //    OffensivePower = offensivePower;
     //    WeaponWeight = weaponWeight;
@@ -22,7 +22,7 @@ public class WeaponData
     //    MaxDurable = durableValue;
     //    CurrentDurable = durableValue;
     //    Attribute = attributeType;
-    //    WeponType = weponType;
+    //    WeaponType = weponType;
     //}
 
     public void UpdategeParam(PlayerEquipWeapon equipWeaponData) 
@@ -33,7 +33,7 @@ public class WeaponData
         MaxDurable = equipWeaponData.MaxDurable.Value;
         CurrentDurable = equipWeaponData.CurrentDurable.Value;
         Attribute = equipWeaponData.Attribute;
-        WeponType = equipWeaponData.WeponType;
+        WeaponType = equipWeaponData.weaponType;
     }
     
     public enum AttributeType
