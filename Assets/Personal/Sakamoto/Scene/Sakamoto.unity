@@ -372,7 +372,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _commandObj: {fileID: 0}
   _generator: {fileID: 0}
-  _enemyStatus: {fileID: 0}
 --- !u!1001 &296370824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1134,6 +1133,7 @@ GameObject:
   - component: {fileID: 1517003280}
   - component: {fileID: 1517003279}
   - component: {fileID: 1517003281}
+  - component: {fileID: 1517003282}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -1218,6 +1218,18 @@ MonoBehaviour:
     m_FrequencyGain: 0
     m_Duration: 0
     m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &1517003282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517003278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d64de061d0e8743b9c99a7d0681dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1616439383
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,7 +1573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5894325663539147747, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5894325663539147775, guid: 75e13bf917144c2499c64c67701f2e6b, type: 3}
       propertyPath: _skillList.Array.size
@@ -2427,12 +2439,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damegeController: {fileID: 3563891869913398238, guid: 8bf5d86742431e3498aadf0af6f1fbf5, type: 3}
   _damagePos: {fileID: 1090746759724906897}
-  _renderer: {fileID: 0}
-  _animator: {fileID: 0}
+  _renderer: {fileID: 1090746760234958430}
+  _animator: {fileID: 1117128914}
   _enemyHealth:
-    _maxHealth: 5
+    _maxHealth: 5000000
   _enemyAttack:
     _attackPower: 10
+  _damageObjects: []
 --- !u!70 &1090746760234958428
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

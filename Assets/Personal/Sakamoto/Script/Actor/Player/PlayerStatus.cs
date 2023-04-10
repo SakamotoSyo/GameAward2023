@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-using VContainer.Unity;
 
-public class PlayerStatus : ActorStatusBase
+public class PlayerStatus
 {
     public List<ISkillBase> PlayerSkillList => _skillList;
     public WeaponData[] WeponDatas => _weaponDatas;
-    public WeaponData EquipWepon => _equipWeapon;
+    public PlayerEquipWeapon EquipWepon => _equipWeapon;
 
     [Tooltip("次のレベルまでの経験値")]
     private int _maxExperienceAmount;
     [Tooltip("現在の経験値")]
     private int _currentExperienceAmount;
     [Tooltip("装備している武器")]
-    private WeaponData _equipWeapon;
+    private PlayerEquipWeapon _equipWeapon = new();
     private int _level;
     private int _skillPoint;
     private WeaponData[] _weaponDatas = new WeaponData[4];
@@ -23,12 +22,30 @@ public class PlayerStatus : ActorStatusBase
 
     private PlayerStatus() 
     {
-        Init();
+        //試験的後で削除する
+        for (int i = 0; i < _weaponDatas.Length; i++) 
+        {
+            _weaponDatas[i] = new(); 
+            _weaponDatas[i].MaxDurable = 50;
+            _weaponDatas[i].CurrentDurable = 50;
+            _weaponDatas[i].OffensivePower = 50;
+        }
+        _equipWeapon.ChangeWeapon(_weaponDatas[0]);
     }
 
     public void ChangeWeponArray(WeaponData[] weaponDatas) 
     {
         _weaponDatas = weaponDatas;
+    }
+
+    /// <summary>
+    /// パラメータの更新をして武器を入れ替える
+    /// </summary>
+    /// <param name="weaponData"></param>
+    public void EwuipWeponChange(WeaponData weaponData) 
+    {
+        _weaponDatas[_equipWeapon.WeaponNum].UpdategeParam(_equipWeapon);
+        _equipWeapon.ChangeWeapon(weaponData);
     }
 
     /// <summary>
