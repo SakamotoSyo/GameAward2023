@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill : MonoBehaviour, ISkillBase
+public class Skill :  ISkillBase
 {
     private ISkillBase _skillBaseImplementation;
     public int SkillId { get; set; }
@@ -10,15 +10,15 @@ public class Skill : MonoBehaviour, ISkillBase
     public int RequiredSP { get; set; }
     public int Damage { get; set; }
     
-    public WeponType Type { get; set; }
+    public WeaponType Type { get; set; }
     
     public void SetUp()
     {
         SkillId = 1;
         SkillName = "Skill1";
-        RequiredSP = 3;
+        RequiredSP = 0;
         Damage = 5;
-        Type = WeponType.LargeSword;
+        Type = WeaponType.LargeSword;
     }
 
     public void SendSkill()
@@ -33,6 +33,7 @@ public class Skill : MonoBehaviour, ISkillBase
 
     public void UseSkill()
     {
+        
     }
 
     public void SkillEffect()
