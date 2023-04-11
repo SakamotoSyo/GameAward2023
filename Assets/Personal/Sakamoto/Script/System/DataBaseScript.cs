@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 public class DataBaseScript : MonoBehaviour
 {
-    private static List<SkillBaseClass> _skillBaseClass;
+    public static List<EnhanceData> EnhanceData => _enhanceData;
+
     [Header("レベルアップデータ")]
     [SerializeField] private TextAsset _levelUpTable;
+    [SerializeField] private TextAsset _descriptionData;
     private static Dictionary<int, int> _statusData = new Dictionary<int, int>();
+    private static List<EnhanceData> _enhanceData = new();
 
     private void Awake()
     {
-        LoadingLevelData();
+        //LoadingLevelData();
+        SetDescription();
     }
 
     /// <summary>
@@ -40,6 +45,26 @@ public class DataBaseScript : MonoBehaviour
 
             int level = int.Parse(parts[0]);
             _statusData.Add(level, table);
+        }
+    }
+
+    private void SetDescription() 
+    {
+        StringReader sr = new StringReader(_descriptionData.text);
+        //最初の一行目はスキップ
+        sr.ReadLine();
+
+        while (true)
+        {
+            //一行ずつ読み込む
+            string line = sr.ReadLine();
+
+            if (string.IsNullOrEmpty(line))
+            {
+                break;
+            }
+
+            _enhanceData.Add(new EnhanceData(0, line));
         }
     }
 
