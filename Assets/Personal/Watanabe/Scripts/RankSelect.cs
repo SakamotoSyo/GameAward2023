@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RankSelect : MonoBehaviour
@@ -20,12 +19,36 @@ public class RankSelect : MonoBehaviour
     private int _startIndex = 0;
     private Selectable _selectable = default;
 
+    /// <summary> S...16, A...8, B...4, C...2, D...1 </summary>
+    private static int _clearRank = 0;
+
+    public static int ClearRank { get => _clearRank; set => _clearRank = value; }
+
+    public static int RankS = 16;
+    public static int RankA = 8;
+    public static int RankB = 4;
+    public static int RankC = 2;
+    public static int RankD = 1;
+
     private void Start()
     {
+        _clearRank = 1;
+
         bool isSetting = false;
+        int[] ranks = new int[5] { RankS, RankA, RankB, RankC, RankD };
 
         for (int i = 0; i < _state.Length; i++)
         {
+            //現在の進行状況を反映
+            if ((_clearRank & ranks[i]) == 1)
+            {
+                _state[i] = ClearState.Cleared;
+            }
+            else
+            {
+                _state[i] = ClearState.NotOpened;
+            }
+
             var rank = 
                 gameObject.transform.GetChild(i).
                 gameObject.GetComponent<Button>();
@@ -82,6 +105,12 @@ public class RankSelect : MonoBehaviour
         {
             UIMove(false);
         }
+    }
+
+    /// <summary> クリアしたステージ(ランク)を保存する </summary>
+    public static void SaveStage(int stage)
+    {
+        _clearRank |= stage;
     }
 
     private void UIMove(bool num)
