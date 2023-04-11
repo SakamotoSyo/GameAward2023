@@ -11,7 +11,7 @@ public class PlayerEquipWeapon
     public IReactiveProperty<float> MaxDurable => _maxDurable;
     public IReactiveProperty<float> CurrentDurable => _currentDurable;
     public WeaponData.AttributeType Attribute => _attribute;
-    public WeponType WeponType => _weponType;
+    public WeaponType WeaponType => _weponType;
     public int WeaponNum => _weaponNum;
 
     private ReactiveProperty<float> _offensivePower = new();
@@ -20,7 +20,7 @@ public class PlayerEquipWeapon
     private ReactiveProperty<float> _maxDurable = new();
     private ReactiveProperty<float> _currentDurable = new();
     private WeaponData.AttributeType _attribute;
-    private WeponType _weponType;
+    private WeaponType _weponType;
     [Tooltip("âΩî‘ñ⁄Ç…éùÇ¡ÇƒÇ¢ÇÈïêäÌÇ©")]
     private int _weaponNum;
 
@@ -51,6 +51,6 @@ public class PlayerEquipWeapon
         _maxDurable.Value = weaponData.MaxDurable;
         _currentDurable.Value = weaponData.CurrentDurable;
         _attribute = weaponData.Attribute;
-        _weponType = weaponData.WeponType;
+        _weponType = weaponData.WeaponType;
     }
 }
