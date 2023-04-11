@@ -122,7 +122,7 @@ public class StateMachine<TOwner>
 
     public void Start(State firstState) 
     {
-       CurrentState = firstState;
+        CurrentState = firstState;
         CurrentState.Enter(null);
     }
 
