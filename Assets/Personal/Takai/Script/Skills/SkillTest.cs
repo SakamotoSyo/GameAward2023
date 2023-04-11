@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class SkillTest : MonoBehaviour, ISkillBase
 {
-    public int SkillId { get; set; }
     public string SkillName { get; set; }
-    public int RequiredSP { get; set; }
     public int Damage { get; set; }
     public WeaponType Type { get; set; }
-    public SkillAcquisition SkillAcquisition { get; set; }
+    public OreRarity Rarity { get; set; }
+    public PlayerSkillDataManagement playerSkillDataManagement { get; set; }
     private void Start()
     {
         SendSkill();
@@ -18,21 +17,20 @@ public class SkillTest : MonoBehaviour, ISkillBase
 
     public void SetUp()
     {
-        SkillId = 1;
-        SkillName = "Skill1";
-        RequiredSP = 0;
+        SkillName = "TestSkill";
         Damage = 5;
         Type = WeaponType.GreatSword;
+        Rarity = OreRarity.Normal;
     }
 
     public void SendSkill()
     {
-        SkillAcquisition = FindObjectOfType<SkillAcquisition>();
+        playerSkillDataManagement = FindObjectOfType<PlayerSkillDataManagement>();
 
         SkillTest mySkill = new SkillTest();
         mySkill.SetUp();
 
-        SkillAcquisition.AddSkill(mySkill);
+        playerSkillDataManagement.AddSkill(mySkill);
     }
 
     public void UseSkill()
