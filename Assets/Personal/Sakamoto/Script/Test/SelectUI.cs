@@ -9,10 +9,11 @@ public class SelectUI : MonoBehaviour
     [SerializeField] private Transform[] _actionUi = new Transform[4];
     [SerializeField] private Transform[] _actionUiPos = new Transform[4];
     [SerializeField] private int _lotateNum;
+    private WeaponStatus _weaponStatus;
     // Start is called before the first frame update
     void Start()
     {
-
+       
     }
 
     // Update is called once per frame

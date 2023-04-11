@@ -25,7 +25,7 @@ public class InitialPreparation : MonoBehaviour
 
         events.gameObject.GetComponent<Image>().color = Color.cyan;
 
-        _weaponName.text = "武器名 : " + events.WeaponType.ToString();
+        _weaponName.text = "武器名 : " + events.Type.ToString();
         _parameters.text = events.Parameter;
         _flavorText.text = events.FlavorText;
     }

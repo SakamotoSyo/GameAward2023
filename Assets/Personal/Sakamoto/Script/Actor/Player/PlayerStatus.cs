@@ -5,20 +5,15 @@ using UniRx;
 
 public class PlayerStatus
 {
-    public List<ISkillBase> PlayerSkillList => _skillList;
+    public ISkillBase[] PlayerSkillList => _skillList;
     public WeaponData[] WeponDatas => _weaponDatas;
     public PlayerEquipWeapon EquipWepon => _equipWeapon;
-
-    [Tooltip("次のレベルまでの経験値")]
-    private int _maxExperienceAmount;
-    [Tooltip("現在の経験値")]
-    private int _currentExperienceAmount;
+    private WeaponData[] _weaponDatas = new WeaponData[4];
     [Tooltip("装備している武器")]
     private PlayerEquipWeapon _equipWeapon = new();
-    private int _level;
-    private int _skillPoint;
-    private WeaponData[] _weaponDatas = new WeaponData[4];
-    private List<ISkillBase> _skillList = new();
+    [Tooltip("必殺技")]
+    private ISkillBase _ninjaThrowingKnives;
+    private ISkillBase[] _skillList = new ISkillBase[2];
 
     private PlayerStatus() 
     {
@@ -48,35 +43,6 @@ public class PlayerStatus
         _equipWeapon.ChangeWeapon(weaponData);
     }
 
-    /// <summary>
-    /// 経験値の取得する処理
-    /// </summary>
-    public void ExperienceAcquisition(int experience) 
-    {
-        //レベルアップまでの経験値
-        var SurplusExperience = _maxExperienceAmount - _currentExperienceAmount;
-
-        if (SurplusExperience <= experience)
-        {
-            LevelUp();
-            //レベルアップして余った経験値を追加で与える
-            _currentExperienceAmount = experience - SurplusExperience;
-        }
-        else 
-        {
-            _currentExperienceAmount += experience;
-        }
-    }
-
-    /// <summary>
-    /// レベルアップの処理
-    /// </summary>
-    private void LevelUp() 
-    {
-        _level++;
-        _maxExperienceAmount = DataBaseScript.GetMaxExperienceAmount(_level);
-    }
-
     public void SaveData() 
     {
 
@@ -85,10 +51,6 @@ public class PlayerStatus
 
 public class PlayerSaveData 
 {
-    public int Level;
-    public int MaxExperienceAmount;
-    public int CurrentExperienceAmount;
-    public int SkillPoint;
     public WeaponData EquipWepon;
     public List<ISkillBase> PlayerSkillList = new();
 }

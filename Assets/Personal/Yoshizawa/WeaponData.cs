@@ -33,7 +33,7 @@ public class WeaponData
         MaxDurable = equipWeaponData.MaxDurable.Value;
         CurrentDurable = equipWeaponData.CurrentDurable.Value;
         Attribute = equipWeaponData.Attribute;
-        WeaponType = equipWeaponData.weaponType;
+        WeaponType = equipWeaponData.WeaponType;
     }
     
     public enum AttributeType
