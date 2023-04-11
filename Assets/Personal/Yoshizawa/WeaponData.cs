@@ -25,7 +25,7 @@ public class WeaponData
     //    WeaponType = weponType;
     //}
 
-    public void UpdategeParam(PlayerEquipWeapon equipWeaponData) 
+    public void UpdateParam(PlayerEquipWeapon equipWeaponData) 
     {
         OffensivePower = equipWeaponData.OffensivePower.Value;
         WeaponWeight = equipWeaponData.WeaponWeight.Value;
