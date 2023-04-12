@@ -37,7 +37,7 @@ public class PlayerStatus
     /// パラメータの更新をして武器を入れ替える
     /// </summary>
     /// <param name="weaponData"></param>
-    public void EwuipWeponChange(WeaponData weaponData) 
+    public void EquipWeponChange(WeaponData weaponData) 
     {
         _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
         _equipWeapon.ChangeWeapon(weaponData);
