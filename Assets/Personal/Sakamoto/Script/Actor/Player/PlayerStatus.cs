@@ -39,7 +39,7 @@ public class PlayerStatus
     /// <param name="weaponData"></param>
     public void EwuipWeponChange(WeaponData weaponData) 
     {
-        _weaponDatas[_equipWeapon.WeaponNum].UpdategeParam(_equipWeapon);
+        _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
         _equipWeapon.ChangeWeapon(weaponData);
     }
 

@@ -33,4 +33,12 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         _oreImage = oreData.OreImage;
     }
+
+    /// <summary>
+    /// Player‚ğ‹­‰»‚·‚éButtonEvent‚ÅŒÄ‚Ño‚·—\’è
+    /// </summary>
+    public void PlayerEnhancement() 
+    {
+
+    }
 }
