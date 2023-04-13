@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class SelectUI : MonoBehaviour
 {
@@ -9,15 +10,16 @@ public class SelectUI : MonoBehaviour
     [SerializeField] private Transform[] _actionUi = new Transform[4];
     [SerializeField] private Transform[] _actionUiPos = new Transform[4];
     [SerializeField] private int _lotateNum;
+    [SerializeField] private Image _skillPanel = default;
+
     private WeaponStatus _weaponStatus;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-       
+        _skillPanel.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
 
         if (Input.GetButtonDown("Left"))
@@ -85,7 +87,23 @@ public class SelectUI : MonoBehaviour
 
             if (_actionUi[num] == _actionUi[0]) 
             {
+                Debug.Log("attack");
                 GameObject.Find("Weapon").GetComponent<WeaponStatus>().SelectType(0);
+            }
+            else if (_actionUi[num] == _actionUi[1])
+            {
+                Debug.Log("skill view");
+                _skillPanel.gameObject.SetActive(true);
+            }
+            else if (_actionUi[num] == _actionUi[2])
+            {
+                Debug.Log("none 1");
+                //–¢’è
+            }
+            else
+            {
+                Debug.Log("none 2");
+                //–¢’è
             }
         }
     }

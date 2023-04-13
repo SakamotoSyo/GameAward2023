@@ -40,14 +40,14 @@ public class RankSelect : MonoBehaviour
         for (int i = 0; i < _state.Length; i++)
         {
             //現在の進行状況を反映
-            if ((_clearRank & ranks[i]) == 1)
-            {
-                _state[i] = ClearState.Cleared;
-            }
-            else
-            {
-                _state[i] = ClearState.NotOpened;
-            }
+            //if ((_clearRank & ranks[i]) == 1)
+            //{
+            //    _state[i] = ClearState.Cleared;
+            //}
+            //else
+            //{
+            //    _state[i] = ClearState.NotOpened;
+            //}
 
             var rank = 
                 gameObject.transform.GetChild(i).
