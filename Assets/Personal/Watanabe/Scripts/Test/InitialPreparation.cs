@@ -11,10 +11,13 @@ public class InitialPreparation : MonoBehaviour
     [SerializeField] private Text _flavorText = default;
     [SerializeField] private Sprite _initialImage = default;
 
-    [SerializeField] private InitialWeaponSelect[] _weapons = new InitialWeaponSelect[4];
-    [SerializeField] private Sprite[] _weaponImages = new Sprite[4];
+    /// <summary> クリックする画像(各武器) </summary>
+    private InitialWeaponSelect[] _weapons = new InitialWeaponSelect[4];
+    /// <summary> 画面に反映させる武器の画像 </summary>
+    private Sprite[] _weaponImages = new Sprite[4];
     /// <summary> 手持ちの武器の種類 </summary>
     private WeaponType[] _holdings = new WeaponType[4];
+    /// <summary> 現在選択中の武器 </summary>
     private WeaponType _selectedWeapon = default;
 
     private void Start()
@@ -26,6 +29,8 @@ public class InitialPreparation : MonoBehaviour
             _weapons[i] = gameObject.transform.GetChild(i).GetComponent<InitialWeaponSelect>();
             _weaponImages[i] = _weapons[i].gameObject.GetComponent<Image>().sprite;
         }
+
+        ViewData(0);
     }
 
     public void ViewData(int num)
@@ -34,7 +39,7 @@ public class InitialPreparation : MonoBehaviour
 
         var events = _weapons[num].GetComponent<InitialWeaponSelect>();
 
-        events.gameObject.GetComponent<Image>().color = Color.cyan;
+        events.gameObject.GetComponent<Image>().color = Color.yellow;
 
         _weaponName.text = "武器名 : " + events.Type.ToString();
         _parameters.text = events.Parameter;
@@ -54,5 +59,10 @@ public class InitialPreparation : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void ResetHolder()
+    {
+        Array.ForEach(_weaponHoldings, i => i.sprite = _initialImage);
     }
 }
