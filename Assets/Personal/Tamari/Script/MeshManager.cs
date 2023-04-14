@@ -1,60 +1,105 @@
+ï»¿#if UNITY_EDITOR
+using System.IO;
+using UnityEditor;
+#endif
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MeshManager : MonoBehaviour
 {
-    private MeshFilter _meshFilter;
-    private Mesh _myMesh;
+    private MeshFilter _meshFilter = default;
+
+    private Mesh _myMesh = default;
+
+    private MeshRenderer _meshRenderer = default;
+
+    private MeshRenderer MeshRenderer = default;
+
+    [SerializeField] Material _meshMaterial = default;
+
     private Vector3[] _myVertices = default;
 
-    [SerializeField, Tooltip("’¸“_”")]
+    private int[] _myTriangles = default;
+
+    // private float[] _radiuses;
+
+    [SerializeField, Tooltip("æœ€å¤§ç¯„å›²")]
+    private float _maxDelta = default;
+
+    [SerializeField, Tooltip("é ‚ç‚¹æ•°")]
     private int _nVertices = 6;
 
-    [SerializeField, Tooltip("’†S‚ÌxÀ•W")]
+    [SerializeField, Tooltip("ä¸­å¿ƒã®xåº§æ¨™")]
     private float _x0 = 0f;
 
-    [SerializeField, Tooltip("’†S‚ÌyÀ•W")]
+    [SerializeField, Tooltip("ä¸­å¿ƒã®yåº§æ¨™")]
     private float _y0 = 0f;
 
-    [SerializeField, Tooltip("‘å‚«‚³"), Range(1, 10)]
+    [SerializeField, Tooltip("å¤§ãã•"), Range(0, 10)]
     private float _radius = 2f;
 
     private int _indexNum = default;
 
+    // private int _radiusIndexNum = default;
+
     private float _dis = 1000f;
 
-    Vector3 _closeMesh;
+    private SaveData _saveData = default;
 
-    [SerializeField, Tooltip("‹à‘®‚ğ’@‚­‰¹")]
-    private string _blacksmithSe;
-    void Start()
+    [SerializeField, Tooltip("é‡‘å±ã‚’å©ãéŸ³")]
+    private string _blacksmithSe = default;
+
+    [ContextMenu("Make mesh from model")]
+
+    private void Awake()
     {
+        _saveData = new SaveData();
+        SaveManager.Initialize();
+        _meshRenderer = GetComponent<MeshRenderer>();
         _meshFilter = gameObject.GetComponent<MeshFilter>();
         _myMesh = new Mesh();
+    }
+
+    void Start()
+    {
+        foreach (var f in SaveManager._weaponFileList)
+        {
+            SaveManager.Load(f);
+        }
+
+        // _radiuses = new float[_nVertices];   
+        _meshMaterial = _meshRenderer.material;
 
         _myVertices = new Vector3[_nVertices];
 
         Vector3[] myNormals = new Vector3[_nVertices];
 
-        // ˆê•Ó“–‚½‚è‚Ì’†SŠp‚Ì 1 / 2
+        // ä¸€è¾ºå½“ãŸã‚Šã®ä¸­å¿ƒè§’ã® 1 / 2
         float halfStep = Mathf.PI / _nVertices;
+
+        //for(int i = 0; i < _nVertices; i++)
+        //{
+        //    _radiuses[i] = _radius;
+        //    Debug.Log(_radiuses[i]);
+        //}
 
         for (int i = 0; i < _nVertices; i++)
         {
-            // ’†S‚©‚ç i ”Ô–Ú‚Ì’¸“_‚ÉŒü‚©‚¤Šp“x
+            // ä¸­å¿ƒã‹ã‚‰ i ç•ªç›®ã®é ‚ç‚¹ã«å‘ã‹ã†è§’åº¦
             float angle = (i + 1) * halfStep;
 
             float x = _radius * Mathf.Cos(angle);
 
             float y = _radius * Mathf.Sin(angle);
-            // ‰º‘¤‚Ì’¸“_‚ÌˆÊ’u‚Æ–@ü
+            // ä¸‹å´ã®é ‚ç‚¹ã®ä½ç½®ã¨æ³•ç·š
             _myVertices[i].Set(_x0 - x, _y0 - y, 0);
-            myNormals[i] = Vector3.forward;
+            myNormals[i] = Vector3.back;
             i++;
-            // ÅŒã‚Ì’¸“_‚ğ¶¬‚µ‚½‚çI—¹
+            // æœ€å¾Œã®é ‚ç‚¹ã‚’ç”Ÿæˆã—ãŸã‚‰çµ‚äº†
             if (i >= _nVertices) break;
-            // ã‘¤‚Ì’¸“_‚ÌˆÊ’u‚Æ–@ü
+            // ä¸Šå´ã®é ‚ç‚¹ã®ä½ç½®ã¨æ³•ç·š
             _myVertices[i].Set(_x0 - x, _y0 + y, 0);
-            myNormals[i] = Vector3.forward;
+            myNormals[i] = Vector3.back;
         }
         _myMesh.SetVertices(_myVertices);
 
@@ -63,26 +108,26 @@ public class MeshManager : MonoBehaviour
         int nPolygons = _nVertices - 2;
         int nTriangles = nPolygons * 3;
 
-        int[] myTriangles = new int[nTriangles];
+        _myTriangles = new int[nTriangles];
 
         for (int i = 0; i < nPolygons; i++)
         {
-            // ‚P‚Â–Ú‚ÌOŠpŒ`‚ÌÅ‰‚Ì’¸“_‚Ì’¸“_”Ô†‚ÌŠi”[æ
+            // ï¼‘ã¤ç›®ã®ä¸‰è§’å½¢ã®æœ€åˆã®é ‚ç‚¹ã®é ‚ç‚¹ç•ªå·ã®æ ¼ç´å…ˆ
             int firstI = i * 3;
-            // ‚P‚Â–Ú‚ÌOŠpŒ`‚Ì’¸“_”Ô†
-            myTriangles[firstI + 0] = i;
-            myTriangles[firstI + 1] = i + 1;
-            myTriangles[firstI + 2] = i + 2;
+            // ï¼‘ã¤ç›®ã®ä¸‰è§’å½¢ã®é ‚ç‚¹ç•ªå·
+            _myTriangles[firstI + 0] = i;
+            _myTriangles[firstI + 1] = i + 1;
+            _myTriangles[firstI + 2] = i + 2;
             i++;
-            // ÅŒã‚Ì’¸“_”Ô†‚ğŠi”[‚µ‚½‚çI—¹
+            // æœ€å¾Œã®é ‚ç‚¹ç•ªå·ã‚’æ ¼ç´ã—ãŸã‚‰çµ‚äº†
             if (i >= nPolygons) break;
-            // ‚Q‚Â–Ú‚ÌOŠpŒ`‚Ì’¸“_”Ô†
-            myTriangles[firstI + 3] = i + 2;
-            myTriangles[firstI + 4] = i + 1;
-            myTriangles[firstI + 5] = i;
+            // ï¼’ã¤ç›®ã®ä¸‰è§’å½¢ã®é ‚ç‚¹ç•ªå·
+            _myTriangles[firstI + 3] = i + 2;
+            _myTriangles[firstI + 4] = i + 1;
+            _myTriangles[firstI + 5] = i;
         }
 
-        _myMesh.SetTriangles(myTriangles, 0);
+        _myMesh.SetTriangles(_myTriangles, 0);
 
         _meshFilter.mesh = _myMesh;
     }
@@ -90,39 +135,104 @@ public class MeshManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SoundManager.Instance.CriAtomPlay(CueSheet.CueSheet_0, _blacksmithSe);
-            Vector3 mousePos = Input.mousePosition;
-            var worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            Calculation();
+        }
+    }
 
-            for (int i = 0; i < _myVertices.Length; i++)
+    void Calculation()
+    {
+        SoundManager.Instance.CriAtomPlay(CueSheet.CueSheet_0, _blacksmithSe);
+        Vector3 mousePos = Input.mousePosition;
+        var worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        for (int i = 0; i < _myVertices.Length; i++)
+        {
+            float dis = Vector3.Distance(worldPos, _myVertices[i]);
+            if (dis < _dis)
             {
-                float dis = Vector3.Distance(worldPos, _myVertices[i]);
-                if (dis < _dis)
-                {
-                    _dis = dis;
-                    _closeMesh = _myVertices[i];
-                    _indexNum = i;
-                    Debug.Log(_myVertices[i]);
-                }
+                _dis = dis;
+                _indexNum = i;
+                //_radiusIndexNum = i;
             }
+        }
 
-            float disX = worldPos.x - _closeMesh.x;
-            float disY = worldPos.y - _closeMesh.y;
+        // ä»¥ä¸‹å¤‰æ•°åã‚’è€ƒãˆãŸã„
 
-            if (disX < _radius && disY < _radius)
-            {
-                _closeMesh -= new Vector3(disX, disY, 0);
-                _myVertices[_indexNum] = _closeMesh;
+        // ã‚¿ãƒƒãƒ—ä½ç½®ã¨è¿‘ã„é ‚ç‚¹ã¨ã®è·é›¢(to)
+        float toDis = Vector3.Distance(worldPos, new Vector3(_x0, _y0, 0));
 
-                Debug.Log($"ˆê”Ô‹ß‚¢’¸“_{_indexNum}‚É{disX}‚Æ{disY}‚ğ‘«‚µ‚½{_myVertices[_indexNum].y}");
+        // ä¸­å¿ƒã¨è¿‘ã„é ‚ç‚¹ã¨ã®è·é›¢(io)
+        float ioDis = Vector3.Distance(_myVertices[_indexNum], new Vector3(_x0, _y0, 0));
 
-                _myMesh.SetVertices(_myVertices);
-            }
-            else
-            {
-                Debug.Log($"’@‚¢‚½êŠ‚ªˆê”Ô‹ß‚¢’¸“_{_indexNum}‚©‚ç—£‚ê‚·‚¬‚Ä‚Ü‚·");
-            }
-            _dis = 1000f;
+        float disX = worldPos.x - _myVertices[_indexNum].x;
+        float disY = worldPos.y - _myVertices[_indexNum].y;
+
+        if (Mathf.Abs(disX) < _radius && Mathf.Abs(disY) < _radius /*disX < _radiuses[_radiusIndexNum] && disY < _radiuses[_radiusIndexNum]
+                    dis2 < _radius*/)
+        {
+            _myVertices[_indexNum] -= new Vector3(disX, disY, 0);
+            //_myVertices[_indexNum] = _closeMesh;
+            // _radiuses[_radiusIndexNum] -= 0.1f;
+
+            //if (_radiuses[_radiusIndexNum] <= 0)
+            //{
+            //    _radiuses[_radiusIndexNum] = 0.02f;
+            //    Debug.Log($"ä¸€ç•ªè¿‘ã„é ‚ç‚¹{_indexNum}ãŒåå¿œã™ã‚‹è·é›¢ãŒæœ€å°å€¤ã§ã™");
+
+            //}
+
+            // Debug.Log($"ä¸€ç•ªè¿‘ã„é ‚ç‚¹{_indexNum}ãŒåå¿œã™ã‚‹è·é›¢ã¯{_radiuses[_radiusIndexNum]}ã§ã™");
+
+            _myMesh.SetVertices(_myVertices);
+        }
+        else
+        {
+            Debug.Log($"å©ã„ãŸå ´æ‰€ãŒä¸€ç•ªè¿‘ã„é ‚ç‚¹{_indexNum}ã‹ã‚‰é›¢ã‚Œã™ãã¦ã¾ã™");
+        }
+        _dis = 1000f;
+    }
+    public void OnSaveData(string weapon)
+    {
+        if (weapon == "Taiken")
+        {
+            _saveData._prefabName = weapon;
+            _saveData._myVertices = _myVertices;
+            _saveData._myTriangles = _myTriangles;
+            SaveManager.Save(SaveManager.TAIKENFILEPATH, _saveData);
+        }
+        else if (weapon == "Souken")
+        {
+            _saveData._prefabName = weapon;
+            _saveData._myVertices = _myVertices;
+            _saveData._myTriangles = _myTriangles;
+            SaveManager.Save(SaveManager.SOUKENFILEPATH, _saveData);
+        }
+        else if (weapon == "Hammer")
+        {
+            _saveData._prefabName = weapon;
+            _saveData._myVertices = _myVertices;
+            _saveData._myTriangles = _myTriangles;
+            SaveManager.Save(SaveManager.HAMMERFILEPATH, _saveData);
+        }
+        else if (weapon == "Yari")
+        {
+            _saveData._prefabName = weapon;
+            _saveData._myVertices = _myVertices;
+            _saveData._myTriangles = _myTriangles;
+            SaveManager.Save(SaveManager.YARIFILEPATH, _saveData);
+        }
+    }
+
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene("BattleSample");
+    }
+
+    public void OnResetSaveData()
+    {
+        foreach (var f in SaveManager._weaponFileList)
+        {
+            SaveManager.ResetSaveData(f);
         }
     }
 }
