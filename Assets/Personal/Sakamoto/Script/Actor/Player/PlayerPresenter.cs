@@ -10,6 +10,7 @@ public class PlayerPresenter :IStartable, IDisposable
 {
     private PlayerView _playerView;
     private PlayerStatus _playerStatus;
+    /// <summary>w“Ç‚µ‚Ä‚¢‚é‚à‚Ì‚ğ‚Ü‚Æ‚ß‚ÄDispose‚µ‚½‚¢‚Æ‚«‚Ég‚¤‹@”\</summary>
     private CompositeDisposable _compositeDisposable = new();
 
     [Inject]
@@ -22,8 +23,8 @@ public class PlayerPresenter :IStartable, IDisposable
 
     public void Start()
     {
-        _playerStatus.MaxHp.Subscribe(_playerView.SetMaxHp).AddTo(_compositeDisposable);
-        _playerStatus.CurrentHp.Subscribe(_playerView.SetCurrentHp).AddTo(_compositeDisposable);
+        _playerStatus.EquipWepon.MaxDurable.Subscribe(_playerView.SetMaxHp).AddTo(_compositeDisposable);
+        _playerStatus.EquipWepon.CurrentDurable.Subscribe(_playerView.SetCurrentHp).AddTo(_compositeDisposable);
     }
 
     public void Dispose()

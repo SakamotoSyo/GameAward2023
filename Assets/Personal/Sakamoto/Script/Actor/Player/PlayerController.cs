@@ -14,14 +14,20 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+       
+    }
+
     /// <summary>
     /// ダメージを受ける流れ
     /// </summary>
     public void AddDamage(float damage) 
     {
-        if (_playerStatus.DownJudge(damage))
+        if (_playerStatus.EquipWepon.DownJudge(damage))
         {
-            _playerStatus.AddDamage(damage);
+            //アニメーションがあったらここでダメージを受ける処理を呼ぶ
+            _playerStatus.EquipWepon.AddDamage(damage);
         }
         else 
         {
