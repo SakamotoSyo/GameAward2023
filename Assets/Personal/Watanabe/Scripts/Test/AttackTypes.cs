@@ -7,6 +7,11 @@ public class AttackTypes : MonoBehaviour
     [SerializeField] private Transform _switchWeapon = default;
     [SerializeField] private Image _currentWeapon = default;
 
+    [SerializeField] private Text _name = default;
+    [SerializeField] private Text _effect = default;
+
+    private AttackStatus[] _status = new AttackStatus[4];
+
     private Image[] _weapons = new Image[4];
     private Image[] _attacks = new Image[4];
     private int _index = 0;
@@ -16,6 +21,7 @@ public class AttackTypes : MonoBehaviour
     {
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
+            _status[i] = gameObject.transform.GetChild(i).GetComponent<AttackStatus>();
             _attacks[i] = gameObject.transform.GetChild(i).GetComponent<Image>();
         }
 
@@ -26,6 +32,9 @@ public class AttackTypes : MonoBehaviour
         ImageView(_index);
         _currentWeapon.sprite = _weapons[_index].sprite;
         _switchWeapon.gameObject.SetActive(false);
+
+        _name.text = _attacks[0].gameObject.transform.GetChild(0).GetComponent<Text>().text;
+        _effect.text = _status[0].Status;
     }
 
     private void Update()
@@ -66,6 +75,12 @@ public class AttackTypes : MonoBehaviour
         }
         _weapons[index].color = Color.yellow;
         _attacks[index].color = Color.yellow;
+
+        if (!_isAttack)
+        {
+            _name.text = _attacks[index].gameObject.transform.GetChild(0).GetComponent<Text>().text;
+            _effect.text = _status[index].Status;
+        }
     }
 
     private void AttackTest(Strength strength)
