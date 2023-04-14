@@ -303,6 +303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bd70fb14edc0fa4583c666ae67913c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _meshMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  _maxDelta: 0
   _nVertices: 6
   _x0: 0
   _y0: -2
@@ -698,7 +700,7 @@ MonoBehaviour:
       streamingVoices: 0
     outputSamplingRate: 0
     usesInGamePreview: 0
-    inGamePreviewMode: 0
+    inGamePreviewMode: 1
     inGamePreviewConfig:
       maxPreviewObjects: 200
       communicationBufferSize: 2048
@@ -734,4 +736,4 @@ MonoBehaviour:
     numberOfDecoders: 8
     numberOfMaxEntries: 4
   dontInitializeOnAwake: 0
-  dontDestroyOnLoad: 0
+  dontDestroyOnLoad: 1
