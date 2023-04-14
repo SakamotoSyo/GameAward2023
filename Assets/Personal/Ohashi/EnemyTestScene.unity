@@ -519,6 +519,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &900614869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 900614870}
+  m_Layer: 0
+  m_Name: EnemyLifeTimeScope
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &900614870
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900614869}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3049006, y: 0.8840664, z: -0.021205883}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1046768080 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5659145776566657539, guid: 1537b8343b3864d4f828d8f40c085bc4, type: 3}
@@ -993,7 +1024,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Presenter
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6139290890399937414, guid: 5c1fe3ea4011a9c4b898f4c1dee3a063, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5c1fe3ea4011a9c4b898f4c1dee3a063, type: 3}
 --- !u!1001 &7943077710957124050
 PrefabInstance:
