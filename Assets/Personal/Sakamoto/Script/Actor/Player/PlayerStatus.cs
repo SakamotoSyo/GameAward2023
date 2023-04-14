@@ -6,7 +6,7 @@ using UniRx;
 public class PlayerStatus
 {
     public ISkillBase[] PlayerSkillList => _skillList;
-    public WeaponData[] WeponDatas => _weaponDatas;
+    public WeaponData[] WeaponDatas => _weaponDatas;
     public PlayerEquipWeapon EquipWepon => _equipWeapon;
     private WeaponData[] _weaponDatas = new WeaponData[4];
     [Tooltip("‘•”õ‚µ‚Ä‚¢‚é•Ší")]
@@ -17,13 +17,10 @@ public class PlayerStatus
 
     private PlayerStatus() 
     {
-        //Œ±“IŒã‚Åíœ‚·‚é
+        //TODO:Œ±“IŒã‚Åíœ‚·‚é
         for (int i = 0; i < _weaponDatas.Length; i++) 
         {
-            _weaponDatas[i] = new(); 
-            _weaponDatas[i].MaxDurable = 50;
-            _weaponDatas[i].CurrentDurable = 50;
-            _weaponDatas[i].OffensivePower = 50;
+            _weaponDatas[i] = new(50,50,50,50, WeaponData.AttributeType.None, WeaponType.GreatSword); 
         }
         _equipWeapon.ChangeWeapon(_weaponDatas[0]);
     }
