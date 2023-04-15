@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-public class EquipEnemyWeapon : MonoBehaviour
+public class EquipEnemyWeapon
 {
-    [SerializeField]
     private float _weaponPower;
 
-    [SerializeField]
     private float _maxHp;
 
-    [SerializeField]
     private float _enemySpeed;
+
+    public float EnemySpeed => _enemySpeed;
 
     private ReactiveProperty<float> _currentHp = new();
 
