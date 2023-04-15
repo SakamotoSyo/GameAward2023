@@ -13,6 +13,9 @@ public class StateController : MonoBehaviour
     public StateMachine<StateController> StateMachine => _stateMachine;
 
     private EnemyController[] _enemyController = null;
+    public EnemyController[] EnemyController => _enemyController;
+    public EnemyController CurrenyEnemy { get; private set; } = null;
+
     private PlayerController _playerController = null;
     public PlayerController PlayerController => _playerController;
 
@@ -27,13 +30,18 @@ public class StateController : MonoBehaviour
         Any2End,
     }
 
-    private void OnEnable()
-    {
-        _enemyController = FindObjectsOfType<EnemyController>();
-    }
-
     private void Start()
     {
+        _playerController = FindObjectOfType<PlayerController>();
+        _orderOfAction.Add(_playerController.gameObject);
+
+        _enemyController = FindObjectsOfType<EnemyController>();
+
+        for (int i = 0; i < _enemyController.Length; i++)
+        {
+            _orderOfAction.Add(_enemyController[i].gameObject);
+        }
+        
         _stateMachine = new(this);
         _stateMachine.AddAnyTranstion<BattleStartState>((int)TransitionCondition.Any2Start);
         _stateMachine.AddTransition<BattleStartState, PlayerAttackState>((int)TransitionCondition.Start2Player);
@@ -49,30 +57,86 @@ public class StateController : MonoBehaviour
 
     private void Update()
     {
-        _orderOfAction.Sort((a, b) =>
+        if (BattleStartState.IsBattleCommandSelected)
         {
-            float x = a.TryGetComponent(out EnemyController enemyA) ? enemyA.EnemyStatus.GetSpeed : 0f;
-            float y = b.TryGetComponent(out EnemyController enemyB) ? enemyB.EnemyStatus.GetSpeed : 0f;
+            _orderOfAction.Sort((a, b) =>
+            {
+                float x = 0f, y = 0f;
+                
+                // 変数xに代入する値の選定
+                if (a.TryGetComponent(out EnemyController enemyA)) x = enemyA.EnemyStatus.GetSpeed;
+                else if (a.TryGetComponent(out PlayerController player))
+                {
+                    x = player.PlayerStatus.EquipWeapon.WeaponWeight.Value;
+                }
 
-            if (x - y > 0)      return  1;
-            else if (x - y < 0) return -1;
-            else                return  0;
-        });
+                // 変数yに代入する値の選定
+                if (b.TryGetComponent(out EnemyController enemyB)) y = enemyB.EnemyStatus.GetSpeed;
+                else if (b.TryGetComponent(out PlayerController player))
+                {
+                    y = player.PlayerStatus.EquipWeapon.WeaponWeight.Value;
+                }
+
+                if (x - y > 0)      return -1;
+                else if (x - y < 0) return  1;
+                else                return  0;
+            });
+        }
+
         _stateMachine.Update();
     }
 
-    public void CommandSelected()
+    private int _count = 0;
+
+    public void FirstStateTransition()
     {
-        if (BattleStartState.IsBattleStart)
+        if (BattleStartState.IsBattleCommandSelected)
         {
-            if (_orderOfAction[0].TryGetComponent(out EnemyController enemyController))
+            if (_orderOfAction[_count].TryGetComponent(out EnemyController enemyController))
             {
                 _stateMachine.Dispatch((int)TransitionCondition.Start2Enemy);
             }
-            else if (_orderOfAction[0].TryGetComponent(out PlayerController playerController))
+            else if (_orderOfAction[_count].TryGetComponent(out PlayerController playerController))
             {
                 _stateMachine.Dispatch((int)TransitionCondition.Start2Player);
             }
+        }
+    }
+
+    public void NextStateTransition()
+    {
+        GameObject currentActor = _orderOfAction[_count];
+
+        if (currentActor.TryGetComponent(out EnemyController enemy))
+        {
+            CurrenyEnemy = enemy;
+        }
+
+        if (_count < _orderOfAction.Count) _count++;
+        else
+        {
+            _count = 0;
+            _stateMachine.Dispatch((int)TransitionCondition.Any2Start);
+        }
+
+        GameObject nextActor = _orderOfAction[_count];
+
+        // 次の演者
+        if (nextActor.TryGetComponent(out EnemyController nextEnemy))
+        {
+            if (currentActor.TryGetComponent(out EnemyController currentEnemy))
+            {
+                _stateMachine.Dispatch((int)TransitionCondition.Enemy2Enemy);
+            }
+            else if (currentActor.TryGetComponent(out PlayerController currentPlayer))
+            {
+                _stateMachine.Dispatch((int)TransitionCondition.Player2Enemy);
+            }
+        }
+        // 
+        else if (nextActor.TryGetComponent(out PlayerController nextPlayer))
+        {
+            _stateMachine.Dispatch((int)TransitionCondition.Enemy2Player);
         }
     }
 }
