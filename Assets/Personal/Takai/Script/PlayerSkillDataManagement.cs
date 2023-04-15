@@ -1,30 +1,40 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class PlayerSkillDataManagement : MonoBehaviour
 {
-    private List<ISkillBase> _skills = new List<ISkillBase>();
-    public IReadOnlyList<ISkillBase> PlayerSkillList => _skills;
-    public void AddSkill(ISkillBase skill)
-    {
-        if (_skills == null)
-        {
-            _skills = new List<ISkillBase>();
-        }
+    private List<SkillBase> _skills = new List<SkillBase>();
+    public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
 
-        _skills.Add(skill);
+    private void Start()
+    {
+        SkillBase[] skillPrefabs = Resources.LoadAll<SkillBase>("Skills");
+
+        foreach (var skill in skillPrefabs)
+        {
+           var sObj = Instantiate(skill, transform);
+            _skills.Add(sObj);
+        }
     }
 
-    public ISkillBase OnSkillCall(WeaponType type, OreRarity rarity)
+    public void OnCall()
     {
-        List<ISkillBase> skills = new List<ISkillBase>();
+        Debug.Log(OnSkillCall(WeaponType.GreatSword,OreRarity.Normal));
+
+        OnSkillCall(WeaponType.GreatSword, OreRarity.Normal).UseSkill().Forget();
+    }
+    
+    public SkillBase OnSkillCall(WeaponType weapon, OreRarity rarity)
+    {
+        List<SkillBase> skills = new List<SkillBase>();
         
         foreach (var s in _skills)
         {
-            if (s.Type == type && s.Rarity == rarity)
+            if (s.Weapon == weapon && s.Rarity == rarity)
             {
                 skills.Add(s);
             }
