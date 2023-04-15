@@ -24,10 +24,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void AddDamage(float damage) 
     {
-        if (_playerStatus.EquipWepon.DownJudge(damage))
+        if (_playerStatus.EquipWeapon.DownJudge(damage))
         {
             //アニメーションがあったらここでダメージを受ける処理を呼ぶ
-            _playerStatus.EquipWepon.AddDamage(damage);
+            _playerStatus.EquipWeapon.AddDamage(damage);
         }
         else 
         {
