@@ -9,5 +9,7 @@ public class EnemyStatus
 
     private EquipEnemyWeapon _epicEnemyWeapon;
 
+    public EquipEnemyWeapon EquipEnemyWeapon => _epicEnemyWeapon;
+
     
 }
