@@ -9,11 +9,8 @@ public class EnemyAttackState : State
     protected override void OnEnter(State currentState)
     {
         Debug.Log($"{currentState}に入りました。");
-    }
-
-    protected override void OnUpdate()
-    {
-
+        //await Owner.CurrenyEnemy.Attack(Owner.PlayerController);
+        Owner.NextStateTransition();
     }
 
     protected override void OnExit(State nextState)

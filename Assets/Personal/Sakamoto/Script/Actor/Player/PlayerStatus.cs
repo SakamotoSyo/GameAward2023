@@ -5,9 +5,10 @@ using UniRx;
 
 public class PlayerStatus
 {
+    public ISkillBase NinjaThrowingKnives => _ninjaThrowingKnives;
     public ISkillBase[] PlayerSkillList => _skillList;
     public WeaponData[] WeaponDatas => _weaponDatas;
-    public PlayerEquipWeapon EquipWepon => _equipWeapon;
+    public PlayerEquipWeapon EquipWeapon => _equipWeapon;
     private WeaponData[] _weaponDatas = new WeaponData[4];
     [Tooltip("‘•”õ‚µ‚Ä‚¢‚é•Ší")]
     private PlayerEquipWeapon _equipWeapon = new();

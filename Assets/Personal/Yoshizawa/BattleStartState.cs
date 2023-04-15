@@ -6,25 +6,27 @@ using State = StateMachine<StateController>.State;
 // 日本語対応
 public class BattleStartState : State
 {
-    public static bool IsBattleStart { get; private set; } = false;
+    public static bool IsBattleCommandSelected { get; private set; } = false;
 
     protected override void OnEnter(State currentState)
     {
-        IsBattleStart = true;
+        IsBattleCommandSelected = true;
         Debug.Log($"{currentState}に入りました。");
     }
 
     protected override void OnUpdate()
     {
-        if (IsBattleStart)
-        {
-            
-        }
+        Owner.FirstStateTransition();
     }
 
     protected override void OnExit(State nextState)
     {
-        IsBattleStart = false;
+        IsBattleCommandSelected = false;
         Debug.Log($"{nextState}に遷移するまで、3 2 1...");
+    }
+
+    private IEnumerator WaitCommandSelected()
+    {
+        yield return new WaitUntil(() => IsBattleCommandSelected);
     }
 }
