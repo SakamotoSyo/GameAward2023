@@ -16,9 +16,13 @@ public class BattleStartState : State
 
     protected override void OnUpdate()
     {
-        if (IsBattleStart)
+        if (StateMachine.Owner.OrderOfAction[0].TryGetComponent(out EnemyController enemy))
         {
-            
+            StateMachine.Dispatch((int)StateController.TransitionCondition.Start2Enemy);
+        }
+        else if (StateMachine.Owner.OrderOfAction[0].TryGetComponent(out PlayerController player))
+        {
+            StateMachine.Dispatch((int)StateController.TransitionCondition.Start2Player);
         }
     }
 

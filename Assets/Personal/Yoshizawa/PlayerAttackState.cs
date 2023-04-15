@@ -11,11 +11,6 @@ public class PlayerAttackState : State
         Debug.Log($"{currentState}に入りました。");
     }
 
-    protected override void OnUpdate()
-    {
-        
-    }
-
     protected override void OnExit(State nextState)
     {
         Debug.Log($"{nextState}に遷移するまで、3 2 1...");
