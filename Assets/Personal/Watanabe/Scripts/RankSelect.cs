@@ -3,8 +3,6 @@ using UnityEngine.UI;
 
 public class RankSelect : MonoBehaviour
 {
-    [Tooltip("各ランクの状態")]
-    [SerializeField] private ClearState[] _state = new ClearState[5];
     [SerializeField] private Sprite[] _images = new Sprite[5];
 
     [SerializeField] private Image _stageImage = default;
@@ -12,6 +10,8 @@ public class RankSelect : MonoBehaviour
     [SerializeField] private int _index = 0;
     [SerializeField] private int _beforeIndex = 0;
 
+    /// <summary> 各ランクの状態 </summary>
+    private ClearState[] _state = new ClearState[5];
     /// <summary> RankButtonを全て格納しておく </summary>
     private Button[] _buttons = new Button[5];
     private int[] _indexes = new int[5];
@@ -32,24 +32,33 @@ public class RankSelect : MonoBehaviour
 
     private void Start()
     {
-        _clearRank = 1;
+        //テスト
+        //_clearRankに代入する値は[1, 3, 7, 15, 31]のいずれか
+        _clearRank = 7;
 
         bool isSetting = false;
         int[] ranks = new int[5] { RankS, RankA, RankB, RankC, RankD };
 
-        for (int i = 0; i < _state.Length; i++)
+        for (int i = _state.Length - 1; i >= 0; i--)
         {
             //現在の進行状況を反映
-            //if ((_clearRank & ranks[i]) == 1)
-            //{
-            //    _state[i] = ClearState.Cleared;
-            //}
-            //else
-            //{
-            //    _state[i] = ClearState.NotOpened;
-            //}
+            if ((_clearRank & ranks[i]) == ranks[i])
+            {
+                _state[i] = ClearState.Cleared;
+                if (ranks[i] != RankS)
+                {
+                    _state[i - 1] = ClearState.Challengeable;
+                }
+            }
+            else if (_state[i] != ClearState.Challengeable)
+            {
+                _state[i] = ClearState.NotOpened;
+            }
+        }
 
-            var rank = 
+        for (int i = 0; i < _state.Length; i++)
+        {
+            var rank =
                 gameObject.transform.GetChild(i).
                 gameObject.GetComponent<Button>();
 
