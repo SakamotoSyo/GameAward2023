@@ -9,14 +9,17 @@ public class SelectUI : MonoBehaviour
     [Tooltip("çsìÆÇåàÇﬂÇÈUI")]
     [SerializeField] private Transform[] _actionUi = new Transform[4];
     [SerializeField] private Transform[] _actionUiPos = new Transform[4];
+    [SerializeField] private Text[] _skillText = new Text[3];
+    [SerializeField] private PlayerController _playerController;
     [SerializeField] private int _lotateNum;
-    [SerializeField] private Image _skillPanel = default;
+    [SerializeField] private GameObject _commandUI;
 
     private WeaponStatus _weaponStatus;
+    private PlayerStatus _playerStatus;
 
     private void Start()
     {
-        _skillPanel.gameObject.SetActive(false);
+        _playerStatus = _playerController.PlayerStatus;
     }
 
     private void Update()
@@ -92,8 +95,7 @@ public class SelectUI : MonoBehaviour
             }
             else if (_actionUi[num] == _actionUi[1])
             {
-                Debug.Log("skill view");
-                _skillPanel.gameObject.SetActive(true);
+                Debug.Log("ïKéEãZ");
             }
             else if (_actionUi[num] == _actionUi[2])
             {
@@ -105,6 +107,17 @@ public class SelectUI : MonoBehaviour
                 Debug.Log("none 2");
                 //ñ¢íË
             }
+
+            _commandUI.SetActive(false);
         }
+    }
+
+    public void StartPlayerTurn() 
+    {
+        _skillText[0].text = _playerStatus.NinjaThrowingKnives.SkillName;
+        _skillText[1].text = _playerStatus.PlayerSkillList[0].SkillName;
+        _skillText[2].text = _playerStatus.PlayerSkillList[1].SkillName;
+
+        _commandUI.SetActive(true);
     }
 }

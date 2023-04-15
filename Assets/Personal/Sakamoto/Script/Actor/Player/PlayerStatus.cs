@@ -5,16 +5,16 @@ using UniRx;
 
 public class PlayerStatus
 {
-    public ISkillBase NinjaThrowingKnives => _ninjaThrowingKnives;
-    public ISkillBase[] PlayerSkillList => _skillList;
+    public SkillBase NinjaThrowingKnives => _ninjaThrowingKnives;
+    public SkillBase[] PlayerSkillList => _skillList;
     public WeaponData[] WeaponDatas => _weaponDatas;
     public PlayerEquipWeapon EquipWeapon => _equipWeapon;
     private WeaponData[] _weaponDatas = new WeaponData[4];
     [Tooltip("‘•”õ‚µ‚Ä‚¢‚é•Ší")]
     private PlayerEquipWeapon _equipWeapon = new();
     [Tooltip("•KE‹Z")]
-    private ISkillBase _ninjaThrowingKnives;
-    private ISkillBase[] _skillList = new ISkillBase[2];
+    private SkillBase _ninjaThrowingKnives;
+    private SkillBase[] _skillList = new SkillBase[2];
 
     private PlayerStatus() 
     {
@@ -50,5 +50,5 @@ public class PlayerStatus
 public class PlayerSaveData 
 {
     public WeaponData EquipWepon;
-    public List<ISkillBase> PlayerSkillList = new();
+    public List<SkillBase> PlayerSkillList = new();
 }

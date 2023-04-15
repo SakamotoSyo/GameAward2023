@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public struct OreData
 {
     public EnhanceData[] EnhancedData;
-    public ISkillBase Skill;
+    public SkillBase Skill;
     public Image OreImage;
     public OreRarity Rarity;
 
-    public OreData(EnhanceData[] enhanceDatas,OreRarity oreRarity, ISkillBase skill, Image image) 
+    public OreData(EnhanceData[] enhanceDatas,OreRarity oreRarity, SkillBase skill, Image image) 
     {
         EnhancedData = enhanceDatas;
         Rarity = oreRarity;
