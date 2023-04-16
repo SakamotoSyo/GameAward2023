@@ -19,18 +19,18 @@ public class EnemyPresenter : IStartable, IDisposable
     {
         _enemyStatus = enemyStatus;
         _enemyView = enemyView;
+        enemyController.SetEnemyStatus(enemyStatus);
         
     }
 
     /// <summary>
-    /// Halthの値を監視し、変更されたときSubscribeする
+    /// 武器の耐久値を監視し、変更されたときSubscribeする
     /// </summary>
     private void EnemyHealthObserver()
     {
-        
-        //_enemyModel.EnemyHealth.Health
-        //    .Subscribe(health => _enemyView.HealthText(health))
-        //    .AddTo(_compositeDisposable);
+        _enemyStatus.EquipWeapon.CurrentDurable
+            .Subscribe(durable => _enemyView.HealthText(durable))
+            .AddTo(_compositeDisposable);
     }
 
     public void Start()
@@ -40,6 +40,6 @@ public class EnemyPresenter : IStartable, IDisposable
 
     public void Dispose()
     {
-        //_compositeDisposable.Dispose();
+        _compositeDisposable.Dispose();
     }
 }
