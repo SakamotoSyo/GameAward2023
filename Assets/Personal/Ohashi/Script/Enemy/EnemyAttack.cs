@@ -1,16 +1,12 @@
 using UnityEngine;
 
-[System.Serializable]
 public class EnemyAttack
 {
-    [SerializeField]
-    private float _attackPower = 10f;
+    private float _offensivePower;
 
-    private Animator _animator;
-
-    public void Init(Animator animator)
+    public void Init(float offensivePower)
     {
-        _animator = animator;
+        _offensivePower = offensivePower;
     }
 
     /// <summary>
@@ -18,7 +14,6 @@ public class EnemyAttack
     /// </summary>
     public void Attack(PlayerController playerController)
     {
-        _animator.Play("Attack");
-        playerController.AddDamage(_attackPower);
+        playerController.AddDamage(_offensivePower);
     }
 }
