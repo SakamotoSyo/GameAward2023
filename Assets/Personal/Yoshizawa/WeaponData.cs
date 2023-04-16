@@ -1,7 +1,7 @@
 using UniRx;
 
 // 日本語対応
-public struct WeaponData
+public class WeaponData
 {
     public float OffensivePower;
     public float WeaponWeight;
@@ -41,6 +41,14 @@ public struct WeaponData
         CurrentDurable = equipWeaponData.CurrentDurable.Value;
         Attribute = equipWeaponData.Attribute;
         WeaponType = equipWeaponData.WeaponType;
+    }
+
+    public void EnhanceParam(EnhanceData[] enhanceData) 
+    {
+        for (int i = 0; i < enhanceData.Length; i++) 
+        {
+            StatusArray[i] += enhanceData[i].EnhanceNum;
+        }
     }
 
     /// <summary>
