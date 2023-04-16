@@ -2,43 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
-public class SkillTest : MonoBehaviour, ISkillBase
+public  class SkillTest : SkillBase 
 {
     public string SkillName { get; set; }
     public int Damage { get; set; }
-    public WeaponType Type { get; set; }
+    public WeaponType Weapon { get; set; }
     public OreRarity Rarity { get; set; }
-    public PlayerSkillDataManagement playerSkillDataManagement { get; set; }
-    private void Start()
-    {
-        SendSkill();
-    }
+    public SkillType Type  { get; set; }
+    
+    private Animator _anim;
 
-    public void SetUp()
-    {
-        SkillName = "TestSkill";
-        Damage = 5;
-        Type = WeaponType.GreatSword;
-        Rarity = OreRarity.Normal;
-    }
-
-    public void SendSkill()
-    {
-        playerSkillDataManagement = FindObjectOfType<PlayerSkillDataManagement>();
-
-        SkillTest mySkill = new SkillTest();
-        mySkill.SetUp();
-
-        playerSkillDataManagement.AddSkill(mySkill);
-    }
-
-    public void UseSkill()
+    public override async UniTask UseSkill()
     {
         Debug.Log("Use Skill");
+        _anim = GetComponent<Animator>();
+        await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        Debug.Log("Anim End");
     }
 
-    public void SkillEffect()
+    protected override void SkillEffect()
     {
         Debug.Log("Skill Effect");
     }

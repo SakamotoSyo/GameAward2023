@@ -5,11 +5,11 @@ using UniRx;
 
 public class EnemyStatus
 {
-    private ReactiveProperty<float> _maxHp = new();
+    private WeaponData[] _weaponDates;
 
-    private ReactiveProperty<float> _currentHp = new();
+    private EquipEnemyWeapon _epicEnemyWeapon;
 
-    private float _enemySpeed;
+    public EquipEnemyWeapon EquipEnemyWeapon => _epicEnemyWeapon;
 
-    public float GetSpeed => _enemySpeed;
+    
 }
