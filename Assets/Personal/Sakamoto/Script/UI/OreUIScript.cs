@@ -34,6 +34,12 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _oreImage = oreData.OreImage;
     }
 
+    public void ResetPanel()
+    {
+        _infoPanel.SetActive(false);
+        _enhanceText.text += " ";
+    }
+
     /// <summary>
     /// Player‚ğ‹­‰»‚·‚éButtonEvent‚ÅŒÄ‚Ño‚·—\’è
     /// </summary>
