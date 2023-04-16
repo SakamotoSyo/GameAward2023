@@ -25,6 +25,9 @@ public class EquipEnemyWeapon
 
     public float WeaponWeight => _weaponWeight;
 
+    /// <summary>•Ší‚Ìí—Ş</summary>
+    private WeaponType _weaponType;
+
     /// <summary>
     /// •Ší‚Ö‚Ìƒ_ƒ[ƒW
     /// </summary>
@@ -34,7 +37,7 @@ public class EquipEnemyWeapon
     }
 
     /// <summary>
-    /// ‚Á‚Ä‚¢‚é•Ší‚ğŒğ‘ã‚·‚é
+    /// ‘•”õ‚µ‚Ä‚¢‚é•Ší‚ğŒğ‘ã‚·‚é
     /// </summary>
     public void ChangeWeapon(WeaponData weaponData)
     {
@@ -43,6 +46,7 @@ public class EquipEnemyWeapon
         _maxDurable = weaponData.MaxDurable;
         _weaponWeight = weaponData.WeaponWeight;
         _currentDurable.Value = weaponData.CurrentDurable;
+        _weaponType = weaponData.WeaponType;
     }
 
 }
