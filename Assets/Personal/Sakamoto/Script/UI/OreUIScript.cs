@@ -9,6 +9,7 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     
     [SerializeField] private GameObject _infoPanel;
     [SerializeField] private Image _oreImage;
+    [SerializeField] private ActorGenerator _actorGenerator;
     [SerializeField] private Text _rearityText;
     [SerializeField] private Text _enhanceText;
     private OreData _data;
@@ -38,13 +39,5 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         _infoPanel.SetActive(false);
         _enhanceText.text += " ";
-    }
-
-    /// <summary>
-    /// Player‚ğ‹­‰»‚·‚éButtonEvent‚ÅŒÄ‚Ño‚·—\’è
-    /// </summary>
-    public void PlayerEnhancement() 
-    {
-
     }
 }

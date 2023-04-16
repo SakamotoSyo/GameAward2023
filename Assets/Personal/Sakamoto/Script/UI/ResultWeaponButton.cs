@@ -40,9 +40,4 @@ public class ResultWeaponButton : MonoBehaviour, IPointerEnterHandler, IPointerE
         _statusInfoText.text = "";
     }
 
-    public void PlayerEnhance() 
-    {
-    
-    }
-
 }
