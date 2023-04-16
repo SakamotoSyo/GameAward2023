@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class ResultUIScript : MonoBehaviour
 {
     [SerializeField] private OreUIScript[] _oreUiCs = new OreUIScript[3];
-    [SerializeField] private Button[] _oreButtonUi = new Button[3];
+    [SerializeField] private Button[] _oreButton = new Button[3];
+    [SerializeField] private Button[] _weaponButton = new Button[4];
     [SerializeField] private GameObject _oreSelectObj;
     [SerializeField] private GameObject _enhanceSelectObj;
     [SerializeField] private ActorGenerator _actorGenerator;
@@ -19,12 +20,17 @@ public class ResultUIScript : MonoBehaviour
 
     void Start()
     {
-        RewardLottery();
+        
     }
 
     void Update()
     {
 
+    }
+    public void StartResultLottery() 
+    {
+        _oreSelectObj.SetActive(true);
+        RewardLottery();
     }
 
     /// <summary>
@@ -38,7 +44,7 @@ public class ResultUIScript : MonoBehaviour
             Debug.Log(oreInfo.randomSkill);
             OreData Ore = new OreData(SetEnhanceData(), oreInfo.rearity, oreInfo.randomSkill, oreInfo.oreImage);
             _oreUiCs[i].SetData(Ore);
-            _oreButtonUi[i].onClick.AddListener(() => EnhanceWeaponEvent(Ore));
+            _oreButton[i].onClick.AddListener(() => EnhanceWeaponEvent(Ore));
         }
     }
 
@@ -85,6 +91,7 @@ public class ResultUIScript : MonoBehaviour
         _oreSelectObj.SetActive(false);
         _enhanceSelectObj.SetActive(true);
         WeaponData[] weaponDatas;
+
         if (_resultSceneTest)
         {
             weaponDatas = new WeaponData[4];
@@ -98,11 +105,36 @@ public class ResultUIScript : MonoBehaviour
             weaponDatas = _actorGenerator.PlayerController.PlayerStatus.WeaponDatas;
         }
 
-        for (int i = 0; i < weaponDatas.Length; i++) 
+        for (int i = 0; i < _weaponButton.Length; i++) 
         {
-            _resultUICs[i].SetUpInfo(weaponDatas[i], selectOreData);
+            if (weaponDatas[i] != null)
+            {
+                _weaponButton[i].enabled = true;
+                _resultUICs[i].SetUpInfo(weaponDatas[i], selectOreData);
+                var num = i;
+                _weaponButton[i].onClick.AddListener(() => WeaponEnhanceEvent(weaponDatas[num], selectOreData));
+            }
+            else 
+            {
+                _weaponButton[i].enabled = false;
+            }
+            
         }
 
+    }
+
+
+    /// <summary>
+    /// ïêäÌÇÃã≠âªÇµÇΩÇ∆Ç´ÇÃButtonEvent
+    /// </summary>
+    public void WeaponEnhanceEvent(WeaponData weaponData, OreData oreData)
+    {
+        weaponData.EnhanceParam(oreData.EnhancedData);
+        if (oreData.Skill != null) 
+        {
+
+        }
+        //éüÇÃÉVÅ[ÉìÇ÷
     }
 
     public void SelectAgain()
