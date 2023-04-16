@@ -9,16 +9,16 @@ public class EnemyStatus
 
     public WeaponData[] WeaponDates => _weaponDates;
 
-    private EquipEnemyWeapon _epicEnemyWeapon = new();
+    private EquipEnemyWeapon _epicWeapon = new();
 
-    public EquipEnemyWeapon EquipEnemyWeapon => _epicEnemyWeapon;
+    public EquipEnemyWeapon EquipWeapon => _epicWeapon;
 
     /// <summary>
     /// •Ší‚Ì”z—ñ‚ÌXV
     /// </summary>
-    public void SetWeaponDate(WeaponData[] weaponDatas)
+    public void SetWeaponDates(EnemyDate enemyDate)
     {
-        _weaponDates = weaponDatas;
+        _weaponDates = enemyDate.WeaponDates;
     }
 
     /// <summary>
@@ -26,6 +26,6 @@ public class EnemyStatus
     /// </summary>
     public void EquipChangeWeapon(int weaponNum)
     {
-        _epicEnemyWeapon.ChangeWeapon(_weaponDates[weaponNum]);
+        _epicWeapon.ChangeWeapon(_weaponDates[weaponNum]);
     }
 }
