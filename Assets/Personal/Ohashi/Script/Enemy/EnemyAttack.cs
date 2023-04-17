@@ -12,7 +12,7 @@ public class EnemyAttack
     /// <summary>
     /// çUåÇ
     /// </summary>
-    public void Attack(PlayerController playerController)
+    public void NormalAttack(PlayerController playerController)
     {
         playerController.AddDamage(_offensivePower);
     }

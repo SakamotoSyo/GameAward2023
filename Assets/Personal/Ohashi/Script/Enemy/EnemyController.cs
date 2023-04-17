@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     [SerializeField, Tooltip("ダメージテキストを生成する座標")]
     private Transform _damagePos;
 
+    [SerializeField]
     private SpriteRenderer _renderer;
 
     private Animator _animator;
@@ -37,7 +38,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     /// </summary>
     public void Attack(PlayerController playerController)
     {
-        _enemyAttack.Attack(playerController);
+        _enemyAttack.NormalAttack(playerController);
     }
 
     public void AddDamage(int damage)
