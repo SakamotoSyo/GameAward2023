@@ -13,12 +13,17 @@ public class EnemyStatus
 
     public EquipEnemyWeapon EquipWeapon => _epicWeapon;
 
+    private SkillBase[] _skills = new SkillBase[2];
+
+    private SkillBase _specialSkill;
+
     /// <summary>
     /// •Ší‚Ì”z—ñ‚ÌXV
     /// </summary>
     public void SetWeaponDates(EnemyData enemyData)
     {
         _weaponDatas = enemyData.WeaponDates;
+        _epicWeapon.ChangeWeapon(_weaponDatas[0]);
     }
 
     /// <summary>
