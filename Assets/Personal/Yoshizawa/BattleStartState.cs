@@ -24,9 +24,4 @@ public class BattleStartState : State
         IsBattleCommandSelected = false;
         Debug.Log($"{nextState}に遷移するまで、3 2 1...");
     }
-
-    private IEnumerator WaitCommandSelected()
-    {
-        yield return new WaitUntil(() => IsBattleCommandSelected);
-    }
 }
