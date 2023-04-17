@@ -9,6 +9,9 @@ public class EquipEnemyWeapon
     /// <summary>武器の攻撃力</summary>
     private float _offensivePower;
 
+    /// <summary>武器の攻撃力のプロパティ</summary>
+    public float OffensivePower => _offensivePower;
+
     /// <summary>武器のクリティカル率</summary>
     private float _criticalRate;
 
@@ -18,11 +21,13 @@ public class EquipEnemyWeapon
     /// <summary>武器の現在の耐久値</summary>
     private ReactiveProperty<float> _currentDurable = new();
 
+    /// <summary>武器の現在の耐久値のプロパティ</summary>
     public IReactiveProperty<float> CurrentDurable => _currentDurable;
 
     /// <summary>武器の重さ</summary>
     private float _weaponWeight;
 
+    /// <summary>武器の重さのプロパティ</summary>
     public float WeaponWeight => _weaponWeight;
 
     /// <summary>武器の種類</summary>
