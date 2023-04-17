@@ -47,6 +47,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
             _damagePos.position,
             Quaternion.identity);
         damageController.TextInit(damage);
+        _enemyStatus.EquipWeapon.AddDamage(damage);
     }
 
     /// <summary>
