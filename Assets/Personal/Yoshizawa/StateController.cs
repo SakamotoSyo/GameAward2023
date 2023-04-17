@@ -77,11 +77,11 @@ public class StateController : MonoBehaviour
                 float x = 0f, y = 0f;
                 
                 // 変数xに代入する値の選定
-                if (a.TryGetComponent(out EnemyController enemyA)) x = enemyA.EnemyStatus.EquipEnemyWeapon.WeaponWeight;
+                if (a.TryGetComponent(out EnemyController enemyA)) x = enemyA.EnemyStatus.EquipWeapon.WeaponWeight;
                 else if (a.TryGetComponent(out PlayerController player)) x = player.PlayerStatus.EquipWeapon.WeaponWeight.Value;
 
                 // 変数yに代入する値の選定
-                if (b.TryGetComponent(out EnemyController enemyB)) y = enemyB.EnemyStatus.EquipEnemyWeapon.WeaponWeight;
+                if (b.TryGetComponent(out EnemyController enemyB)) y = enemyB.EnemyStatus.EquipWeapon.WeaponWeight;
                 else if (b.TryGetComponent(out PlayerController player)) y = player.PlayerStatus.EquipWeapon.WeaponWeight.Value;
 
                 if (x - y > 0)      return -1;
