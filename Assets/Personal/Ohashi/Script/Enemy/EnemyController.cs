@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     private EnemyAttack _enemyAttack = new();
 
+    private EnemyAnimation _enemyAnimation = new();
 
     private EnemyStatus _enemyStatus;
 
@@ -24,6 +25,11 @@ public class EnemyController : MonoBehaviour, IAddDamage
     private void Start()
     {
         _enemyAttack.Init(_enemyStatus.EquipWeapon.OffensivePower);
+    }
+
+    private void Update()
+    {
+        
     }
 
     /// <summary>
@@ -53,7 +59,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     /// <summary>
     /// EnemyDateから参照してくる
     /// </summary>
-    public void SetEnemyDate(EnemyData enemyDate)
+    public void SetEnemyData(EnemyData enemyDate)
     {
         _enemyStatus.SetWeaponDates(enemyDate);
         _animator = enemyDate.EnemyAnim;

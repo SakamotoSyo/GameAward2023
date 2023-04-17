@@ -5,9 +5,9 @@ using UniRx;
 
 public class EnemyStatus
 {
-    private WeaponData[] _weaponDates;
+    private WeaponData[] _weaponDatas;
 
-    public WeaponData[] WeaponDates => _weaponDates;
+    public WeaponData[] WeaponDates => _weaponDatas;
 
     private EquipEnemyWeapon _epicWeapon = new();
 
@@ -16,9 +16,9 @@ public class EnemyStatus
     /// <summary>
     /// •Ší‚Ì”z—ñ‚ÌXV
     /// </summary>
-    public void SetWeaponDates(EnemyData enemyDate)
+    public void SetWeaponDates(EnemyData enemyData)
     {
-        _weaponDates = enemyDate.WeaponDates;
+        _weaponDatas = enemyData.WeaponDates;
     }
 
     /// <summary>
@@ -26,6 +26,6 @@ public class EnemyStatus
     /// </summary>
     public void EquipChangeWeapon(int weaponNum)
     {
-        _epicWeapon.ChangeWeapon(_weaponDates[weaponNum]);
+        _epicWeapon.ChangeWeapon(_weaponDatas[weaponNum]);
     }
 }

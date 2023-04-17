@@ -106,7 +106,7 @@ public class TestMusyokuSkill : MonoBehaviour
         sequence.AppendCallback(() =>
         {
             _explosionEffect.Play();
-            _enemyController.TwinSwordAdDamage(_damege);
+            _enemyController.AddDamage(_damege);
         });
         //待つ
         sequence.AppendInterval(_damegeInterval);
