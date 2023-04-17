@@ -16,7 +16,7 @@ public class EnemyStatus
     /// <summary>
     /// •Ší‚Ì”z—ñ‚ÌXV
     /// </summary>
-    public void SetWeaponDates(EnemyDate enemyDate)
+    public void SetWeaponDates(EnemyData enemyDate)
     {
         _weaponDates = enemyDate.WeaponDates;
     }
