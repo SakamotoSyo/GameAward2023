@@ -53,7 +53,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     /// <summary>
     /// EnemyDateから参照してくる
     /// </summary>
-    public void SetEnemyDate(EnemyDate enemyDate)
+    public void SetEnemyDate(EnemyData enemyDate)
     {
         _enemyStatus.SetWeaponDates(enemyDate);
         _animator = enemyDate.EnemyAnim;
