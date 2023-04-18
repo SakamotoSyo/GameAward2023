@@ -9,7 +9,7 @@ public class BattleEndState : State
 {
     protected override void OnEnter(State currentState)
     {
-        Debug.Log($"{currentState}に入りました。");
+        Debug.Log($"「BattleEndState」に入りました。");
         WeaponData[] playerWeapons = Owner.PlayerController.PlayerStatus.WeaponDatas;
 
         // ゲームクリア判定
