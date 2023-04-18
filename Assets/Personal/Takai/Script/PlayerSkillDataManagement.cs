@@ -10,7 +10,7 @@ public class PlayerSkillDataManagement : MonoBehaviour
     private List<SkillBase> _skills = new List<SkillBase>();
     public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
 
-    private void Start()
+    private void Awake()
     {
         SkillBase[] skillPrefabs = Resources.LoadAll<SkillBase>("Skills");
 

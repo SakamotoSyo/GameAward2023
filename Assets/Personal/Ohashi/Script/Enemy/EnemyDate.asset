@@ -12,4 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b24b2f37326779458165c4de3ab31bd, type: 3}
   m_Name: EnemyDate
   m_EditorClassIdentifier: 
-  _enemySprite: {fileID: 0}
+  EnemySprite: {fileID: 0}
+  EnemyAnim: {fileID: 0}
+  RankPoint: 0
+  EnemyPrefab: {fileID: 0}
+  WeaponDates:
+  - OffensivePower: 10
+    WeaponWeight: 10
+    CriticalRate: 10
+    MaxDurable: 0
+    CurrentDurable: 0
+    StatusArray: []
+    Attribute: 0
+    WeaponType: 0
+  - OffensivePower: 0
+    WeaponWeight: 0
+    CriticalRate: 0
+    MaxDurable: 0
+    CurrentDurable: 0
+    StatusArray: []
+    Attribute: 0
+    WeaponType: 0
+  - OffensivePower: 0
+    WeaponWeight: 0
+    CriticalRate: 0
+    MaxDurable: 0
+    CurrentDurable: 0
+    StatusArray: []
+    Attribute: 0
+    WeaponType: 0

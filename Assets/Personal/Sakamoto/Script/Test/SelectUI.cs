@@ -10,16 +10,20 @@ public class SelectUI : MonoBehaviour
     [SerializeField] private Transform[] _actionUi = new Transform[4];
     [SerializeField] private Transform[] _actionUiPos = new Transform[4];
     [SerializeField] private Text[] _skillText = new Text[3];
-    [SerializeField] private PlayerController _playerController;
+    [SerializeField] private ActorGenerator _generator;
+    [SerializeField] private StateController _stateController;
     [SerializeField] private int _lotateNum;
     [SerializeField] private GameObject _commandUI;
 
     private WeaponStatus _weaponStatus;
-    private PlayerStatus _playerStatus;
+    private PlayerController _playerController;
+    private EnemyController _enemyController;
 
     private void Start()
     {
-        _playerStatus = _playerController.PlayerStatus;
+        _playerController = _generator.PlayerController;
+        Debug.Log(_playerController);
+        _enemyController = _generator.EnemyController;
     }
 
     private void Update()
@@ -70,16 +74,16 @@ public class SelectUI : MonoBehaviour
                        x => _actionUi[j].transform.localScale = x,
                        _actionUiPos[nextMoveNum].transform.localScale, 0.5f);
 
-            if (i == 0) 
+            if (i == 0)
             {
                 _actionUi[nextMoveNum].SetAsLastSibling();
             }
         }
     }
 
-    public void TestAttack() 
+    public void TestAttack()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             var num = _lotateNum % _actionUi.Length;
             if (num < 0)
@@ -88,10 +92,11 @@ public class SelectUI : MonoBehaviour
             }
 
 
-            if (_actionUi[num] == _actionUi[0]) 
+            if (_actionUi[num] == _actionUi[0])
             {
                 Debug.Log("attack");
-                GameObject.Find("Weapon").GetComponent<WeaponStatus>().SelectType(0);
+               _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack));
+
             }
             else if (_actionUi[num] == _actionUi[1])
             {
@@ -109,14 +114,15 @@ public class SelectUI : MonoBehaviour
             }
 
             _commandUI.SetActive(false);
+            _stateController.NextStateTransition();
         }
     }
 
-    public void StartPlayerTurn() 
+    public void StartPlayerTurn()
     {
-        _skillText[0].text = _playerStatus.NinjaThrowingKnives.SkillName;
-        _skillText[1].text = _playerStatus.PlayerSkillList[0].SkillName;
-        _skillText[2].text = _playerStatus.PlayerSkillList[1].SkillName;
+        _skillText[0].text = _playerController.PlayerStatus.NinjaThrowingKnives.SkillName;
+        _skillText[1].text = _playerController.PlayerStatus.PlayerSkillList[0].SkillName;
+        _skillText[2].text = _playerController.PlayerStatus.PlayerSkillList[1].SkillName;
 
         _commandUI.SetActive(true);
     }

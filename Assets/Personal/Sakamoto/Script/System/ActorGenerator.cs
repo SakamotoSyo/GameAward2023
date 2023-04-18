@@ -5,15 +5,16 @@ using UnityEngine;
 public class ActorGenerator : MonoBehaviour
 {
     public PlayerController PlayerController => _playerController;
-    public List<EnemyController> EnemyControllerList => _enemyControllerList;
+    public EnemyController EnemyController => _enemyController;
 
     [SerializeField] private GameObject _playerPrefab;
+    [SerializeField] private EnemyData _testEnemyData;
     [SerializeField] private Transform _playerInsPos;
+    [SerializeField] private Transform _enemyInsPos;
     private PlayerController _playerController;
-    //ToDo:Œã‚ÅEnemyController‚É•Ï‚¦‚é
-    private List<EnemyController> _enemyControllerList = new();
+    private EnemyController _enemyController;
 
-    private void Start()
+    private void Awake()
     {
         SetUp();
     }
@@ -21,23 +22,22 @@ public class ActorGenerator : MonoBehaviour
     public void SetUp()
     {
         PlayerGeneration();
+        EnemyGenetation(_testEnemyData.EnemyPrefab);
     }
 
-    public PlayerController PlayerGeneration() 
+    public void PlayerGeneration() 
     {
         var playerObj = Instantiate(_playerPrefab);
         playerObj.transform.SetParent(_playerInsPos.transform);
         _playerController = playerObj.GetComponent<PlayerController>();
-        return _playerController;
     }
 
-    public List<EnemyController> EnemyGenetation(List<GameObject> enemyList)
+    public EnemyController EnemyGenetation(GameObject enemyPrefab)
     {
-        for (int i = 0; i < enemyList.Count; i++)
-        {
-            _enemyControllerList.Add(enemyList[i].GetComponent<EnemyController>());
-        }
-
-        return _enemyControllerList;
+        var enemyObj = Instantiate(enemyPrefab);
+        enemyObj.transform.SetParent(_enemyInsPos.transform);
+        _enemyController = enemyObj.GetComponent<EnemyController>();
+        _enemyController.SetEnemyData(_testEnemyData);
+        return _enemyController;
     }
 }

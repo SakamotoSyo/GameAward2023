@@ -11,13 +11,13 @@ public class BattleStateController : MonoBehaviour
     [SerializeField] private ActorGenerator _generator;
     private StateMachine<BattleStateController> _stateMachine;
     private PlayerController _playerController;
-    private List<EnemyController> _enemyController = new();
-    
+    private EnemyController _enemyController = new();
+   
 
     void Start()
     {
         _playerController = _generator.PlayerController;
-        _enemyController = _generator.EnemyControllerList;
+        _enemyController = _generator.EnemyController;
         _stateMachine = new StateMachine<BattleStateController>(this);
         _stateMachine.Start<GameStartState>();
     }
