@@ -15,6 +15,6 @@ public class PlayerAttackState : State
     {
         WeaponData[] weapons = Owner.PlayerController.PlayerStatus.WeaponDatas;
         Owner.TransitionToStartOrEnd(weapons);
-        Debug.Log($"{nextState.GetType()}に遷移するまで、3 2 1...");
+        Debug.Log($"「{nextState.GetType()}」に遷移するまで、3 2 1...");
     }
 }

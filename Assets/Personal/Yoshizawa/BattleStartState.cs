@@ -22,6 +22,6 @@ public class BattleStartState : State
     protected override void OnExit(State nextState)
     {
         IsBattleCommandSelected = false;
-        Debug.Log($"{nextState.GetType()}に遷移するまで、3 2 1...");
+        Debug.Log($"「{nextState.GetType()}」に遷移するまで、3 2 1...");
     }
 }
