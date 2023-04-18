@@ -1,8 +1,9 @@
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
-using UnityEngine.SceneManagement;
+using UnityEditor.Compilation;
 
 [CustomEditor(typeof(SkillBase))]
 public class SkillGenerator : EditorWindow
@@ -25,23 +26,28 @@ public class SkillGenerator : EditorWindow
 
     void OnGUI()
     {
-        GUILayout.Label("�X�L���X�e�[�^�X�ݒ�");
+        GUILayout.Label("SKillGenerator");
 
         EditorGUILayout.BeginVertical(GUI.skin.box);
-        _skillName = EditorGUILayout.TextField("�X�L����", _skillName);
-        _damage = EditorGUILayout.IntField("�_���[�W", _damage);
-        _weapon = (WeaponType)EditorGUILayout.EnumPopup("������", _weapon);
-        _rarity = (OreRarity)EditorGUILayout.EnumPopup("���A���e�B", _rarity);
-        _type = (SkillType)EditorGUILayout.EnumPopup("�^�C�v", _type);
-        _className = EditorGUILayout.TextField("�N���X��", _className);
-        if (GUILayout.Button("���Z�b�g"))
+        _skillName = EditorGUILayout.TextField("スキル名", _skillName);
+        _damage = EditorGUILayout.IntField("ダメージ値", _damage);
+        _weapon = (WeaponType)EditorGUILayout.EnumPopup("武器種類", _weapon);
+        _rarity = (OreRarity)EditorGUILayout.EnumPopup("レアリティ", _rarity);
+        _type = (SkillType)EditorGUILayout.EnumPopup("タイプ", _type);
+        _className = EditorGUILayout.TextField("クラス名", _className);
+        if (GUILayout.Button("リセット"))
         {
             Reset();
         }
 
-        if (GUILayout.Button("�쐬"))
+        if (GUILayout.Button("クラス作成"))
         {
-            CreatSkill();
+            CreateClass();
+        }
+
+        if (GUILayout.Button("プレハブ作成"))
+        {
+            CreatPrefab();
         }
 
         EditorGUILayout.EndVertical();
@@ -54,22 +60,34 @@ public class SkillGenerator : EditorWindow
         _skillName = "";
     }
 
-    private void CreatSkill()
+    private void CreatPrefab()
     {
-        if (_skillName == "" || _skillName == "") { return; }
         string prefabPath = $"Assets/Resources/Skills/{_className}.prefab";
-        GameObject newPrefab = new GameObject(_className);
-
-        CreateClass();
-        while(EditorApplication.isCompiling)
+        if (AssetDatabase.LoadAssetAtPath(prefabPath, typeof(GameObject)))
         {
-            System.Threading.Thread.Sleep(100);
+            Debug.LogWarning("プレハブが既に存在します " + _className);
+            return;
         }
 
-        newPrefab.AddComponent(Type.GetType(_className));
+        GameObject newPrefab = new GameObject(_className);
+        Type type = Type.GetType(_className + ", Assembly-CSharp");
+
+        if (type == null)
+        {
+            Debug.LogError("コンポーネントが見つかりませんでした: " + _className);
+            return;
+        }
+
+        Component component = newPrefab.AddComponent(type);
+        Debug.Log(component);
+
+        if (component == null)
+        {
+            Debug.Log("コンポーネントがアタッチ出来ませんでした" + _className);
+        }
+
         PrefabUtility.SaveAsPrefabAsset(newPrefab, prefabPath);
         GameObject.DestroyImmediate(newPrefab);
-        AssetDatabase.Refresh();
     }
 
     private void CreateClass()
@@ -92,7 +110,19 @@ public class SkillGenerator : EditorWindow
                 break;
         }
 
-        string classCode = "using System;\r\nusing System.Collections;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\nusing Cysharp.Threading.Tasks;\r\nusing UnityEngine.Playables;\r\n\r\npublic  class " + _className + " : SkillBase \r\n{\r\n    public string SkillName { get; set; }\r\n    public int Damage { get; set; }\r\n    public WeaponType Weapon { get; set; }\r\n    public OreRarity Rarity { get; set; }\r\n    public SkillType Type  { get; set; }\r\n    \r\n    private PlayableDirector _anim;\r\n\r\n    public override async UniTask UseSkill()\r\n    {\r\n        Debug.Log(\"Use Skill\");\r\n        _anim = GetComponent<PlayableDirector>();\r\n        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);\r\n        Debug.Log(\"Anim End\");\r\n    }\r\n\r\n    protected override void SkillEffect()\r\n    {\r\n        Debug.Log(\"Skill Effect\");\r\n    }\r\n}";
+        if (AssetDatabase.LoadAssetAtPath(path, typeof(MonoScript)))
+        {
+            Debug.LogWarning("コンポーネントが既に存在します " + _className);
+            return;
+        }
+
+        string classCode =
+            "using System;\r\nusing System.Collections;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\nusing Cysharp.Threading.Tasks;\r\nusing UnityEngine.Playables;\r\n\r\npublic  class " +
+            _className +
+            " : SkillBase \r\n{\r\n    public string SkillName { get; set; }\r\n    public int Damage { get; set; }\r\n    public WeaponType Weapon { get; set; }\r\n    public OreRarity Rarity { get; set; }\r\n    public SkillType Type  { get; set; }\r\n    \r\n    private PlayableDirector _anim;\r\n\r\n    public override async UniTask UseSkill()\r\n    {\r\n        Debug.Log(\"Use Skill\");\r\n        _anim = GetComponent<PlayableDirector>();\r\n        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);\r\n        Debug.Log(\"Anim End\");\r\n    }\r\n\r\n    protected override void SkillEffect()\r\n    {\r\n        Debug.Log(\"Skill Effect\");\r\n    }\r\n}";
         File.WriteAllText(path, classCode);
+        CompilationPipeline.RequestScriptCompilation();
+        AssetDatabase.Refresh();
     }
 }
+#endif
