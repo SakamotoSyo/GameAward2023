@@ -1,5 +1,7 @@
 using UniRx;
+using UnityEngine;
 
+[System.Serializable]
 // 日本語対応
 public class WeaponData
 {

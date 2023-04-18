@@ -11,6 +11,8 @@ public class EnemyData : ScriptableObject
 
     public int RankPoint;
 
+    public GameObject EnemyPrefab;
+
     public WeaponData[] WeaponDates;
 
 }

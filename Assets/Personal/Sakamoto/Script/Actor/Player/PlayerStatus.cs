@@ -41,6 +41,11 @@ public class PlayerStatus
         _equipWeapon.ChangeWeapon(weaponData);
     }
 
+    public float ConventionalAttack() 
+    {
+       return _equipWeapon.OffensivePower.Value;
+    }
+
     public void SaveData() 
     {
 
@@ -49,6 +54,8 @@ public class PlayerStatus
 
 public class PlayerSaveData 
 {
-    public WeaponData EquipWepon;
-    public List<SkillBase> PlayerSkillList = new();
+    public WeaponData EquipWeapon;
+    public WeaponData[] WeaponArray;
+    public SkillBase[] PlayerSkillList = new SkillBase[2];
+    public SkillBase NinjaThrowingKnives;
 }

@@ -36,8 +36,33 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// í èÌçUåÇ
+    /// </summary>
+    public float Attack(PlayerAttackType attackType) 
+    {
+        switch (attackType) 
+        {
+            case PlayerAttackType.ConventionalAttack:
+                return _playerStatus.ConventionalAttack();
+                break;
+           // case PlayerAttackType.Skill1:
+             //   return
+        }
+
+        return 0;
+    }
+
     public void SetPlayerStatus(PlayerStatus playerStatus) 
     {
         _playerStatus = playerStatus;
     }
+}
+
+public enum PlayerAttackType 
+{
+    ConventionalAttack,
+    NinjaThrowingKnives,
+    Skill1,
+    Skill2,
 }
