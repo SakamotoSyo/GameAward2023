@@ -1,20 +1,17 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine.Playables;
 
 public abstract class SkillBase : MonoBehaviour
 {
-    public string SkillName { get; set; }
-    public int Damage { get; set; }
-    public WeaponType Weapon { get; set; }
-    public OreRarity Rarity { get; set; }
-    public SkillType Type { get; set; }
-
+    public abstract string SkillName { get; protected set; }
+    public abstract int Damage { get; protected set; }
+    public abstract WeaponType Weapon { get; protected set; }
+    public abstract OreRarity Rarity { get; protected set; }
+    public abstract SkillType Type { get; protected set; }
     public abstract UniTask UseSkill();
 
-    protected virtual void SkillEffect()
-    {
-        
-    }
+    protected abstract void SkillEffect();
 }
 
 public enum SkillType
