@@ -11,7 +11,7 @@ public class BattleStartState : State
     protected override void OnEnter(State currentState)
     {
         IsBattleCommandSelected = true;
-        Debug.Log($"{currentState}に入りました。");
+        Debug.Log($"「BattleStartState」に入りました。");
     }
 
     protected override void OnUpdate()
@@ -22,6 +22,6 @@ public class BattleStartState : State
     protected override void OnExit(State nextState)
     {
         IsBattleCommandSelected = false;
-        Debug.Log($"{nextState}に遷移するまで、3 2 1...");
+        Debug.Log($"「{nextState.GetType()}」に遷移するまで、3 2 1...");
     }
 }

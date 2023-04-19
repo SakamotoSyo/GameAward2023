@@ -9,7 +9,17 @@ namespace SakamotoTest
     {
         protected override void OnEnter(State currentState)
         {
+            Owner.ActionSequentialDetermining();
+            StateMachine.Dispatch((int)BattleStateController.BattleEvent.StartToNextActorState);
+        }
 
+        protected override void OnUpdate()
+        {
+            base.OnUpdate();
+        }
+
+        protected override void OnExit(State nextState)
+        {
         }
     }
 }

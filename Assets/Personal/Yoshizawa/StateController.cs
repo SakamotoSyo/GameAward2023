@@ -59,7 +59,6 @@ public class StateController : MonoBehaviour
         _stateMachine.AddTransition<BattleStartState, PlayerAttackState>((int)TransitionCondition.Start2Player);
         _stateMachine.AddTransition<BattleStartState, EnemyAttackState>((int)TransitionCondition.Start2Enemy);
         _stateMachine.AddTransition<PlayerAttackState, EnemyAttackState>((int)TransitionCondition.Player2Enemy);
-        _stateMachine.AddTransition<EnemyAttackState, EnemyAttackState>((int)TransitionCondition.Enemy2Enemy);
         _stateMachine.AddTransition<EnemyAttackState, PlayerAttackState>((int)TransitionCondition.Enemy2Player);
         _stateMachine.AddAnyTranstion<BattleEndState>((int)TransitionCondition.Any2End);
 
@@ -112,7 +111,10 @@ public class StateController : MonoBehaviour
 
     public void NextStateTransition()
     {
-        GameObject currentActor = _orderOfAction[_count];
+        if (_orderOfAction[_count].TryGetComponent(out EnemyController enemy))
+        {
+            CurrenyEnemy = enemy;
+        }
 
         if (_count < _orderOfAction.Count) _count++;
         else
@@ -126,17 +128,7 @@ public class StateController : MonoBehaviour
         // 次に行動するActorがEnemyだったら
         if (nextActor.TryGetComponent(out EnemyController nextEnemy))
         {
-            // 現在行動しているActorがEnemyだったら
-            if (currentActor.TryGetComponent(out EnemyController currentEnemy))
-            {
-                _stateMachine.Dispatch((int)TransitionCondition.Enemy2Enemy);
-            }
-            // 現在行動しているActorがPlayerだったら
-            else if (currentActor.TryGetComponent(out PlayerController currentPlayer))
-            {
-                CurrenyEnemy = nextEnemy;
-                _stateMachine.Dispatch((int)TransitionCondition.Player2Enemy);
-            }
+            _stateMachine.Dispatch((int)TransitionCondition.Player2Enemy);
         }
         // 次に行動するActorがPlayerだったら
         else if (nextActor.TryGetComponent(out PlayerController nextPlayer))
