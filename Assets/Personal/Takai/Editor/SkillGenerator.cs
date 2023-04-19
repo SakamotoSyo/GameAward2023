@@ -3,7 +3,10 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
+using System.Reflection;
 using UnityEditor.Compilation;
+using UnityEngine.Playables;
+using UnityEngine.UIElements;
 
 [CustomEditor(typeof(SkillBase))]
 public class SkillGenerator : EditorWindow
@@ -77,7 +80,8 @@ public class SkillGenerator : EditorWindow
             Debug.LogError("コンポーネントが見つかりませんでした: " + _className);
             return;
         }
-
+        SetComponentVariable(type,_damage);
+        newPrefab.AddComponent<PlayableDirector>();
         Component component = newPrefab.AddComponent(type);
         Debug.Log(component);
 
@@ -123,6 +127,22 @@ public class SkillGenerator : EditorWindow
         File.WriteAllText(path, classCode);
         CompilationPipeline.RequestScriptCompilation();
         AssetDatabase.Refresh();
+    }
+
+    void SetComponentVariable(Type t,int dmg)
+    {
+        object instance = Activator.CreateInstance(t);
+        BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+        FieldInfo fieldInfo = t.GetField("Damage", bindingFlags);
+        if (fieldInfo != null)
+        {
+            fieldInfo.SetValue(instance, dmg);
+        }
+        else
+        {
+            Debug.LogError("変数が見つかりませんでした: " + "Damage");
+            return;
+        }
     }
 }
 #endif
