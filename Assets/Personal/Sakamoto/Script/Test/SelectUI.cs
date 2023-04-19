@@ -11,7 +11,8 @@ public class SelectUI : MonoBehaviour
     [SerializeField] private Transform[] _actionUiPos = new Transform[4];
     [SerializeField] private Text[] _skillText = new Text[3];
     [SerializeField] private ActorGenerator _generator;
-    [SerializeField] private StateController _stateController;
+    //[SerializeField] private StateController _stateController;
+    [SerializeField] private BattleStateController _battleStateController;
     [SerializeField] private int _lotateNum;
     [SerializeField] private GameObject _commandUI;
 
@@ -114,7 +115,7 @@ public class SelectUI : MonoBehaviour
             }
 
             _commandUI.SetActive(false);
-            _stateController.NextStateTransition();
+            _battleStateController.ActorStateEnd();
         }
     }
 
