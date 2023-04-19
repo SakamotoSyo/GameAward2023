@@ -1,29 +1,27 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine.Playables;
 
-public  class SkillTest : SkillBase 
+public class TestSkill : SkillBase
 {
-    public string SkillName { get; set; }
-    public int Damage { get; set; }
-    public WeaponType Weapon { get; set; }
-    public OreRarity Rarity { get; set; }
-    public SkillType Type  { get; set; }
-    
-    private Animator _anim;
+    public override string SkillName { get; protected set; }
+    public override int Damage { get; protected set; }
+    public override WeaponType Weapon { get; protected set; }
+    public override OreRarity Rarity { get; protected set; }
+    public override SkillType Type { get; protected set; }
+    private PlayableDirector _anim;
 
-    public override async UniTask UseSkill()
+    public async override UniTask UseSkill()
     {
         Debug.Log("Use Skill");
-        _anim = GetComponent<Animator>();
-        await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        _anim = GetComponent<PlayableDirector>();
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
         Debug.Log("Anim End");
     }
 
     protected override void SkillEffect()
     {
-        Debug.Log("Skill Effect");
+        // スキルの効果処理を実装する
     }
 }
+
