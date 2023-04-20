@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     private void Start()
     {
-        _enemyAttack.Init(_enemyStatus.EquipWeapon.OffensivePower);
+        _enemyAttack.Init(_enemyStatus.EquipWeapon.OffensivePower, _animator);
     }
 
     private void Update()
