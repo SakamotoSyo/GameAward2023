@@ -9,8 +9,7 @@ public class SelectNextActorTransitionState : State
 {
     protected override async void OnEnter(State currentState)
     {
-        Debug.Log("SelectState");
-        Owner.NextActorStateTransition();
+       Owner.NextActorStateTransition();
     }
 
     protected override void OnUpdate()

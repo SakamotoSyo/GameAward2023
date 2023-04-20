@@ -73,11 +73,10 @@ public class BattleStateController : MonoBehaviour
     /// <summary>
     /// Listの中から次に行動するActorを決定させる
     /// </summary>
-    public async void NextActorStateTransition()
+    public void NextActorStateTransition()
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(0.1));
-        Debug.Log(_actionSequentialList.Count);
-        
+        UniTask.WaitUntil(() => _stateMachine.CurrentState == _stateMachine.GetOrAddState<SelectNextActorTransitionState>());
+
         for (int i = 0; i < _actionSequentialList.Count; i++)
         {
             if (_actionSequentialList[i].PlayerController && !_actionSequentialList[i].alreadyActedOn)
@@ -88,18 +87,17 @@ public class BattleStateController : MonoBehaviour
             else if (_actionSequentialList[i].EnemyController && !_actionSequentialList[i].alreadyActedOn)
             {
                 _stateMachine.Dispatch((int)BattleEvent.SelectStateToEnemyTrun);
-                Debug.Log("Enemyに移行します");
                 break;
             }
             else if (_actionSequentialList[i].PlayerController && _actionSequentialList[i].EnemyController)
             {
                 Debug.LogError("想定外のDataが含まれています");
             }
-            else 
+            else if(_actionSequentialList.Count -1 == i)
             {
                 ActionSequentialDetermining();
                 Debug.Log("全て行動済みなので行動順を決めなおす");
-                NextActorStateTransition();
+               NextActorStateTransition();
             }
         }
     }
@@ -109,13 +107,17 @@ public class BattleStateController : MonoBehaviour
     /// </summary>
     public void ActorStateEnd() 
     {
+        ClearGameOverCheck();
+
         for (int i = 0; i < _actionSequentialList.Count; i++) 
         {
             if (!_actionSequentialList[i].alreadyActedOn) 
             {
                 _actionSequentialList[i].alreadyActedOn = true;
+                break;
             }
         }
+
         if (_stateMachine.CurrentState == _stateMachine.GetOrAddState<SPlayerAttackState>())
         {
             _stateMachine.Dispatch((int)BattleEvent.PlayerTurnToSelectState);
@@ -123,6 +125,17 @@ public class BattleStateController : MonoBehaviour
         else if (_stateMachine.CurrentState == _stateMachine.GetOrAddState<SEnemyAttackState>()) 
         {
             _stateMachine.Dispatch((int)BattleEvent.EnemyToSelectState);
+        }
+    }
+
+    public void ClearGameOverCheck() 
+    {
+      var weaponArray = _enemyController.EnemyStatus.WeaponDates.Where(x => 0 < x.CurrentDurable).ToArray();
+        Debug.Log($"残っている敵の武器は{weaponArray.Length}本");
+        Debug.Log(weaponArray[0].CurrentDurable);   
+        if (weaponArray.Length == 0) 
+        {
+            Debug.Log("GameClear");
         }
     }
 
