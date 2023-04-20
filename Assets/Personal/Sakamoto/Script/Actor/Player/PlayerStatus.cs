@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using UniRx;
 
 public class PlayerStatus
@@ -21,7 +22,7 @@ public class PlayerStatus
         //TODO:Œ±“IŒã‚Åíœ‚·‚é
         for (int i = 0; i < _weaponDatas.Length; i++) 
         {
-            _weaponDatas[i] = new(50,50,50,50, WeaponData.AttributeType.None, WeaponType.GreatSword); 
+            _weaponDatas[i] = new(1000, 1000,50,1000, WeaponData.AttributeType.None, WeaponType.GreatSword); 
         }
         _equipWeapon.ChangeWeapon(_weaponDatas[0]);
     }
@@ -41,6 +42,26 @@ public class PlayerStatus
         _equipWeapon.ChangeWeapon(weaponData);
     }
 
+    /// <summary>
+    /// g‚¦‚é•Ší‚ğ‚Á‚Ä‚¢‚½ê‡ƒ‰ƒ“ƒ_ƒ€‚É“ü‚ê‘Ö‚¦‚é
+    /// “ü‚ê‘Ö‚¦‚ê‚È‚©‚Á‚½ê‡false‚ğ•Ô‚·
+    /// </summary>
+    public bool RandomEquipWeponChange() 
+    {
+        _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
+        var weaponArray = _weaponDatas.Where(x => 0 < x.CurrentDurable).ToArray();
+        if (weaponArray.Length == 0)
+        {
+            Debug.Log("GameOver");
+            return false;
+        }
+        else 
+        {
+            _equipWeapon.ChangeWeapon(weaponArray[0]);
+        }
+        return true;
+    }
+
     public float ConventionalAttack() 
     {
        return _equipWeapon.OffensivePower.Value;
@@ -58,4 +79,5 @@ public class PlayerSaveData
     public WeaponData[] WeaponArray;
     public SkillBase[] PlayerSkillList = new SkillBase[2];
     public SkillBase NinjaThrowingKnives;
+    public int PlayerRankPoint;
 }

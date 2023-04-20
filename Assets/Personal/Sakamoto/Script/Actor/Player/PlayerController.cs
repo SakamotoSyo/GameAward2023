@@ -31,7 +31,11 @@ public class PlayerController : MonoBehaviour
         }
         else 
         {
-            //€‚ñ‚¾‚Æ‚«‚Ìˆ—‚ğ’Ç‰Á
+            //•Ší‚ª‰ó‚ê‚½‚Æ‚«‚É“ü‚ê‘Ö‚¦‚éˆ—
+            if (!_playerStatus.RandomEquipWeponChange())
+            {
+                //GameOver‚Ìˆ—‚Í‚±‚±‚É
+            }
         }
         
     }

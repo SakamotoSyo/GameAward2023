@@ -26,7 +26,7 @@ public class PlayerEquipWeapon
 
     public virtual void AddDamage(float damage)
     {
-        _currentDurable.Value = damage;
+        _currentDurable.Value -= damage;
     }
 
     /// <summary>
