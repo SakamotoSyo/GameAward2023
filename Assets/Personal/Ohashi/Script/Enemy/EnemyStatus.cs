@@ -26,6 +26,16 @@ public class EnemyStatus
         _epicWeapon.ChangeWeapon(_weaponDatas[0]);
     }
 
+    public bool IsWeaponsAllBrek()
+    {
+        if(_epicWeapon.WeaponBreakCount >= _weaponDatas.Length)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     /// <summary>
     /// ‚Ç‚Ì•Ší‚É•ÏX‚·‚é‚©‚ğw’è‚·‚é
     /// </summary>
