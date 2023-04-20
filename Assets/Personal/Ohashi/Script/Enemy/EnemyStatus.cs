@@ -39,8 +39,15 @@ public class EnemyStatus
     /// <summary>
     /// ‚Ç‚Ì•Ší‚É•ÏX‚·‚é‚©‚ğw’è‚·‚é
     /// </summary>
-    public void EquipChangeWeapon(int weaponNum)
+    public void EquipChangeWeapon()
     {
-        _epicWeapon.ChangeWeapon(_weaponDatas[weaponNum]);
+        foreach(WeaponData weapon in _weaponDatas)
+        {
+            if(weapon.CurrentDurable > 0)
+            {
+                _epicWeapon.ChangeWeapon(weapon);
+                return;
+            }
+        }
     }
 }
