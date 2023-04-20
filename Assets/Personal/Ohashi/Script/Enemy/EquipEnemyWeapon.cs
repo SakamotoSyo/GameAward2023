@@ -33,12 +33,27 @@ public class EquipEnemyWeapon
     /// <summary>•Ší‚Ìí—Ş</summary>
     private WeaponType _weaponType;
 
+    private int _breakCount = 0;
+
+    public int WeaponBreakCount => _breakCount;
+
     /// <summary>
     /// •Ší‚Ö‚Ìƒ_ƒ[ƒW
     /// </summary>
     public void AddDamage(float damage)
     {
         _currentDurable.Value -= damage;
+
+    }
+
+    public bool IsWeaponBreak()
+    {
+        if (_currentDurable.Value <= 0)
+        {
+            _breakCount++;
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
