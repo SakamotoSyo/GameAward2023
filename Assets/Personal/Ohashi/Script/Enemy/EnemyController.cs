@@ -50,6 +50,14 @@ public class EnemyController : MonoBehaviour, IAddDamage
             Quaternion.identity);
         damageController.TextInit(damage);
         _enemyStatus.EquipWeapon.AddDamage(damage);
+        if(_enemyStatus.EquipWeapon.IsWeaponBreak())
+        {
+            if(_enemyStatus.IsWeaponsAllBrek())
+            {
+                Debug.Log("敵の武器が全部壊れた");
+            }
+            _enemyStatus.EquipChangeWeapon();
+        }
     }
 
     /// <summary>
