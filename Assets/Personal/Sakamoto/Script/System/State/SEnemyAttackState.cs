@@ -8,7 +8,8 @@ public class SEnemyAttackState : State
 {
     protected override async void OnEnter(State currentState)
     {
-        Owner.EnemyController.Attack(Owner.PlayerController);
+       await Owner.EnemyController.Attack(Owner.PlayerController);
+       Owner.ActorStateEnd();
     }
 }
 
