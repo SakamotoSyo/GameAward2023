@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class EnemyController : MonoBehaviour, IAddDamage
 {
@@ -36,9 +37,10 @@ public class EnemyController : MonoBehaviour, IAddDamage
     /// <summary>
     /// 攻撃のメソッドを呼ぶ
     /// </summary>
-    public void Attack(PlayerController playerController)
+    public async UniTask Attack(PlayerController playerController)
     {
         _enemyAttack.NormalAttack(playerController);
+        await UniTask.Delay(1);
     }
 
     public void AddDamage(int damage)
