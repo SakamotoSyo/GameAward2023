@@ -34,7 +34,7 @@ public class PlayerSkillDataManagement : MonoBehaviour
         
         foreach (var s in _skills)
         {
-            if (s.Weapon == weapon && s.Rarity == rarity)
+            if (s.Weapon == weapon)
             {
                 skills.Add(s);
             }
