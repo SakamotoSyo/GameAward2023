@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class RankingBattleScript : MonoBehaviour
 {
     [SerializeField] private EnemyDataBase _enemyDataBase;
-    [SerializeField] private Button[] _selectButton = new Button[3];
-    [SerializeField] private Image[] _enemyImage = new Image[3];
+    [SerializeField] private GameObject _buttonInsPos;
+    [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private int _rankPointRange = 100;
     [SceneName]
     [SerializeField] private string _battleScene;
@@ -29,12 +29,15 @@ public class RankingBattleScript : MonoBehaviour
         {
             PlayerDataInit();
         }
-        for (int i = 0; i < _selectButton.Length; i++)
+        EnemyData[] enemyData = _enemyDataBase.GetEnemyArrayData(GameManager.PlayerSaveData.PlayerRankPoint, _rankPointRange);
+        for (int i = 0; i < enemyData.Length; i++)
         {
-            var enemyData = _enemyDataBase.GetRandomEnemyData(GameManager.PlayerSaveData.PlayerRankPoint, _rankPointRange);
-            _enemyImage[i].sprite = enemyData.EnemySprite;
-            _selectButton[i].onClick.AddListener(() => GameManager.SetEnemyData(enemyData));
-            _selectButton[i].onClick.AddListener(() => SceneLoader.LoadScene(_battleScene));
+            var enemyButtonPrefab = Instantiate(_enemyPrefab);
+            enemyButtonPrefab.transform.SetParent(_buttonInsPos.transform);
+            enemyButtonPrefab.GetComponent<Image>().sprite = enemyData[i].EnemySprite;
+            var button = enemyButtonPrefab.GetComponent<Button>();
+            button.onClick.AddListener(() => GameManager.SetEnemyData(enemyData[i]));
+            button.onClick.AddListener(() => SceneLoader.LoadScene(_battleScene));
         }
     }
 
