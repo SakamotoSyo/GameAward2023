@@ -6,7 +6,7 @@ using System.IO;
 
 public class DataBaseScript : MonoBehaviour
 {
-    public static List<EnhanceData> EnhanceData => _enhanceData;
+    public static List<EnhanceData> DescriptionEnhanceData => _enhanceData;
 
     [Header("レベルアップデータ")]
     [SerializeField] private TextAsset _levelUpTable;
@@ -17,7 +17,11 @@ public class DataBaseScript : MonoBehaviour
     private void Awake()
     {
         //LoadingLevelData();
-        SetDescription();
+        if (_enhanceData.Count == 0)
+        {
+            SetDescription();
+        }
+        
     }
 
     /// <summary>

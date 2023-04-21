@@ -19,6 +19,10 @@ public class PlayerPresenter :IStartable, IDisposable
         _playerStatus = playerStatus;
         _playerView = playerView;
         playerController.SetPlayerStatus(playerStatus);
+        if (GameManager.PlayerSaveData != null) 
+        {
+            playerStatus.LoadStatus(GameManager.PlayerSaveData);
+        }
     }
 
     public void Start()
