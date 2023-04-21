@@ -82,7 +82,7 @@ public class ResultUIScript : MonoBehaviour
        //WeaponData weaponData = weaponDatas[Random.Range(0, weaponDatas.Length)];
        //TODO:テストで動かせるようになっているのでPlayerが生成される環境だったら上を使う
        //WeaponType weaponType = (WeaponType)Random.Range(0, 4);
-       SkillBase randomSkill = _playerSkillDataManagement.OnSkillCall(WeaponType.GreatSword, OreRarity.Normal);
+       SkillBase randomSkill = _playerSkillDataManagement.OnSkillCall(WeaponType.GreatSword, SkillType.Skill);
        Image oreImage = _oreImage[(int)rearity];
 
         return (oreImage, rearity, randomSkill); 
