@@ -37,7 +37,15 @@ public class ActorGenerator : MonoBehaviour
         var enemyObj = Instantiate(enemyPrefab);
         enemyObj.transform.SetParent(_enemyInsPos.transform);
         _enemyController = enemyObj.GetComponent<EnemyController>();
-        _enemyController.SetEnemyData(_testEnemyData);
+        if (GameManager.EnemyData)
+        {
+            _enemyController.SetEnemyData(GameManager.EnemyData);
+        }
+        else 
+        {
+            _enemyController.SetEnemyData(_testEnemyData);
+        }
+        
         return _enemyController;
     }
 }
