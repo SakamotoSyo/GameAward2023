@@ -16,11 +16,16 @@ public class ResultUIScript : MonoBehaviour
     [SerializeField] private ResultWeaponButton[] _resultUICs = new ResultWeaponButton[4];
     [Tooltip("リザルトシーンのテスト用")]
     [SerializeField] private bool _resultSceneTest = false;
+    [SceneName]
+    [SerializeField] private string _homeScene;
 
 
     void Start()
     {
-        
+        if (_resultSceneTest) 
+        {
+            StartResultLottery();
+        }
     }
 
     void Update()
@@ -54,8 +59,8 @@ public class ResultUIScript : MonoBehaviour
     /// <returns></returns>
     private EnhanceData[] SetEnhanceData()
     {
-        EnhanceData[] enhanceData = new EnhanceData[DataBaseScript.EnhanceData.Count];
-        for (int i = 0; i < DataBaseScript.EnhanceData.Count; i++)
+        EnhanceData[] enhanceData = new EnhanceData[DataBaseScript.DescriptionEnhanceData.Count];
+        for (int i = 0; i < DataBaseScript.DescriptionEnhanceData.Count; i++)
         {
             //そのステータスを強化するかどうか
             int enhanceBool = Random.Range(0, 2);
@@ -64,7 +69,7 @@ public class ResultUIScript : MonoBehaviour
                 //強化する数字
                 int enhanceNum = Random.Range(1, 3);
                 enhanceData[i].EnhanceNum = enhanceNum;
-                enhanceData[i].EnhanceDescription = DataBaseScript.EnhanceData[i].EnhanceDescription;
+                enhanceData[i].EnhanceDescription = DataBaseScript.DescriptionEnhanceData[i].EnhanceDescription;
             }
         }
         return enhanceData;
@@ -130,11 +135,13 @@ public class ResultUIScript : MonoBehaviour
     public void WeaponEnhanceEvent(WeaponData weaponData, OreData oreData)
     {
         weaponData.EnhanceParam(oreData.EnhancedData);
+        Debug.Log("強化しました");
         if (oreData.Skill != null) 
         {
 
         }
-        //次のシーンへ
+        _actorGenerator.PlayerController.SavePlayerData();
+        SceneLoader.LoadScene(_homeScene);
     }
 
     public void SelectAgain()

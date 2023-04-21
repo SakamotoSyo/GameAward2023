@@ -27,9 +27,7 @@ public class RankingBattleScript : MonoBehaviour
     {
         if (GameManager.PlayerSaveData == null) 
         {
-            var playerData = new PlayerSaveData();
-            playerData.PlayerRankPoint = 0;
-            GameManager.SetPlayerData(playerData);
+            PlayerDataInit();
         }
         for (int i = 0; i < _selectButton.Length; i++)
         {
@@ -38,6 +36,20 @@ public class RankingBattleScript : MonoBehaviour
             _selectButton[i].onClick.AddListener(() => GameManager.SetEnemyData(enemyData));
             _selectButton[i].onClick.AddListener(() => SceneLoader.LoadScene(_battleScene));
         }
+    }
+
+
+    public void PlayerDataInit() 
+    {
+        var playerData = new PlayerSaveData();
+        var weaponDatas = new WeaponData[4];
+        for (int i = 0; i < 4; i++)
+        {
+            weaponDatas[i] = new WeaponData(1000, 1000, 50, 1000, WeaponData.AttributeType.None, WeaponType.GreatSword);
+        }
+        playerData.WeaponArray = weaponDatas;
+        playerData.PlayerRankPoint = 0;
+        GameManager.SetPlayerData(playerData);
     }
 
 }
