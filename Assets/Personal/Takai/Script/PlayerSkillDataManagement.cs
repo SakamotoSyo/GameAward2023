@@ -21,22 +21,16 @@ public class PlayerSkillDataManagement : MonoBehaviour
         }
     }
 
-    public void OnCall()
-    {
-        Debug.Log(OnSkillCall(WeaponType.GreatSword,OreRarity.Normal));
-
-        OnSkillCall(WeaponType.GreatSword, OreRarity.Normal).UseSkill().Forget();
-    }
-    
-    public SkillBase OnSkillCall(WeaponType weapon, OreRarity rarity)
+    public SkillBase OnSkillCall(WeaponType weapon,SkillType type)
     {
         List<SkillBase> skills = new List<SkillBase>();
         
         foreach (var s in _skills)
         {
-            if (s.Weapon == weapon)
+            if (s.Weapon == weapon && s.Type == type)
             {
                 skills.Add(s);
+                Debug.Log($"{s}を検索");
             }
         }
         
