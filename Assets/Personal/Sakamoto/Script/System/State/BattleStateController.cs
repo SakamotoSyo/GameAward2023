@@ -12,10 +12,12 @@ public class BattleStateController : MonoBehaviour
     public GameObject ComanndObj => _commandObj;
     public PlayerController PlayerController => _playerController;
     public EnemyController EnemyController => _enemyController;
+    public ResultUIScript ResultUIScript => _resultUIScript;
 
     [SerializeField] private GameObject _commandObj;
     [SerializeField] private ActorGenerator _generator;
     [SerializeField] private Text _stateText;
+    [SerializeField] private ResultUIScript _resultUIScript;
     private StateMachine<BattleStateController> _stateMachine;
     private List<ActionSequentialData> _actionSequentialList = new();
     private PlayerController _playerController;
@@ -29,7 +31,7 @@ public class BattleStateController : MonoBehaviour
 
         _stateMachine = new StateMachine<BattleStateController>(this);
         _stateMachine.AddAnyTranstion<GameStartState>((int)BattleEvent.BattleStart);
-        _stateMachine.AddAnyTranstion<GameEndState>((int)BattleEvent.BattleEnd);
+        _stateMachine.AddAnyTranstion<SBattleEndState>((int)BattleEvent.BattleEnd);
         _stateMachine.AddTransition<GameStartState, SelectNextActorTransitionState>
                                   ((int)BattleEvent.StartToNextActorState);
         _stateMachine.AddTransition<SelectNextActorTransitionState, SPlayerAttackState>
@@ -130,12 +132,10 @@ public class BattleStateController : MonoBehaviour
 
     public void ClearGameOverCheck() 
     {
-      var weaponArray = _enemyController.EnemyStatus.WeaponDates.Where(x => 0 < x.CurrentDurable).ToArray();
-        Debug.Log($"Žc‚Á‚Ä‚¢‚é“G‚Ì•Ší‚Í{weaponArray.Length}–{");
-        Debug.Log(weaponArray[0].CurrentDurable);   
-        if (weaponArray.Length == 0) 
+        if (_enemyController.EnemyStatus.IsWeaponsAllBrek()) 
         {
-            Debug.Log("GameClear");
+            Debug.Log("‘JˆÚ‚µ‚Ü‚·");
+            _stateMachine.Dispatch((int)BattleEvent.BattleEnd);
         }
     }
 
