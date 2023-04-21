@@ -16,7 +16,7 @@
         SkillName = "天空斬り";
         Damage = 180;
         Weapon = (WeaponType)0;
-        Type = (SkillType)0;
+        Type = (SkillType)1;
     }
 
         public async override UniTask UseSkill()
