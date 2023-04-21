@@ -61,6 +61,12 @@ public class PlayerController : MonoBehaviour
     {
         _playerStatus = playerStatus;
     }
+
+    public void SavePlayerData() 
+    {
+        _playerStatus.SaveStatus();
+        Debug.Log("Save‚³‚ê‚Ü‚µ‚½");
+    }
 }
 
 public enum PlayerAttackType 
