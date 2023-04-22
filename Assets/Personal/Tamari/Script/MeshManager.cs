@@ -4,6 +4,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class MeshManager : MonoBehaviour
 {
@@ -12,8 +13,6 @@ public class MeshManager : MonoBehaviour
     private Mesh _myMesh = default;
 
     private MeshRenderer _meshRenderer = default;
-
-    private MeshRenderer MeshRenderer = default;
 
     [SerializeField] Material _meshMaterial = default;
 
@@ -38,6 +37,9 @@ public class MeshManager : MonoBehaviour
     [SerializeField, Tooltip("大きさ"), Range(0, 10)]
     private float _radius = 2f;
 
+    [SerializeField, Tooltip("叩いた時に反応する範囲")]
+    private float _range = 0.5f;
+
     private int _indexNum = default;
 
     // private int _radiusIndexNum = default;
@@ -45,6 +47,9 @@ public class MeshManager : MonoBehaviour
     private float _dis = 1000f;
 
     private SaveData _saveData = default;
+
+    [SerializeField, Tooltip("刀身の色")]
+    private List<Color> _setColor = new List<Color>();
 
     [SerializeField, Tooltip("金属を叩く音")]
     private string _blacksmithSe = default;
@@ -61,6 +66,18 @@ public class MeshManager : MonoBehaviour
     }
 
     void Start()
+    {
+        CreateMesh();
+    }
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Calculation();
+        }
+    }
+
+    void CreateMesh()
     {
         foreach (var f in SaveManager._weaponFileList)
         {
@@ -129,14 +146,10 @@ public class MeshManager : MonoBehaviour
 
         _myMesh.SetTriangles(_myTriangles, 0);
 
+        _myMesh.SetColors(_setColor);
+        _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
+        _meshFilter.sharedMesh = _myMesh;
         _meshFilter.mesh = _myMesh;
-    }
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Calculation();
-        }
     }
 
     void Calculation()
@@ -167,7 +180,7 @@ public class MeshManager : MonoBehaviour
         float disX = worldPos.x - _myVertices[_indexNum].x;
         float disY = worldPos.y - _myVertices[_indexNum].y;
 
-        if (Mathf.Abs(disX) < _radius && Mathf.Abs(disY) < _radius /*disX < _radiuses[_radiusIndexNum] && disY < _radiuses[_radiusIndexNum]
+        if (Mathf.Abs(disX) < _range && Mathf.Abs(disY) < _range /*disX < _radiuses[_radiusIndexNum] && disY < _radiuses[_radiusIndexNum]
                     dis2 < _radius*/)
         {
             _myVertices[_indexNum] -= new Vector3(disX, disY, 0);
@@ -198,6 +211,7 @@ public class MeshManager : MonoBehaviour
             _saveData._prefabName = weapon;
             _saveData._myVertices = _myVertices;
             _saveData._myTriangles = _myTriangles;
+            _saveData._colorList = _setColor;
             SaveManager.Save(SaveManager.TAIKENFILEPATH, _saveData);
         }
         else if (weapon == "Souken")
@@ -205,6 +219,7 @@ public class MeshManager : MonoBehaviour
             _saveData._prefabName = weapon;
             _saveData._myVertices = _myVertices;
             _saveData._myTriangles = _myTriangles;
+            _saveData._colorList = _setColor;
             SaveManager.Save(SaveManager.SOUKENFILEPATH, _saveData);
         }
         else if (weapon == "Hammer")
@@ -212,6 +227,7 @@ public class MeshManager : MonoBehaviour
             _saveData._prefabName = weapon;
             _saveData._myVertices = _myVertices;
             _saveData._myTriangles = _myTriangles;
+            _saveData._colorList = _setColor;
             SaveManager.Save(SaveManager.HAMMERFILEPATH, _saveData);
         }
         else if (weapon == "Yari")
@@ -219,6 +235,7 @@ public class MeshManager : MonoBehaviour
             _saveData._prefabName = weapon;
             _saveData._myVertices = _myVertices;
             _saveData._myTriangles = _myTriangles;
+            _saveData._colorList = _setColor;
             SaveManager.Save(SaveManager.YARIFILEPATH, _saveData);
         }
     }
