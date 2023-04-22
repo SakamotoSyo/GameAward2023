@@ -33,7 +33,7 @@ public class RankSelect : MonoBehaviour
     private void Start()
     {
         //テスト
-        //_clearRankに代入する値は[1, 3, 7, 15, 31]のいずれか
+        //_clearRankに代入する値は[ 1, 3, 7, 15, 31 ]のいずれか
         _clearRank = 7;
 
         bool isSetting = false;
