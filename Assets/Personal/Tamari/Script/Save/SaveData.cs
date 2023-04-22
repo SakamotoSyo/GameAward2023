@@ -8,4 +8,5 @@ public class SaveData
     public string _prefabName;
     public Vector3[] _myVertices;
     public int[] _myTriangles;
+    public List<Color> _colorList = new List<Color>();
 }
