@@ -144,7 +144,7 @@ public class SkillGenerator : EditorWindow
         Type = (" + typeof(SkillType) + @")" + (int)_type + @";
     }
 
-        public async override UniTask UseSkill()
+        public async override UniTask UseSkill(PlayerStatus status)
         {
             Debug.Log(""Use Skill"");
             _anim = GetComponent<PlayableDirector>();
