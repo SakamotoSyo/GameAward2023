@@ -19,7 +19,7 @@
         Type = (SkillType)1;
     }
 
-        public async override UniTask UseSkill()
+        public async override UniTask UseSkill(PlayerStatus status)
         {
             Debug.Log("Use Skill");
             _anim = GetComponent<PlayableDirector>();

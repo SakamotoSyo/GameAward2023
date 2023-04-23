@@ -38,4 +38,10 @@ public class PlayerSkillDataManagement : MonoBehaviour
         
        return skills[n];
     }
+
+    public void TurnCall()
+    {
+        Debug.Log("TurnCall呼び出し");
+        
+    }
 }
