@@ -23,12 +23,14 @@
         {
             Debug.Log("Use Skill");
             _anim = GetComponent<PlayableDirector>();
+            SkillEffect(status);
             await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
             Debug.Log("Anim End");
         }
 
-        protected override void SkillEffect()
+        protected override void SkillEffect(PlayerStatus status)
         {
             // スキルの効果処理を実装する
+            
         }
     }

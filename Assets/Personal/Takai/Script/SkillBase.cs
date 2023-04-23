@@ -8,9 +8,9 @@ public abstract class SkillBase : MonoBehaviour
     public abstract int Damage { get; protected set; }
     public abstract WeaponType Weapon { get; protected set; }
     public abstract SkillType Type { get; protected set; }
+    
     public abstract UniTask UseSkill(PlayerStatus status);
-
-    protected abstract void SkillEffect();
+     protected abstract void SkillEffect(PlayerStatus status);
 }
 
 public enum SkillType
