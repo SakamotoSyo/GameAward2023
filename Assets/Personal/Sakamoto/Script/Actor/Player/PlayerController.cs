@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public PlayerStatus PlayerStatus => _playerStatus;
+    public PlayerSkill PlayerSkill => _playerSkill; 
 
+    private PlayerSkill _playerSkill;
     private PlayerStatus _playerStatus;
     private PlayerAnimation _playerAnimation = new();
 
@@ -64,7 +66,9 @@ public class PlayerController : MonoBehaviour
 
     public void SavePlayerData() 
     {
-        _playerStatus.SaveStatus();
+        PlayerSaveData playerSaveData = new PlayerSaveData();
+        _playerStatus.SaveStatus(playerSaveData);
+        GameManager.SetPlayerData(playerSaveData);
         Debug.Log("Save‚³‚ê‚Ü‚µ‚½");
     }
 }

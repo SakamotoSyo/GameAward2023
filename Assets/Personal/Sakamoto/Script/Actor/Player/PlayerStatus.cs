@@ -6,16 +6,11 @@ using UniRx;
 
 public class PlayerStatus
 {
-    public SkillBase NinjaThrowingKnives => _ninjaThrowingKnives;
-    public SkillBase[] PlayerSkillList => _skillList;
     public WeaponData[] WeaponDatas => _weaponDatas;
     public PlayerEquipWeapon EquipWeapon => _equipWeapon;
     private WeaponData[] _weaponDatas = new WeaponData[4];
     [Tooltip("‘•”õ‚µ‚Ä‚¢‚é•Ší")]
     private PlayerEquipWeapon _equipWeapon = new();
-    [Tooltip("•KE‹Z")]
-    private SkillBase _ninjaThrowingKnives;
-    private SkillBase[] _skillList = new SkillBase[2];
     private int _playerRankPoint = 0;
 
     private PlayerStatus()
@@ -68,22 +63,16 @@ public class PlayerStatus
         return _equipWeapon.OffensivePower.Value;
     }
 
-    public void SaveStatus()
+    public void SaveStatus(PlayerSaveData saveData)
     {
-        var playerData = new PlayerSaveData();
-        playerData.WeaponArray = _weaponDatas;
-        playerData.PlayerSkillList = PlayerSkillList;
-        playerData.NinjaThrowingKnives = NinjaThrowingKnives;
-        playerData.PlayerRankPoint = _playerRankPoint;
-        GameManager.SetPlayerData(playerData);
+        saveData.WeaponArray = _weaponDatas;
+        saveData.PlayerRankPoint = _playerRankPoint;
     }
 
     public void LoadStatus(PlayerSaveData player)
     {
         _weaponDatas = player.WeaponArray;
         _equipWeapon.ChangeWeapon(player.WeaponArray[0]);
-        _skillList = player.PlayerSkillList;
-        _ninjaThrowingKnives = player.NinjaThrowingKnives;
         _playerRankPoint = player.PlayerRankPoint;
     }
 }
@@ -91,7 +80,7 @@ public class PlayerStatus
 public class PlayerSaveData
 {
     public WeaponData[] WeaponArray;
-    public SkillBase[] PlayerSkillList = new SkillBase[2];
-    public SkillBase NinjaThrowingKnives;
+    public SkillBase[] PlayerSkillArray = new SkillBase[2];
+    public SkillBase SpecialAttack;
     public int PlayerRankPoint;
 }
