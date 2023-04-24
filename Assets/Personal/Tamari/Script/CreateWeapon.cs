@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class CreateWeapon : BaseCreateWeapon
 {
@@ -28,7 +28,7 @@ public class CreateWeapon : BaseCreateWeapon
                 break;
             default:
                 {
-                    Debug.Log("w’è‚³‚ê‚½•Ší‚Ì–¼‘O : " + weapon + " ‚Í‘¶İ‚µ‚Ü‚¹‚ñ");
+                    Debug.Log("æŒ‡å®šã•ã‚ŒãŸæ­¦å™¨ã®åå‰ : " + weapon + " ã¯å­˜åœ¨ã—ã¾ã›ã‚“");
                 }
                 return;
         }
@@ -37,7 +37,7 @@ public class CreateWeapon : BaseCreateWeapon
 
 
     /// <summary>
-    /// ƒfƒoƒbƒO—pBƒ{ƒ^ƒ“‚ÅƒfƒoƒbƒO‚·‚é‚Æ‚«‚Í‚±‚êg‚¨‚¤B
+    /// ãƒ‡ãƒãƒƒã‚°ç”¨ã€‚ãƒœã‚¿ãƒ³ã§ãƒ‡ãƒãƒƒã‚°ã™ã‚‹ã¨ãã¯ã“ã‚Œä½¿ãŠã†ã€‚
     /// </summary>
     /// <param name="weaponName"></param>
     public void DebugCreate(string weaponName)
@@ -66,7 +66,7 @@ public class CreateWeapon : BaseCreateWeapon
                 break;
             default:
                 {
-                    Debug.Log("w’è‚³‚ê‚½•Ší‚Ì–¼‘O : " + weaponName + " ‚Í‘¶İ‚µ‚Ü‚¹‚ñ");
+                    Debug.Log("æŒ‡å®šã•ã‚ŒãŸæ­¦å™¨ã®åå‰ : " + weaponName + " ã¯å­˜åœ¨ã—ã¾ã›ã‚“");
                 }
                 return;
         }

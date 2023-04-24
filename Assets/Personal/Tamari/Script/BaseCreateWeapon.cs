@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ public abstract class BaseCreateWeapon : MonoBehaviour
     {
         if (_data._myVertices == null )
         {
-            Debug.Log("‘I‚ñ‚¾•Ší‚ÌƒZ[ƒuƒf[ƒ^‚Í‚ ‚è‚Ü‚¹‚ñ");
+            Debug.Log("é¸ã‚“ã æ­¦å™¨ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã¯ã‚ã‚Šã¾ã›ã‚“");
             return;
         }
         Mesh mesh = new Mesh();
