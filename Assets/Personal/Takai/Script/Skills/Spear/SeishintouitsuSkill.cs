@@ -3,7 +3,7 @@
     using Cysharp.Threading.Tasks;
     using UnityEngine.Playables;
 
-    public class KiriageSkill : SkillBase
+    public class SeishintouitsuSkill : SkillBase
     {
         public override string SkillName { get; protected set; }
         public override int Damage { get; protected set; }
@@ -11,11 +11,11 @@
         public override SkillType Type { get; protected set; }
         private PlayableDirector _anim;
 
-    public KiriageSkill()
+    public SeishintouitsuSkill()
     {
-        SkillName = "斬り上げ";
-        Damage = 70;
-        Weapon = (WeaponType)0;
+        SkillName = "精神統一";
+        Damage = 0;
+        Weapon = (WeaponType)3;
         Type = (SkillType)0;
     }
 
@@ -31,6 +31,5 @@
         protected override void SkillEffect(PlayerStatus status)
         {
             // スキルの効果処理を実装する
-            
         }
     }
