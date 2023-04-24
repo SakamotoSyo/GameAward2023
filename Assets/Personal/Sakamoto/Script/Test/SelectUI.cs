@@ -106,10 +106,15 @@ public class SelectUI : MonoBehaviour
             else if (_actionUi[num] == _actionUi[2])
             {
                 Debug.Log("none 1");
+                SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
+                _skillText[0].text = skill1.name;
+                _skillText[1].text = skill1.Damage.ToString();
+                //_skillText[2].text = skill1.;
                 //–¢’è
             }
             else
             {
+                SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
                 Debug.Log("none 2");
                 //–¢’è
             }
@@ -121,9 +126,12 @@ public class SelectUI : MonoBehaviour
 
     public void StartPlayerTurn()
     {
-        _skillText[0].text = _playerController.PlayerStatus.NinjaThrowingKnives.SkillName;
-        _skillText[1].text = _playerController.PlayerStatus.PlayerSkillList[0].SkillName;
-        _skillText[2].text = _playerController.PlayerStatus.PlayerSkillList[1].SkillName;
+        var playerSkill = _playerController.PlayerSkill;
+        _skillText[0].text = playerSkill.SpecialAttack.SkillName;
+        for (int i = 1; i < playerSkill.PlayerSkillArray.Length + 1; i++) 
+        {
+            _skillText[i].text = playerSkill.PlayerSkillArray[i - 1].SkillName;
+        }
 
         _commandUI.SetActive(true);
     }
