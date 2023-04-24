@@ -3,7 +3,7 @@
     using Cysharp.Threading.Tasks;
     using UnityEngine.Playables;
 
-    public class KiriageSkill : SkillBase
+    public class GekiretsuKudakiuchiSkill : SkillBase
     {
         public override string SkillName { get; protected set; }
         public override int Damage { get; protected set; }
@@ -11,12 +11,12 @@
         public override SkillType Type { get; protected set; }
         private PlayableDirector _anim;
 
-    public KiriageSkill()
+    public GekiretsuKudakiuchiSkill()
     {
-        SkillName = "斬り上げ";
-        Damage = 70;
-        Weapon = (WeaponType)0;
-        Type = (SkillType)0;
+        SkillName = "激烈・砕き打ち";
+        Damage = 170;
+        Weapon = (WeaponType)2;
+        Type = (SkillType)1;
     }
 
         public async override UniTask UseSkill(PlayerStatus status)
@@ -31,6 +31,5 @@
         protected override void SkillEffect(PlayerStatus status)
         {
             // スキルの効果処理を実装する
-            
         }
     }

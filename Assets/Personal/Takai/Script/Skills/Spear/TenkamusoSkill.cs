@@ -3,7 +3,7 @@
     using Cysharp.Threading.Tasks;
     using UnityEngine.Playables;
 
-    public class KiriageSkill : SkillBase
+    public class TenkamusoSkill : SkillBase
     {
         public override string SkillName { get; protected set; }
         public override int Damage { get; protected set; }
@@ -11,12 +11,12 @@
         public override SkillType Type { get; protected set; }
         private PlayableDirector _anim;
 
-    public KiriageSkill()
+    public TenkamusoSkill()
     {
-        SkillName = "斬り上げ";
-        Damage = 70;
-        Weapon = (WeaponType)0;
-        Type = (SkillType)0;
+        SkillName = "天下無双";
+        Damage = 120;
+        Weapon = (WeaponType)3;
+        Type = (SkillType)1;
     }
 
         public async override UniTask UseSkill(PlayerStatus status)
@@ -31,6 +31,5 @@
         protected override void SkillEffect(PlayerStatus status)
         {
             // スキルの効果処理を実装する
-            
         }
     }
