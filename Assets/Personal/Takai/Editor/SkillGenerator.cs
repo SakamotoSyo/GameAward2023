@@ -34,7 +34,7 @@ public class SkillGenerator : EditorWindow
         _weapon = (WeaponType)EditorGUILayout.EnumPopup("武器種類", _weapon);
         _type = (SkillType)EditorGUILayout.EnumPopup("タイプ", _type);
         _className = EditorGUILayout.TextField("クラス名", _className);
-        
+
         if (GUILayout.Button("リセット"))
         {
             Reset();
@@ -93,12 +93,12 @@ public class SkillGenerator : EditorWindow
 
     private void CreateClass()
     {
-        if(_skillName == "" || _className == "")
+        if (_skillName == "" || _className == "")
         {
             Debug.LogError("名前を入力してください");
             return;
         }
-        
+
         string path = "";
 
         switch (_weapon)
