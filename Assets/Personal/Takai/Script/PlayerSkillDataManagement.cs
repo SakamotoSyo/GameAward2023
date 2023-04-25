@@ -42,6 +42,12 @@ public class PlayerSkillDataManagement : MonoBehaviour
     public void TurnCall()
     {
         Debug.Log("TurnCall呼び出し");
-        
+        foreach (var skill in _skills)
+        {
+            if (skill.gameObject.activeSelf)
+            {
+                skill.TurnEnd();
+            }
+        }
     }
 }
