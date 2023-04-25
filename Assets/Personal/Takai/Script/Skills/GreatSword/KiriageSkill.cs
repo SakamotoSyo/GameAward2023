@@ -10,6 +10,7 @@ public class KiriageSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
 
+    private PlayerStatus _status;
     private PlayableDirector _anim;
     private const int AddDamageValue = 5;
     private int _count = 0;
@@ -26,29 +27,38 @@ public class KiriageSkill : SkillBase
     public async override UniTask UseSkill(PlayerStatus status)
     {
         Debug.Log("Use Skill");
+        _status = status;
         _anim = GetComponent<PlayableDirector>();
-        SkillEffect(status);
+        SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
         Debug.Log("Anim End");
+        AttackEnd();
     }
 
-    protected override void SkillEffect(PlayerStatus status)
+    protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
         if (_count <= 2)
         {
             _count++;
-            status.EquipWeapon.OffensivePower.Value += AddDamageValue * _count;
-            _attackValue += _attackValue;
+            _status.EquipWeapon.OffensivePower.Value += (AddDamageValue * _count) + Damage;
+            _attackValue += AddDamageValue * _count;
         }
         else
         {
-            _attackValue += _attackValue;
+            _status.EquipWeapon.OffensivePower.Value += Damage;
         }
     }
 
+    private void AttackEnd()
+    {
+        _status.EquipWeapon.OffensivePower.Value -= Damage;
+    }
+
+
     public override void BattleFinish()
     {
+        _status.EquipWeapon.OffensivePower.Value -= _attackValue;
         _count = 0;
         _attackValue = 0;
     }

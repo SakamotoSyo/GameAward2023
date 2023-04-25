@@ -12,6 +12,7 @@ public class TemplateSkill : SkillBase
     public override string FlavorText { get; protected set; }
 
     private PlayableDirector _anim;
+    private PlayerStatus _status;
 
     public TemplateSkill()
     {
@@ -24,15 +25,17 @@ public class TemplateSkill : SkillBase
     public async override UniTask UseSkill(PlayerStatus status)
     {
         Debug.Log("Use Skill");
+        _status = status;
         _anim = GetComponent<PlayableDirector>();
-        SkillEffect(status);
+        SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
         Debug.Log("Anim End");
     }
 
-    protected override void SkillEffect(PlayerStatus status)
+    protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
+            
     }
 
     public override void BattleFinish()
