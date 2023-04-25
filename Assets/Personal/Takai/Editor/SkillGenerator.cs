@@ -134,6 +134,7 @@ public class SkillGenerator : EditorWindow
         public override int Damage { get; protected set; }
         public override WeaponType Weapon { get; protected set; }
         public override SkillType Type { get; protected set; }
+        public override string FlavorText { get; protected set; }
         private PlayableDirector _anim;
 
     public " + _className + @"()
