@@ -11,7 +11,8 @@ public class KyoukaSkill : SkillBase
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerStatus _status;
-
+    private const float DamageFactor = 1.5f;
+    
     public KyoukaSkill()
     {
         SkillName = "狂化";
@@ -33,6 +34,12 @@ public class KyoukaSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
+        
+    }
+    
+    public override void TurnEnd()
+    {
+            
     }
 
     public override void BattleFinish()

@@ -39,6 +39,11 @@
             
         }
 
+        public override void TurnEnd()
+        {
+            
+        }
+
         public override void BattleFinish()
         {
             

@@ -31,8 +31,7 @@ public class KiriageSkill : SkillBase
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
-        Debug.Log("Anim End");
-        AttackEnd();
+        Debug.Log("Anim End"); 
     }
 
     protected override void SkillEffect()
@@ -50,7 +49,7 @@ public class KiriageSkill : SkillBase
         }
     }
 
-    private void AttackEnd()
+    public override void TurnEnd()
     {
         _status.EquipWeapon.OffensivePower.Value -= Damage;
     }

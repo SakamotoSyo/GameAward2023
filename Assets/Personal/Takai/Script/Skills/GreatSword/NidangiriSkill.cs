@@ -35,6 +35,10 @@ public class NidangiriSkill : SkillBase
         // スキルの効果処理を実装する
     }
 
+    public override void TurnEnd()
+    {
+    }
+
     public override void BattleFinish()
     {
     }
