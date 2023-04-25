@@ -16,15 +16,15 @@ public class PlayerSkillDataManagement : MonoBehaviour
 
         foreach (var skill in skillPrefabs)
         {
-           var sObj = Instantiate(skill, transform);
+            var sObj = Instantiate(skill, transform);
             _skills.Add(sObj);
         }
     }
 
-    public SkillBase OnSkillCall(WeaponType weapon,SkillType type)
+    public SkillBase OnSkillCall(WeaponType weapon, SkillType type)
     {
         List<SkillBase> skills = new List<SkillBase>();
-        
+
         foreach (var s in _skills)
         {
             if (s.Weapon == weapon && s.Type == type)
@@ -33,10 +33,23 @@ public class PlayerSkillDataManagement : MonoBehaviour
                 Debug.Log($"{s}を検索");
             }
         }
-        
+
         int n = Random.Range(0, skills.Count);
-        
-       return skills[n];
+
+        return skills[n];
+    }
+
+    public void OnSkillUse<T>() where T : SkillBase
+    {
+        SkillBase skill = _skills.Find(skill => skill.GetType() == typeof(T));
+        if (skill != null)
+        {
+            // 特定のクラスを見つけた後の処理を記述する
+        }
+        else
+        {
+            Debug.Log("スキルが見つかりません");
+        }
     }
 
     public void TurnCall()
