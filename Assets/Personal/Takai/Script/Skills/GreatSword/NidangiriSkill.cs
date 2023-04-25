@@ -29,8 +29,15 @@ public class NidangiriSkill : SkillBase
         Debug.Log("Anim End");
     }
 
+    const int AddDamageValue = 5;
+    
     protected override void SkillEffect(PlayerStatus status)
     {
         // スキルの効果処理を実装する
+    }
+
+    public override void BattleFinish()
+    {
+        
     }
 }

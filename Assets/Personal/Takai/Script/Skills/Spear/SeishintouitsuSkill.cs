@@ -33,4 +33,9 @@ public class SeishintouitsuSkill : SkillBase
     {
         // スキルの効果処理を実装する
     }
+
+    public override void BattleFinish()
+    {
+        
+    }
 }

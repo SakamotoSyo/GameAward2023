@@ -29,8 +29,15 @@ public class KyoukaSkill : SkillBase
         Debug.Log("Anim End");
     }
 
+    private const float DamageFactor = 1.5f;
+    private const int Turn = 2;
     protected override void SkillEffect(PlayerStatus status)
     {
         // スキルの効果処理を実装する
+    }
+
+    public override void BattleFinish()
+    {
+        
     }
 }

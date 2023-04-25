@@ -29,8 +29,15 @@ public class TenkuugiriSkill : SkillBase
         Debug.Log("Anim End");
     }
 
+    private const int AddDamageValue = 10;
+    
     protected override void SkillEffect(PlayerStatus status)
     {
         // スキルの効果処理を実装する
+    }
+
+    public override void BattleFinish()
+    {
+        
     }
 }
