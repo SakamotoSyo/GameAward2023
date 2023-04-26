@@ -7,6 +7,10 @@ using Random = UnityEngine.Random;
 
 public class PlayerSkillDataManagement : MonoBehaviour
 {
+    [SerializeField] private PlayerStatus _pStatus;
+    [SerializeField] private EnemyStatus _eStatus;
+    [SerializeField] private WeaponStatus _wStatus;
+    
     private List<SkillBase> _skills = new List<SkillBase>();
     public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
 
@@ -45,6 +49,7 @@ public class PlayerSkillDataManagement : MonoBehaviour
         if (skill != null)
         {
             // 特定のクラスを見つけた後の処理を記述する
+            skill.UseSkill(_pStatus,_eStatus,_wStatus);
         }
         else
         {
