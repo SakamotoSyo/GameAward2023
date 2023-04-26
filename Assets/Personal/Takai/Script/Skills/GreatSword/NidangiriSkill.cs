@@ -10,7 +10,8 @@ public class NidangiriSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _status;
+    private PlayerStatus _playerStatus;
+    private WeaponStatus _weaponStatus;
 
     public NidangiriSkill()
     {
@@ -23,7 +24,8 @@ public class NidangiriSkill : SkillBase
     public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
     {
         Debug.Log("Use Skill");
-        _status = player;
+        _playerStatus = player;
+        _weaponStatus = weapon;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
