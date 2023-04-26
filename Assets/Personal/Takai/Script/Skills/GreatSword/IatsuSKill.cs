@@ -23,10 +23,10 @@
         Type = (SkillType)0;
     }
 
-        public async override UniTask UseSkill(PlayerStatus status)
+        public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
         {
             Debug.Log("Use Skill");
-            _status = status;
+            _status = player;
             _anim = GetComponent<PlayableDirector>();
             SkillEffect();
             await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
