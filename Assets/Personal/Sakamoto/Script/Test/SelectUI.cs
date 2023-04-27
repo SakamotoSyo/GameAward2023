@@ -15,14 +15,17 @@ public class SelectUI : MonoBehaviour
     [SerializeField] private BattleStateController _battleStateController;
     [SerializeField] private int _lotateNum;
     [SerializeField] private GameObject _commandUI;
+    [SerializeField] private GameObject _infoUI;
 
     private WeaponStatus _weaponStatus;
     private PlayerController _playerController;
+    private PlayerStatus _playerStatus;
     private EnemyController _enemyController;
 
     private void Start()
     {
         _playerController = _generator.PlayerController;
+        _playerStatus = _playerController.PlayerStatus;
         Debug.Log(_playerController);
         _enemyController = _generator.EnemyController;
     }
@@ -84,7 +87,7 @@ public class SelectUI : MonoBehaviour
 
     public void TestAttack()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)&& _playerStatus.ChackAnomaly())
         {
             var num = _lotateNum % _actionUi.Length;
             if (num < 0)
@@ -96,25 +99,32 @@ public class SelectUI : MonoBehaviour
             if (_actionUi[num] == _actionUi[0])
             {
                 Debug.Log("attack");
-               _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack));
+                _infoUI.SetActive(false);
+                _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack));
 
             }
             else if (_actionUi[num] == _actionUi[1])
             {
                 Debug.Log("•KŽE‹Z");
+                _infoUI.SetActive(false);
             }
             else if (_actionUi[num] == _actionUi[2])
             {
                 Debug.Log("none 1");
+                _infoUI.SetActive(true);
                 SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
                 _skillText[0].text = skill1.name;
                 _skillText[1].text = skill1.Damage.ToString();
-                //_skillText[2].text = skill1.;
+                _skillText[2].text = skill1.FlavorText;
                 //–¢’è
             }
             else
             {
+                _infoUI.SetActive(true);
                 SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
+                _skillText[0].text = skill2.name;
+                _skillText[1].text = skill2.Damage.ToString();
+                _skillText[2].text = skill2.FlavorText;
                 Debug.Log("none 2");
                 //–¢’è
             }
