@@ -14,6 +14,7 @@ public class IatsuSKill : SkillBase
     private const float PowerDown = 0.1f;
     private const int Turn = 2;
     private int _turn;
+    private float _attackValue = 0;
 
     public IatsuSKill()
     {
@@ -39,7 +40,8 @@ public class IatsuSKill : SkillBase
         float dmg = _enemyStatus.EquipWeapon.OffensivePower;
         if (_turn == 0)
         {
-            
+            _attackValue += dmg * PowerDown;
+            _enemyStatus.EquipWeapon.OffensivePower -= dmg * PowerDown;
         }
         else
         {
@@ -52,11 +54,15 @@ public class IatsuSKill : SkillBase
         _turn++;
         if (_turn > Turn)
         {
-            
+            _enemyStatus.EquipWeapon.OffensivePower += _attackValue;
+            _turn = 0;
+            _attackValue = 0;
         }
     }
 
     public override void BattleFinish()
     {
+        _turn = 0;
+        _attackValue = 0;
     }
 }
