@@ -17,6 +17,14 @@ public class EnemyStatus
 
     private SkillBase _specialSkill;
 
+    private bool _isStan = false;
+
+    public bool IsStan { get => _isStan; set => _isStan = value; }
+
+    private bool _isBoss = false;
+
+    public bool IsBoss { get => _isBoss; set => _isBoss = value; }
+
     /// <summary>
     /// •Ší‚Ì”z—ñ‚ÌXV
     /// </summary>

@@ -10,7 +10,7 @@ public class EquipEnemyWeapon
     private float _offensivePower;
 
     /// <summary>武器の攻撃力のプロパティ</summary>
-    public float OffensivePower => _offensivePower;
+    public float OffensivePower { get => _offensivePower; set => _offensivePower = value; }
 
     /// <summary>武器のクリティカル率</summary>
     private float _criticalRate;

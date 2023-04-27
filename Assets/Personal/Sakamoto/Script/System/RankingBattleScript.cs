@@ -29,15 +29,36 @@ public class RankingBattleScript : MonoBehaviour
         {
             PlayerDataInit();
         }
-        EnemyData[] enemyData = _enemyDataBase.GetEnemyArrayData(GameManager.PlayerSaveData.PlayerRankPoint, _rankPointRange);
-        for (int i = 0; i < enemyData.Length; i++)
+        EnemyData[] enemyDataHigh = _enemyDataBase.GetEnemyArrayData(GameManager.PlayerSaveData.PlayerRankPoint, _rankPointRange, true);
+        for (int i = 0; i < 3; i++)
         {
             var enemyButtonPrefab = Instantiate(_enemyPrefab);
             enemyButtonPrefab.transform.SetParent(_buttonInsPos.transform);
-            enemyButtonPrefab.GetComponent<Image>().sprite = enemyData[i].EnemySprite;
+            var randomIndex = Random.Range(0, enemyDataHigh.Length);
+            //enemyButtonPrefab.GetComponent<Image>().sprite = enemyData[i].EnemySprite;
+            enemyButtonPrefab.GetComponent<Image>().sprite = enemyDataHigh[randomIndex].EnemySprite;
             var button = enemyButtonPrefab.GetComponent<Button>();
-            button.onClick.AddListener(() => GameManager.SetEnemyData(enemyData[i]));
-            button.onClick.AddListener(() => SceneLoader.LoadScene(_battleScene));
+
+            button.onClick.AddListener(() => SelectEnemy.SetImage(enemyButtonPrefab.GetComponent<Image>().sprite));
+            //button.onClick.AddListener(() => GameManager.SetEnemyData(enemyData[i]));
+            button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
+            //button.onClick.AddListener(() => SceneLoader.LoadScene(_battleScene));
+        }
+
+        EnemyData[] enemyDataLow = _enemyDataBase.GetEnemyArrayData(GameManager.PlayerSaveData.PlayerRankPoint, _rankPointRange, false);
+        for (int i = 0; i < 2; i++)
+        {
+            var enemyButtonPrefab = Instantiate(_enemyPrefab);
+            enemyButtonPrefab.transform.SetParent(_buttonInsPos.transform);
+            var randomIndex = Random.Range(0, enemyDataLow.Length);
+            //enemyButtonPrefab.GetComponent<Image>().sprite = enemyData[i].EnemySprite;
+            enemyButtonPrefab.GetComponent<Image>().sprite = enemyDataLow[randomIndex].EnemySprite;
+            var button = enemyButtonPrefab.GetComponent<Button>();
+
+            button.onClick.AddListener(() => SelectEnemy.SetImage(enemyButtonPrefab.GetComponent<Image>().sprite));
+            //button.onClick.AddListener(() => GameManager.SetEnemyData(enemyData[i]));
+            button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataLow[randomIndex]));
+            //button.onClick.AddListener(() => SceneLoader.LoadScene(_battleScene));
         }
     }
 

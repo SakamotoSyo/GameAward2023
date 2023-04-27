@@ -8,10 +8,14 @@ public class PlayerStatus
 {
     public WeaponData[] WeaponDatas => _weaponDatas;
     public PlayerEquipWeapon EquipWeapon => _equipWeapon;
+    public StateAnomaly CurrentAnomaly => _currentAnomaly;
+
     private WeaponData[] _weaponDatas = new WeaponData[4];
     [Tooltip("‘•”õ‚µ‚Ä‚¢‚é•Ší")]
     private PlayerEquipWeapon _equipWeapon = new();
     private int _playerRankPoint = 0;
+    private StateAnomaly _currentAnomaly = StateAnomaly.None;
+    
 
     private PlayerStatus()
     {
@@ -63,6 +67,24 @@ public class PlayerStatus
         return _equipWeapon.OffensivePower.Value;
     }
 
+    public bool ChackAnomaly() 
+    {
+        if (StateAnomaly.Stun == _currentAnomaly) 
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// ó‘ÔˆÙí‚Ì•t—^
+    /// </summary>
+    /// <param name="anomaly"></param>
+    public void SetStateAnomaly(StateAnomaly anomaly) 
+    {
+        _currentAnomaly = anomaly;
+    }
+
     public void SaveStatus(PlayerSaveData saveData)
     {
         saveData.WeaponArray = _weaponDatas;
@@ -83,4 +105,10 @@ public class PlayerSaveData
     public SkillBase[] PlayerSkillArray = new SkillBase[2];
     public SkillBase SpecialAttack;
     public int PlayerRankPoint;
+}
+
+public enum StateAnomaly
+{
+    None,
+    Stun
 }
