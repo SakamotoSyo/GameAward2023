@@ -6,7 +6,9 @@ using Random = UnityEngine.Random;
 public class EnemyAttack
 {
     private float _offensivePower;
+
     private Animator _anim;
+
     private EnemyAttackType _attackType = new();
 
     public void Init(float offensivePower, Animator anim)
