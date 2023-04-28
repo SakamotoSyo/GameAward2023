@@ -15,6 +15,9 @@ public class EquipEnemyWeapon
     /// <summary>武器のクリティカル率</summary>
     private float _criticalRate;
 
+    /// <summary>武器のクリティカル率のプロパティ</summary>
+    public float CriticalRate { get => _criticalRate; set => _criticalRate = value; }
+
     /// <summary>武器の最大耐久値</summary>
     private float _maxDurable;
 
@@ -28,7 +31,7 @@ public class EquipEnemyWeapon
     private float _weaponWeight;
 
     /// <summary>武器の重さのプロパティ</summary>
-    public float WeaponWeight => _weaponWeight;
+    public float WeaponWeight { get => _weaponWeight; set => _weaponWeight = value; }
 
     /// <summary>武器の種類</summary>
     private WeaponType _weaponType;
