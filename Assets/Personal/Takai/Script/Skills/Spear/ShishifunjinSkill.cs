@@ -10,7 +10,8 @@ public class ShishifunjinSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _status;
+    private PlayerStatus _playerStatus;
+
 
     public ShishifunjinSkill()
     {
@@ -23,7 +24,7 @@ public class ShishifunjinSkill : SkillBase
     public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
     {
         Debug.Log("Use Skill");
-        _status = player;
+        _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
@@ -33,11 +34,13 @@ public class ShishifunjinSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
+        _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        //経過ターンが多いほど攻撃回数アップ（上限 7回） 1 + 2×(ターン数-1) 
     }
-    
+
     public override void TurnEnd()
     {
-            
+        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
     }
 
     public override void BattleFinish()
