@@ -2,7 +2,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 
-public class GekiretsuKudakiuchiSkill : SkillBase
+public class ShippuSkill : SkillBase
 {
     public override string SkillName { get; protected set; }
     public override int Damage { get; protected set; }
@@ -12,12 +12,12 @@ public class GekiretsuKudakiuchiSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerStatus _status;
 
-    public GekiretsuKudakiuchiSkill()
+    public ShippuSkill()
     {
-        SkillName = "激烈・砕き打ち";
-        Damage = 170;
-        Weapon = (WeaponType)2;
-        Type = (SkillType)1;
+        SkillName = "疾風";
+        Damage = 30;
+        Weapon = (WeaponType)1;
+        Type = (SkillType)0;
     }
 
     public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
@@ -34,12 +34,12 @@ public class GekiretsuKudakiuchiSkill : SkillBase
     {
         // スキルの効果処理を実装する
     }
-    
+
     public override void TurnEnd()
     {
-            
+        
     }
-
+    
     public override void BattleFinish()
     {
     }

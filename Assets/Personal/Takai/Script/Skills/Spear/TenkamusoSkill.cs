@@ -11,6 +11,7 @@ public class TenkamusoSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
+    private PlayerStatus _status;
 
     public TenkamusoSkill()
     {
@@ -20,17 +21,29 @@ public class TenkamusoSkill : SkillBase
         Type = (SkillType)1;
     }
 
-    public async override UniTask UseSkill(PlayerStatus status)
+    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
     {
         Debug.Log("Use Skill");
+        _status = player;
         _anim = GetComponent<PlayableDirector>();
-        SkillEffect(status);
+        SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
         Debug.Log("Anim End");
     }
 
-    protected override void SkillEffect(PlayerStatus status)
+    protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
+            
+    }
+    
+    public override void TurnEnd()
+    {
+            
+    }
+
+    public override void BattleFinish()
+    {
+        
     }
 }
