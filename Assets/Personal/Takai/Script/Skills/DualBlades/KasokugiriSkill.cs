@@ -11,7 +11,8 @@ public class KasokugiriSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _status;
+    private PlayerStatus _playerStatus;
+
     public KasokugiriSkill()
     {
         SkillName = "加速斬り";
@@ -23,7 +24,7 @@ public class KasokugiriSkill : SkillBase
     public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
     {
         Debug.Log("Use Skill");
-        _status = player;
+        _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
@@ -33,16 +34,37 @@ public class KasokugiriSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-            
+        _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+
+        float weight = _playerStatus.EquipWeapon.WeaponWeight.Value;
+        switch (Mathf.FloorToInt(weight / 10))
+        {
+            case 0:
+                // 重さが10以下の場合の処理
+                break;
+            case 1:
+                // 重さが11~20以下の場合の処理
+                break;
+            case 2:
+                // 重さが21~30以下の場合の処理
+                break;
+            case 3:
+                // 重さが31~40以下の場合の処理
+                break;
+            default:
+                // 重さが40より大きい場合の処理
+                break;
+        }
     }
-    
+
+
     public override void TurnEnd()
     {
-        
+        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
     }
 
     public override void BattleFinish()
     {
-        
+
     }
 }

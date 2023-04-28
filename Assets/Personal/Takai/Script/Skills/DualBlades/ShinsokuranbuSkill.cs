@@ -10,7 +10,8 @@ public class ShinsokuranbuSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _status;
+    private PlayerStatus _playerStatus;
+    bool _isAttack = false;
 
     public ShinsokuranbuSkill()
     {
@@ -23,7 +24,7 @@ public class ShinsokuranbuSkill : SkillBase
     public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
     {
         Debug.Log("Use Skill");
-        _status = player;
+        _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
@@ -33,13 +34,26 @@ public class ShinsokuranbuSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
+
+        if (true) //素早さをに応じて発動できるか検知
+        {
+            _isAttack = true;
+            _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        }
     }
 
     public override void TurnEnd()
     {
+        if (_isAttack)
+        {
+            _isAttack = false;
+            _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+        }
+
     }
 
     public override void BattleFinish()
     {
+        _isAttack = false;  
     }
 }
