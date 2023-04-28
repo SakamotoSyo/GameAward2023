@@ -38,8 +38,9 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         // スキルの効果処理を実装する
         _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
 
+        // 防御、素早さを40%下げる。
         _enemyStatus.EquipWeapon.OffensivePower -= _enemyStatus.EquipWeapon.OffensivePower * _subtractValue;
-        // 敵の攻撃、防御、会心率、素早さを40%下げる。
+        _enemyStatus.EquipWeapon.CriticalRate -= _enemyStatus.EquipWeapon.CriticalRate + _subtractValue;
 
         _playerStatus.EquipWeapon.CurrentDurable.Value = 0;
     }
