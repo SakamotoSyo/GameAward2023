@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -12,10 +11,10 @@ public class KasokuSkill : SkillBase
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
-    const float AddSpeedValue = 0.05f;
-    const int Turn = 3;
+    private const float ADD_VALUE = 0.05f;
     float _speedValue = 0;
-    int _count = 0;
+    private int _turn;
+    private int _count = 0;
 
     public KasokuSkill()
     {
@@ -38,22 +37,69 @@ public class KasokuSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        //float spd = _playerStatus.EquipWeapon.
-        //if (_count >= Turn)
-        //{
-        //    _count++;
-        //    _attackValue += (dmg * (AddDamageValue * _count)) + Damage;
-        //    _playerStatus.EquipWeapon.OffensivePower.Value += (dmg * (AddDamageValue * _count));
-        //}
+        float spd = _playerStatus.EquipWeapon.WeaponWeight.Value;
+        switch (_count)
+        {
+            case 0:
+                _count++;
+                _turn += 4;
+                _speedValue += (spd * (ADD_VALUE * _count));
+                _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
+                break;
+            case 1:
+                _count++;
+                _turn += 4;
+                _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
+                _speedValue += (spd * (ADD_VALUE * _count));
+                _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
+                break;
+            case 2:
+                _count++;
+                _turn += 4;
+                _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
+                _speedValue += (spd * (ADD_VALUE * _count));
+                _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
+                break;
+            default:
+                _count++;
+                _turn += 4;
+                _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
+                _speedValue += (spd * (ADD_VALUE * _count));
+                _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
+                break;
+        }
     }
-    
+
     public override void TurnEnd()
     {
+        float spd = _playerStatus.EquipWeapon.WeaponWeight.Value;
         
+        _turn--;
+        if (_turn <= 0)
+        {
+            _count = 0;
+            _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
+        }
+        else if(_turn <= 3)
+        {
+            _count--;
+            _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
+            _speedValue += (spd * (ADD_VALUE * _count));
+            _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
+        }
+        else if(_turn <= 6)
+        {
+            _count--;
+            _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
+            _speedValue += (spd * (ADD_VALUE * _count));
+            _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
+        }
     }
 
     public override void BattleFinish()
     {
-        
+        _count = 0;
+        _turn = 0;
+        _speedValue = 0;
     }
 }
