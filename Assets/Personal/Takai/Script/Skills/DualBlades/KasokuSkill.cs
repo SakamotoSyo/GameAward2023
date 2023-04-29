@@ -38,36 +38,12 @@ public class KasokuSkill : SkillBase
     {
         // スキルの効果処理を実装する
         float spd = _playerStatus.EquipWeapon.WeaponWeight.Value;
-        switch (_count)
-        {
-            case 0:
-                _count++;
-                _turn += 4;
-                _speedValue += (spd * (ADD_VALUE * _count));
-                _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
-                break;
-            case 1:
-                _count++;
-                _turn += 4;
-                _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
-                _speedValue += (spd * (ADD_VALUE * _count));
-                _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
-                break;
-            case 2:
-                _count++;
-                _turn += 4;
-                _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
-                _speedValue += (spd * (ADD_VALUE * _count));
-                _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
-                break;
-            default:
-                _count++;
-                _turn += 4;
-                _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
-                _speedValue += (spd * (ADD_VALUE * _count));
-                _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
-                break;
-        }
+        
+        _count++;
+        _turn += 4;
+        _playerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
+        _speedValue += (spd * (ADD_VALUE * _count));
+        _playerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
     }
 
     public override void TurnEnd()
