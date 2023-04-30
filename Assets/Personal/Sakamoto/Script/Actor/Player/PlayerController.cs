@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public PlayerStatus PlayerStatus => _playerStatus;
     public PlayerSkill PlayerSkill => _playerSkill; 
 
-    private PlayerSkill _playerSkill;
+    private PlayerSkill _playerSkill = new();
     private PlayerStatus _playerStatus;
     private PlayerAnimation _playerAnimation = new();
 

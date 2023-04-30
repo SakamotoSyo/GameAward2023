@@ -16,4 +16,18 @@ public class PlayerSkill : MonoBehaviour
         saveData.PlayerSkillArray = _skillArray;
     }
 
+    public bool AddSkillJudge(SkillBase skill) 
+    {
+        for (int i = 0; i < _skillArray.Length; i++) 
+        {
+            if (_skillArray[i] == null) 
+            {
+                _skillArray[i] = skill;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

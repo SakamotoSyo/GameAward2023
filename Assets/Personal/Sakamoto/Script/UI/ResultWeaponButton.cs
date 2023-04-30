@@ -30,9 +30,10 @@ public class ResultWeaponButton : MonoBehaviour, IPointerEnterHandler, IPointerE
                 int num = _oreData.EnhancedData[i].EnhanceNum + (int)_weaponData.StatusArray[i];
                 _statusInfoText.text += "<color=red>"+ num + "</color>\n";   
             }
-
             //_statusInfoText.text += _actorGenerator.PlayerController.PlayerStatus.PlayerSkillList;
         }
+
+        _statusInfoText.text += "<color=blue>" + _oreData.Skill.SkillName + "</color>\n";
     }
 
     public void OnPointerExit(PointerEventData eventData)
