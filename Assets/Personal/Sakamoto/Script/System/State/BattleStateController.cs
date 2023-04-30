@@ -13,11 +13,13 @@ public class BattleStateController : MonoBehaviour
     public PlayerController PlayerController => _playerController;
     public EnemyController EnemyController => _enemyController;
     public ResultUIScript ResultUIScript => _resultUIScript;
+    public PlayerSkillDataManagement SkillManagement => _skillManagement;
 
     [SerializeField] private GameObject _commandObj;
     [SerializeField] private ActorGenerator _generator;
     [SerializeField] private Text _stateText;
     [SerializeField] private ResultUIScript _resultUIScript;
+    [SerializeField] private PlayerSkillDataManagement _skillManagement;
     private StateMachine<BattleStateController> _stateMachine;
     private List<ActionSequentialData> _actionSequentialList = new();
     private PlayerController _playerController;
@@ -77,7 +79,8 @@ public class BattleStateController : MonoBehaviour
     /// </summary>
     public void NextActorStateTransition()
     {
-        UniTask.WaitUntil(() => _stateMachine.CurrentState == _stateMachine.GetOrAddState<SelectNextActorTransitionState>());
+        var token = this.GetCancellationTokenOnDestroy();
+        UniTask.WaitUntil(() => _stateMachine.CurrentState == _stateMachine.GetOrAddState<SelectNextActorTransitionState>(), cancellationToken: token);
 
         for (int i = 0; i < _actionSequentialList.Count; i++)
         {
