@@ -28,8 +28,8 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
-        SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
+        SkillEffect(); 
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
