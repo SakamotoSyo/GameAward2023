@@ -26,12 +26,14 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void SetData(OreData oreData) 
     {
+        Debug.Log(oreData.Rarity);
         _rearityText.text = oreData.Rarity.ToString();
         for (int i = 0; i < oreData.EnhancedData.Length; i++) 
         {
             _enhanceText.text += oreData.EnhancedData[i].EnhanceDescription;
             _enhanceText.text += " ";
         }
+        _enhanceText.text += "\n" + oreData.Skill.SkillName;
         _oreImage = oreData.OreImage;
     }
 
