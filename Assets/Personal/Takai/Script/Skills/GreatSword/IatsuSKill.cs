@@ -2,7 +2,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 
-public class KiaiSkill : SkillBase
+public class IatsuSKill : SkillBase
 {
     public override string SkillName { get; protected set; }
     public override int Damage { get; protected set; }
@@ -10,21 +10,24 @@ public class KiaiSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
-    bool _isAttack = false;
+    private EnemyStatus _enemyStatus;
+    private const float PowerDown = 0.1f;
+    private const int Turn = 2;
+    private int _turn;
+    private float _attackValue = 0;
 
-    public KiaiSkill()
+    public IatsuSKill()
     {
-        SkillName = "気合い";
+        SkillName = "威圧";
         Damage = 0;
-        Weapon = (WeaponType)2;
+        Weapon = (WeaponType)0;
         Type = (SkillType)0;
     }
 
     public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
     {
         Debug.Log("Use Skill");
-        _playerStatus = player;
+        _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -34,24 +37,32 @@ public class KiaiSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _isAttack = true;
+        float dmg = _enemyStatus.EquipWeapon.OffensivePower;
+        if (_turn == 0)
+        {
+            _attackValue += dmg * PowerDown;
+            _enemyStatus.EquipWeapon.OffensivePower -= dmg * PowerDown;
+        }
+        else
+        {
+            Debug.Log("重複できません");
+        }
     }
 
     public override void TurnEnd()
     {
-        if (_isAttack)
+        _turn++;
+        if (_turn > Turn)
         {
-            _playerStatus.EquipWeapon.OffensivePower.Value *= 2;
-            _isAttack = false;
-        }
-        else
-        {
-            _playerStatus.EquipWeapon.OffensivePower.Value /= 2;
+            _enemyStatus.EquipWeapon.OffensivePower += _attackValue;
+            _turn = 0;
+            _attackValue = 0;
         }
     }
 
     public override void BattleFinish()
     {
-        _isAttack = false;
+        _turn = 0;
+        _attackValue = 0;
     }
 }

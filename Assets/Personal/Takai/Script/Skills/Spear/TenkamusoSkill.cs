@@ -11,6 +11,7 @@ public class TenkamusoSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
+    private PlayerStatus _playerStatus;
 
     public TenkamusoSkill()
     {
@@ -20,17 +21,36 @@ public class TenkamusoSkill : SkillBase
         Type = (SkillType)1;
     }
 
-    public async override UniTask UseSkill(PlayerStatus status)
+    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
     {
         Debug.Log("Use Skill");
+        _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
-        SkillEffect(status);
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
+        SkillEffect();
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
-    protected override void SkillEffect(PlayerStatus status)
+    protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
+        var hp = _playerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
+        if (_playerStatus.EquipWeapon.CurrentDurable.Value <= hp)
+        {
+            if(true) //経過ターンが多いほど威力上昇
+            {
+                _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+            }
+        }
+    }
+    
+    public override void TurnEnd()
+    {
+        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage; 
+    }
+
+    public override void BattleFinish()
+    {
+        
     }
 }

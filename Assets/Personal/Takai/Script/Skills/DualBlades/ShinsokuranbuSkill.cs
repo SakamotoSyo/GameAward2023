@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -11,6 +10,8 @@ public class ShinsokuranbuSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
+    private PlayerStatus _playerStatus;
+    bool _isAttack = false;
 
     public ShinsokuranbuSkill()
     {
@@ -20,17 +21,39 @@ public class ShinsokuranbuSkill : SkillBase
         Type = (SkillType)1;
     }
 
-    public async override UniTask UseSkill(PlayerStatus status)
+    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
     {
         Debug.Log("Use Skill");
+        _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
-        SkillEffect(status);
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
+        SkillEffect();
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
-    protected override void SkillEffect(PlayerStatus status)
+    protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
+
+        if (true) //素早さをに応じて発動できるか検知
+        {
+            _isAttack = true;
+            _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        }
+    }
+
+    public override void TurnEnd()
+    {
+        if (_isAttack)
+        {
+            _isAttack = false;
+            _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+        }
+
+    }
+
+    public override void BattleFinish()
+    {
+        _isAttack = false;  
     }
 }
