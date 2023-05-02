@@ -40,7 +40,8 @@ public class GekiretsuKudakiuchiSkill : SkillBase
 
         // 防御、素早さを40%下げる。
         _enemyStatus.EquipWeapon.OffensivePower -= _enemyStatus.EquipWeapon.OffensivePower * _subtractValue;
-        _enemyStatus.EquipWeapon.CriticalRate -= _enemyStatus.EquipWeapon.CriticalRate + _subtractValue;
+        _enemyStatus.EquipWeapon.CriticalRate -= _enemyStatus.EquipWeapon.CriticalRate * _subtractValue;
+        _enemyStatus.EquipWeapon.WeaponWeight -= _enemyStatus.EquipWeapon.WeaponWeight * _subtractValue;
 
         _playerStatus.EquipWeapon.CurrentDurable.Value = 0;
     }
@@ -52,5 +53,6 @@ public class GekiretsuKudakiuchiSkill : SkillBase
 
     public override void BattleFinish()
     {
+
     }
 }
