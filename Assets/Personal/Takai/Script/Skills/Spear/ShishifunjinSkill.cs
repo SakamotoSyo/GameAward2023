@@ -11,7 +11,7 @@ public class ShishifunjinSkill : SkillBase
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
-
+    private int _count;
 
     public ShishifunjinSkill()
     {
@@ -36,14 +36,24 @@ public class ShishifunjinSkill : SkillBase
         // スキルの効果処理を実装する
         _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
         //経過ターンが多いほど攻撃回数アップ（上限 7回） 1 + 2×(ターン数-1) 
+        if (_count >= 7)
+        {
+            int num = 1 + 2 * (7 - 1);
+        }
+        else
+        {
+            int num = 1 + 2 * (_count - 1);
+        }
     }
 
     public override void TurnEnd()
     {
+        _count++;
         _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
     }
 
     public override void BattleFinish()
     {
+        _count = 0;
     }
 }

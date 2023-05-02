@@ -12,6 +12,7 @@ public class TenkamusoSkill : SkillBase
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
+    private int _count;
 
     public TenkamusoSkill()
     {
@@ -37,20 +38,20 @@ public class TenkamusoSkill : SkillBase
         var hp = _playerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
         if (_playerStatus.EquipWeapon.CurrentDurable.Value <= hp)
         {
-            if(true) //経過ターンが多いほど威力上昇
-            {
-                _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
-            }
+
+            _playerStatus.EquipWeapon.OffensivePower.Value += Damage + (_count * 10);
+
         }
     }
-    
+
     public override void TurnEnd()
     {
-        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage; 
+        _count++;
+        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage + (_count * 10);
     }
 
     public override void BattleFinish()
     {
-        
+        _count = 0;
     }
 }

@@ -39,11 +39,8 @@ public class KasokugiriSkill : SkillBase
         float weight = _playerStatus.EquipWeapon.WeaponWeight.Value;
         switch (Mathf.FloorToInt(weight / 10))
         {
-            case 0:
-                // 重さが10以下の場合の処理
-                break;
             case 1:
-                // 重さが11~20以下の場合の処理
+                // 重さが20以下の場合の処理
                 break;
             case 2:
                 // 重さが21~30以下の場合の処理
