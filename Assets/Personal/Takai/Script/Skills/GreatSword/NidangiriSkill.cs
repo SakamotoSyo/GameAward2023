@@ -39,25 +39,26 @@ public class NidangiriSkill : SkillBase
         _attackValue += Damage;
         _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
 
-        if (weight >= 60)
+        switch (weight / 10)
         {
-            _attackValue += 20;
-            _playerStatus.EquipWeapon.OffensivePower.Value += 20;
-        }
-        else if (weight >= 50)
-        {
-            _attackValue += 15;
-            _playerStatus.EquipWeapon.OffensivePower.Value += 15;
-        }
-        else if (weight >= 40)
-        {
-            _attackValue += 10;
-            _playerStatus.EquipWeapon.OffensivePower.Value += 10;
-        }
-        else if (weight >= 30)
-        {
-            _attackValue += 5;
-            _playerStatus.EquipWeapon.OffensivePower.Value += 5;
+            case 6:
+                _attackValue += 20;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 20;
+                break;
+            case 5:
+                _attackValue += 15;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 15;
+                break;
+            case 4:
+                _attackValue += 10;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 10;
+                break;
+            case 3:
+                _attackValue += 5;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 5;
+                break;
+            default:
+                break;
         }
     }
 

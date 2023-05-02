@@ -34,8 +34,10 @@ public class ShinsokuranbuSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
+        float weight = _playerStatus.EquipWeapon.WeaponWeight.Value;
 
-        if (true) //素早さをに応じて発動できるか検知
+
+        if (weight <= 30) //素早さをに応じて発動できるか検知
         {
             _isAttack = true;
             _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
