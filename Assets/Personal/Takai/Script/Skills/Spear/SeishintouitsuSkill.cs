@@ -14,6 +14,7 @@ public class SeishintouitsuSkill : SkillBase
     const float AddValue = 0.2f;
     private int _count;
     private float _value;
+    private bool _isSkill = false;
 
     public SeishintouitsuSkill()
     {
@@ -37,9 +38,13 @@ public class SeishintouitsuSkill : SkillBase
     {
         // スキルの効果処理を実装する
         _count += 4;
-        _value += _playerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
-        _playerStatus.EquipWeapon.CriticalRate.Value += _playerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
+        if(!_isSkill)
+        {
+            _value += _playerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
+            _playerStatus.EquipWeapon.CriticalRate.Value += _playerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
+        }
         // 会心時のダメージが20%上昇
+
     }
 
     public override void TurnEnd()
