@@ -11,7 +11,7 @@ public class NidangiriSkill : SkillBase
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
-    private WeaponStatus _weaponStatus;
+    float _attackValue = 0f;
 
     public NidangiriSkill()
     {
@@ -25,7 +25,6 @@ public class NidangiriSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
-        _weaponStatus = weapon;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -34,14 +33,43 @@ public class NidangiriSkill : SkillBase
 
     protected override void SkillEffect()
     {
+        float dmg = _playerStatus.EquipWeapon.OffensivePower.Value;
+        float weight = _playerStatus.EquipWeapon.WeaponWeight.Value;
 
+        _attackValue += Damage;
+        _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+
+        switch (weight / 10)
+        {
+            case 6:
+                _attackValue += 20;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 20;
+                break;
+            case 5:
+                _attackValue += 15;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 15;
+                break;
+            case 4:
+                _attackValue += 10;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 10;
+                break;
+            case 3:
+                _attackValue += 5;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 5;
+                break;
+            default:
+                break;
+        }
     }
 
     public override void TurnEnd()
     {
+        _playerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
+        _attackValue = 0;
     }
 
     public override void BattleFinish()
     {
+        _attackValue = 0;
     }
 }
