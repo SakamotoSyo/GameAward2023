@@ -13,7 +13,8 @@ public class KudakiuchiSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
     private EnemyStatus _enemyStatus;
-    const float _subtractProtectionValue = 0.2f;
+    const float _subtractValue = 0.2f;
+    private bool _isSkill = false;
     public KudakiuchiSkill()
     {
         SkillName = "砕き打ち";
@@ -38,15 +39,25 @@ public class KudakiuchiSkill : SkillBase
         // スキルの効果処理を実装する
         _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
         //敵の防御力を下げる処理
+        if (!_isSkill)
+        {
+            _isSkill = true;
+        }
     }
     
     public override void TurnEnd()
     {
         _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+
+        if(_isSkill)
+        {
+            float hp = _enemyStatus.EquipWeapon.CurrentDurable.Value;
+            _enemyStatus.EquipWeapon.CurrentDurable.Value -= hp * _subtractValue;
+        }
     }
     
     public override void BattleFinish()
     {
-        
+        _isSkill = false;   
     }
 }
