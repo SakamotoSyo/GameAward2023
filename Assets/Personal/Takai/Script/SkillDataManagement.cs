@@ -7,10 +7,11 @@ using Random = UnityEngine.Random;
 
 public class SkillDataManagement : MonoBehaviour
 {
+    [SerializeField] private ActorGenerator _actorGenerator;
     [SerializeField] private PlayerStatus _pStatus;
     [SerializeField] private EnemyStatus _eStatus;
     [SerializeField] private WeaponStatus _wStatus;
-    
+
     private List<SkillBase> _skills = new List<SkillBase>();
     public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
 
@@ -43,21 +44,25 @@ public class SkillDataManagement : MonoBehaviour
         return skills[n];
     }
 
-    public void OnSkillUse<T>(object status) where T : SkillBase
+    public void OnSkillUse<T>(Type status) where T : SkillBase
     {
         SkillBase skill = _skills.Find(skill => skill.GetType() == typeof(T));
         if (skill != null)
         {
-            // 引数が PlayerStatus の場合、_pStatus に代入する
-            if (status is PlayerStatus)
+            // 引数が Player の場合、_pStatus に代入する
+            if (status == Type.Player)
             {
-                _pStatus = (PlayerStatus)status;
+                _pStatus = _actorGenerator.PlayerController.PlayerStatus;
+                _eStatus = _actorGenerator.EnemyController.EnemyStatus;
+
                 skill.UseSkill(_pStatus, _eStatus, _wStatus);
             }
-            // 引数が EnemyStatus の場合、_eStatus に代入する
-            else if (status is EnemyStatus)
+            // 引数が Enemy の場合、_eStatus に代入する
+            else if (status == Type.Enemy)
             {
-                _eStatus = (EnemyStatus)status;
+                _pStatus = _actorGenerator.PlayerController.PlayerStatus;
+                _eStatus = _actorGenerator.EnemyController.EnemyStatus;
+
                 skill.UseSkill(_pStatus, _eStatus, _wStatus);
             }
             // 上記以外の場合、エラーをログに記録する
@@ -84,4 +89,10 @@ public class SkillDataManagement : MonoBehaviour
             }
         }
     }
+}
+
+public enum Type
+{
+    Player,
+    Enemy,
 }
