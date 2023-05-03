@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class SkillDataManagement : MonoBehaviour
 {
+    [SerializeField] private ActorGenerator _actorGenerator;
     [SerializeField] private PlayerStatus _pStatus;
     [SerializeField] private EnemyStatus _eStatus;
     [SerializeField] private WeaponStatus _wStatus;
@@ -43,7 +44,7 @@ public class SkillDataManagement : MonoBehaviour
         return skills[n];
     }
 
-    public void OnSkillUse<T>(Type status,PlayerStatus player, EnemyStatus enemy) where T : SkillBase
+    public void OnSkillUse<T>(Type status) where T : SkillBase
     {
         SkillBase skill = _skills.Find(skill => skill.GetType() == typeof(T));
         if (skill != null)
@@ -51,16 +52,16 @@ public class SkillDataManagement : MonoBehaviour
             // 引数が Player の場合、_pStatus に代入する
             if (status == Type.Player)
             {
-                _pStatus = player;
-                _eStatus = enemy;
+                _pStatus = _actorGenerator.PlayerController.PlayerStatus;
+                _eStatus = _actorGenerator.EnemyController.EnemyStatus;
 
                 skill.UseSkill(_pStatus, _eStatus, _wStatus);
             }
             // 引数が Enemy の場合、_eStatus に代入する
             else if (status == Type.Enemy)
             {
-                _pStatus = player;
-                _eStatus = enemy;
+                _pStatus = _actorGenerator.PlayerController.PlayerStatus;
+                _eStatus = _actorGenerator.EnemyController.EnemyStatus;
 
                 skill.UseSkill(_pStatus, _eStatus, _wStatus);
             }
