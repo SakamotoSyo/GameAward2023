@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class SkillDataManagement : MonoBehaviour
 {
     [SerializeField] private ActorGenerator _actorGenerator;
+
     [SerializeField] private PlayerStatus _pStatus;
     [SerializeField] private EnemyStatus _eStatus;
     [SerializeField] private WeaponStatus _wStatus;
@@ -44,39 +45,21 @@ public class SkillDataManagement : MonoBehaviour
         return skills[n];
     }
 
-    public void OnSkillUse<T>(Type status) where T : SkillBase
+    public void OnSkillUse<T>(ActorAttackType actorType) where T : SkillBase
     {
         SkillBase skill = _skills.Find(skill => skill.GetType() == typeof(T));
         if (skill != null)
         {
-            // 引数が Player の場合、_pStatus に代入する
-            if (status == Type.Player)
-            {
-                _pStatus = _actorGenerator.PlayerController.PlayerStatus;
-                _eStatus = _actorGenerator.EnemyController.EnemyStatus;
+            _pStatus = _actorGenerator.PlayerController.PlayerStatus;
+            _eStatus = _actorGenerator.EnemyController.EnemyStatus;
 
-                skill.UseSkill(_pStatus, _eStatus, _wStatus);
-            }
-            // 引数が Enemy の場合、_eStatus に代入する
-            else if (status == Type.Enemy)
-            {
-                _pStatus = _actorGenerator.PlayerController.PlayerStatus;
-                _eStatus = _actorGenerator.EnemyController.EnemyStatus;
-
-                skill.UseSkill(_pStatus, _eStatus, _wStatus);
-            }
-            // 上記以外の場合、エラーをログに記録する
-            else
-            {
-                Debug.LogError("不明なステータスが渡されました");
-            }
+            skill.UseSkill(_pStatus, _eStatus, _wStatus,actorType);
         }
         else
         {
             Debug.Log("スキルが見つかりません");
         }
     }
-
 
     public void TurnCall()
     {
@@ -91,7 +74,7 @@ public class SkillDataManagement : MonoBehaviour
     }
 }
 
-public enum Type
+public enum ActorAttackType
 {
     Player,
     Enemy,
