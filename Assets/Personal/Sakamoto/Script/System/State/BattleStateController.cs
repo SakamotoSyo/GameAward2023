@@ -13,13 +13,13 @@ public class BattleStateController : MonoBehaviour
     public PlayerController PlayerController => _playerController;
     public EnemyController EnemyController => _enemyController;
     public ResultUIScript ResultUIScript => _resultUIScript;
-    public PlayerSkillDataManagement SkillManagement => _skillManagement;
+    public SkillDataManagement SkillManagement => _skillManagement;
 
     [SerializeField] private GameObject _commandObj;
     [SerializeField] private ActorGenerator _generator;
     [SerializeField] private Text _stateText;
     [SerializeField] private ResultUIScript _resultUIScript;
-    [SerializeField] private PlayerSkillDataManagement _skillManagement;
+    [SerializeField] private SkillDataManagement _skillManagement;
     private StateMachine<BattleStateController> _stateMachine;
     private List<ActionSequentialData> _actionSequentialList = new();
     private PlayerController _playerController;
@@ -61,11 +61,13 @@ public class BattleStateController : MonoBehaviour
     {
         _actionSequentialList.Clear();
         var playerActionSequential = new ActionSequentialData();
+
         playerActionSequential.PlayerController = _playerController;
         playerActionSequential.WeaponWeight = _playerController.PlayerStatus.EquipWeapon.WeaponWeight.Value;
         _actionSequentialList.Add(playerActionSequential);
 
         var enemyActionSequential = new ActionSequentialData();
+
         enemyActionSequential.EnemyController = _enemyController;
         enemyActionSequential.WeaponWeight = _enemyController.EnemyStatus.EquipWeapon.WeaponWeight;
         _actionSequentialList.Add(enemyActionSequential);
