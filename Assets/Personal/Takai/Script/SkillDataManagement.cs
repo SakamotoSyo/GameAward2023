@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerSkillDataManagement : MonoBehaviour
+public class SkillDataManagement : MonoBehaviour
 {
     [SerializeField] private PlayerStatus _pStatus;
     [SerializeField] private EnemyStatus _eStatus;
@@ -43,19 +43,35 @@ public class PlayerSkillDataManagement : MonoBehaviour
         return skills[n];
     }
 
-    public void OnSkillUse<T>() where T : SkillBase
+    public void OnSkillUse<T>(object status) where T : SkillBase
     {
         SkillBase skill = _skills.Find(skill => skill.GetType() == typeof(T));
         if (skill != null)
         {
-            // 特定のクラスを見つけた後の処理を記述する
-            skill.UseSkill(_pStatus,_eStatus,_wStatus);
+            // 引数が PlayerStatus の場合、_pStatus に代入する
+            if (status is PlayerStatus)
+            {
+                _pStatus = (PlayerStatus)status;
+                skill.UseSkill(_pStatus, _eStatus, _wStatus);
+            }
+            // 引数が EnemyStatus の場合、_eStatus に代入する
+            else if (status is EnemyStatus)
+            {
+                _eStatus = (EnemyStatus)status;
+                skill.UseSkill(_pStatus, _eStatus, _wStatus);
+            }
+            // 上記以外の場合、エラーをログに記録する
+            else
+            {
+                Debug.LogError("不明なステータスが渡されました");
+            }
         }
         else
         {
             Debug.Log("スキルが見つかりません");
         }
     }
+
 
     public void TurnCall()
     {
