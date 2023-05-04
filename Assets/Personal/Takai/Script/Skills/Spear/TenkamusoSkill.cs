@@ -22,7 +22,7 @@ public class TenkamusoSkill : SkillBase
         Type = (SkillType)1;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon)
+    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;

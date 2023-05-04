@@ -13,7 +13,7 @@ public class SkillGenerator : EditorWindow
     private int _damage = 0;
     private WeaponType _weapon;
     private SkillType _type;
-    private PlayerSkillDataManagement _playerSkillDataManagement;
+    private SkillDataManagement _skillDataManagement;
 
     private string _className = "";
 
