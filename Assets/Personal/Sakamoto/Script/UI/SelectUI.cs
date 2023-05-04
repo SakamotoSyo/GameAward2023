@@ -10,12 +10,12 @@ public class SelectUI : MonoBehaviour
     [SerializeField] private Transform[] _actionUi = new Transform[4];
     [SerializeField] private Transform[] _actionUiPos = new Transform[4];
     [SerializeField] private Text[] _skillText = new Text[3];
-    [SerializeField] private ActorGenerator _generator;
-    //[SerializeField] private StateController _stateController;
-    [SerializeField] private BattleStateController _battleStateController;
-    [SerializeField] private int _lotateNum;
     [SerializeField] private GameObject _commandUI;
     [SerializeField] private GameObject _infoUI;
+    [SerializeField] private ActorGenerator _generator;
+    [SerializeField] private BattleStateController _battleStateController;
+    [SerializeField] private BattleChangeWeapon _battleChangeWeaponCs;
+    [SerializeField] private int _lotateNum;
 
     private WeaponStatus _weaponStatus;
     private PlayerController _playerController;
@@ -44,7 +44,7 @@ public class SelectUI : MonoBehaviour
             _lotateNum = (_lotateNum - 1) % 4;
         }
 
-        TestAttack();
+        Attack();
     }
 
     private void UiMove(bool num)
@@ -85,7 +85,7 @@ public class SelectUI : MonoBehaviour
         }
     }
 
-    public void TestAttack()
+    public void Attack()
     {
         if (Input.GetKeyDown(KeyCode.Space)&& _playerStatus.ChackAnomaly())
         {
@@ -110,13 +110,11 @@ public class SelectUI : MonoBehaviour
             }
             else if (_actionUi[num] == _actionUi[2])
             {
-                Debug.Log("none 1");
                 _infoUI.SetActive(true);
                 SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
                 _skillText[0].text = skill1.name;
                 _skillText[1].text = skill1.Damage.ToString();
                 _skillText[2].text = skill1.FlavorText;
-                //ñ¢íË
             }
             else
             {
@@ -125,12 +123,13 @@ public class SelectUI : MonoBehaviour
                 _skillText[0].text = skill2.name;
                 _skillText[1].text = skill2.Damage.ToString();
                 _skillText[2].text = skill2.FlavorText;
-                Debug.Log("none 2");
-                //ñ¢íË
             }
 
             _commandUI.SetActive(false);
-            _battleStateController.ActorStateEnd();
+            _battleChangeWeaponCs.ChangeWeaponUiOpen();
+            Debug.Log("ïêäÌì¸ÇÍäG");
+            //TODO:ëJà⁄ÇÃã@î\Çï ÇÃèÍèäÇ…à⁄Ç∑
+            //_battleStateController.ActorStateEnd();
         }
     }
 
