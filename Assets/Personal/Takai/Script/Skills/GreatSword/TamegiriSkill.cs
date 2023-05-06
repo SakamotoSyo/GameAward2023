@@ -11,6 +11,9 @@ public class TamegiriSkill : SkillBase
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
+    private EnemyStatus _enemyStatus;
+    private ActorAttackType _actor;
+    private bool _isUse = false;
 
     public TamegiriSkill()
     {
@@ -20,28 +23,58 @@ public class TamegiriSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon,
+        ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
+        _enemyStatus = enemy;
+        _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
     protected override void SkillEffect()
     {
+        _isUse = true;
+
         // スキルの効果処理を実装する
-        _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        switch (_actor)
+        {
+            case ActorAttackType.Player:
+                _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+                break;
+            case ActorAttackType.Enemy:
+                _enemyStatus.EquipWeapon.OffensivePower += Damage;
+                break;
+        }
     }
-    
+
     public override void TurnEnd()
     {
-        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+        if (!_isUse)
+        {
+            return;
+        }
+
+        _isUse = false;
+
+        switch (_actor)
+        {
+            case ActorAttackType.Player:
+                _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+                break;
+            case ActorAttackType.Enemy:
+                _enemyStatus.EquipWeapon.OffensivePower -= Damage;
+                break;
+        }
     }
 
     public override void BattleFinish()
     {
+        _isUse = false;
     }
 }
