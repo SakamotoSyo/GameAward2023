@@ -37,7 +37,7 @@ public class IkishochinSkill : SkillBase
     {
         // スキルの効果処理を実装する
         _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
-        _enemyStatus.EquipWeapon.OffensivePower -= _enemyStatus.EquipWeapon.OffensivePower + _subtractValue;
+        _enemyStatus.EquipWeapon.CurrentOffensivePower -= _enemyStatus.EquipWeapon.OffensivePower + _subtractValue;
     }
 
     public override void TurnEnd()

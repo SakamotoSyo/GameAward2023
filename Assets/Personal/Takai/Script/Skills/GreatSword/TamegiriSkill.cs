@@ -48,7 +48,7 @@ public class TamegiriSkill : SkillBase
                 _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
                 break;
             case ActorAttackType.Enemy:
-                _enemyStatus.EquipWeapon.OffensivePower += Damage;
+                _enemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
                 break;
         }
     }
@@ -68,7 +68,7 @@ public class TamegiriSkill : SkillBase
                 _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
                 break;
             case ActorAttackType.Enemy:
-                _enemyStatus.EquipWeapon.OffensivePower -= Damage;
+                _enemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
                 break;
         }
     }
