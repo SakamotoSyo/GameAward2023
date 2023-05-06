@@ -58,4 +58,16 @@ public class EnemyStatus
             }
         }
     }
+
+    public bool IsDebuff()
+    {
+        if(_epicWeapon.OffensivePower != _epicWeapon.CurrentOffensivePower ||
+            _epicWeapon.CriticalRate != _epicWeapon.CurrentCriticalRate ||
+            _epicWeapon.WeaponWeight != _epicWeapon.CurrentWeaponWeight)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
