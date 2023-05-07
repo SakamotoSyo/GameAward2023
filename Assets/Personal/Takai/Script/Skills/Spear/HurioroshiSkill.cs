@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
+using DG.Tweening;
 
 public class HurioroshiSkill : SkillBase
 {
@@ -10,8 +11,8 @@ public class HurioroshiSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
-    private EnemyStatus _enemyStatus;
+    private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
     private ActorAttackType _actor;
     private bool _isUse = false;
 
@@ -23,7 +24,7 @@ public class HurioroshiSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
@@ -42,10 +43,10 @@ public class HurioroshiSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
                 break;
             case ActorAttackType.Enemy:
-                _enemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
+                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
                 break;
         }
     }
@@ -62,10 +63,10 @@ public class HurioroshiSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
                 break;
             case ActorAttackType.Enemy:
-                _enemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
+                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
                 break;
         }
     }

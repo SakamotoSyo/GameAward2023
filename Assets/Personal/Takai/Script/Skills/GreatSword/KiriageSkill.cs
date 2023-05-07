@@ -10,7 +10,7 @@ public class KiriageSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
 
-    private PlayerStatus _playerStatus;
+    private PlayerController _playerStatus;
     private PlayableDirector _anim;
     private const float AddDamageValue = 0.05f;
     private const int Turn = 3;
@@ -25,7 +25,7 @@ public class KiriageSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
@@ -37,25 +37,25 @@ public class KiriageSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        float dmg = _playerStatus.EquipWeapon.OffensivePower.Value;
+        float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
         // スキルの効果処理を実装する
         if (_count <= Turn)
         {
             _count++;
             _attackValue += (dmg * (AddDamageValue * _count)) + Damage;
-            _playerStatus.EquipWeapon.OffensivePower.Value += (dmg * (AddDamageValue * _count));
+            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += (dmg * (AddDamageValue * _count));
         }
     }
 
     public override void TurnEnd()
     {
-        _playerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
+        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
     }
 
 
     public override void BattleFinish()
     {
-        _playerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
+        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
         _count = 0;
         _attackValue = 0;
     }

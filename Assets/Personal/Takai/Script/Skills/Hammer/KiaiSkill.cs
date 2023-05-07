@@ -10,7 +10,7 @@ public class KiaiSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
+    private PlayerController _playerStatus;
     bool _isAttack = false;
 
     public KiaiSkill()
@@ -21,7 +21,7 @@ public class KiaiSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
@@ -41,12 +41,12 @@ public class KiaiSkill : SkillBase
     {
         if (_isAttack)
         {
-            _playerStatus.EquipWeapon.OffensivePower.Value *= 2;
+            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value *= 2;
             _isAttack = false;
         }
         else
         {
-            _playerStatus.EquipWeapon.OffensivePower.Value /= 2;
+            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value /= 2;
         }
     }
 

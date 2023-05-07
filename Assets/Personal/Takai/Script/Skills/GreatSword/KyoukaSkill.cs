@@ -10,7 +10,7 @@ public class KyoukaSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
+    private PlayerController _playerStatus;
     private const float DamageFactor = 1.5f;
     private int _turn;
 
@@ -22,7 +22,7 @@ public class KyoukaSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
@@ -37,7 +37,7 @@ public class KyoukaSkill : SkillBase
         if (_turn == 0)
         {
             _turn++;
-            _playerStatus.EquipWeapon.OffensivePower.Value *= DamageFactor;
+            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value *= DamageFactor;
         }
         else
         {
@@ -50,7 +50,7 @@ public class KyoukaSkill : SkillBase
         _turn++;
         if (_turn > 2)
         {
-            _playerStatus.EquipWeapon.OffensivePower.Value /= DamageFactor;
+            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value /= DamageFactor;
             // プレイヤーがひるむ
             _turn = 0;
         }
