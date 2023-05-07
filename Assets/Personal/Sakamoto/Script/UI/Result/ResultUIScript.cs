@@ -58,10 +58,10 @@ public class ResultUIScript : MonoBehaviour
     /// </summary>
     private void RewardLottery()
     {
+        _actorGenerator.PlayerController.PlayerStatus.AddRankPoint();
         for (int i = 0; i < _oreUiCs.Length; i++)
         {
             var oreInfo = RarityLottery();
-            Debug.Log(oreInfo.randomSkill);
             OreData Ore = new OreData(SetEnhanceData(), oreInfo.rearity, oreInfo.randomSkill, oreInfo.oreImage);
             _oreUiCs[i].SetData(Ore);
             _oreButton[i].onClick.AddListener(() => EnhanceWeaponEvent(Ore));
@@ -93,11 +93,9 @@ public class ResultUIScript : MonoBehaviour
     private (Image oreImage, OreRarity rearity, SkillBase randomSkill) RarityLottery()
     {
         OreRarity rearity = (OreRarity)Random.Range(0, 3);
-        //WeaponData[] weaponDatas = _actorGenerator.PlayerController.PlayerStatus.WeponDatas;
-        //WeaponData weaponData = weaponDatas[Random.Range(0, weaponDatas.Length)];
-        //TODO:テストで動かせるようになっているのでPlayerが生成される環境だったら上を使う
-        //WeaponType weaponType = (WeaponType)Random.Range(0, 4);
-        SkillBase randomSkill = _playerSkillDataManagement.OnSkillCall(WeaponType.GreatSword, SkillType.Skill);
+        WeaponData[] weaponDatas = _actorGenerator.PlayerController.PlayerStatus.WeaponDatas;
+        WeaponData weaponData = weaponDatas[Random.Range(0, weaponDatas.Length)];
+        SkillBase randomSkill = _playerSkillDataManagement.OnSkillCall(weaponData.WeaponType, SkillType.Skill);
         Image oreImage = _oreImage[(int)rearity];
 
         return (oreImage, rearity, randomSkill);
@@ -151,13 +149,11 @@ public class ResultUIScript : MonoBehaviour
     {
         weaponData.EnhanceParam(oreData.EnhancedData);
         var playerSkill = _actorGenerator.PlayerController.PlayerSkill;
-        Debug.Log("強化しました");
         if (oreData.Skill != null)
         {
             if (playerSkill.AddSkillJudge(oreData.Skill))
             {
                 //スキルを追加出来たときの処理
-                Debug.Log($"{oreData.Skill}を覚えました");
                 if (_isBlacksmith)
                 {
                     BlacksmithJudge();

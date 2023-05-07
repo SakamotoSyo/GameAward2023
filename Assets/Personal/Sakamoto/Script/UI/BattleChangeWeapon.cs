@@ -30,9 +30,17 @@ public class BattleChangeWeapon : MonoBehaviour
             if (i < _playerStatus.WeaponDatas.Length - 1)
             {
                 var num = i;
-                _weaponButton[i].interactable = true;
-                _weaponTypeText[i].text = _playerStatus.WeaponDatas[num].WeaponType.ToString();  
-                _weaponButton[i].onClick.AddListener(() => OnClickChangeWeapon(_playerStatus.WeaponDatas[num]));
+                if (_playerStatus.WeaponDatas[i].CurrentDurable <= 0) 
+                {
+                    _weaponButton[i].interactable = false;
+                }
+                else 
+                {
+                    _weaponButton[i].interactable = true;
+                }
+                _weaponTypeText[i].text = _playerStatus.WeaponDatas[num].WeaponType.ToString();
+                _weaponButton[i].onClick.RemoveAllListeners();
+                _weaponButton[i].onClick.AddListener(() => OnClickChangeWeapon(_playerStatus.WeaponDatas[num], num));
                 _weaponButton[i].onClick.AddListener(() => _battleStateController.ActorStateEnd());
             }
             else
@@ -46,9 +54,15 @@ public class BattleChangeWeapon : MonoBehaviour
     /// ボタンを押されたときの入れ替え処理
     /// </summary>
     /// <param name="weaponData">武器のデータ</param>
-    public void OnClickChangeWeapon(WeaponData weaponData)
+    public void OnClickChangeWeapon(WeaponData weaponData, int arrayNum)
     {
-        _playerStatus.EquipWeponChange(weaponData);
+        _playerStatus.EquipWeponChange(weaponData, arrayNum);
         _weaponUiPanel.SetActive(false);
+    }
+
+    public void CancelButton() 
+    {
+        _weaponUiPanel.SetActive(false);
+        _battleStateController.ActorStateEnd();
     }
 }
