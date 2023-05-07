@@ -23,6 +23,7 @@ public class TenkamusoSkill : SkillBase
         Damage = 120;
         Weapon = (WeaponType)3;
         Type = (SkillType)1;
+        FlavorText = "経過ターンが多いほど威力上昇　※HP30％以下で発動可能";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

@@ -13,7 +13,7 @@ public class ShippuSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float _subtractHpValue = 0.02f;
-
+    bool _isUse = false;
     int _count = 3;
 
     public ShippuSkill()
@@ -22,6 +22,7 @@ public class ShippuSkill : SkillBase
         Damage = 30;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
+        FlavorText = "2ターンの間敵に継続ダメージを与える";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
@@ -37,6 +38,8 @@ public class ShippuSkill : SkillBase
 
     protected override void SkillEffect()
     {
+        _isUse = true;
+
         // スキルの効果処理を実装する
         _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
 
@@ -45,18 +48,25 @@ public class ShippuSkill : SkillBase
 
     public override void TurnEnd()
     {
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
-
         if (_count <= 0)
         {
             _count--;
             float durable = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value;
             _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value -= durable * _subtractHpValue;
         }
+
+        if (!_isUse)
+        {
+            return;
+        }
+
+        _isUse = false;
+        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
     }
 
     public override void BattleFinish()
     {
+        _isUse = false;
         _count = 0;
     }
 }

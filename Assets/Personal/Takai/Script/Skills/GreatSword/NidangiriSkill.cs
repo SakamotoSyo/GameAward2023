@@ -12,6 +12,7 @@ public class NidangiriSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     float _attackValue = 0f;
+    bool _isUse = false;
 
     public NidangiriSkill()
     {
@@ -19,6 +20,7 @@ public class NidangiriSkill : SkillBase
         Damage = 80;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
+        FlavorText = "重さが大きいほど2撃目のダメージが大きくなる(上限4)";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
@@ -33,6 +35,8 @@ public class NidangiriSkill : SkillBase
 
     protected override void SkillEffect()
     {
+        _isUse = true;
+
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
         float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
 
@@ -64,12 +68,19 @@ public class NidangiriSkill : SkillBase
 
     public override void TurnEnd()
     {
+        if (!_isUse)
+        {
+            return;
+        }
+
+        _isUse = false;
         _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
         _attackValue = 0;
     }
 
     public override void BattleFinish()
     {
+        _isUse = false;
         _attackValue = 0;
     }
 }

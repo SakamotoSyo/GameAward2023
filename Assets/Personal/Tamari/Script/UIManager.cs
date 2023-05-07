@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     WeaponType _weaponType;
 
-    [Header("常に置いてあるボタン")]
+    [Header("常に置いてあるUI")]
 
     [SerializeField]
     private Button _finishButton = default;
@@ -18,7 +18,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button _sampleCreateButton = default;
 
-
+    [SerializeField]
+    private Text _weaponTypeText = default;
 
     [Header("リセット時に確認用に出すパネルに必要な情報")]
 
@@ -53,6 +54,34 @@ public class UIManager : MonoBehaviour
     {
         _panelForReset.SetActive(false);
         _panelForSample.SetActive(false);
+        switch (GameManager.BlacksmithType)
+        {
+            case WeaponType.GreatSword:
+                {
+                    _weaponTypeText.text = "大剣";
+                }
+                break;
+            case WeaponType.DualBlades:
+                {
+                    _weaponTypeText.text = "双剣";
+                }
+                break;
+            case WeaponType.Hammer:
+                {
+                    _weaponTypeText.text = "ハンマー";
+                }
+                break;
+            case WeaponType.Spear:
+                {
+                    _weaponTypeText.text = "やり";
+                }
+                break;
+            default:
+                {
+                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
+                }
+                return;
+        }
     }
 
     public void SwitchCheckForReset(bool flag)
