@@ -1,19 +1,49 @@
 ﻿using UnityEngine;
 
-public class CreateWeapon : BaseCreateWeapon
+public class CreateWeapon : MonoBehaviour
 {
-    public void CreateWeapons()
+    [SerializeField]
+    private GameObject _weaponObj = default;
+    [SerializeField]
+    private GameObject _weaponHandle = default;
+    private MeshRenderer _myRenderer = default;
+    private GameObject _childObj = default;
+
+    private SaveData _data = default;
+
+    public void Create()
     {
-        switch (GameManager.BlacksmithType)
+        if (_data._myVertices == null)
+        {
+            Debug.Log("選んだ武器のセーブデータはありません");
+            return;
+        }
+        Mesh mesh = new Mesh();
+        mesh.vertices = _data._myVertices;
+        mesh.triangles = _data._myTriangles;
+        mesh.SetColors(_data._colorList);
+
+        _childObj = new GameObject(_data._prefabName);
+        _childObj.transform.parent = _weaponObj.transform;
+
+        MeshFilter meshFilter = _childObj.AddComponent<MeshFilter>();
+        meshFilter.mesh = mesh;
+
+        _myRenderer = _childObj.AddComponent<MeshRenderer>();
+        _myRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
+    }
+    public void CreateWeapons(WeaponType weaponType)
+    {
+        switch (weaponType)
         {
             case WeaponType.GreatSword:
                 {
-                    _data = SaveManager.Load(SaveManager.TAIKENFILEPATH);
+                    _data = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
                 }
                 break;
             case WeaponType.DualBlades:
                 {
-                    _data = SaveManager.Load(SaveManager.SOUKENFILEPATH);
+                    _data = SaveManager.Load(SaveManager.DUALSWORDFILEPATH);
                 }
                 break;
             case WeaponType.Hammer:
@@ -23,7 +53,7 @@ public class CreateWeapon : BaseCreateWeapon
                 break;
             case WeaponType.Spear:
                 {
-                    _data = SaveManager.Load(SaveManager.YARIFILEPATH);
+                    _data = SaveManager.Load(SaveManager.SPEARFILEPATH);
                 }
                 break;
             default:
@@ -46,12 +76,12 @@ public class CreateWeapon : BaseCreateWeapon
         {
             case "Taiken":
                 {
-                    _data = SaveManager.Load(SaveManager.TAIKENFILEPATH);
+                    _data = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
                 }
                 break;
             case "Souken":
                 {
-                    _data = SaveManager.Load(SaveManager.SOUKENFILEPATH);
+                    _data = SaveManager.Load(SaveManager.DUALSWORDFILEPATH);
                 }
                 break;
             case "Hammer":
@@ -61,7 +91,7 @@ public class CreateWeapon : BaseCreateWeapon
                 break;
             case "Yari":
                 {
-                    _data = SaveManager.Load(SaveManager.YARIFILEPATH);
+                    _data = SaveManager.Load(SaveManager.SPEARFILEPATH);
                 }
                 break;
             default:

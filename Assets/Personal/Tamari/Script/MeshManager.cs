@@ -133,10 +133,10 @@ public class MeshManager : MonoBehaviour
 
     void Calculation()
     {
-        //if (_isFinished)
-        //{
-        //    return;
-        //}
+        if (_isFinished)
+        {
+            return;
+        }
 
         Vector3 mousePos = Input.mousePosition;
         var worldPos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -197,12 +197,12 @@ public class MeshManager : MonoBehaviour
         {
             case WeaponType.GreatSword:
                 {
-                    BaseSaveMesh(SaveManager.TAIKENFILEPATH);
+                    BaseSaveMesh(SaveManager.GREATSWORDFILEPATH);
                 }
                 break;
             case WeaponType.DualBlades:
                 {
-                    BaseSaveMesh(SaveManager.SOUKENFILEPATH);
+                    BaseSaveMesh(SaveManager.DUALSWORDFILEPATH);
                 }
                 break;
             case WeaponType.Hammer:
@@ -212,7 +212,7 @@ public class MeshManager : MonoBehaviour
                 break;
             case WeaponType.Spear:
                 {
-                    BaseSaveMesh(SaveManager.YARIFILEPATH);
+                    BaseSaveMesh(SaveManager.SPEARFILEPATH);
                 }
                 break;
             default:
