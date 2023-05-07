@@ -43,7 +43,12 @@ public class ActorGenerator : MonoBehaviour
             _enemyController.EnemyStatus.IsBoss = true;
         }
 
-        if (GameManager.EnemyData)
+        if (GameManager.EnemyData && GameManager.EnemyData.IsBoss) 
+        {
+            _enemyController.EnemyStatus.IsBoss = true;
+            _enemyController.SetEnemyData(GameManager.EnemyData);
+        }
+        else if (GameManager.EnemyData)
         {
             Debug.Log(GameManager.EnemyData.WeaponDates[0].WeaponType);
             _enemyController.SetEnemyData(GameManager.EnemyData);
