@@ -21,6 +21,7 @@ public class EnemyDataBase : MonoBehaviour
 
     private void Init()
     {
+        isInit = true;
         bossDataList = new List<EnemyBossData>(_bossDataList);
     }
 
