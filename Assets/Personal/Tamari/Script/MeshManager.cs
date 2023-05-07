@@ -89,8 +89,6 @@ public class MeshManager : MonoBehaviour
 
     public List<Color> SetColor { get { return _setColor; } }
 
-    WeaponType _weaponType = default;
-
     [SerializeField]
     private string _nextSceneName = default;
 
@@ -195,7 +193,7 @@ public class MeshManager : MonoBehaviour
     /// <param name="weapon"></param>
     public void SaveMesh()
     {
-        switch (_weaponType)
+        switch (GameManager.BlacksmithType)
         {
             case WeaponType.GreatSword:
                 {
@@ -219,7 +217,7 @@ public class MeshManager : MonoBehaviour
                 break;
             default:
                 {
-                    Debug.Log("指定された武器の名前 : " + _weaponType + " は存在しません");
+                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
                 }
                 return;
         }
@@ -227,7 +225,7 @@ public class MeshManager : MonoBehaviour
 
     private void BaseSaveMesh(string fileName)
     {
-        _saveData._prefabName = _weaponType.ToString();
+        _saveData._prefabName = GameManager.BlacksmithType.ToString();
         _saveData._myVertices = _myVertices;
         _saveData._myTriangles = _myTriangles;
         _saveData._colorList = _setColor;

@@ -2,9 +2,9 @@
 
 public class CreateWeapon : BaseCreateWeapon
 {
-    public void CreateWeapons(WeaponType weapon)
+    public void CreateWeapons()
     {
-        switch (weapon)
+        switch (GameManager.BlacksmithType)
         {
             case WeaponType.GreatSword:
                 {
@@ -28,7 +28,7 @@ public class CreateWeapon : BaseCreateWeapon
                 break;
             default:
                 {
-                    Debug.Log("指定された武器の名前 : " + weapon + " は存在しません");
+                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
                 }
                 return;
         }
