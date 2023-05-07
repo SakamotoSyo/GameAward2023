@@ -7,10 +7,10 @@ public struct OreData
 {
     public EnhanceData[] EnhancedData;
     public SkillBase Skill;
-    public Image OreImage;
+    public Sprite OreImage;
     public OreRarity Rarity;
 
-    public OreData(EnhanceData[] enhanceDatas,OreRarity oreRarity, SkillBase skill, Image image) 
+    public OreData(EnhanceData[] enhanceDatas,OreRarity oreRarity, SkillBase skill, Sprite image) 
     {
         EnhancedData = enhanceDatas;
         Rarity = oreRarity;
