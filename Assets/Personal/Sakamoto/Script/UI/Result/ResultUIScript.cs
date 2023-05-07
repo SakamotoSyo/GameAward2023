@@ -207,7 +207,7 @@ public class ResultUIScript : MonoBehaviour
         }
         else if (oreData.Skill.Type == SkillType.Special)
         {
-            if (playerSkill.AddSkillJudge(oreData.Skill))
+            if (playerSkill.AddSpecialSkill(oreData.Skill))
             {
                 weaponData.EnhanceParam(oreData.EnhancedData);
                 //スキルを追加出来たときの処理
@@ -223,6 +223,7 @@ public class ResultUIScript : MonoBehaviour
             }
             else
             {
+                Debug.Log("必殺技");
                 _enhanceSelectObj.SetActive(false);
                 _skillSelectPanel.SetActive(true);
                 _skillSelectButtonCs[0].SetCurrentSkill(playerSkill.SpecialAttack);
