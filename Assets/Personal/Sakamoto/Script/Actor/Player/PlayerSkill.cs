@@ -37,7 +37,7 @@ public class PlayerSkill
 
     public bool AddSpecialSkill(SkillBase skill) 
     {
-        if (_specialAttack) 
+        if (!_specialAttack) 
         {
             _specialAttack = skill;
             return true;
