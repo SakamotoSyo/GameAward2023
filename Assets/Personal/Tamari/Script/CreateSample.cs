@@ -1,29 +1,85 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CreateSample : MonoBehaviour
 {
-    [SerializeField] MeshManager _meshManager;
+    [SerializeField] MeshManager _meshManager = default;
 
-    [SerializeField, Tooltip("‘åŒ•‚ÌƒTƒ“ƒvƒ‹")]
-    private List<Vector3> _taikenSample;
+    [SerializeField, Tooltip("å¤§å‰£ã®ã‚µãƒ³ãƒ—ãƒ«")]
+    private List<Vector3> _taikenSample = default;
 
-    [SerializeField, Tooltip("‘oŒ•‚ÌƒTƒ“ƒvƒ‹")]
-    private List<Vector3> _soukenSample;
+    [SerializeField, Tooltip("åŒå‰£ã®ã‚µãƒ³ãƒ—ãƒ«")]
+    private List<Vector3> _soukenSample = default;
 
-    [SerializeField, Tooltip("ƒnƒ“ƒ}[‚ÌƒTƒ“ƒvƒ‹")]
-    private List<Vector3> _hammerSample;
+    [SerializeField, Tooltip("ãƒãƒ³ãƒãƒ¼ã®ã‚µãƒ³ãƒ—ãƒ«")]
+    private List<Vector3> _hammerSample = default;
 
-    [SerializeField, Tooltip("‚â‚è‚ÌƒTƒ“ƒvƒ‹")]
-    private List<Vector3> _yariSample;
+    [SerializeField, Tooltip("ã‚„ã‚Šã®ã‚µãƒ³ãƒ—ãƒ«")]
+    private List<Vector3> _yariSample = default;
+
+    private WeaponType _weaponType = default;
+
+    public void WeaponSamples()
+    {
+        switch (_weaponType)
+        {
+            case WeaponType.GreatSword:
+                {
+                    SampleTaiken();
+                }
+                break;
+            case WeaponType.DualBlades:
+                {
+                    SampleSouken();
+                }
+                break;
+            case WeaponType.Hammer:
+                {
+                    SampleHammer();
+                }
+                break;
+            case WeaponType.Spear:
+                {
+                    SampleYari();
+                }
+                break;
+            default:
+                {
+                    Debug.Log("æŒ‡å®šã•ã‚ŒãŸæ­¦å™¨ã®åå‰ : " + _weaponType + " ã¯å­˜åœ¨ã—ã¾ã›ã‚“");
+                }
+                return;
+        }
+
+        Debug.Log(_weaponType + "ã®ã•ã‚“ã·ã‚‹");
+    }
 
     public void SampleTaiken()
     {
-        for (int i = 0; i < _taikenSample.Count; i++)
+        BaseSampleCreate(_taikenSample);
+    }
+
+    public void SampleSouken()
+    {
+        BaseSampleCreate(_soukenSample);
+    }
+
+    public void SampleHammer()
+    {
+        BaseSampleCreate(_hammerSample);
+    }
+
+    public void SampleYari()
+    {
+        BaseSampleCreate(_yariSample);
+    }
+
+    private void BaseSampleCreate(List<Vector3> weaponList)
+    {
+        for (int i = 0; i < weaponList.Count; i++)
         {
-            _meshManager.MyVertices[i] = _taikenSample[i];
-            _meshManager.MyMesh.SetVertices(_taikenSample);
+            _meshManager.MyVertices[i] = weaponList[i];
+            _meshManager.MyMesh.SetVertices(weaponList);
         }
     }
 }
