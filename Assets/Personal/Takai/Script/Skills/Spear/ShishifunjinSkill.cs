@@ -16,6 +16,7 @@ public class ShishifunjinSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private int _count;
+    bool _isUse = false;
 
     public ShishifunjinSkill()
     {
@@ -38,12 +39,14 @@ public class ShishifunjinSkill : SkillBase
 
     protected override async void SkillEffect()
     {
+        _isUse = true;
+
         var token = this.GetCancellationTokenOnDestroy();
         // スキルの効果処理を実装する
         _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
         //経過ターンが多いほど攻撃回数アップ（上限 7回） 1 + 2×(ターン数-1) 
         int num = 1 + 2 * (_count - 1);
-        if(7 < num) num = 7;
+        if (7 < num) num = 7;
 
         for (int i = 0; i < num; i++)
         {
@@ -55,11 +58,19 @@ public class ShishifunjinSkill : SkillBase
     public override void TurnEnd()
     {
         _count++;
+
+        if (!_isUse)
+        {
+            return;
+        }
+
+        _isUse = false;
         _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
     }
 
     public override void BattleFinish()
     {
+        _isUse = false;
         _count = 0;
     }
 }
