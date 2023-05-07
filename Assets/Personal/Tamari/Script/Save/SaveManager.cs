@@ -17,16 +17,16 @@ public class SaveManager
     const string HAMMERFILEPATH = "Hammer.dat";
     const string YARIFILEPATH = "Yari.dat";
 #else
-    public const string TAIKENFILEPATH = "Taiken.json";
-    public const string SOUKENFILEPATH = "Souken.json";
+    public const string GREATSWORDFILEPATH = "Taiken.json";
+    public const string DUALSWORDFILEPATH = "Souken.json";
     public const string HAMMERFILEPATH = "Hammer.json";
-    public const string YARIFILEPATH = "Yari.json";
+    public const string SPEARFILEPATH = "Yari.json";
 #endif
     private SaveData Data;
 
     public static void Initialize()
     {
-        _weaponFileList = new List<string>() { TAIKENFILEPATH, SOUKENFILEPATH, HAMMERFILEPATH, YARIFILEPATH };
+        _weaponFileList = new List<string>() { GREATSWORDFILEPATH, DUALSWORDFILEPATH, HAMMERFILEPATH, SPEARFILEPATH };
     }
     static public SaveData Load(string filePath)
     {
