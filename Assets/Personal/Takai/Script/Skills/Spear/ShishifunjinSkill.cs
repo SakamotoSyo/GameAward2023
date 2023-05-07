@@ -24,6 +24,7 @@ public class ShishifunjinSkill : SkillBase
         Damage = 20;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
+        FlavorText = "経過ターンが多いほど攻撃回数アップ（上限 7回）";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

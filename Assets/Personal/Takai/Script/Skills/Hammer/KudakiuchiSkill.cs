@@ -22,6 +22,7 @@ public class KudakiuchiSkill : SkillBase
         Damage = 50;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
+        FlavorText = "攻撃した武器に継続ダメージを受ける状態を付与";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

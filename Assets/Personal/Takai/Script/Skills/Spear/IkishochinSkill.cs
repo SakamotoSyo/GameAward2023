@@ -20,6 +20,7 @@ public class IkishochinSkill : SkillBase
         Damage = 60;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
+        FlavorText = "敵の攻撃力20%を下げる";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

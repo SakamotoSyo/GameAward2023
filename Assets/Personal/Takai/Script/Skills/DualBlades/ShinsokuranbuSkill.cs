@@ -21,6 +21,7 @@ public class ShinsokuranbuSkill : SkillBase
         Damage = 150;
         Weapon = (WeaponType)1;
         Type = (SkillType)1;
+        FlavorText = "重さが30以下のとき発動可能　※使用後元のステータスに戻る";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

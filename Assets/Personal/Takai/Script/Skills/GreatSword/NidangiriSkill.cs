@@ -20,6 +20,7 @@ public class NidangiriSkill : SkillBase
         Damage = 80;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
+        FlavorText = "重さが大きいほど2撃目のダメージが大きくなる(上限4)";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

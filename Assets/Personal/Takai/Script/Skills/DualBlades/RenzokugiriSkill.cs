@@ -21,6 +21,7 @@ public class RenzokugiriSkill : SkillBase
         Damage = 30;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
+        FlavorText = "２つの剣による連続攻撃";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

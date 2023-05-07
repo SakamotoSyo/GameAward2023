@@ -19,6 +19,7 @@ public class IngaouhouSkill : SkillBase
         Damage = 0;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
+        FlavorText = "発動したターンに攻撃を受けるとダメージを30%軽減し、反撃する。";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

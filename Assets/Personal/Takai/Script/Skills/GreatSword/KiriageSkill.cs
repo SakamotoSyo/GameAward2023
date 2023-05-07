@@ -23,6 +23,7 @@ public class KiriageSkill : SkillBase
         Damage = 70;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
+        FlavorText= "2ターンの間攻撃力が5%上昇。(重複あり→5%,10%,15%)";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

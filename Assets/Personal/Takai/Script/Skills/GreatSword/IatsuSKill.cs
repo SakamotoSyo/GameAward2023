@@ -22,6 +22,7 @@ public class IatsuSKill : SkillBase
         Damage = 0;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
+        FlavorText = "2ターンの間敵の攻撃力を10%下げる";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
