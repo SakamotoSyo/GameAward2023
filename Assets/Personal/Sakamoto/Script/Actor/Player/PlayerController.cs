@@ -7,8 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     public Action GameOverAction;
     public PlayerStatus PlayerStatus => _playerStatus;
-    public PlayerSkill PlayerSkill => _playerSkill; 
+    public PlayerSkill PlayerSkill => _playerSkill;
 
+    [SerializeField, Tooltip("ダメージテキストのクラス")]
+    private DamageTextController _damegeController;
+    [SerializeField, Tooltip("ダメージテキストを生成する座標")]
+    private Transform _damagePos;
     private PlayerSkill _playerSkill = new();
     private PlayerStatus _playerStatus;
     private PlayerAnimation _playerAnimation = new();
@@ -28,6 +32,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void AddDamage(float damage) 
     {
+        var damageController = Instantiate(_damegeController,
+          _damagePos.position,
+           Quaternion.identity);
+        damageController.TextInit((int)damage);
         if (_playerStatus.EquipWeapon.DownJudge(damage))
         {
             //アニメーションがあったらここでダメージを受ける処理を呼ぶ
