@@ -15,16 +15,16 @@ public class PlayerStatus
     private PlayerEquipWeapon _equipWeapon = new();
     private int _playerRankPoint = 0;
     private StateAnomaly _currentAnomaly = StateAnomaly.None;
-    
+
 
     private PlayerStatus()
     {
         //TODO:試験的後で削除する
         for (int i = 0; i < _weaponDatas.Length; i++)
         {
-            _weaponDatas[i] = new(1000, 1000, 50, 1000, WeaponData.AttributeType.None, WeaponType.GreatSword);
+            _weaponDatas[i] = new(1000, 1000, 50, 1000, WeaponData.AttributeType.None, WeaponType.DualBlades);
         }
-        _equipWeapon.ChangeWeapon(_weaponDatas[0]);
+        _equipWeapon.ChangeWeapon(_weaponDatas[0], 0);
     }
 
     public void ChangeWeponArray(WeaponData[] weaponDatas)
@@ -32,14 +32,19 @@ public class PlayerStatus
         _weaponDatas = weaponDatas;
     }
 
+    public void AddRankPoint()
+    {
+        _playerRankPoint += 100;
+    }
+
     /// <summary>
     /// パラメータの更新をして武器を入れ替える
     /// </summary>
     /// <param name="weaponData"></param>
-    public void EquipWeponChange(WeaponData weaponData)
+    public void EquipWeponChange(WeaponData weaponData, int arrayNum)
     {
         _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
-        _equipWeapon.ChangeWeapon(weaponData);
+        _equipWeapon.ChangeWeapon(weaponData, arrayNum);
     }
 
     /// <summary>
@@ -49,17 +54,15 @@ public class PlayerStatus
     public bool RandomEquipWeponChange()
     {
         _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
-        var weaponArray = _weaponDatas.Where(x => 0 < x.CurrentDurable).ToArray();
-        if (weaponArray.Length == 0)
+        for (int i = 0; i < _weaponDatas.Length; i++)
         {
-            Debug.Log("GameOver");
-            return false;
+            if (0 < _weaponDatas[i].CurrentDurable)
+            {
+                _equipWeapon.ChangeWeapon(WeaponDatas[i], i);
+                return true;
+            }
         }
-        else
-        {
-            _equipWeapon.ChangeWeapon(weaponArray[0]);
-        }
-        return true;
+        return false;
     }
 
     public float ConventionalAttack()
@@ -67,9 +70,9 @@ public class PlayerStatus
         return _equipWeapon.OffensivePower.Value;
     }
 
-    public bool ChackAnomaly() 
+    public bool ChackAnomaly()
     {
-        if (StateAnomaly.Stun == _currentAnomaly) 
+        if (StateAnomaly.Stun == _currentAnomaly)
         {
             return false;
         }
@@ -80,7 +83,7 @@ public class PlayerStatus
     /// 状態異常の付与
     /// </summary>
     /// <param name="anomaly"></param>
-    public void SetStateAnomaly(StateAnomaly anomaly) 
+    public void SetStateAnomaly(StateAnomaly anomaly)
     {
         _currentAnomaly = anomaly;
     }
@@ -94,7 +97,7 @@ public class PlayerStatus
     public void LoadStatus(PlayerSaveData player)
     {
         _weaponDatas = player.WeaponArray;
-        _equipWeapon.ChangeWeapon(player.WeaponArray[0]);
+        _equipWeapon.ChangeWeapon(player.WeaponArray[0], 0);
         _playerRankPoint = player.PlayerRankPoint;
     }
 }
