@@ -6,7 +6,6 @@ public abstract class BaseCreateWeapon : MonoBehaviour
 {
     private MeshRenderer _myRenderer = default;
     private GameObject _go = default;
-    protected string _name = default;
 
     protected SaveData _data = default;
     
