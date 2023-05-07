@@ -18,11 +18,10 @@ public class CreateSample : MonoBehaviour
     [SerializeField, Tooltip("やりのサンプル")]
     private List<Vector3> _yariSample = default;
 
-    private WeaponType _weaponType = default;
 
     public void WeaponSamples()
     {
-        switch (_weaponType)
+        switch (GameManager.BlacksmithType)
         {
             case WeaponType.GreatSword:
                 {
@@ -46,12 +45,12 @@ public class CreateSample : MonoBehaviour
                 break;
             default:
                 {
-                    Debug.Log("指定された武器の名前 : " + _weaponType + " は存在しません");
+                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
                 }
                 return;
         }
 
-        Debug.Log(_weaponType + "のさんぷる");
+        Debug.Log(GameManager.BlacksmithType + "のさんぷる");
     }
 
     public void SampleTaiken()

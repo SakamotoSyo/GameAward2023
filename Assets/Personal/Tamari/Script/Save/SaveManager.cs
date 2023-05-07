@@ -24,7 +24,6 @@ public class SaveManager
 #endif
     private SaveData Data;
 
-
     public static void Initialize()
     {
         _weaponFileList = new List<string>() { TAIKENFILEPATH, SOUKENFILEPATH, HAMMERFILEPATH, YARIFILEPATH };
