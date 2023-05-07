@@ -37,8 +37,8 @@ public class HauchiSkill : SkillBase
     {
         // スキルの効果処理を実装する
         _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
-        _enemyStatus.EquipWeapon.OffensivePower -= _enemyStatus.EquipWeapon.OffensivePower + _subtractAttackValue;
-        _enemyStatus.EquipWeapon.CriticalRate -= _enemyStatus.EquipWeapon.CriticalRate * _subtractAttackValue;
+        _enemyStatus.EquipWeapon.CurrentOffensivePower -= _enemyStatus.EquipWeapon.OffensivePower + _subtractAttackValue;
+        _enemyStatus.EquipWeapon.CurrentCriticalRate -= _enemyStatus.EquipWeapon.CriticalRate * _subtractAttackValue;
     }
     
     public override void TurnEnd()

@@ -12,7 +12,10 @@ public class TenkamusoSkill : SkillBase
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
+    private EnemyStatus _enemyStatus;
+    private ActorAttackType _actor;
     private int _count;
+    private bool _isUse = false;
 
     public TenkamusoSkill()
     {
@@ -26,6 +29,8 @@ public class TenkamusoSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
+        _enemyStatus = enemy;
+        _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -34,24 +39,59 @@ public class TenkamusoSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        // スキルの効果処理を実装する
-        var hp = _playerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
-        if (_playerStatus.EquipWeapon.CurrentDurable.Value <= hp)
+        
+
+        switch (_actor)
         {
-
-            _playerStatus.EquipWeapon.OffensivePower.Value += Damage + (_count * 10);
-
+            case ActorAttackType.Player:
+            {
+                var hp = _playerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
+                if (_playerStatus.EquipWeapon.CurrentDurable.Value <= hp)
+                {
+                    _isUse = true;
+                    _playerStatus.EquipWeapon.OffensivePower.Value += Damage + (_count * 10);
+                }
+            }
+                break;
+            case ActorAttackType.Enemy:
+            {
+                var hp = _enemyStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
+                if (_enemyStatus.EquipWeapon.CurrentDurable.Value <= hp)
+                {
+                    _isUse = true;
+                    _enemyStatus.EquipWeapon.CurrentOffensivePower += Damage + (_count * 10);
+                }
+            }
+                break;
         }
     }
 
     public override void TurnEnd()
     {
         _count++;
-        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage + (_count * 10);
+
+        if (!_isUse)
+        {
+            return;
+        }
+
+        _isUse = false;
+
+        switch (_actor)
+        {
+            case ActorAttackType.Player:
+                _playerStatus.EquipWeapon.OffensivePower.Value -= Damage + ((_count - 1) * 10);
+                break;
+            case ActorAttackType.Enemy:
+                _enemyStatus.EquipWeapon.CurrentOffensivePower -= Damage + ((_count - 1) * 10);
+                break;
+        }
+        
     }
 
     public override void BattleFinish()
     {
         _count = 0;
+        _isUse = false;
     }
 }

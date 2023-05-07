@@ -11,6 +11,9 @@ public class HurioroshiSkill : SkillBase
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
+    private EnemyStatus _enemyStatus;
+    private ActorAttackType _actor;
+    private bool _isUse = false;
 
     public HurioroshiSkill()
     {
@@ -24,6 +27,8 @@ public class HurioroshiSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
+        _enemyStatus = enemy;
+        _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -32,17 +37,41 @@ public class HurioroshiSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        // スキルの効果処理を実装する
-        _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        _isUse = true;
+
+        switch (_actor)
+        {
+            case ActorAttackType.Player:
+                _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+                break;
+            case ActorAttackType.Enemy:
+                _enemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
+                break;
+        }
     }
     
     public override void TurnEnd()
     {
-        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+        if (!_isUse)
+        {
+            return;
+        }
+        
+        _isUse = false;
+
+        switch (_actor)
+        {
+            case ActorAttackType.Player:
+                _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+                break;
+            case ActorAttackType.Enemy:
+                _enemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
+                break;
+        }
     }
 
     public override void BattleFinish()
     {
-        
+        _isUse = false;
     }
 }

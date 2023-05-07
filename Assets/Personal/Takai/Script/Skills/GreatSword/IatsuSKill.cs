@@ -41,7 +41,7 @@ public class IatsuSKill : SkillBase
         if (_turn == 0)
         {
             _attackValue += dmg * PowerDown;
-            _enemyStatus.EquipWeapon.OffensivePower -= dmg * PowerDown;
+            _enemyStatus.EquipWeapon.CurrentOffensivePower -= dmg * PowerDown;
         }
         else
         {
@@ -54,7 +54,7 @@ public class IatsuSKill : SkillBase
         _turn++;
         if (_turn > Turn)
         {
-            _enemyStatus.EquipWeapon.OffensivePower += _attackValue;
+            _enemyStatus.EquipWeapon.CurrentOffensivePower += _attackValue;
             _turn = 0;
             _attackValue = 0;
         }

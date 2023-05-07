@@ -12,7 +12,7 @@ public class OiuchiSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
     private EnemyStatus _enemyStatus;
-    bool _isDebuff = false;
+    private bool _isUse = false;
 
     public OiuchiSkill()
     {
@@ -22,40 +22,49 @@ public class OiuchiSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon,
+        ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
     protected override void SkillEffect()
     {
+        _isUse = true;
         // スキルの効果処理を実装する
         _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
-        if (true) //敵にデバフがついているか検知
+        if (_enemyStatus.IsDebuff()) //敵にデバフがついているか検知
         {
-            _isDebuff = true;
             _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
         }
     }
 
     public override void TurnEnd()
     {
-        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
-        if (_isDebuff) //敵にデバフがついているか検知
+        if (!_isUse)
         {
-            _isDebuff = false;
+            return;
+        }
+
+        _isUse = false;
+        
+        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+
+        if (_enemyStatus.IsDebuff()) //敵にデバフがついているか検知
+        {
             _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
         }
     }
 
     public override void BattleFinish()
     {
-        _isDebuff = false;
+        _isUse = false;
     }
 }
