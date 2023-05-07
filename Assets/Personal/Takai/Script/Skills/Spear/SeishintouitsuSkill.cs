@@ -10,7 +10,7 @@ public class SeishintouitsuSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
+    private PlayerController _playerStatus;
     const float AddValue = 0.2f;
     private int _count;
     private float _value;
@@ -24,7 +24,7 @@ public class SeishintouitsuSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
@@ -40,8 +40,8 @@ public class SeishintouitsuSkill : SkillBase
         _count += 4;
         if(!_isSkill)
         {
-            _value += _playerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
-            _playerStatus.EquipWeapon.CriticalRate.Value += _playerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
+            _value += _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
+            _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value += _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
         }
         // 会心時のダメージが20%上昇
 
@@ -51,7 +51,7 @@ public class SeishintouitsuSkill : SkillBase
     {
         if (_count <= 0)
         {
-            _playerStatus.EquipWeapon.CriticalRate.Value -= _value;
+            _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value -= _value;
             _value = 0;
         }
         else

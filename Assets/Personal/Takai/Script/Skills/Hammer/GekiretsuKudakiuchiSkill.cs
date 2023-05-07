@@ -10,8 +10,8 @@ public class GekiretsuKudakiuchiSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
-    private EnemyStatus _enemyStatus;
+    private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
     private ActorAttackType _actor;
     const float _subtractValue = 0.4f;
     private bool _isUse;
@@ -24,8 +24,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         Type = (SkillType)1;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon,
-        ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
@@ -47,32 +46,32 @@ public class GekiretsuKudakiuchiSkill : SkillBase
             case ActorAttackType.Player:
             {
                 // スキルの効果処理を実装する
-                _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
 
                 // 防御、素早さを40%下げる。
-                _enemyStatus.EquipWeapon.CurrentOffensivePower -=
-                    _enemyStatus.EquipWeapon.OffensivePower * _subtractValue;
-                _enemyStatus.EquipWeapon.CurrentCriticalRate -=
-                    _enemyStatus.EquipWeapon.CriticalRate * _subtractValue;
-                _enemyStatus.EquipWeapon.CurrentWeaponWeight -=
-                    _enemyStatus.EquipWeapon.WeaponWeight * _subtractValue;
+                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -=
+                    _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue;
+                _enemyStatus.EnemyStatus.EquipWeapon.CurrentCriticalRate -=
+                    _enemyStatus.EnemyStatus.EquipWeapon.CriticalRate * _subtractValue;
+                _enemyStatus.EnemyStatus.EquipWeapon.CurrentWeaponWeight -=
+                    _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight * _subtractValue;
 
-                _playerStatus.EquipWeapon.CurrentDurable.Value = 0;
+                _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value = 0;
             }
                 break;
             case ActorAttackType.Enemy:
             {
-                _enemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
+                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
 
                 // 防御、素早さを40%下げる。
-                _playerStatus.EquipWeapon.OffensivePower.Value -=
-                    _playerStatus.EquipWeapon.OffensivePower.Value * _subtractValue;
-                _playerStatus.EquipWeapon.CriticalRate.Value -=
-                    _playerStatus.EquipWeapon.CriticalRate.Value * _subtractValue;
-                _playerStatus.EquipWeapon.WeaponWeight.Value -=
-                    _playerStatus.EquipWeapon.WeaponWeight.Value * _subtractValue;
+                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -=
+                    _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * _subtractValue;
+                _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value -=
+                    _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * _subtractValue;
+                _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value -=
+                    _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value * _subtractValue;
 
-                _enemyStatus.EquipWeapon.CurrentDurable.Value = 0;
+                _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value = 0;
             }
                 break;
         }
@@ -90,10 +89,10 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
                 break;
             case ActorAttackType.Enemy:
-                _enemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
+                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
                 break;
         }
        
