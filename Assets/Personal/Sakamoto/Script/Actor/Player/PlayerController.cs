@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
+    public Action GameOverAction;
     public PlayerStatus PlayerStatus => _playerStatus;
+    public PlayerSkill PlayerSkill => _playerSkill; 
 
+    private PlayerSkill _playerSkill = new();
     private PlayerStatus _playerStatus;
     private PlayerAnimation _playerAnimation = new();
 
     private void Start()
     {
-        
+       _playerSkill.Init(GameObject.Find("DataBase").GetComponent<SkillDataManagement>());
     }
 
     private void Update()
@@ -31,10 +35,17 @@ public class PlayerController : MonoBehaviour
         }
         else 
         {
+            _playerStatus.EquipWeapon.AddDamage(damage);
             //•Ší‚ª‰ó‚ê‚½‚Æ‚«‚É“ü‚ê‘Ö‚¦‚éˆ—
             if (!_playerStatus.RandomEquipWeponChange())
             {
                 //GameOver‚Ìˆ—‚Í‚±‚±‚É
+                Debug.Log("GameOver");
+                GameOverAction?.Invoke();
+            }
+            else 
+            {
+                Debug.Log("“ü‚ê‘Ö‚¦‚Ü‚µ‚½");
             }
         }
         
@@ -64,8 +75,17 @@ public class PlayerController : MonoBehaviour
 
     public void SavePlayerData() 
     {
-        _playerStatus.SaveStatus();
+        PlayerSaveData playerSaveData = new PlayerSaveData();
+        _playerStatus.SaveStatus(playerSaveData);
+        _playerSkill.SaveSkill(playerSaveData);
+        GameManager.SetPlayerData(playerSaveData);
         Debug.Log("Save‚³‚ê‚Ü‚µ‚½");
+    }
+
+    public void LoadPlayerData(PlayerSaveData playerSaveData) 
+    {
+        _playerStatus.LoadStatus(playerSaveData);
+        _playerSkill.LoadSkill(playerSaveData);
     }
 }
 

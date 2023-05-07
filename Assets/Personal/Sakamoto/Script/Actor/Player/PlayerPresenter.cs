@@ -21,7 +21,7 @@ public class PlayerPresenter :IStartable, IDisposable
         playerController.SetPlayerStatus(playerStatus);
         if (GameManager.PlayerSaveData != null) 
         {
-            playerStatus.LoadStatus(GameManager.PlayerSaveData);
+            playerController.LoadPlayerData(GameManager.PlayerSaveData);
         }
     }
 

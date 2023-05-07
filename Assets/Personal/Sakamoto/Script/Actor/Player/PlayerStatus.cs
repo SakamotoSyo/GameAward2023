@@ -6,26 +6,25 @@ using UniRx;
 
 public class PlayerStatus
 {
-    public SkillBase NinjaThrowingKnives => _ninjaThrowingKnives;
-    public SkillBase[] PlayerSkillList => _skillList;
     public WeaponData[] WeaponDatas => _weaponDatas;
     public PlayerEquipWeapon EquipWeapon => _equipWeapon;
+    public StateAnomaly CurrentAnomaly => _currentAnomaly;
+
     private WeaponData[] _weaponDatas = new WeaponData[4];
     [Tooltip("装備している武器")]
     private PlayerEquipWeapon _equipWeapon = new();
-    [Tooltip("必殺技")]
-    private SkillBase _ninjaThrowingKnives;
-    private SkillBase[] _skillList = new SkillBase[2];
     private int _playerRankPoint = 0;
+    private StateAnomaly _currentAnomaly = StateAnomaly.None;
+
 
     private PlayerStatus()
     {
         //TODO:試験的後で削除する
         for (int i = 0; i < _weaponDatas.Length; i++)
         {
-            _weaponDatas[i] = new(1000, 1000, 50, 1000, WeaponData.AttributeType.None, WeaponType.GreatSword);
+            _weaponDatas[i] = new(1000, 1000, 50, 1000, WeaponData.AttributeType.None, WeaponType.DualBlades);
         }
-        _equipWeapon.ChangeWeapon(_weaponDatas[0]);
+        _equipWeapon.ChangeWeapon(_weaponDatas[0], 0);
     }
 
     public void ChangeWeponArray(WeaponData[] weaponDatas)
@@ -33,14 +32,19 @@ public class PlayerStatus
         _weaponDatas = weaponDatas;
     }
 
+    public void AddRankPoint()
+    {
+        _playerRankPoint += 100;
+    }
+
     /// <summary>
     /// パラメータの更新をして武器を入れ替える
     /// </summary>
     /// <param name="weaponData"></param>
-    public void EquipWeponChange(WeaponData weaponData)
+    public void EquipWeponChange(WeaponData weaponData, int arrayNum)
     {
         _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
-        _equipWeapon.ChangeWeapon(weaponData);
+        _equipWeapon.ChangeWeapon(weaponData, arrayNum);
     }
 
     /// <summary>
@@ -50,17 +54,15 @@ public class PlayerStatus
     public bool RandomEquipWeponChange()
     {
         _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
-        var weaponArray = _weaponDatas.Where(x => 0 < x.CurrentDurable).ToArray();
-        if (weaponArray.Length == 0)
+        for (int i = 0; i < _weaponDatas.Length; i++)
         {
-            Debug.Log("GameOver");
-            return false;
+            if (0 < _weaponDatas[i].CurrentDurable)
+            {
+                _equipWeapon.ChangeWeapon(WeaponDatas[i], i);
+                return true;
+            }
         }
-        else
-        {
-            _equipWeapon.ChangeWeapon(weaponArray[0]);
-        }
-        return true;
+        return false;
     }
 
     public float ConventionalAttack()
@@ -68,22 +70,34 @@ public class PlayerStatus
         return _equipWeapon.OffensivePower.Value;
     }
 
-    public void SaveStatus()
+    public bool ChackAnomaly()
     {
-        var playerData = new PlayerSaveData();
-        playerData.WeaponArray = _weaponDatas;
-        playerData.PlayerSkillList = PlayerSkillList;
-        playerData.NinjaThrowingKnives = NinjaThrowingKnives;
-        playerData.PlayerRankPoint = _playerRankPoint;
-        GameManager.SetPlayerData(playerData);
+        if (StateAnomaly.Stun == _currentAnomaly)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 状態異常の付与
+    /// </summary>
+    /// <param name="anomaly"></param>
+    public void SetStateAnomaly(StateAnomaly anomaly)
+    {
+        _currentAnomaly = anomaly;
+    }
+
+    public void SaveStatus(PlayerSaveData saveData)
+    {
+        saveData.WeaponArray = _weaponDatas;
+        saveData.PlayerRankPoint = _playerRankPoint;
     }
 
     public void LoadStatus(PlayerSaveData player)
     {
         _weaponDatas = player.WeaponArray;
-        _equipWeapon.ChangeWeapon(player.WeaponArray[0]);
-        _skillList = player.PlayerSkillList;
-        _ninjaThrowingKnives = player.NinjaThrowingKnives;
+        _equipWeapon.ChangeWeapon(player.WeaponArray[0], 0);
         _playerRankPoint = player.PlayerRankPoint;
     }
 }
@@ -91,7 +105,13 @@ public class PlayerStatus
 public class PlayerSaveData
 {
     public WeaponData[] WeaponArray;
-    public SkillBase[] PlayerSkillList = new SkillBase[2];
-    public SkillBase NinjaThrowingKnives;
+    public SkillBase[] PlayerSkillArray = new SkillBase[2];
+    public SkillBase SpecialAttack;
     public int PlayerRankPoint;
+}
+
+public enum StateAnomaly
+{
+    None,
+    Stun
 }

@@ -13,7 +13,7 @@ public class SkillGenerator : EditorWindow
     private int _damage = 0;
     private WeaponType _weapon;
     private SkillType _type;
-    private PlayerSkillDataManagement _playerSkillDataManagement;
+    private SkillDataManagement _skillDataManagement;
 
     private string _className = "";
 
@@ -34,7 +34,7 @@ public class SkillGenerator : EditorWindow
         _weapon = (WeaponType)EditorGUILayout.EnumPopup("武器種類", _weapon);
         _type = (SkillType)EditorGUILayout.EnumPopup("タイプ", _type);
         _className = EditorGUILayout.TextField("クラス名", _className);
-        
+
         if (GUILayout.Button("リセット"))
         {
             Reset();
@@ -93,12 +93,12 @@ public class SkillGenerator : EditorWindow
 
     private void CreateClass()
     {
-        if(_skillName == "" || _className == "")
+        if (_skillName == "" || _className == "")
         {
             Debug.LogError("名前を入力してください");
             return;
         }
-        
+
         string path = "";
 
         switch (_weapon)
@@ -134,7 +134,9 @@ public class SkillGenerator : EditorWindow
         public override int Damage { get; protected set; }
         public override WeaponType Weapon { get; protected set; }
         public override SkillType Type { get; protected set; }
+        public override string FlavorText { get; protected set; }
         private PlayableDirector _anim;
+        private PlayerStatus _status;
 
     public " + _className + @"()
     {
@@ -147,15 +149,21 @@ public class SkillGenerator : EditorWindow
         public async override UniTask UseSkill(PlayerStatus status)
         {
             Debug.Log(""Use Skill"");
+            _status = status;
             _anim = GetComponent<PlayableDirector>();
             SkillEffect(status);
             await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
             Debug.Log(""Anim End"");
         }
 
-        protected override void SkillEffect(PlayerStatus status)
+        protected override void SkillEffect()
         {
             // スキルの効果処理を実装する
+        }
+
+        public override void BattleFinish()
+        {
+            // 戦闘終了時の処理
         }
     }";
 

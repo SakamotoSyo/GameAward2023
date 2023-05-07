@@ -32,6 +32,7 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             _enhanceText.text += oreData.EnhancedData[i].EnhanceDescription;
             _enhanceText.text += " ";
         }
+        _enhanceText.text += "\n" + oreData.Skill.SkillName;
         _oreImage = oreData.OreImage;
     }
 

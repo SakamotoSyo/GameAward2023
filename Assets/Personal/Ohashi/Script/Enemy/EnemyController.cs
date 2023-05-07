@@ -39,8 +39,11 @@ public class EnemyController : MonoBehaviour, IAddDamage
     /// </summary>
     public async UniTask Attack(PlayerController playerController)
     {
-        _enemyAttack.NormalAttack(playerController);
-        await UniTask.Delay(1);
+        if(!_enemyStatus.IsStan)
+        {
+            _enemyAttack.SelectAttack(playerController);
+            await UniTask.Delay(1);
+        }
     }
 
     public void AddDamage(int damage)

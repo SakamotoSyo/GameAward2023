@@ -44,13 +44,13 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-      //  _infoText.text = DataBaseScript.WeaponDescriptionData[_weaponType];
+        _infoText.text = DataBaseScript.WeaponDescriptionData[_weaponType];
         _infoPanel.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         _infoPanel.SetActive(false);
-        //_infoText.text = ""; 
+        _infoText.text = ""; 
     }
 }

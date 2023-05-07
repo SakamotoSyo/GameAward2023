@@ -1,15 +1,17 @@
+using UnityEngine;
+using Cysharp.Threading.Tasks;
+using UnityEngine.Playables;
 
-    using UnityEngine;
-    using Cysharp.Threading.Tasks;
-    using UnityEngine.Playables;
-
-    public class NidangiriSkill : SkillBase
-    {
-        public override string SkillName { get; protected set; }
-        public override int Damage { get; protected set; }
-        public override WeaponType Weapon { get; protected set; }
-        public override SkillType Type { get; protected set; }
-        private PlayableDirector _anim;
+public class NidangiriSkill : SkillBase
+{
+    public override string SkillName { get; protected set; }
+    public override int Damage { get; protected set; }
+    public override WeaponType Weapon { get; protected set; }
+    public override SkillType Type { get; protected set; }
+    public override string FlavorText { get; protected set; }
+    private PlayableDirector _anim;
+    private PlayerStatus _playerStatus;
+    float _attackValue = 0f;
 
     public NidangiriSkill()
     {
@@ -19,17 +21,55 @@
         Type = (SkillType)0;
     }
 
-        public async override UniTask UseSkill(PlayerStatus status)
-        {
-            Debug.Log("Use Skill");
-            _anim = GetComponent<PlayableDirector>();
-            SkillEffect(status);
-            await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
-            Debug.Log("Anim End");
-        }
+    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    {
+        Debug.Log("Use Skill");
+        _playerStatus = player;
+        _anim = GetComponent<PlayableDirector>();
+        SkillEffect();
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        Debug.Log("Anim End");
+    }
 
-        protected override void SkillEffect(PlayerStatus status)
+    protected override void SkillEffect()
+    {
+        float dmg = _playerStatus.EquipWeapon.OffensivePower.Value;
+        float weight = _playerStatus.EquipWeapon.WeaponWeight.Value;
+
+        _attackValue += Damage;
+        _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+
+        switch (weight / 10)
         {
-            // スキルの効果処理を実装する
+            case 6:
+                _attackValue += 20;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 20;
+                break;
+            case 5:
+                _attackValue += 15;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 15;
+                break;
+            case 4:
+                _attackValue += 10;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 10;
+                break;
+            case 3:
+                _attackValue += 5;
+                _playerStatus.EquipWeapon.OffensivePower.Value += 5;
+                break;
+            default:
+                break;
         }
     }
+
+    public override void TurnEnd()
+    {
+        _playerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
+        _attackValue = 0;
+    }
+
+    public override void BattleFinish()
+    {
+        _attackValue = 0;
+    }
+}
