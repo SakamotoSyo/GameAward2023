@@ -16,6 +16,10 @@ public class PlayerStatus
     private int _playerRankPoint = 0;
     private StateAnomaly _currentAnomaly = StateAnomaly.None;
 
+    public static SaveData _gsData = default;
+    public static SaveData _dsData = default;
+    public static SaveData _hData = default;
+    public static SaveData _sData = default;
 
     private PlayerStatus()
     {
@@ -25,6 +29,26 @@ public class PlayerStatus
             _weaponDatas[i] = new(1000, 1000, 50, 1000, WeaponData.AttributeType.None, WeaponType.DualBlades);
         }
         _equipWeapon.ChangeWeapon(_weaponDatas[0], 0);
+
+        for(int i = 0; i < _weaponDatas.Length; i++)
+        {
+            if (_weaponDatas[i].WeaponType == WeaponType.GreatSword)
+            {
+                _gsData = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
+            }
+            if (_weaponDatas[i].WeaponType == WeaponType.DualBlades)
+            {
+                _dsData = SaveManager.Load(SaveManager.DUALSWORDFILEPATH);
+            }
+            if (_weaponDatas[i].WeaponType == WeaponType.Hammer)
+            {
+                _hData = SaveManager.Load(SaveManager.HAMMERFILEPATH);
+            }
+            if (_weaponDatas[i].WeaponType == WeaponType.Spear)
+            {
+                _sData = SaveManager.Load(SaveManager.SPEARFILEPATH);
+            }
+        }
     }
 
     public void ChangeWeponArray(WeaponData[] weaponDatas)
