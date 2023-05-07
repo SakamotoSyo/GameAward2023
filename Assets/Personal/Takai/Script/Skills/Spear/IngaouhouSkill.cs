@@ -10,8 +10,8 @@ public class IngaouhouSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
-    private EnemyStatus _enemyStatus;
+    private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
     
     public IngaouhouSkill()
     {
@@ -21,7 +21,7 @@ public class IngaouhouSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;

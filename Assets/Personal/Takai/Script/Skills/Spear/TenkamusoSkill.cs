@@ -11,8 +11,8 @@ public class TenkamusoSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
-    private EnemyStatus _enemyStatus;
+    private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
     private ActorAttackType _actor;
     private int _count;
     private bool _isUse = false;
@@ -25,7 +25,7 @@ public class TenkamusoSkill : SkillBase
         Type = (SkillType)1;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
@@ -45,21 +45,21 @@ public class TenkamusoSkill : SkillBase
         {
             case ActorAttackType.Player:
             {
-                var hp = _playerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
-                if (_playerStatus.EquipWeapon.CurrentDurable.Value <= hp)
+                var hp = _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
+                if (_playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value <= hp)
                 {
                     _isUse = true;
-                    _playerStatus.EquipWeapon.OffensivePower.Value += Damage + (_count * 10);
+                    _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage + (_count * 10);
                 }
             }
                 break;
             case ActorAttackType.Enemy:
             {
-                var hp = _enemyStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
-                if (_enemyStatus.EquipWeapon.CurrentDurable.Value <= hp)
+                var hp = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
+                if (_enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value <= hp)
                 {
                     _isUse = true;
-                    _enemyStatus.EquipWeapon.CurrentOffensivePower += Damage + (_count * 10);
+                    _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += Damage + (_count * 10);
                 }
             }
                 break;
@@ -80,10 +80,10 @@ public class TenkamusoSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _playerStatus.EquipWeapon.OffensivePower.Value -= Damage + ((_count - 1) * 10);
+                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage + ((_count - 1) * 10);
                 break;
             case ActorAttackType.Enemy:
-                _enemyStatus.EquipWeapon.CurrentOffensivePower -= Damage + ((_count - 1) * 10);
+                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= Damage + ((_count - 1) * 10);
                 break;
         }
         
