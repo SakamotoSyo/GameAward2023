@@ -43,7 +43,7 @@ public class PlayerEquipWeapon
     /// <summary>
     /// •Ší‚ğ•ÏX‚·‚éÛ‚Ég—p‚·‚éŠÖ”
     /// </summary>
-    public void ChangeWeapon(WeaponData weaponData) 
+    public void ChangeWeapon(WeaponData weaponData, int arrayNum) 
     {
         _offensivePower.Value = weaponData.OffensivePower;
         _weaponWeight.Value = weaponData.WeaponWeight;
@@ -52,5 +52,6 @@ public class PlayerEquipWeapon
         _currentDurable.Value = weaponData.CurrentDurable;
         _attribute = weaponData.Attribute;
         _weponType = weaponData.WeaponType;
+        _weaponNum = arrayNum;
     }
 }

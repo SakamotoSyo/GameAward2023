@@ -7,18 +7,15 @@ using State = StateMachine<BattleStateController>.State;
 
 public class SelectNextActorTransitionState : State
 {
-    protected override async void OnEnter(State currentState)
+    protected override void OnEnter(State currentState)
     {
+       //Owner.SkillManagement.TurnCall();
        Owner.NextActorStateTransition();
     }
 
     protected override void OnUpdate()
     {
-        base.OnUpdate();
-        if (Input.GetKeyDown(KeyCode.A)) 
-        {
-            
-        }
+
     }
 
     protected override void OnExit(State nextState)

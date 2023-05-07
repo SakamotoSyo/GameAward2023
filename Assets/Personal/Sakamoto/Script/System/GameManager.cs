@@ -7,9 +7,11 @@ public static class GameManager
     public static EnemyData EnemyData => _enemyData;
     public static PlayerSaveData PlayerSaveData => _saveData;
 
+    public static WeaponType BlacksmithType => _blacksmithType;
+
     private static PlayerSaveData _saveData;
     private static EnemyData _enemyData;
-    private static WeaponType BlacksmithType;
+    private static WeaponType _blacksmithType;
 
     public static void SetEnemyData(EnemyData enemyData) 
     {
@@ -23,6 +25,6 @@ public static class GameManager
 
     public static void SetBlacksmithType(WeaponType weaponType) 
     {
-        BlacksmithType = weaponType;
+        _blacksmithType = weaponType;
     }
 }

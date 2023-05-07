@@ -11,7 +11,9 @@ public class ShinsokuranbuSkill : SkillBase
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerStatus _playerStatus;
-    bool _isAttack = false;
+    private EnemyStatus _enemyStatus;
+    private ActorAttackType _actor;
+    bool _isUse = false;
 
     public ShinsokuranbuSkill()
     {
@@ -21,41 +23,74 @@ public class ShinsokuranbuSkill : SkillBase
         Type = (SkillType)1;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon,
+        ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
+        _enemyStatus = enemy;
+        _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
     protected override void SkillEffect()
     {
-        // スキルの効果処理を実装する
-        float weight = _playerStatus.EquipWeapon.WeaponWeight.Value;
+        float weight = 0;
 
-
-        if (weight <= 30) //素早さをに応じて発動できるか検知
+        switch (_actor)
         {
-            _isAttack = true;
-            _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+            case ActorAttackType.Player:
+            {
+                weight = _playerStatus.EquipWeapon.WeaponWeight.Value;
+
+                if (weight <= 30) //素早さをに応じて発動できるか検知
+                {
+                    _isUse = true;
+                    _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+                }
+            }
+                break;
+            case ActorAttackType.Enemy:
+            {
+                weight = _enemyStatus.EquipWeapon.WeaponWeight;
+
+                if (weight <= 30) //素早さをに応じて発動できるか検知
+                {
+                    _isUse = true;
+                    _enemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
+                }
+            }
+                break;
         }
+        // スキルの効果処理を実装する
     }
 
     public override void TurnEnd()
     {
-        if (_isAttack)
+        if (!_isUse)
         {
-            _isAttack = false;
-            _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+            return;
         }
 
+        _isUse = false;
+
+        switch (_actor)
+        {
+            case ActorAttackType.Player:
+                _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+                break;
+            case ActorAttackType.Enemy:
+                _enemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
+                break;
+        }
     }
 
     public override void BattleFinish()
     {
-        _isAttack = false;  
+        _isUse = false;
     }
 }

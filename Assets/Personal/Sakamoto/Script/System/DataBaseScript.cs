@@ -24,6 +24,7 @@ public class DataBaseScript : MonoBehaviour
         if (_enhanceData.Count == 0)
         {
             SetDescription();
+            SetWeaponTypeDescription();
         }
 
     }

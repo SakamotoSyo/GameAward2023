@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cysharp.Threading.Tasks;
+using System;
 //改善点
 public class StateMachine<TOwner>
 {
@@ -154,11 +155,11 @@ public class StateMachine<TOwner>
     /// ステートを変更する
     /// </summary>
     /// <param name="nextState">遷移先のステート</param>
-    public void Change(State nextState) 
+    public async void Change(State nextState) 
     {
         CurrentState.Exit(nextState);
-        nextState.Enter(null);
         CurrentState = nextState;
+        nextState.Enter(null);
     }
 }
 

@@ -5,14 +5,33 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 /// <summary>
-/// TODO : 双剣の時のメッシュ2個作成をする ➔　後回し
+/// TODO : 双剣の時のメッシュ2個作成をする
 /// </summary>
 public class MeshManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _centorMark = default;
+    private GameObject _parentObj = default;
+
+    [SerializeField]
+    private GameObject _weaponHandle = default;
+
+    private static Vector3 _handlePos = default;
+
+    public static Vector3 HandlePos => _handlePos;
+
+    private Vector3 _lowestPos = default;
+
+    /// <summary>
+    /// 重心の位置を表すオブジェクト(後で消す)
+    /// </summary>
+    [SerializeField]
+    private GameObject _jyuusin = default;
+
+    private GameObject _go = default;
 
     [SerializeField, Tooltip("双剣ver")]
     private bool _isSouken = default;
@@ -42,6 +61,8 @@ public class MeshManager : MonoBehaviour
 
     public int NVertices => _nVertices;
 
+    private Vector2 _firstCenterPos = default;
+
     [SerializeField, Tooltip("中心の座標")]
     private Vector2 _centerPos = default;
 
@@ -58,14 +79,18 @@ public class MeshManager : MonoBehaviour
 
     private float _dis = 1000f;
 
-    // public static bool _isFinished;
+    private bool _isFinished;
 
     private SaveData _saveData;
-
     public SaveData SaveData => _saveData;
 
     [SerializeField]
     private List<Color> _setColor = new List<Color>();
+
+    public List<Color> SetColor { get { return _setColor; } }
+
+    [SerializeField]
+    private string _nextSceneName = default;
 
     [ContextMenu("Make mesh from model")]
 
@@ -78,6 +103,8 @@ public class MeshManager : MonoBehaviour
 
     void Start()
     {
+        _isFinished = false;
+        _firstCenterPos = _centerPos;
         foreach (var f in SaveManager._weaponFileList)
         {
             SaveManager.Load(f);
@@ -95,8 +122,8 @@ public class MeshManager : MonoBehaviour
     }
     void Update()
     {
+        _jyuusin.transform.position = _centerPos;
         _myMesh.SetColors(_setColor);
-        _centorMark.transform.position = _centerPos;
         if (Input.GetMouseButtonDown(0))
         {
             Calculation();
@@ -128,15 +155,18 @@ public class MeshManager : MonoBehaviour
         // タップ位置と近い頂点との距離(ti)
         float tiDis = Vector3.Distance(worldPos, _centerPos);
 
-        // 重心と近い頂点との距離(io)
+        // 中心と近い頂点との距離(io)
         float ioDis = Vector3.Distance(_myVertices[_indexNum], _centerPos);
 
-        // 重心とタップ位置との距離(to)
+        // 中心とタップ位置との距離(to)
         float toDis = Vector3.Distance(worldPos, _centerPos);
 
         float disX = worldPos.x - _myVertices[_indexNum].x;
         float disY = worldPos.y - _myVertices[_indexNum].y;
 
+        // 叩いた頂点がメッシュの内部に入り込むことを避けたい
+        // 現状スタート時の中心からずれなければ入り込まない判定をとれる
+        // が、各頂点がずれていくとうまく動かない(中心点が連動しないから)
         if (toDis < _minRange && toDis > ioDis)
         {
             Debug.Log("これ以上中に打ち込めません");
@@ -156,47 +186,55 @@ public class MeshManager : MonoBehaviour
 
         _dis = 1000f;
     }
-    public void OnSaveData(string weapon)
+
+    /// <summary>
+    /// 武器のセーブ
+    /// </summary>
+    /// <param name="weapon"></param>
+    public void SaveMesh()
     {
-        if (weapon == "Taiken")
+        switch (GameManager.BlacksmithType)
         {
-            _saveData._prefabName = weapon;
-            _saveData._myVertices = _myVertices;
-            _saveData._myTriangles = _myTriangles;
-            _saveData._colorList = _setColor;
-            SaveManager.Save(SaveManager.TAIKENFILEPATH, _saveData);
-        }
-        else if (weapon == "Souken")
-        {
-            _saveData._prefabName = weapon;
-            _saveData._myVertices = _myVertices;
-            _saveData._myTriangles = _myTriangles;
-            _saveData._colorList = _setColor;
-            SaveManager.Save(SaveManager.SOUKENFILEPATH, _saveData);
-        }
-        else if (weapon == "Hammer")
-        {
-            _saveData._prefabName = weapon;
-            _saveData._myVertices = _myVertices;
-            _saveData._myTriangles = _myTriangles;
-            _saveData._colorList = _setColor;
-            SaveManager.Save(SaveManager.HAMMERFILEPATH, _saveData);
-        }
-        else if (weapon == "Yari")
-        {
-            _saveData._prefabName = weapon;
-            _saveData._myVertices = _myVertices;
-            _saveData._myTriangles = _myTriangles;
-            _saveData._colorList = _setColor;
-            SaveManager.Save(SaveManager.YARIFILEPATH, _saveData);
+            case WeaponType.GreatSword:
+                {
+                    BaseSaveMesh(SaveManager.TAIKENFILEPATH);
+                }
+                break;
+            case WeaponType.DualBlades:
+                {
+                    BaseSaveMesh(SaveManager.SOUKENFILEPATH);
+                }
+                break;
+            case WeaponType.Hammer:
+                {
+                    BaseSaveMesh(SaveManager.HAMMERFILEPATH);
+                }
+                break;
+            case WeaponType.Spear:
+                {
+                    BaseSaveMesh(SaveManager.YARIFILEPATH);
+                }
+                break;
+            default:
+                {
+                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
+                }
+                return;
         }
     }
 
-    public void ChangeScene()
+    private void BaseSaveMesh(string fileName)
     {
-        SceneManager.LoadScene("BattleSample");
+        _saveData._prefabName = GameManager.BlacksmithType.ToString();
+        _saveData._myVertices = _myVertices;
+        _saveData._myTriangles = _myTriangles;
+        _saveData._colorList = _setColor;
+        SaveManager.Save(fileName, _saveData);
     }
 
+    /// <summary>
+    /// 全武器のセーブデータ削除
+    /// </summary>
     public void OnResetSaveData()
     {
         foreach (var f in SaveManager._weaponFileList)
@@ -205,13 +243,41 @@ public class MeshManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// メッシュの形を元に戻す
+    /// </summary>
+    public void ResetMeshShape()
+    {
+        if (_go == null)
+            return;
+
+        Destroy(_go);
+
+        _centerPos = _firstCenterPos;
+        CreateMesh();
+    }
+
+    public async void ChangeScene()
+    {
+        if(_isFinished)
+        {
+            return;
+        }
+        _isFinished = true;
+        SaveMesh();
+        SoundManager.Instance.CriAtomPlay(CueSheet.CueSheet_0, "SE_Blacksmith_Finish");
+        await UniTask.DelayFrame(2000);
+        SceneManager.LoadScene(_nextSceneName);
+    }
+
     public void CreateMesh()
     {
-        GameObject go = new GameObject("WeaponBase");
+        _go = new GameObject("WeaponBase");
+        _go.transform.parent = _parentObj.transform.parent;
 
-        _meshFilter = go.AddComponent<MeshFilter>();
+        _meshFilter = _go.AddComponent<MeshFilter>();
 
-        _meshRenderer = go.AddComponent<MeshRenderer>();
+        _meshRenderer = _go.AddComponent<MeshRenderer>();
 
         _myVertices = new Vector3[_nVertices];
 
@@ -265,18 +331,29 @@ public class MeshManager : MonoBehaviour
             _myTriangles[firstI + 5] = i;
         }
 
+
         _myMesh.SetTriangles(_myTriangles, 0);
-
-        Vector2[] uvs = new Vector2[_nVertices];
-
         _myMesh.SetColors(_setColor);
         _meshFilter.sharedMesh = _myMesh;
         _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
         _meshFilter.mesh = _myMesh;
         _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
+
+        _lowestPos = _myVertices[0];
+
+        for (int i = 0; i < _myVertices.Length; i++)
+        {
+            if (_lowestPos.y > _myVertices[i].y)
+            {
+                _lowestPos = _myVertices[i];
+            }
+        }
+
+        _handlePos = _lowestPos - new Vector3(0, 0.5f, 0);
+
+        _weaponHandle.transform.position = _handlePos;
     }
 
-    // TODO　➔　なにか策を考える
     private void CreateSouken(string name, float sX, float sY)
     {
         GameObject go = new GameObject(name);
@@ -348,6 +425,11 @@ public class MeshManager : MonoBehaviour
         _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
     }
 
+    /// <summary>
+    /// メッシュの重心を取得する関数
+    /// </summary>
+    /// <param name="vertices"></param>
+    /// <returns></returns>
     private Vector3 GetCentroid(Vector3[] vertices)
     {
         Vector3 centroid = Vector3.zero;

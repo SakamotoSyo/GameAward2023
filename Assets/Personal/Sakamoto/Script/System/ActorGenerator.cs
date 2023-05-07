@@ -11,6 +11,7 @@ public class ActorGenerator : MonoBehaviour
     [SerializeField] private EnemyData _testEnemyData;
     [SerializeField] private Transform _playerInsPos;
     [SerializeField] private Transform _enemyInsPos;
+    [SerializeField] private bool _isBossDebug = false;
     private PlayerController _playerController;
     private EnemyController _enemyController;
 
@@ -37,8 +38,19 @@ public class ActorGenerator : MonoBehaviour
         var enemyObj = Instantiate(enemyPrefab);
         enemyObj.transform.SetParent(_enemyInsPos.transform);
         _enemyController = enemyObj.GetComponent<EnemyController>();
-        if (GameManager.EnemyData)
+        if (_isBossDebug) 
         {
+            _enemyController.EnemyStatus.IsBoss = true;
+        }
+
+        if (GameManager.EnemyData && GameManager.EnemyData.IsBoss) 
+        {
+            _enemyController.EnemyStatus.IsBoss = true;
+            _enemyController.SetEnemyData(GameManager.EnemyData);
+        }
+        else if (GameManager.EnemyData)
+        {
+            Debug.Log(GameManager.EnemyData.WeaponDates[0].WeaponType);
             _enemyController.SetEnemyData(GameManager.EnemyData);
         }
         else 
