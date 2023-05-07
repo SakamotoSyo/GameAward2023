@@ -22,8 +22,8 @@ public class SkillDataManagement : MonoBehaviour
 
         foreach (var skill in skillPrefabs)
         {
-            var sObj = Instantiate(skill, transform);
-            _skills.Add(sObj);
+            Instantiate(skill, transform);
+            _skills.Add(skill);
         }
     }
 
@@ -36,7 +36,6 @@ public class SkillDataManagement : MonoBehaviour
             if (s.Weapon == weapon && s.Type == type)
             {
                 skills.Add(s);
-                Debug.Log($"{s}を検索");
             }
         }
 
@@ -45,14 +44,14 @@ public class SkillDataManagement : MonoBehaviour
         return skills[n];
     }
 
-    public void OnSkillUse<T>(ActorAttackType actorType) where T : SkillBase
+    public void OnSkillUse(ActorAttackType actorType, string skillName)
     {
-        SkillBase skill = _skills.Find(skill => skill.GetType() == typeof(T));
+        SkillBase skill = _skills.Find(skill => skill.name == skillName);
         if (skill != null)
         {
             _pStatus = _actorGenerator.PlayerController.PlayerStatus;
             _eStatus = _actorGenerator.EnemyController.EnemyStatus;
-
+            Debug.Log(skill.name);
             skill.UseSkill(_pStatus, _eStatus, _wStatus,actorType);
         }
         else

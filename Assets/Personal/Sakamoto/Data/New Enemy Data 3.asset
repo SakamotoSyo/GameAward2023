@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemySprite: {fileID: 21300000, guid: 931e2779348b4194eb969bb829c8f2d0, type: 3}
   EnemyAnim: {fileID: 4275729858961864513, guid: cbe0ac18deb4b9744aa89fb95927c56a, type: 3}
-  RankPoint: -40
+  RankPoint: 40
   EnemyPrefab: {fileID: 1090746760672497615, guid: cbe0ac18deb4b9744aa89fb95927c56a, type: 3}
   WeaponDates:
-  - OffensivePower: 0
+  - OffensivePower: 900
     WeaponWeight: 0
     CriticalRate: 0
     MaxDurable: 100
@@ -25,28 +25,4 @@ MonoBehaviour:
     StatusArray:
     - 0
     Attribute: 0
-    WeaponType: 0
-  - OffensivePower: 0
-    WeaponWeight: 0
-    CriticalRate: 0
-    MaxDurable: 0
-    CurrentDurable: 0
-    StatusArray: []
-    Attribute: 0
-    WeaponType: 0
-  - OffensivePower: 0
-    WeaponWeight: 0
-    CriticalRate: 0
-    MaxDurable: 0
-    CurrentDurable: 0
-    StatusArray: []
-    Attribute: 0
-    WeaponType: 0
-  - OffensivePower: 0
-    WeaponWeight: 0
-    CriticalRate: 0
-    MaxDurable: 0
-    CurrentDurable: 0
-    StatusArray: []
-    Attribute: 0
-    WeaponType: 0
+    WeaponType: 2
