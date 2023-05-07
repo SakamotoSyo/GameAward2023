@@ -10,7 +10,7 @@ public abstract class SkillBase : MonoBehaviour
     public abstract SkillType Type { get; protected set; }
     public abstract string FlavorText { get; protected set; }
 
-    public abstract UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon,ActorAttackType actorType);
+    public abstract UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType);
     protected abstract void SkillEffect();
     public abstract void TurnEnd();
     public abstract void BattleFinish();

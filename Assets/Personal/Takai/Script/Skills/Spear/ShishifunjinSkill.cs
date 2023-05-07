@@ -13,8 +13,8 @@ public class ShishifunjinSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
-    private EnemyStatus _enemyStatus;
+    private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
     private int _count;
 
     public ShishifunjinSkill()
@@ -25,7 +25,7 @@ public class ShishifunjinSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
@@ -40,7 +40,7 @@ public class ShishifunjinSkill : SkillBase
     {
         var token = this.GetCancellationTokenOnDestroy();
         // スキルの効果処理を実装する
-        _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
         //経過ターンが多いほど攻撃回数アップ（上限 7回） 1 + 2×(ターン数-1) 
         int num = 1 + 2 * (_count - 1);
         if(7 < num) num = 7;
@@ -48,14 +48,14 @@ public class ShishifunjinSkill : SkillBase
         for (int i = 0; i < num; i++)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime), cancellationToken: token);
-            _enemyStatus.EquipWeapon.AddDamage(_playerStatus.EquipWeapon.OffensivePower.Value);
+            _enemyStatus.EnemyStatus.EquipWeapon.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value);
         }
     }
 
     public override void TurnEnd()
     {
         _count++;
-        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
     }
 
     public override void BattleFinish()

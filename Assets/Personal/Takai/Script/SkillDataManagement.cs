@@ -9,9 +9,8 @@ public class SkillDataManagement : MonoBehaviour
 {
     [SerializeField] private ActorGenerator _actorGenerator;
 
-    [SerializeField] private PlayerStatus _pStatus;
-    [SerializeField] private EnemyStatus _eStatus;
-    [SerializeField] private WeaponStatus _wStatus;
+    [SerializeField] private PlayerController _pStatus;
+    [SerializeField] private EnemyController _eStatus;
 
     private List<SkillBase> _skills = new List<SkillBase>();
     public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
@@ -49,10 +48,10 @@ public class SkillDataManagement : MonoBehaviour
         SkillBase skill = _skills.Find(skill => skill.name == skillName);
         if (skill != null)
         {
-            _pStatus = _actorGenerator.PlayerController.PlayerStatus;
-            _eStatus = _actorGenerator.EnemyController.EnemyStatus;
+            _pStatus = _actorGenerator.PlayerController;
+            _eStatus = _actorGenerator.EnemyController;
             Debug.Log(skill.name);
-            skill.UseSkill(_pStatus, _eStatus, _wStatus,actorType);
+            skill.UseSkill(_pStatus, _eStatus,actorType);
         }
         else
         {

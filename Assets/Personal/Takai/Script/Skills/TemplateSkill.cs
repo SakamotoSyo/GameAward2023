@@ -12,7 +12,7 @@ public class TemplateSkill : SkillBase
     public override string FlavorText { get; protected set; }
 
     private PlayableDirector _anim;
-    private PlayerStatus _status;
+    private PlayerController _status;
 
     public TemplateSkill()
     {
@@ -22,7 +22,7 @@ public class TemplateSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon, ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _status = player;

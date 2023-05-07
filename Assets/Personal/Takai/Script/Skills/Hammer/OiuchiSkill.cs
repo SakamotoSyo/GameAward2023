@@ -10,8 +10,8 @@ public class OiuchiSkill : SkillBase
     public override SkillType Type { get; protected set; }
     public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
-    private PlayerStatus _playerStatus;
-    private EnemyStatus _enemyStatus;
+    private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
     private bool _isUse = false;
 
     public OiuchiSkill()
@@ -22,8 +22,7 @@ public class OiuchiSkill : SkillBase
         Type = (SkillType)0;
     }
 
-    public async override UniTask UseSkill(PlayerStatus player, EnemyStatus enemy, WeaponStatus weapon,
-        ActorAttackType actorType)
+    public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
@@ -39,10 +38,10 @@ public class OiuchiSkill : SkillBase
     {
         _isUse = true;
         // スキルの効果処理を実装する
-        _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
-        if (_enemyStatus.IsDebuff()) //敵にデバフがついているか検知
+        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        if (_enemyStatus.EnemyStatus.IsDebuff()) //敵にデバフがついているか検知
         {
-            _playerStatus.EquipWeapon.OffensivePower.Value += Damage;
+            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
         }
     }
 
@@ -55,11 +54,11 @@ public class OiuchiSkill : SkillBase
 
         _isUse = false;
         
-        _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
 
-        if (_enemyStatus.IsDebuff()) //敵にデバフがついているか検知
+        if (_enemyStatus.EnemyStatus.IsDebuff()) //敵にデバフがついているか検知
         {
-            _playerStatus.EquipWeapon.OffensivePower.Value -= Damage;
+            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
         }
     }
 
