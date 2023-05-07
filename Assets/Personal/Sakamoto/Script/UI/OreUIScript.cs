@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    
+
     [SerializeField] private GameObject _infoPanel;
     [SerializeField] private Image _oreImage;
     [SerializeField] private ActorGenerator _actorGenerator;
@@ -16,7 +16,7 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _infoPanel.SetActive(true); 
+        _infoPanel.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -24,16 +24,29 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _infoPanel.SetActive(false);
     }
 
-    public void SetData(OreData oreData) 
+    public void SetData(OreData oreData)
     {
         _rearityText.text = oreData.Rarity.ToString();
-        for (int i = 0; i < oreData.EnhancedData.Length; i++) 
+        for (int i = 0; i < oreData.EnhancedData.Length; i++)
         {
+            if (0 == oreData.EnhancedData[i].EnhanceNum) continue;
+
             _enhanceText.text += oreData.EnhancedData[i].EnhanceDescription;
+            if (0 < oreData.EnhancedData[i].EnhanceNum)
+            {
+                _enhanceText.text += "+";
+                _enhanceText.text += oreData.EnhancedData[i].EnhanceNum.ToString();
+            }
+            else
+            {
+                _enhanceText.text += oreData.EnhancedData[i].EnhanceNum.ToString();
+            }
             _enhanceText.text += " ";
+
         }
         _enhanceText.text += "\n" + oreData.Skill.SkillName;
-        _oreImage = oreData.OreImage;
+        _enhanceText.text += "\n" + oreData.Skill.FlavorText;
+        _oreImage.sprite = oreData.OreImage;
     }
 
     public void ResetPanel()

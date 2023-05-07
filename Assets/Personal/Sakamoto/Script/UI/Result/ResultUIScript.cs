@@ -19,7 +19,7 @@ public class ResultUIScript : MonoBehaviour
     [SerializeField] private SkillSelectButtonScript[] _skillSelectButtonCs = new SkillSelectButtonScript[2];
     [SerializeField] private ActorGenerator _actorGenerator;
     [SerializeField] private SkillDataManagement _playerSkillDataManagement;
-    [SerializeField] private Image[] _oreImage = new Image[3];
+    [SerializeField] private Sprite[] _oreImage = new Sprite[3];
     [SerializeField] private ResultWeaponButton[] _resultUICs = new ResultWeaponButton[4];
     [SceneName]
     [SerializeField] private string _blacksmithSceneName;
@@ -62,7 +62,7 @@ public class ResultUIScript : MonoBehaviour
         for (int i = 0; i < _oreUiCs.Length; i++)
         {
             var oreInfo = RarityLottery();
-            OreData Ore = new OreData(SetEnhanceData(), oreInfo.rearity, oreInfo.randomSkill, oreInfo.oreImage);
+            OreData Ore = new OreData(SetEnhanceData(oreInfo.rearity), oreInfo.rearity, oreInfo.randomSkill, oreInfo.oreImage);
             _oreUiCs[i].SetData(Ore);
             _oreButton[i].onClick.AddListener(() => EnhanceWeaponEvent(Ore));
         }
@@ -72,7 +72,7 @@ public class ResultUIScript : MonoBehaviour
     /// 強化するStatusを返してくれる
     /// </summary>
     /// <returns></returns>
-    private EnhanceData[] SetEnhanceData()
+    private EnhanceData[] SetEnhanceData(OreRarity oreRarity)
     {
         EnhanceData[] enhanceData = new EnhanceData[DataBaseScript.DescriptionEnhanceData.Count];
         for (int i = 0; i < DataBaseScript.DescriptionEnhanceData.Count; i++)
@@ -86,17 +86,36 @@ public class ResultUIScript : MonoBehaviour
                 enhanceData[i].EnhanceNum = enhanceNum;
                 enhanceData[i].EnhanceDescription = DataBaseScript.DescriptionEnhanceData[i].EnhanceDescription;
             }
+            else
+            {
+                if (oreRarity == OreRarity.Normal)
+                {
+                    int downNum = Random.Range(-1, -3);
+                    enhanceData[i].EnhanceNum = downNum;
+                    enhanceData[i].EnhanceDescription = DataBaseScript.DescriptionEnhanceData[i].EnhanceDescription;
+                }
+            }
         }
         return enhanceData;
     }
 
-    private (Image oreImage, OreRarity rearity, SkillBase randomSkill) RarityLottery()
+    private (Sprite oreImage, OreRarity rearity, SkillBase randomSkill) RarityLottery()
     {
-        OreRarity rearity = (OreRarity)Random.Range(0, 3);
+        SkillBase randomSkill;
+        OreRarity rearity = (OreRarity)Random.Range(0, 2);
         WeaponData[] weaponDatas = _actorGenerator.PlayerController.PlayerStatus.WeaponDatas;
         WeaponData weaponData = weaponDatas[Random.Range(0, weaponDatas.Length)];
-        SkillBase randomSkill = _playerSkillDataManagement.OnSkillCall(weaponData.WeaponType, SkillType.Skill);
-        Image oreImage = _oreImage[(int)rearity];
+        var randomNum = Random.Range(0, 100);
+        if (20 < randomNum)
+        {
+            randomSkill = _playerSkillDataManagement.OnSkillCall(weaponData.WeaponType, SkillType.Skill);
+        }
+        else
+        {
+            randomSkill = _playerSkillDataManagement.OnSkillCall(weaponData.WeaponType, SkillType.Special);
+        }
+
+        Sprite oreImage = _oreImage[(int)rearity];
 
         return (oreImage, rearity, randomSkill);
     }
@@ -125,7 +144,7 @@ public class ResultUIScript : MonoBehaviour
 
         for (int i = 0; i < _weaponButton.Length; i++)
         {
-            if (weaponDatas[i] != null)
+            if (i < weaponDatas.Length)
             {
                 _weaponButton[i].enabled = true;
                 _resultUICs[i].SetUpInfo(weaponDatas[i], selectOreData);
@@ -147,12 +166,13 @@ public class ResultUIScript : MonoBehaviour
     /// </summary>
     public void WeaponEnhanceEvent(WeaponData weaponData, OreData oreData)
     {
-        weaponData.EnhanceParam(oreData.EnhancedData);
         var playerSkill = _actorGenerator.PlayerController.PlayerSkill;
-        if (oreData.Skill != null)
+        if (!oreData.Skill) return;
+        if (oreData.Skill.Type == SkillType.Skill)
         {
             if (playerSkill.AddSkillJudge(oreData.Skill))
             {
+                weaponData.EnhanceParam(oreData.EnhancedData);
                 //スキルを追加出来たときの処理
                 if (_isBlacksmith)
                 {
@@ -172,11 +192,61 @@ public class ResultUIScript : MonoBehaviour
                 _skillSelectPanel.SetActive(true);
                 _skillSelectButtonCs[0].SetCurrentSkill(playerSkill.PlayerSkillArray[0]);
                 _skillSelectButtonCs[1].SetCurrentSkill(playerSkill.PlayerSkillArray[1]);
-                _skillSelectButton[0].onClick.AddListener(() => ChangeSkill(0, oreData.Skill));
-                _skillSelectButton[1].onClick.AddListener(() => ChangeSkill(1, oreData.Skill));
+                _skillSelectButton[0].onClick.AddListener(() =>
+                {
+                    ChangeSkill(0, oreData.Skill);
+                    weaponData.EnhanceParam(oreData.EnhancedData);
+
+                });
+                _skillSelectButton[1].onClick.AddListener(() =>
+                {
+                    ChangeSkill(1, oreData.Skill);
+                    weaponData.EnhanceParam(oreData.EnhancedData);
+                });
+            }
+        }
+        else if (oreData.Skill.Type == SkillType.Special)
+        {
+            if (playerSkill.AddSkillJudge(oreData.Skill))
+            {
+                weaponData.EnhanceParam(oreData.EnhancedData);
+                //スキルを追加出来たときの処理
+                if (_isBlacksmith)
+                {
+                    BlacksmithJudge();
+                }
+                else
+                {
+                    _actorGenerator.PlayerController.SavePlayerData();
+                    SceneLoader.LoadScene(_homeScene);
+                }
+            }
+            else
+            {
+                _enhanceSelectObj.SetActive(false);
+                _skillSelectPanel.SetActive(true);
+                _skillSelectButtonCs[0].SetCurrentSkill(playerSkill.SpecialAttack);
+                _skillSelectButtonCs[1].SetCurrentSkill(oreData.Skill);
+                _skillSelectButton[0].onClick.AddListener(() =>
+                {
+                    ChangeSpecialSkill(oreData.Skill);
+                    weaponData.EnhanceParam(oreData.EnhancedData);
+
+                });
+                _skillSelectButton[1].onClick.AddListener(() =>
+                {
+                    weaponData.EnhanceParam(oreData.EnhancedData);
+                    SceneLoader.LoadScene(_homeScene);
+                });
             }
         }
         // SceneLoader.LoadScene(_homeScene);
+    }
+
+    public void CancelSelectSkill()
+    {
+        _enhanceSelectObj.SetActive(true);
+        _skillSelectPanel.SetActive(false);
     }
 
     /// <summary>
@@ -234,6 +304,21 @@ public class ResultUIScript : MonoBehaviour
             _actorGenerator.PlayerController.SavePlayerData();
             SceneLoader.LoadScene(_homeScene);
         }
+    }
+
+    public void ChangeSpecialSkill(SkillBase skill) 
+    {
+        _actorGenerator.PlayerController.PlayerSkill.ChangeSpecialSkill(skill);
+        if (_isBlacksmith)
+        {
+            BlacksmithJudge();
+        }
+        else
+        {
+            _actorGenerator.PlayerController.SavePlayerData();
+            SceneLoader.LoadScene(_homeScene);
+        }
+
     }
 
     public void SelectAgain()
