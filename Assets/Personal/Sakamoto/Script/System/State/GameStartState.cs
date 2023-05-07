@@ -9,10 +9,9 @@ namespace SakamotoTest
 {
     public class GameStartState : State
     {
-        protected override async void OnEnter(State currentState)
+        protected override void OnEnter(State currentState)
         {
             Owner.ActionSequentialDetermining();
-            await UniTask.Delay(1);
             StateMachine.Dispatch((int)BattleStateController.BattleEvent.StartToNextActorState);
         }
 

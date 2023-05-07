@@ -10,6 +10,7 @@ using Cysharp.Threading.Tasks;
 public class BattleStateController : MonoBehaviour
 {
     public GameObject ComanndObj => _commandObj;
+    public GameObject GameOverTextObj => _gameOverTextObj;
     public PlayerController PlayerController => _playerController;
     public EnemyController EnemyController => _enemyController;
     public ResultUIScript ResultUIScript => _resultUIScript;
@@ -20,6 +21,7 @@ public class BattleStateController : MonoBehaviour
     [SerializeField] private Text _stateText;
     [SerializeField] private ResultUIScript _resultUIScript;
     [SerializeField] private SkillDataManagement _skillManagement;
+    [SerializeField] private GameObject _gameOverTextObj;
     private StateMachine<BattleStateController> _stateMachine;
     private List<ActionSequentialData> _actionSequentialList = new();
     private PlayerController _playerController;
@@ -34,6 +36,7 @@ public class BattleStateController : MonoBehaviour
         _stateMachine = new StateMachine<BattleStateController>(this);
         _stateMachine.AddAnyTranstion<GameStartState>((int)BattleEvent.BattleStart);
         _stateMachine.AddAnyTranstion<SBattleEndState>((int)BattleEvent.BattleEnd);
+        _stateMachine.AddAnyTranstion<GameOverState>((int)BattleEvent.GameOver);
         _stateMachine.AddTransition<GameStartState, SelectNextActorTransitionState>
                                   ((int)BattleEvent.StartToNextActorState);
         _stateMachine.AddTransition<SelectNextActorTransitionState, SPlayerAttackState>
@@ -46,6 +49,7 @@ public class BattleStateController : MonoBehaviour
                                   ((int)(BattleEvent.EnemyToSelectState));
 
         _stateMachine.Start<GameStartState>();
+        _generator.PlayerController.GameOverAction += GameOver;
     }
 
     void Update()
@@ -114,7 +118,7 @@ public class BattleStateController : MonoBehaviour
     /// </summary>
     public void ActorStateEnd() 
     {
-        ClearGameOverCheck();
+        ClearCheck();
 
         for (int i = 0; i < _actionSequentialList.Count; i++) 
         {
@@ -135,13 +139,17 @@ public class BattleStateController : MonoBehaviour
         }
     }
 
-    public void ClearGameOverCheck() 
+    public void ClearCheck() 
     {
         if (_enemyController.EnemyStatus.IsWeaponsAllBrek()) 
         {
-            Debug.Log("‘JˆÚ‚µ‚Ü‚·");
             _stateMachine.Dispatch((int)BattleEvent.BattleEnd);
         }
+    }
+
+    public void GameOver() 
+    {
+        _stateMachine.Dispatch((int)BattleEvent.GameOver);
     }
 
     public enum BattleEvent
@@ -153,6 +161,7 @@ public class BattleStateController : MonoBehaviour
         SelectStateToPlayerTrun,
         SelectStateToEnemyTrun,
         BattleEnd,
+        GameOver,
     }
 
     public class ActionSequentialData

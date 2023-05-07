@@ -7,6 +7,7 @@ public class SBattleEndState : State
 {
     protected override void OnEnter(State currentState)
     {
+        Debug.Log("‚«‚½");
         Owner.ResultUIScript.StartResultLottery();
     }
 
