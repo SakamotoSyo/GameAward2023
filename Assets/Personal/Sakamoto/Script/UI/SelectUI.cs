@@ -15,6 +15,7 @@ public class SelectUI : MonoBehaviour
     [SerializeField] private ActorGenerator _generator;
     [SerializeField] private BattleStateController _battleStateController;
     [SerializeField] private BattleChangeWeapon _battleChangeWeaponCs;
+    [SerializeField] private SkillDataManagement _skillDataManagement;
     [SerializeField] private int _lotateNum;
 
     private WeaponStatus _weaponStatus;
@@ -26,7 +27,6 @@ public class SelectUI : MonoBehaviour
     {
         _playerController = _generator.PlayerController;
         _playerStatus = _playerController.PlayerStatus;
-        Debug.Log(_playerController);
         _enemyController = _generator.EnemyController;
     }
 
@@ -36,12 +36,14 @@ public class SelectUI : MonoBehaviour
         if (Input.GetButtonDown("Left"))
         {
             UiMove(true);
-            _lotateNum = (_lotateNum + 1) % 4;
+            _lotateNum = (_lotateNum + 1) % _actionUi.Length;
+            SkillInfo();
         }
         else if (Input.GetButtonDown("Right"))
         {
             UiMove(false);
-            _lotateNum = (_lotateNum - 1) % 4;
+            _lotateNum = (_lotateNum - 1) % _actionUi.Length;
+            SkillInfo();
         }
 
         Attack();
@@ -83,11 +85,13 @@ public class SelectUI : MonoBehaviour
                 _actionUi[nextMoveNum].SetAsLastSibling();
             }
         }
+
+     
     }
 
     public void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Space)&& _playerStatus.ChackAnomaly())
+        if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
         {
             var num = _lotateNum % _actionUi.Length;
             if (num < 0)
@@ -112,24 +116,73 @@ public class SelectUI : MonoBehaviour
             {
                 _infoUI.SetActive(true);
                 SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
-                _skillText[0].text = skill1.name;
-                _skillText[1].text = skill1.Damage.ToString();
-                _skillText[2].text = skill1.FlavorText;
+                if (skill1) 
+                {
+                    _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
+                }
             }
-            else
+            else if (_actionUi[num] == _actionUi[3])
             {
                 _infoUI.SetActive(true);
                 SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
+                if (skill2)
+                {
+                    _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
+                }
+            }
+
+
+            _commandUI.SetActive(false);
+            _battleChangeWeaponCs.ChangeWeaponUiOpen();
+            //TODO:遷移の機能を別の場所に移す
+            //_battleStateController.ActorStateEnd();
+        }
+    }
+
+    private void SkillInfo() 
+    {
+        var currentUi = _lotateNum % _actionUi.Length;
+        if (currentUi < 0)
+        {
+            currentUi += _actionUi.Length;
+        }
+
+        if (_actionUi[currentUi] == _actionUi[2])
+        {
+            _infoUI.SetActive(true);
+            SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
+            if (skill1 != null)
+            {
+                _skillText[0].text = skill1.name;
+                _skillText[1].text = skill1.Damage.ToString();
+                _skillText[2].text = skill1.FlavorText;
+                Debug.Log("テキストです");
+            }
+            else
+            {
+                Debug.Log("nullデス");
+            }
+
+        }
+        else if (_actionUi[currentUi] == _actionUi[3])
+        {
+            _infoUI.SetActive(true);
+            SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
+            if (skill2 != null)
+            {
                 _skillText[0].text = skill2.name;
                 _skillText[1].text = skill2.Damage.ToString();
                 _skillText[2].text = skill2.FlavorText;
             }
+            else
+            {
 
-            _commandUI.SetActive(false);
-            _battleChangeWeaponCs.ChangeWeaponUiOpen();
-            Debug.Log("武器入れ絵");
-            //TODO:遷移の機能を別の場所に移す
-            //_battleStateController.ActorStateEnd();
+            }
+
+        }
+        else
+        {
+            _infoUI.SetActive(false);
         }
     }
 
@@ -137,7 +190,7 @@ public class SelectUI : MonoBehaviour
     {
         var playerSkill = _playerController.PlayerSkill;
         _skillText[0].text = playerSkill.SpecialAttack.SkillName;
-        for (int i = 1; i < playerSkill.PlayerSkillArray.Length + 1; i++) 
+        for (int i = 1; i < playerSkill.PlayerSkillArray.Length + 1; i++)
         {
             _skillText[i].text = playerSkill.PlayerSkillArray[i - 1].SkillName;
         }
