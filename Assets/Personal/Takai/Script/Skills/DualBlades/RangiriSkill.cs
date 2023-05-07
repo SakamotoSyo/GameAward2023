@@ -16,6 +16,7 @@ public class RangiriSkill : SkillBase
     const int Turn = 3;
     float _attackValue = 0;
     int _count = 0;
+    bool _isUse = false;
 
     public RangiriSkill()
     {
@@ -23,6 +24,7 @@ public class RangiriSkill : SkillBase
         Damage = 60;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
+        FlavorText = "2ターンの間攻撃力が5%上昇(重複あり→5%,10%,15%)";
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
@@ -38,6 +40,8 @@ public class RangiriSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
+        _isUse = true;
+
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
         if (_count >= Turn)
         {
@@ -49,12 +53,19 @@ public class RangiriSkill : SkillBase
 
     public override void TurnEnd()
     {
+        if (!_isUse)
+        {
+            return;
+        }
+
+        _isUse = false;
         _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
     }
 
 
     public override void BattleFinish()
     {
+        _isUse = false;
         _count = 0;
         _attackValue = 0;
     }
