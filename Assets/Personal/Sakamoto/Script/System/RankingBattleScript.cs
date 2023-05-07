@@ -11,6 +11,7 @@ public class RankingBattleScript : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _bossButtonObj;
     [SerializeField] private Text _rankText;
+    [SerializeField] private EnemyData _enemyData;
     [SerializeField] private int _rankPointRange = 100;
     [SceneName]
     [SerializeField] private string _battleScene;
@@ -54,19 +55,16 @@ public class RankingBattleScript : MonoBehaviour
             //button.onClick.AddListener(() => SceneLoader.LoadScene(_battleScene));
         }
 
-        //EnemyData[] enemyDataLow = _enemyDataBase.GetRankEnemyArrayData(GameManager.PlayerSaveData.PlayerRankPoint, _rankPointRange, false);
-        //for (int i = 0; i < 2; i++)
-        //{
-        //    var enemyButtonPrefab = Instantiate(_enemyPrefab);
-        //    enemyButtonPrefab.transform.SetParent(_buttonInsPos.transform);
-        //    var randomIndex = Random.Range(0, enemyDataLow.Length);
-        //    //enemyButtonPrefab.GetComponent<Image>().sprite = enemyData[i].EnemySprite;
-        //    enemyButtonPrefab.GetComponent<Image>().sprite = enemyDataLow[randomIndex].EnemySprite;
-        //    var button = enemyButtonPrefab.GetComponent<Button>();
+        if (enemyDataHigh.Length == 0)
+        {
+            var enemyButtonPrefab = Instantiate(_enemyPrefab);
+            enemyButtonPrefab.transform.SetParent(_buttonInsPos.transform);
+            enemyButtonPrefab.GetComponent<Image>().sprite = _enemyData.EnemySprite;
+            var button = enemyButtonPrefab.GetComponent<Button>();
 
-        //    button.onClick.AddListener(() => SelectEnemy.SetImage(enemyButtonPrefab.GetComponent<Image>().sprite));
-        //    button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataLow[randomIndex]));
-        //}
+            button.onClick.AddListener(() => SelectEnemy.SetImage(enemyButtonPrefab.GetComponent<Image>().sprite));
+            button.onClick.AddListener(() => GameManager.SetEnemyData(_enemyData));
+        }
     }
 
 
