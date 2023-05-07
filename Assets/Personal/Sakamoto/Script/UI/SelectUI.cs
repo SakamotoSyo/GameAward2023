@@ -160,7 +160,7 @@ public class SelectUI : MonoBehaviour
             }
             else
             {
-                Debug.Log("nullƒfƒX");
+                _skillText[0].text = "NoSkill";
             }
 
         }
@@ -176,9 +176,24 @@ public class SelectUI : MonoBehaviour
             }
             else
             {
-
+                _skillText[0].text = "NoSkill";
             }
 
+        }
+        else if (_actionUi[currentUi] == _actionUi[1]) 
+        {
+            _infoUI.SetActive(true);
+            var special = _playerController.PlayerSkill.SpecialAttack;
+            if (special != null)
+            {
+                _skillText[0].text = special.name;
+                _skillText[1].text = special.Damage.ToString();
+                _skillText[2].text = special.FlavorText;
+            }
+            else 
+            {
+                _skillText[0].text = "NoSkill";
+            }
         }
         else
         {

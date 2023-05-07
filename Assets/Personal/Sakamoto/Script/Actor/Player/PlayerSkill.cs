@@ -23,11 +23,26 @@ public class PlayerSkill
         saveData.PlayerSkillArray = _skillArray;
     }
 
+    public void ChangeSpecialSkill(SkillBase skill) 
+    {
+        _specialAttack = skill;
+    }
+
     public void LoadSkill(PlayerSaveData playerSaveData) 
     {
         _skillArray = playerSaveData.PlayerSkillArray;
         Debug.Log(_skillArray.Length);
         _specialAttack = playerSaveData.SpecialAttack;
+    }
+
+    public bool AddSpecialSkill(SkillBase skill) 
+    {
+        if (_specialAttack) 
+        {
+            _specialAttack = skill;
+            return true;
+        }
+        return false;
     }
 
     public bool AddSkillJudge(SkillBase skill) 
