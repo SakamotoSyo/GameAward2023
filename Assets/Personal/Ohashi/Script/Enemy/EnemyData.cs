@@ -15,4 +15,6 @@ public class EnemyData : ScriptableObject
 
     public WeaponData[] WeaponDates;
 
+    public bool IsBoss;
+
 }

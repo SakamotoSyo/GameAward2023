@@ -39,7 +39,7 @@ public class RankingBattleScript : MonoBehaviour
             PlayerDataInit();
         }
         EnemyData[] enemyDataHigh = _enemyDataBase.GetRankEnemyArrayData(GameManager.PlayerSaveData.PlayerRankPoint, _rankPointRange, true);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < enemyDataHigh.Length; i++)
         {
             var enemyButtonPrefab = Instantiate(_enemyPrefab);
             enemyButtonPrefab.transform.SetParent(_buttonInsPos.transform);
