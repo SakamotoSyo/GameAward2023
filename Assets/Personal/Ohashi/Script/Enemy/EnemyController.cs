@@ -52,7 +52,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
             _damagePos.position,
             Quaternion.identity);
         damageController.TextInit((int)damage);
-        _enemyStatus.EquipWeapon.AddDamage(damage);
+        _enemyStatus.EquipWeapon.AddDamage((int)damage);
 
         if(_enemyStatus.EquipWeapon.IsWeaponBreak())
         {
