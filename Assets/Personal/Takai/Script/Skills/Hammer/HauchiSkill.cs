@@ -9,7 +9,6 @@ public class HauchiSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float _subtractAttackValue = 0.2f;
-    bool _isUse = false;
     public HauchiSkill()
     {
         SkillName = "刃打ち";
@@ -32,25 +31,19 @@ public class HauchiSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
         // スキルの効果処理を実装する
         _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + _subtractAttackValue;
         _enemyStatus.EnemyStatus.EquipWeapon.CurrentCriticalRate -= _enemyStatus.EnemyStatus.EquipWeapon.CriticalRate * _subtractAttackValue;
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
+        
     }
 }

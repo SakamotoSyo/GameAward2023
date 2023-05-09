@@ -7,7 +7,6 @@ public class OiuchiSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    private bool _isUse = false;
 
     public OiuchiSkill()
     {
@@ -32,7 +31,6 @@ public class OiuchiSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
         // スキルの効果処理を実装する
         _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         if (_enemyStatus.EnemyStatus.IsDebuff()) //敵にデバフがついているか検知
@@ -41,18 +39,13 @@ public class OiuchiSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
+        
     }
 }

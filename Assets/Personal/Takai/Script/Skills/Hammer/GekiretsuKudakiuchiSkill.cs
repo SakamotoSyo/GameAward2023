@@ -9,7 +9,6 @@ public class GekiretsuKudakiuchiSkill : SkillBase
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
     const float _subtractValue = 0.4f;
-    private bool _isUse;
 
     public GekiretsuKudakiuchiSkill()
     {
@@ -35,15 +34,13 @@ public class GekiretsuKudakiuchiSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
-
         switch (_actor)
         {
             case ActorAttackType.Player:
             {
                 // スキルの効果処理を実装する
                 _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
-                
+
                 // 防御、素早さを40%下げる。
                 _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -=
                     _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue;
@@ -58,7 +55,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
             case ActorAttackType.Enemy:
             {
                 _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
-                
+
                 // 防御、素早さを40%下げる。
                 _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -=
                     _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * _subtractValue;
@@ -73,18 +70,13 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
+        
     }
 }

@@ -8,7 +8,6 @@ public class IkishochinSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     float _subtractValue = 0.2f;
-    bool _isUse = false;
     public IkishochinSkill()
     {
         SkillName = "意気消沈";
@@ -31,24 +30,18 @@ public class IkishochinSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
         // スキルの効果処理を実装する
         _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + _subtractValue;
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
+        
     }
 }

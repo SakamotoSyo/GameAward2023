@@ -42,7 +42,7 @@ public class KasokuSkill : SkillBase
         _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
         float spd = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
         
@@ -66,6 +66,8 @@ public class KasokuSkill : SkillBase
             _speedValue += (spd * (ADD_VALUE * _count));
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
         }
+
+        return true;
     }
 
     public override void BattleFinish()

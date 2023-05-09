@@ -8,7 +8,6 @@ public class TamegiriSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    private bool _isUse = false;
 
     public TamegiriSkill()
     {
@@ -34,8 +33,6 @@ public class TamegiriSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
-
         // スキルの効果処理を実装する
         switch (_actor)
         {
@@ -49,18 +46,12 @@ public class TamegiriSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
     }
 }

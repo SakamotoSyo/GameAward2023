@@ -72,15 +72,15 @@ public class TenkuugiriSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
         if (!_isUse)
         {
-            return;
+            return false;
         }
 
         _isUse = false;
-
+        
         switch (_actor)
         {
             case ActorAttackType.Player:
@@ -94,10 +94,12 @@ public class TenkuugiriSkill : SkillBase
             }
                 break;
         }
+
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
+        
     }
 }

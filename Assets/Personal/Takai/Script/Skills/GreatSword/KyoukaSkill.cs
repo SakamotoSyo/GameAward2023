@@ -41,7 +41,7 @@ public class KyoukaSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
         _turn++;
         if (_turn > 2)
@@ -50,6 +50,8 @@ public class KyoukaSkill : SkillBase
             // プレイヤーがひるむ
             _turn = 0;
         }
+
+        return true;
     }
 
     public override void BattleFinish()

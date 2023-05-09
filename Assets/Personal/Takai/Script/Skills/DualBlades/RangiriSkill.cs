@@ -10,7 +10,6 @@ public class RangiriSkill : SkillBase
     const float AddDamageValue = 0.05f;
     const int Turn = 3;
     int _count = 0;
-    bool _isUse = false;
 
     public RangiriSkill()
     {
@@ -33,9 +32,6 @@ public class RangiriSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        // スキルの効果処理を実装する
-        _isUse = true;
-
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
         if (_count >= Turn)
         {
@@ -44,20 +40,14 @@ public class RangiriSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
 
     public override void BattleFinish()
     {
-        _isUse = false;
         _count = 0;
     }
 }

@@ -8,7 +8,6 @@ public class PowerBlowSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    private bool _isUse;
 
     public PowerBlowSkill()
     {
@@ -33,8 +32,6 @@ public class PowerBlowSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
-        
         switch (_actor)
         {
             case ActorAttackType.Player:
@@ -46,18 +43,13 @@ public class PowerBlowSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-        
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
+        
     }
 }

@@ -11,7 +11,6 @@ public class ShishifunjinSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private int _count;
-    bool _isUse = false;
 
     public ShishifunjinSkill()
     {
@@ -35,8 +34,6 @@ public class ShishifunjinSkill : SkillBase
 
     protected override async void SkillEffect()
     {
-        _isUse = true;
-
         var token = this.GetCancellationTokenOnDestroy();
         // スキルの効果処理を実装する
         _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
@@ -51,21 +48,15 @@ public class ShishifunjinSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
         _count++;
 
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
         _count = 0;
     }
 }

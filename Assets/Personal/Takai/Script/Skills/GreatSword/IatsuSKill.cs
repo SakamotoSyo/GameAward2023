@@ -45,7 +45,7 @@ public class IatsuSKill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
         _turn++;
         if (_turn > Turn)
@@ -54,6 +54,8 @@ public class IatsuSKill : SkillBase
             _turn = 0;
             _attackValue = 0;
         }
+
+        return true;
     }
 
     public override void BattleFinish()

@@ -12,7 +12,7 @@ public abstract class SkillBase : MonoBehaviour
 
     public abstract UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType);
     protected abstract void SkillEffect();
-    public abstract void TurnEnd();
+    public abstract bool TurnEnd();
     public abstract void BattleFinish();
 }
 

@@ -8,7 +8,6 @@ public class RenzokugiriSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    private bool _isUse = false;
 
     public RenzokugiriSkill()
     {
@@ -34,7 +33,6 @@ public class RenzokugiriSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
         // スキルの効果処理を実装する
         switch (_actor)
         {
@@ -47,18 +45,12 @@ public class RenzokugiriSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = true;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
     }
 }

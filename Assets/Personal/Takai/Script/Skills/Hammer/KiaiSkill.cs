@@ -6,7 +6,6 @@ public class KiaiSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
-    bool _isAttack = false;
 
     public KiaiSkill()
     {
@@ -23,31 +22,24 @@ public class KiaiSkill : SkillBase
         _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _isAttack = true;
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value *= 2;
+        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * 2);
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (_isAttack)
-        {
-            _isAttack = false;
-        }
-        else
-        {
-            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value /= 2;
-        }
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isAttack = false;
+        
     }
 }

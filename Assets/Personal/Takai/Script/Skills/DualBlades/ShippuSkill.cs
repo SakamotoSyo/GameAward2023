@@ -8,7 +8,6 @@ public class ShippuSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float _subtractHpValue = 0.02f;
-    bool _isUse = false;
     int _count = 3;
 
     public ShippuSkill()
@@ -33,15 +32,13 @@ public class ShippuSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
-
         // スキルの効果処理を実装する
         _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
 
         _count += 2;
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
         if (_count <= 0)
         {
@@ -50,17 +47,11 @@ public class ShippuSkill : SkillBase
             _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value -= durable * _subtractHpValue;
         }
 
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return true;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
         _count = 0;
     }
 }

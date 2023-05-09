@@ -10,7 +10,6 @@ public class TenkamusoSkill : SkillBase
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
     private int _count;
-    private bool _isUse = false;
 
     public TenkamusoSkill()
     {
@@ -42,7 +41,6 @@ public class TenkamusoSkill : SkillBase
                 var hp = _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
                 if (_playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value <= hp)
                 {
-                    _isUse = true;
                     _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage + (_count * 10));
                 }
             }
@@ -52,7 +50,6 @@ public class TenkamusoSkill : SkillBase
                 var hp = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
                 if (_enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value <= hp)
                 {
-                    _isUse = true;
                     _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage + (_count * 10));
                 }
             }
@@ -60,21 +57,15 @@ public class TenkamusoSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
         _count++;
 
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
         _count = 0;
-        _isUse = false;
     }
 }

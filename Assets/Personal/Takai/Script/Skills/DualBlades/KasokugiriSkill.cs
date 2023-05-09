@@ -10,7 +10,6 @@ public class KasokugiriSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    private bool _isUse = false;
 
     public KasokugiriSkill()
     {
@@ -36,7 +35,6 @@ public class KasokugiriSkill : SkillBase
 
     protected override async void SkillEffect()
     {
-        _isUse = true;
         int num = 0;
 
         switch (_actor)
@@ -151,18 +149,13 @@ public class KasokugiriSkill : SkillBase
     }
 
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
+        
     }
 }

@@ -6,7 +6,6 @@ public class NidangiriSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
-    bool _isUse = false;
 
     public NidangiriSkill()
     {
@@ -29,8 +28,6 @@ public class NidangiriSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
-
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
         float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
         
@@ -55,18 +52,12 @@ public class NidangiriSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
     }
 }

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -22,23 +21,22 @@ public class TemplateSkill : SkillBase
         _status = player;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-            
     }
-    
-    public override void TurnEnd()
+
+    public override bool TurnEnd()
     {
-            
+        return false;
     }
 
     public override void BattleFinish()
     {
-        
     }
 }

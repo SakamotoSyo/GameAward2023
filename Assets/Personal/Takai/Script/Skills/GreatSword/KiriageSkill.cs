@@ -9,7 +9,6 @@ public class KiriageSkill : SkillBase
     private const float AddDamageValue = 0.05f;
     private const int Turn = 3;
     private int _count = 0;
-    bool _isUse = false;
     public KiriageSkill()
     {
         SkillName = "斬り上げ";
@@ -31,8 +30,6 @@ public class KiriageSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
-
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
         // スキルの効果処理を実装する
         if (_count <= Turn)
@@ -42,20 +39,14 @@ public class KiriageSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false; 
     }
 
 
     public override void BattleFinish()
     {
-        _isUse = false;
         _count = 0;
     }
 }

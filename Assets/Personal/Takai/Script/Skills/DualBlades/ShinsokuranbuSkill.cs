@@ -8,7 +8,6 @@ public class ShinsokuranbuSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    bool _isUse = false;
 
     public ShinsokuranbuSkill()
     {
@@ -44,7 +43,6 @@ public class ShinsokuranbuSkill : SkillBase
 
                 if (weight <= 30) //素早さをに応じて発動できるか検知
                 {
-                    _isUse = true;
                     _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                 }
             }
@@ -55,7 +53,6 @@ public class ShinsokuranbuSkill : SkillBase
 
                 if (weight <= 30) //素早さをに応じて発動できるか検知
                 {
-                    _isUse = true;
                     _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
                 }
             }
@@ -63,18 +60,12 @@ public class ShinsokuranbuSkill : SkillBase
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
     }
 }

@@ -35,9 +35,9 @@ public class IngaouhouSkill : SkillBase
 
     }
     
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-            
+        return false;
     }
 
     public override void BattleFinish()
