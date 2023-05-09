@@ -75,10 +75,21 @@ public class CreateSample : MonoBehaviour
 
     private void BaseSampleCreate(List<Vector3> weaponList)
     {
+        Vector3 pos = new Vector3(0, 0, 0);
+        List<Vector3> posList = new List<Vector3>();
         for (int i = 0; i < weaponList.Count; i++)
         {
-            _meshManager.MyVertices[i] = weaponList[i];
-            _meshManager.MyMesh.SetVertices(weaponList);
+            float x = weaponList[i].x + _meshManager.CentorPos.x;
+
+            float y = weaponList[i].y;
+
+            pos = new Vector3(x, y);
+
+            _meshManager.MyVertices[i] = pos;
+
+            posList.Add(pos);
         }
+
+        _meshManager.MyMesh.SetVertices(posList);
     }
 }
