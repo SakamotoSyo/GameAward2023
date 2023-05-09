@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,13 +8,12 @@ public class StateController : MonoBehaviour
 {
     /// <summary>戦闘時、キャラクターの行動順序を格納するリスト</summary>
     private List<GameObject> _orderOfAction = new List<GameObject>();
-    public List<GameObject> OrderOfAction => _orderOfAction;
 
     private StateMachine<StateController> _stateMachine = null;
     public StateMachine<StateController> StateMachine => _stateMachine;
 
-    private EnemyController[] _enemyController = null;
-    public EnemyController[] EnemyController => _enemyController;
+    private EnemyController _enemyController = null;
+    public EnemyController EnemyController => _enemyController;
     public EnemyController CurrenyEnemy { get; private set; } = null;
 
     private PlayerController _playerController = null;
@@ -35,7 +35,6 @@ public class StateController : MonoBehaviour
         Start2Player,
         Start2Enemy,
         Player2Enemy,
-        Enemy2Enemy,
         Enemy2Player,
         Any2End,
     }
@@ -45,15 +44,11 @@ public class StateController : MonoBehaviour
         _playerController = FindObjectOfType<PlayerController>();
         _orderOfAction.Add(_playerController.gameObject);
 
-        _enemyController = FindObjectsOfType<EnemyController>();
-
-        for (int i = 0; i < _enemyController.Length; i++)
-        {
-            _orderOfAction.Add(_enemyController[i].gameObject);
-        }
+        _enemyController = FindObjectOfType<EnemyController>();
+        _orderOfAction.Add(_enemyController.gameObject);
 
         _resultUI = FindObjectOfType<ResultUIScript>();
-        
+
         _stateMachine = new(this);
         _stateMachine.AddAnyTranstion<BattleStartState>((int)TransitionCondition.Any2Start);
         _stateMachine.AddTransition<BattleStartState, PlayerAttackState>((int)TransitionCondition.Start2Player);
@@ -74,56 +69,63 @@ public class StateController : MonoBehaviour
             _orderOfAction.Sort((a, b) =>
             {
                 float x = 0f, y = 0f;
-                
+
                 // 変数xに代入する値の選定
-                if (a.TryGetComponent(out EnemyController enemyA)) x = enemyA.EnemyStatus.EquipWeapon.WeaponWeight;
+                if (a.TryGetComponent(out EnemyController enemyA))
+                {
+                    x = enemyA.EnemyStatus.EquipWeapon.WeaponWeight;
+                    CurrenyEnemy = enemyA;
+                }
                 else if (a.TryGetComponent(out PlayerController player)) x = player.PlayerStatus.EquipWeapon.WeaponWeight.Value;
 
                 // 変数yに代入する値の選定
-                if (b.TryGetComponent(out EnemyController enemyB)) y = enemyB.EnemyStatus.EquipWeapon.WeaponWeight;
+                if (b.TryGetComponent(out EnemyController enemyB))
+                {
+                    y = enemyB.EnemyStatus.EquipWeapon.WeaponWeight;
+                    CurrenyEnemy = enemyB;
+                }
                 else if (b.TryGetComponent(out PlayerController player)) y = player.PlayerStatus.EquipWeapon.WeaponWeight.Value;
 
-                if (x - y > 0)      return -1;
-                else if (x - y < 0) return  1;
-                else                return  0;
+                if (x - y > 0) return -1;
+                else if (x - y < 0) return 1;
+                else return 0;
             });
         }
 
         _stateMachine.Update();
     }
 
-    private int _count = 0;
-
     public void FirstStateTransition()
     {
         if (BattleStartState.IsBattleCommandSelected)
         {
-            if (_orderOfAction[_count].TryGetComponent(out EnemyController enemyController))
+            if (_orderOfAction[0].TryGetComponent(out EnemyController enemyController))
             {
+                CurrenyEnemy = enemyController;
                 _stateMachine.Dispatch((int)TransitionCondition.Start2Enemy);
             }
-            else if (_orderOfAction[_count].TryGetComponent(out PlayerController playerController))
+            else if (_orderOfAction[0].TryGetComponent(out PlayerController playerController))
             {
                 _stateMachine.Dispatch((int)TransitionCondition.Start2Player);
             }
         }
     }
 
+    int _count = 0;
+
     public void NextStateTransition()
     {
-        if (_orderOfAction[_count].TryGetComponent(out EnemyController enemy))
-        {
-            CurrenyEnemy = enemy;
-        }
+        Debug.Log("お願いしますm(_ _)m");
 
-        if (_count < _orderOfAction.Count) _count++;
-        else
+        if (_count >= _orderOfAction.Count)
         {
             _count = 0;
-            TransitionToStartOrEnd(CurrenyEnemy.EnemyStatus.WeaponDates);
+            TransitionToStartOrEnd();
         }
 
-        GameObject nextActor = _orderOfAction[_count];
+        _count++;
+
+        GameObject nextActor = _orderOfAction[_count + 1];
 
         // 次に行動するActorがEnemyだったら
         if (nextActor.TryGetComponent(out EnemyController nextEnemy))
@@ -139,13 +141,18 @@ public class StateController : MonoBehaviour
 
     /// <summary>戦闘開始 or 戦闘終了 のステートに遷移する</summary>
     /// <param name="weapons">所持武器の配列</param>
-    public void TransitionToStartOrEnd(WeaponData[] weapons)
+    public void TransitionToStartOrEnd()
     {
-        if (BrokenWeaponsCount(weapons) < weapons.Length)
+        Debug.Log("頼む！");
+        WeaponData[] playerWeapons = PlayerController.PlayerStatus.WeaponDatas;
+        WeaponData[] enemyWeapons = CurrenyEnemy.EnemyStatus.WeaponDates;
+        int enemyBrokenWeaponsCount = BrokenWeaponsCount(enemyWeapons);
+
+        if (enemyBrokenWeaponsCount < enemyWeapons.Length)
         {
             _stateMachine.Dispatch((int)TransitionCondition.Any2Start);
         }
-        else
+        else if (enemyBrokenWeaponsCount >= enemyWeapons.Length || BrokenWeaponsCount(playerWeapons) >= playerWeapons.Length)
         {
             _stateMachine.Dispatch((int)TransitionCondition.Any2End);
         }

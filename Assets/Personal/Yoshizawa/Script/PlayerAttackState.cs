@@ -13,8 +13,6 @@ public class PlayerAttackState : State
 
     protected override void OnExit(State nextState)
     {
-        WeaponData[] weapons = Owner.PlayerController.PlayerStatus.WeaponDatas;
-        Owner.TransitionToStartOrEnd(weapons);
         Debug.Log($"「{nextState.GetType()}」に遷移するまで、3 2 1...");
     }
 }
