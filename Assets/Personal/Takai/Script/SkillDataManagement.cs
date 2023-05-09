@@ -11,8 +11,9 @@ public class SkillDataManagement : MonoBehaviour
 
     [SerializeField] private PlayerController _pStatus;
     [SerializeField] private EnemyController _eStatus;
-
+    
     private List<SkillBase> _skills = new List<SkillBase>();
+    private List<SkillBase> _skillUsePool = new List<SkillBase>();
     public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
 
     private void Awake()
@@ -66,7 +67,11 @@ public class SkillDataManagement : MonoBehaviour
         {
             if (skill.gameObject.activeSelf)
             {
-                skill.TurnEnd();
+               bool IsUse = skill.TurnEnd();
+               if (IsUse)
+               {
+                   _skillUsePool.Add(skill);
+               }
             }
         }
     }
