@@ -7,11 +7,6 @@ public class ShishifunjinSkill : SkillBase
 {
     [Tooltip("攻撃間の待機時間")]
     [SerializeField] private int _attackWaitTime;
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
@@ -44,7 +39,7 @@ public class ShishifunjinSkill : SkillBase
 
         var token = this.GetCancellationTokenOnDestroy();
         // スキルの効果処理を実装する
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         //経過ターンが多いほど攻撃回数アップ（上限 7回） 1 + 2×(ターン数-1) 
         int num = 1 + 2 * (_count - 1);
         if (7 < num) num = 7;
@@ -66,7 +61,6 @@ public class ShishifunjinSkill : SkillBase
         }
 
         _isUse = false;
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
     }
 
     public override void BattleFinish()

@@ -4,18 +4,12 @@ using UnityEngine.Playables;
 
 public class TenkuugiriSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
     private const float WeaponWeight = 100;
     private const float AddDamageValue = 0.2f;
-    private float _attackValue = 0;
     private bool _isUse = false;
 
     public TenkuugiriSkill()
@@ -48,17 +42,14 @@ public class TenkuugiriSkill : SkillBase
         {
             case ActorAttackType.Player:
             {
-                var dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
-
                 if (_playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value >= WeaponWeight)
                 {
-                    _attackValue += dmg * AddDamageValue + Damage;
-                    _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += dmg * AddDamageValue + Damage;
+                    _playerStatus.AddDamage(
+                        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * AddDamageValue + Damage);
                 }
                 else
                 {
-                    _attackValue += Damage;
-                    _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
+                    _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                 }
             }
                 break;
@@ -68,13 +59,11 @@ public class TenkuugiriSkill : SkillBase
 
                 if (_enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight >= WeaponWeight)
                 {
-                    _attackValue += dmg * AddDamageValue + Damage;
-                    _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += dmg * AddDamageValue + Damage;
+                    _enemyStatus.AddDamage((int)(dmg * AddDamageValue) + Damage);
                 }
                 else
                 {
-                    _attackValue += Damage;
-                    _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
+                    _enemyStatus.AddDamage((int)dmg + Damage);
                 }
             }
                 break;
@@ -96,26 +85,19 @@ public class TenkuugiriSkill : SkillBase
         {
             case ActorAttackType.Player:
             {
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
-                _attackValue = 0;
                 _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value = 0;
             }
                 break;
             case ActorAttackType.Enemy:
             {
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower-= _attackValue;
-                _attackValue = 0;
                 _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value = 0;
             }
                 break;
         }
-
-        
     }
 
     public override void BattleFinish()
     {
         _isUse = false;
-        _attackValue = 0;
     }
 }

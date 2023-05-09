@@ -4,18 +4,11 @@ using UnityEngine.Playables;
 
 public class KiriageSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
-
     private PlayerController _playerStatus;
     private PlayableDirector _anim;
     private const float AddDamageValue = 0.05f;
     private const int Turn = 3;
     private int _count = 0;
-    private float _attackValue = 0;
     bool _isUse = false;
     public KiriageSkill()
     {
@@ -45,8 +38,7 @@ public class KiriageSkill : SkillBase
         if (_count <= Turn)
         {
             _count++;
-            _attackValue += (dmg * (AddDamageValue * _count)) + Damage;
-            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += (dmg * (AddDamageValue * _count));
+            _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + (dmg * (AddDamageValue * _count)));
         }
     }
 
@@ -58,15 +50,12 @@ public class KiriageSkill : SkillBase
         }
 
         _isUse = false;
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
     }
 
 
     public override void BattleFinish()
     {
         _isUse = false;
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
         _count = 0;
-        _attackValue = 0;
     }
 }

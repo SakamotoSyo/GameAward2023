@@ -5,11 +5,6 @@ using DG.Tweening;
 
 public class HurioroshiSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
@@ -43,10 +38,10 @@ public class HurioroshiSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
+                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                 break;
             case ActorAttackType.Enemy:
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
+                _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
                 break;
         }
     }
@@ -59,16 +54,6 @@ public class HurioroshiSkill : SkillBase
         }
         
         _isUse = false;
-
-        switch (_actor)
-        {
-            case ActorAttackType.Player:
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
-                break;
-            case ActorAttackType.Enemy:
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
-                break;
-        }
     }
 
     public override void BattleFinish()

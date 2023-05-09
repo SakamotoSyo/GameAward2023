@@ -4,11 +4,6 @@ using UnityEngine.Playables;
 
 public class GekiretsuKudakiuchiSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
@@ -47,8 +42,8 @@ public class GekiretsuKudakiuchiSkill : SkillBase
             case ActorAttackType.Player:
             {
                 // スキルの効果処理を実装する
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
-
+                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                
                 // 防御、素早さを40%下げる。
                 _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -=
                     _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue;
@@ -62,8 +57,8 @@ public class GekiretsuKudakiuchiSkill : SkillBase
                 break;
             case ActorAttackType.Enemy:
             {
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
-
+                _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
+                
                 // 防御、素早さを40%下げる。
                 _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -=
                     _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * _subtractValue;
@@ -86,17 +81,6 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         }
 
         _isUse = false;
-        
-        switch (_actor)
-        {
-            case ActorAttackType.Player:
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
-                break;
-            case ActorAttackType.Enemy:
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
-                break;
-        }
-       
     }
 
     public override void BattleFinish()

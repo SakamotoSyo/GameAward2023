@@ -4,11 +4,6 @@ using UnityEngine.Playables;
 
 public class ShippuSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
@@ -41,7 +36,7 @@ public class ShippuSkill : SkillBase
         _isUse = true;
 
         // スキルの効果処理を実装する
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
 
         _count += 2;
     }
@@ -61,7 +56,6 @@ public class ShippuSkill : SkillBase
         }
 
         _isUse = false;
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
     }
 
     public override void BattleFinish()

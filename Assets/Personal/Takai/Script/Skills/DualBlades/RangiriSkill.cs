@@ -5,16 +5,10 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class RangiriSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     const float AddDamageValue = 0.05f;
     const int Turn = 3;
-    float _attackValue = 0;
     int _count = 0;
     bool _isUse = false;
 
@@ -46,8 +40,7 @@ public class RangiriSkill : SkillBase
         if (_count >= Turn)
         {
             _count++;
-            _attackValue += (dmg * (AddDamageValue * _count)) + Damage;
-            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += (dmg * (AddDamageValue * _count));
+            _playerStatus.AddDamage(dmg * (AddDamageValue * _count));
         }
     }
 
@@ -59,7 +52,6 @@ public class RangiriSkill : SkillBase
         }
 
         _isUse = false;
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
     }
 
 
@@ -67,6 +59,5 @@ public class RangiriSkill : SkillBase
     {
         _isUse = false;
         _count = 0;
-        _attackValue = 0;
     }
 }
