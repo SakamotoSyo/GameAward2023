@@ -7,8 +7,9 @@ using Random = UnityEngine.Random;
 
 public class SkillDataManagement : MonoBehaviour
 {
+    [Header("スキル検索"), SerializeField] private string _skillName;
+    
     [SerializeField] private ActorGenerator _actorGenerator;
-
     [SerializeField] private PlayerController _pStatus;
     [SerializeField] private EnemyController _eStatus;
     
@@ -74,6 +75,20 @@ public class SkillDataManagement : MonoBehaviour
                }
             }
         }
+    }
+
+    public SkillBase SearchSkill()
+    {
+        foreach (var s in _skills)
+        {
+            if (s.SkillName == _skillName)
+            {
+                return s;
+            }
+        }
+
+        Debug.Log("スキル名が一致しません");
+        return null;
     }
 }
 
