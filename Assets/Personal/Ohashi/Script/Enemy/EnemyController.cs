@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     private void Start()
     {
-        _enemyAttack.Init(_enemyStatus.EquipWeapon.OffensivePower, _animator);
+        _enemyAttack.Init(_enemyStatus.EquipWeapon.CurrentOffensivePower, _animator);
     }
 
     private void Update()
@@ -46,19 +46,21 @@ public class EnemyController : MonoBehaviour, IAddDamage
         }
     }
 
-    public void AddDamage(int damage)
+    public void AddDamage(float damage)
     {
         var damageController = Instantiate(_damegeController,
             _damagePos.position,
             Quaternion.identity);
-        damageController.TextInit(damage);
-        _enemyStatus.EquipWeapon.AddDamage(damage);
+        damageController.TextInit((int)damage);
+        _enemyStatus.EquipWeapon.AddDamage((int)damage);
+
         if(_enemyStatus.EquipWeapon.IsWeaponBreak())
         {
             if(_enemyStatus.IsWeaponsAllBrek())
             {
                 Debug.Log("敵の武器が全部壊れた");
             }
+
             _enemyStatus.EquipChangeWeapon();
         }
     }
