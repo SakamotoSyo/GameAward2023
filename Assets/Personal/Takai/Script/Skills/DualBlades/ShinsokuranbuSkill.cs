@@ -4,16 +4,10 @@ using UnityEngine.Playables;
 
 public class ShinsokuranbuSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    bool _isUse = false;
 
     public ShinsokuranbuSkill()
     {
@@ -49,8 +43,7 @@ public class ShinsokuranbuSkill : SkillBase
 
                 if (weight <= 30) //素早さをに応じて発動できるか検知
                 {
-                    _isUse = true;
-                    _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
+                    _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                 }
             }
                 break;
@@ -60,37 +53,19 @@ public class ShinsokuranbuSkill : SkillBase
 
                 if (weight <= 30) //素早さをに応じて発動できるか検知
                 {
-                    _isUse = true;
-                    _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
+                    _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
                 }
             }
                 break;
         }
-        // スキルの効果処理を実装する
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
-
-        switch (_actor)
-        {
-            case ActorAttackType.Player:
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
-                break;
-            case ActorAttackType.Enemy:
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
-                break;
-        }
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
     }
 }

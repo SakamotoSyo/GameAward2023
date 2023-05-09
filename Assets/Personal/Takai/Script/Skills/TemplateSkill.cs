@@ -1,16 +1,9 @@
-
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 
 public class TemplateSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
-
     private PlayableDirector _anim;
     private PlayerController _status;
 
@@ -28,23 +21,22 @@ public class TemplateSkill : SkillBase
         _status = player;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-            
     }
-    
-    public override void TurnEnd()
+
+    public override bool TurnEnd()
     {
-            
+        return false;
     }
 
     public override void BattleFinish()
     {
-        
     }
 }

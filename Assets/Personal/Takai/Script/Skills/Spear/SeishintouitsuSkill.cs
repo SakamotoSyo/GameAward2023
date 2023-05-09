@@ -4,11 +4,6 @@ using UnityEngine.Playables;
 
 public class SeishintouitsuSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     const float AddValue = 0.2f;
@@ -41,6 +36,7 @@ public class SeishintouitsuSkill : SkillBase
         _count += 4;
         if(!_isSkill)
         {
+            _isSkill = true;
             _value += _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
             _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value += _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
         }
@@ -48,22 +44,26 @@ public class SeishintouitsuSkill : SkillBase
 
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (_count <= 0)
+        if (_count <= 0 && _isSkill)
         {
             _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value -= _value;
             _value = 0;
+            _isSkill = false;
         }
-        else
+        else 
         {
             _count--;
         }
+
+        return false;
     }
 
     public override void BattleFinish()
     {
         _value = 0;
         _count = 0;
+        _isSkill = false;
     }
 }

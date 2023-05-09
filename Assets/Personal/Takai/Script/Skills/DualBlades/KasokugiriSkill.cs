@@ -6,17 +6,10 @@ using UnityEngine.Playables;
 public class KasokugiriSkill : SkillBase
 {
     [Tooltip("攻撃間の待機時間")][SerializeField] private int _attackWaitTime;
-
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    private bool _isUse = false;
 
     public KasokugiriSkill()
     {
@@ -42,7 +35,6 @@ public class KasokugiriSkill : SkillBase
 
     protected override async void SkillEffect()
     {
-        _isUse = true;
         int num = 0;
 
         switch (_actor)
@@ -60,7 +52,7 @@ public class KasokugiriSkill : SkillBase
                             {
                                 await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
                                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                                _enemyStatus.EnemyStatus.EquipWeapon.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value);
+                                _enemyStatus.AddDamage((int)_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                             }
 
                             break;
@@ -71,7 +63,7 @@ public class KasokugiriSkill : SkillBase
                             {
                                 await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
                                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                                _enemyStatus.EnemyStatus.EquipWeapon.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value);
+                                _enemyStatus.AddDamage((int)_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                             }
 
                             break;
@@ -82,7 +74,7 @@ public class KasokugiriSkill : SkillBase
                             {
                                 await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
                                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                                _enemyStatus.EnemyStatus.EquipWeapon.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value);
+                                _enemyStatus.AddDamage((int)_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                             }
 
                             break;
@@ -93,7 +85,7 @@ public class KasokugiriSkill : SkillBase
                             {
                                 await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
                                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                                _enemyStatus.EnemyStatus.EquipWeapon.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value);
+                                _enemyStatus.AddDamage((int)_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                             }
 
                             break;
@@ -113,7 +105,7 @@ public class KasokugiriSkill : SkillBase
                             {
                                 await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
                                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                                _playerStatus.PlayerStatus.EquipWeapon.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower);
+                                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
                             }
 
                             break;
@@ -124,7 +116,7 @@ public class KasokugiriSkill : SkillBase
                             {
                                 await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
                                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                                _playerStatus.PlayerStatus.EquipWeapon.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower);
+                                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
                             }
 
                             break;
@@ -135,7 +127,7 @@ public class KasokugiriSkill : SkillBase
                             {
                                 await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
                                     cancellationToken: this.GetCancellationTokenOnDestroy()); 
-                                _playerStatus.PlayerStatus.EquipWeapon.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower);
+                                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
                             }
 
                             break;
@@ -146,7 +138,7 @@ public class KasokugiriSkill : SkillBase
                             {
                                 await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
                                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                                _playerStatus.PlayerStatus.EquipWeapon.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower);
+                                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
                             }
 
                             break;
@@ -157,32 +149,13 @@ public class KasokugiriSkill : SkillBase
     }
 
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
-
-        switch (_actor)
-        {
-            case ActorAttackType.Player:
-                {
-                    _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
-                }
-                break;
-            case ActorAttackType.Enemy:
-                {
-                    _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= Damage;
-                }
-                break;
-        }
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
+        
     }
 }

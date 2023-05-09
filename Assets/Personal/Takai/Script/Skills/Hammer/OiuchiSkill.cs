@@ -4,15 +4,9 @@ using UnityEngine.Playables;
 
 public class OiuchiSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    private bool _isUse = false;
 
     public OiuchiSkill()
     {
@@ -37,34 +31,21 @@ public class OiuchiSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
         // スキルの効果処理を実装する
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         if (_enemyStatus.EnemyStatus.IsDebuff()) //敵にデバフがついているか検知
         {
-            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
+            _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
-        
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
-
-        if (_enemyStatus.EnemyStatus.IsDebuff()) //敵にデバフがついているか検知
-        {
-            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= Damage;
-        }
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
+        
     }
 }

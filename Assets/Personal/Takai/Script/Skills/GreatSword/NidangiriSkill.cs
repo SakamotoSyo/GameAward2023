@@ -4,15 +4,8 @@ using UnityEngine.Playables;
 
 public class NidangiriSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
-    float _attackValue = 0f;
-    bool _isUse = false;
 
     public NidangiriSkill()
     {
@@ -35,52 +28,36 @@ public class NidangiriSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
-
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
         float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
-
-        _attackValue += Damage;
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
+        
+        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
 
         switch (weight / 10)
         {
             case 6:
-                _attackValue += 20;
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += 20;
+                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 20);
                 break;
             case 5:
-                _attackValue += 15;
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += 15;
+                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 15);
                 break;
             case 4:
-                _attackValue += 10;
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += 10;
+                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 10);
                 break;
             case 3:
-                _attackValue += 5;
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += 5;
+                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 5);
                 break;
             default:
                 break;
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
-        _attackValue = 0;
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _isUse = false;
-        _attackValue = 0;
     }
 }

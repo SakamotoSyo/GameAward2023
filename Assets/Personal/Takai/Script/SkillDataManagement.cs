@@ -7,12 +7,14 @@ using Random = UnityEngine.Random;
 
 public class SkillDataManagement : MonoBehaviour
 {
+    [Header("スキル検索"), SerializeField] private string _skillName;
+    
     [SerializeField] private ActorGenerator _actorGenerator;
-
     [SerializeField] private PlayerController _pStatus;
     [SerializeField] private EnemyController _eStatus;
-
+    
     private List<SkillBase> _skills = new List<SkillBase>();
+    private List<SkillBase> _skillUsePool = new List<SkillBase>();
     public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
 
     private void Awake()
@@ -66,9 +68,27 @@ public class SkillDataManagement : MonoBehaviour
         {
             if (skill.gameObject.activeSelf)
             {
-                skill.TurnEnd();
+               bool IsUse = skill.TurnEnd();
+               if (IsUse)
+               {
+                   _skillUsePool.Add(skill);
+               }
             }
         }
+    }
+
+    public SkillBase SearchSkill()
+    {
+        foreach (var s in _skills)
+        {
+            if (s.SkillName == _skillName)
+            {
+                return s;
+            }
+        }
+
+        Debug.Log("スキル名が一致しません");
+        return null;
     }
 }
 

@@ -4,11 +4,6 @@ using UnityEngine.Playables;
 
 public class KasokuSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private const float ADD_VALUE = 0.05f;
@@ -47,7 +42,7 @@ public class KasokuSkill : SkillBase
         _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
         float spd = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
         
@@ -71,6 +66,8 @@ public class KasokuSkill : SkillBase
             _speedValue += (spd * (ADD_VALUE * _count));
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
         }
+
+        return true;
     }
 
     public override void BattleFinish()

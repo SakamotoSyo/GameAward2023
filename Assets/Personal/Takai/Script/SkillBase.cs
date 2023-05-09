@@ -4,15 +4,15 @@ using UnityEngine.Playables;
 
 public abstract class SkillBase : MonoBehaviour
 {
-    public abstract string SkillName { get; protected set; }
-    public abstract int Damage { get; protected set; }
-    public abstract WeaponType Weapon { get; protected set; }
-    public abstract SkillType Type { get; protected set; }
-    public abstract string FlavorText { get; protected set; }
+    public string SkillName { get; protected set; }
+    public int Damage { get; protected set; }
+    public  WeaponType Weapon { get; protected set; }
+    public SkillType Type { get; protected set; }
+    public string FlavorText { get; protected set; }
 
     public abstract UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType);
     protected abstract void SkillEffect();
-    public abstract void TurnEnd();
+    public abstract bool TurnEnd();
     public abstract void BattleFinish();
 }
 

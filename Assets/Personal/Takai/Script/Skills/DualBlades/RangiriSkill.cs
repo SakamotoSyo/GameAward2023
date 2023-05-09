@@ -5,18 +5,11 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class RangiriSkill : SkillBase
 {
-    public override string SkillName { get; protected set; }
-    public override int Damage { get; protected set; }
-    public override WeaponType Weapon { get; protected set; }
-    public override SkillType Type { get; protected set; }
-    public override string FlavorText { get; protected set; }
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     const float AddDamageValue = 0.05f;
     const int Turn = 3;
-    float _attackValue = 0;
     int _count = 0;
-    bool _isUse = false;
 
     public RangiriSkill()
     {
@@ -39,34 +32,22 @@ public class RangiriSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        // スキルの効果処理を実装する
-        _isUse = true;
-
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
         if (_count >= Turn)
         {
             _count++;
-            _attackValue += (dmg * (AddDamageValue * _count)) + Damage;
-            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += (dmg * (AddDamageValue * _count));
+            _playerStatus.AddDamage(dmg * (AddDamageValue * _count));
         }
     }
 
-    public override void TurnEnd()
+    public override bool TurnEnd()
     {
-        if (!_isUse)
-        {
-            return;
-        }
-
-        _isUse = false;
-        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -= _attackValue;
+        return false;
     }
 
 
     public override void BattleFinish()
     {
-        _isUse = false;
         _count = 0;
-        _attackValue = 0;
     }
 }
