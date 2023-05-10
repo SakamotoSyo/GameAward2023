@@ -39,7 +39,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
             case ActorAttackType.Player:
             {
                 // スキルの効果処理を実装する
-                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
 
                 // 防御、素早さを40%下げる。
                 _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -=
@@ -54,7 +54,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
                 break;
             case ActorAttackType.Enemy:
             {
-                _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
 
                 // 防御、素早さを40%下げる。
                 _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -=

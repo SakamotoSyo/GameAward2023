@@ -5,6 +5,7 @@ using UnityEngine.Playables;
 public class KiriageSkill : SkillBase
 {
     private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
     private PlayableDirector _anim;
     private const float AddDamageValue = 0.05f;
     private const int Turn = 3;
@@ -22,6 +23,7 @@ public class KiriageSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
+        _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -35,7 +37,8 @@ public class KiriageSkill : SkillBase
         if (_count <= Turn)
         {
             _count++;
-            _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + (dmg * (AddDamageValue * _count)));
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + (dmg * (AddDamageValue * _count)));
+            Debug.Log($"ダメージ{_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + (dmg * (AddDamageValue * _count))}");
         }
     }
 

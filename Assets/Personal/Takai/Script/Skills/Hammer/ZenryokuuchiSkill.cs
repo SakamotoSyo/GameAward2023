@@ -2,16 +2,16 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 
-public class PowerBlowSkill : SkillBase
+public class ZenryokuuchiSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
 
-    public PowerBlowSkill()
+    public ZenryokuuchiSkill()
     {
-        SkillName = "パワーブロウ";
+        SkillName = "全力打ち";
         Damage = 60;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;

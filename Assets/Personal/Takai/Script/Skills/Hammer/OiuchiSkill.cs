@@ -32,10 +32,10 @@ public class OiuchiSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         if (_enemyStatus.EnemyStatus.IsDebuff()) //敵にデバフがついているか検知
         {
-            _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         }
     }
 

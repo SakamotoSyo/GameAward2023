@@ -41,7 +41,7 @@ public class TenkamusoSkill : SkillBase
                 var hp = _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
                 if (_playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value <= hp)
                 {
-                    _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage + (_count * 10));
+                    _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage + (_count * 10));
                 }
             }
                 break;
@@ -50,7 +50,7 @@ public class TenkamusoSkill : SkillBase
                 var hp = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
                 if (_enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value <= hp)
                 {
-                    _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage + (_count * 10));
+                    _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage + (_count * 10));
                 }
             }
                 break;
