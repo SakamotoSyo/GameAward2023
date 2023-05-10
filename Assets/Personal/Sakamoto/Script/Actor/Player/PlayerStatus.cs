@@ -16,11 +16,6 @@ public class PlayerStatus
     private int _playerRankPoint = 0;
     private StateAnomaly _currentAnomaly = StateAnomaly.None;
 
-    public static SaveData _gsData = default;
-    public static SaveData _dsData = default;
-    public static SaveData _hData = default;
-    public static SaveData _sData = default;
-
     private PlayerStatus()
     {
         //TODO:ééå±ìIå„Ç≈çÌèúÇ∑ÇÈ
@@ -34,19 +29,19 @@ public class PlayerStatus
         {
             if (_weaponDatas[i].WeaponType == WeaponType.GreatSword)
             {
-                _gsData = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
+                WeaponSaveData.GSData = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
             }
             if (_weaponDatas[i].WeaponType == WeaponType.DualBlades)
             {
-                _dsData = SaveManager.Load(SaveManager.DUALSWORDFILEPATH);
+                WeaponSaveData.DBData = SaveManager.Load(SaveManager.DUALBLADES);
             }
             if (_weaponDatas[i].WeaponType == WeaponType.Hammer)
             {
-                _hData = SaveManager.Load(SaveManager.HAMMERFILEPATH);
+                WeaponSaveData.HData = SaveManager.Load(SaveManager.HAMMERFILEPATH);
             }
             if (_weaponDatas[i].WeaponType == WeaponType.Spear)
             {
-                _sData = SaveManager.Load(SaveManager.SPEARFILEPATH);
+                WeaponSaveData.SData = SaveManager.Load(SaveManager.SPEARFILEPATH);
             }
         }
     }
