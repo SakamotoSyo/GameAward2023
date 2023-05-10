@@ -32,7 +32,7 @@ public class HauchiSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + _subtractAttackValue;
         _enemyStatus.EnemyStatus.EquipWeapon.CurrentCriticalRate -= _enemyStatus.EnemyStatus.EquipWeapon.CriticalRate * _subtractAttackValue;
     }

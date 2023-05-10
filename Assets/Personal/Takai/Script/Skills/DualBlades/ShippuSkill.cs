@@ -33,7 +33,7 @@ public class ShippuSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
 
         _count += 2;
     }

@@ -3,16 +3,16 @@ using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 using DG.Tweening;
 
-public class HurioroshiSkill : SkillBase
+public class IssenSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
 
-    public HurioroshiSkill()
+    public IssenSkill()
     {
-        SkillName = "振り下ろし";
+        SkillName = "一閃";
         Damage = 60;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
@@ -35,10 +35,10 @@ public class HurioroshiSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                 break;
             case ActorAttackType.Enemy:
-                _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
                 break;
         }
     }

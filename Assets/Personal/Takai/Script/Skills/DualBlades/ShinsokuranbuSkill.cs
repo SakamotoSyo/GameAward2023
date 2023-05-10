@@ -37,23 +37,23 @@ public class ShinsokuranbuSkill : SkillBase
 
         switch (_actor)
         {
-            case ActorAttackType.Player:
+            case ActorAttackType.Enemy:
             {
                 weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
 
                 if (weight <= 30) //素早さをに応じて発動できるか検知
                 {
-                    _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                    _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                 }
             }
                 break;
-            case ActorAttackType.Enemy:
+            case ActorAttackType.Player:
             {
                 weight = _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight;
 
                 if (weight <= 30) //素早さをに応じて発動できるか検知
                 {
-                    _enemyStatus.AddDamage((int)_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
+                    _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
                 }
             }
                 break;

@@ -6,6 +6,7 @@ public class KiaiSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
 
     public KiaiSkill()
     {
@@ -20,6 +21,7 @@ public class KiaiSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
+        _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
@@ -30,7 +32,7 @@ public class KiaiSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * 2);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * 2);
     }
 
     public override bool TurnEnd()

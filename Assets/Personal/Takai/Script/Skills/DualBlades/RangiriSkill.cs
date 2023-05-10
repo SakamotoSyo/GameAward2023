@@ -7,6 +7,7 @@ public class RangiriSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
     const float AddDamageValue = 0.05f;
     const int Turn = 3;
     int _count = 0;
@@ -24,6 +25,7 @@ public class RangiriSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
+        _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -36,7 +38,7 @@ public class RangiriSkill : SkillBase
         if (_count >= Turn)
         {
             _count++;
-            _playerStatus.AddDamage(dmg * (AddDamageValue * _count));
+            _enemyStatus.AddDamage(dmg * (AddDamageValue * _count));
         }
     }
 
