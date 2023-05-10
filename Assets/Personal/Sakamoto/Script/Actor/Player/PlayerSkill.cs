@@ -2,19 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerSkill
 {
+    [SerializeField] private string _skillName;
     public SkillBase SpecialAttack => _specialAttack;
     public SkillBase[] PlayerSkillArray => _skillArray;
     [Tooltip("•KŽE‹Z")]
     private SkillBase _specialAttack;
     private SkillBase[] _skillArray = new SkillBase[2];
     private SkillDataManagement _skillDataManagement;
+    private bool _isSkillDebug;
 
     public void Init(SkillDataManagement skillManagement) 
     {
         _skillDataManagement = skillManagement;
-        //_skillArray[0] = _skillDataManagement.OnSkillCall(WeaponType.DualBlades, SkillType.Skill);
+        if (_isSkillDebug) 
+        {
+            _skillArray[0] = _skillDataManagement.SearchSkill();
+        }
     }
 
     public void SaveSkill(PlayerSaveData saveData) 
