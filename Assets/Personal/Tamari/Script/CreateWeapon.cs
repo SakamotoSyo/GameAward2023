@@ -43,7 +43,7 @@ public class CreateWeapon : MonoBehaviour
                 break;
             case WeaponType.DualBlades:
                 {
-                    _data = SaveManager.Load(SaveManager.DUALSWORDFILEPATH);
+                    _data = SaveManager.Load(SaveManager.DUALBLADES);
                 }
                 break;
             case WeaponType.Hammer:
@@ -81,7 +81,7 @@ public class CreateWeapon : MonoBehaviour
                 break;
             case "Souken":
                 {
-                    _data = SaveManager.Load(SaveManager.DUALSWORDFILEPATH);
+                    _data = SaveManager.Load(SaveManager.DUALBLADES);
                 }
                 break;
             case "Hammer":
