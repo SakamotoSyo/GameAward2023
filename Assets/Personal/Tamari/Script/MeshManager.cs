@@ -16,6 +16,9 @@ using UnityEngine.UI;
 public class MeshManager : MonoBehaviour
 {
     [SerializeField]
+    private GameObject _jyusin;
+
+    [SerializeField]
     private GameObject _parentObj = default;
 
     [SerializeField]
@@ -25,7 +28,7 @@ public class MeshManager : MonoBehaviour
 
     public static Vector3 HandlePos => _handlePos;
 
-    private Vector3 _lowestPos = default;
+    private int _lowestPosIndex = default;
 
     private GameObject _go = default;
 
@@ -124,6 +127,7 @@ public class MeshManager : MonoBehaviour
     }
     void Update()
     {
+        _jyusin.transform.position = _centerPos;
         if (_isFinished)
         {
             return;
@@ -229,6 +233,8 @@ public class MeshManager : MonoBehaviour
         data._prefabName = GameManager.BlacksmithType.ToString();
         data._myVertices = _myVertices;
         data._myTriangles = _myTriangles;
+        data._lowestPosIndex = _lowestPosIndex;
+        data._dis = Vector3.Distance(_go.transform.position, _myVertices[_lowestPosIndex]);
         data._colorList = _setColor;
         SaveManager.Save(fileName, data);
     }
@@ -268,6 +274,17 @@ public class MeshManager : MonoBehaviour
         {
             return;
         }
+
+        var pos = _myVertices[3];
+        for(int i = 0; i < _myVertices.Length; i++)
+        {
+            if(pos.y > _myVertices[i].y)
+            {
+                pos = _myVertices[i];
+                _lowestPosIndex = i;
+            }
+        }
+        Debug.Log(_lowestPosIndex);
         _isFinished = true;
         _allPanel.SetActive(true);
         SaveMesh();
@@ -345,15 +362,15 @@ public class MeshManager : MonoBehaviour
         _meshFilter.mesh = _myMesh;
         _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
 
-        _lowestPos = _myVertices[0];
+        //_lowestPos = _myVertices[0];
 
-        for (int i = 0; i < _myVertices.Length; i++)
-        {
-            if (_lowestPos.y > _myVertices[i].y)
-            {
-                _lowestPos = _myVertices[i];
-            }
-        }
+        //for (int i = 0; i < _myVertices.Length; i++)
+        //{
+        //    if (_lowestPos.y > _myVertices[i].y)
+        //    {
+        //        _lowestPos = _myVertices[i];
+        //    }
+        //}
 
         //_handlePos = _lowestPos - new Vector3(0, 0.5f, 0);
 
