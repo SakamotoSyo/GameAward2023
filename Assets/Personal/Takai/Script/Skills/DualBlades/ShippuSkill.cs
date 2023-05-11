@@ -44,7 +44,7 @@ public class ShippuSkill : SkillBase
         {
             _count--;
             float durable = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value;
-            _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value -= durable * _subtractHpValue;
+            _enemyStatus.AddDamage(durable * _subtractHpValue);
         }
 
         return true;
