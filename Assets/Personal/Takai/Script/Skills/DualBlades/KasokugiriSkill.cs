@@ -39,9 +39,8 @@ public class KasokugiriSkill : SkillBase
 
         switch (_actor)
         {
-            case ActorAttackType.Enemy:
+            case ActorAttackType.Player:
             {
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
                 float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
                 switch (Mathf.FloorToInt(weight / 10))
                 {
@@ -96,9 +95,8 @@ public class KasokugiriSkill : SkillBase
                 }
             }
                 break;
-            case ActorAttackType.Player:
+            case ActorAttackType.Enemy:
             {
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
                 float weight = _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight;
                 switch (Mathf.FloorToInt(weight / 10))
                 {

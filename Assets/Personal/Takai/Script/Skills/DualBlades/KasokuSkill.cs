@@ -46,20 +46,20 @@ public class KasokuSkill : SkillBase
     {
         float spd = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
         
-        _turn--;
-        if (_turn <= 0)
+        if (--_turn <= 0)
         {
             _count = 0;
+            _turn = 0;
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
         }
-        else if(_turn <= 3)
+        else if(--_turn <= 3)
         {
             _count--;
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
             _speedValue += (spd * (ADD_VALUE * _count));
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
         }
-        else if(_turn <= 6)
+        else if(--_turn <= 6)
         {
             _count--;
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
