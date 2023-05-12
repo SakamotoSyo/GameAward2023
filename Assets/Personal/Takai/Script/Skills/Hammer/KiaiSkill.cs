@@ -16,6 +16,11 @@ public class KiaiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "次の攻撃だけ威力が2倍に上昇";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

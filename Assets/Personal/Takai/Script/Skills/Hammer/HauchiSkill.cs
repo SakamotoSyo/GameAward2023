@@ -17,6 +17,11 @@ public class HauchiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "敵の攻撃力と会心率が20%下がる";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

@@ -18,6 +18,11 @@ public class ShippuSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "2ターンの間敵に継続ダメージを与える";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
