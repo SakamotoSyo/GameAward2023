@@ -1,17 +1,10 @@
-﻿#if UNITY_EDITOR
-using System.IO;
-using UnityEditor;
-#endif
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using System.Threading;
-using UnityEngine.UI;
 
 /// <summary>
-/// TODO : 双剣の時のメッシュ2個作成をする
-/// TODO : Scene遷移時のブロッキング処理行う
+/// TODO : 鍛冶中に完成予想図を見せることでプレイヤーにわかりやすくする
 /// </summary>
 public class MeshManager : MonoBehaviour
 {
@@ -19,6 +12,10 @@ public class MeshManager : MonoBehaviour
     private GameObject _jyusin;
 
     private int _lowestPosIndex = default;
+
+    private int _rightmostIndex = default;
+
+    private int _leftmostIndex = default;
 
     private GameObject _go = default;
 
@@ -52,7 +49,7 @@ public class MeshManager : MonoBehaviour
 
     private Vector2 _firstCenterPos = default;
 
-    public Vector2 FirstCenterPos => _firstCenterPos;   
+    public Vector2 FirstCenterPos => _firstCenterPos;
 
     [SerializeField, Tooltip("中心の座標")]
     private Vector2 _centerPos = default;
@@ -67,19 +64,22 @@ public class MeshManager : MonoBehaviour
     [SerializeField, Tooltip("叩ける範囲")]
     private float _minRange = 1.5f;
 
+    [SerializeField, Tooltip("大きさの限界")]
+    private float _sizeLimit = default;
+
+    private float _size = default;
+
     private int _indexNum = default;
 
     private float _dis = 1000f;
 
-    public static bool _isFinished;    
+    public static bool _isFinished;
 
     private SaveData _saveData;
     public SaveData SaveData => _saveData;
 
     [SerializeField]
     private List<Color> _setColor = new List<Color>();
-
-    public List<Color> SetColor { get { return _setColor; } }
 
     [SerializeField]
     private string _nextSceneName = default;
@@ -105,7 +105,7 @@ public class MeshManager : MonoBehaviour
         _saveData = new SaveData();
         SaveManager.Initialize();
 #if UNITY_EDITOR
-        if(_isGS)
+        if (_isGS)
         {
             _weaponType = WeaponType.GreatSword;
         }
@@ -124,10 +124,13 @@ public class MeshManager : MonoBehaviour
 #endif
     }
 
-void Start()
+    void Start()
     {
         _isFinished = false;
         _firstCenterPos = _centerPos;
+
+        _rightmostIndex = 4;
+        _leftmostIndex = 0;
 
         _weaponSaveData = new WeaponSaveData();
 
@@ -135,6 +138,7 @@ void Start()
         {
             CreateMesh();
         }
+        // 作成後に二つ作成することに成功したから双剣用はもういらないかも
         else
         {
             CreateSouken("Souken1", _sCenterPos.x, _sCenterPos.y);
@@ -150,10 +154,14 @@ void Start()
         }
 
         _myMesh.SetColors(_setColor);
+
+        _centerPos = GetCentroid(_myVertices);
+
         if (Input.GetMouseButtonDown(0))
         {
+            _size = GetRange();
+
             Calculation();
-            _centerPos = GetCentroid(_myVertices);
         }
     }
 
@@ -175,11 +183,12 @@ void Start()
 
         _dis = 1000f;
 
-        if (_indexNum == 2)
-        {
-            Debug.Log("一番下の頂点は触れません");
-            return;
-        }
+        // 何かの不都合を感じてこれ書いたけどたぶんいらない。また不都合を感じた時のために残しておく
+        //if (_indexNum == 2)
+        //{
+        //    Debug.Log("一番下の頂点は触れません");
+        //    return;
+        //}
 
         // タップ位置と近い頂点との距離(ti)
         float tiDis = Vector3.Distance(worldPos, _centerPos);
@@ -193,12 +202,18 @@ void Start()
         float disX = worldPos.x - _myVertices[_indexNum].x;
         float disY = worldPos.y - _myVertices[_indexNum].y;
 
-        // 叩いた頂点がメッシュの内部に入り込むことを避けたい
-        // 現状スタート時の中心からずれなければ入り込まない判定をとれる
-        // が、各頂点がずれていくとうまく動かない(中心点が連動しないから)
+        // メッシュの過剰なめり込みと収縮防止
         if (toDis < _minRange && toDis > ioDis)
         {
             Debug.Log("これ以上中に打ち込めません");
+            return;
+        }
+
+        // メッシュの過剰な拡大を防止
+        if (_size >= _sizeLimit && ioDis >= toDis && _indexNum == _rightmostIndex
+            || _size >= _sizeLimit && ioDis >= toDis && _indexNum == _leftmostIndex)
+        {
+            Debug.Log("これ以上横に大きくできません");
             return;
         }
 
@@ -271,7 +286,7 @@ void Start()
                     return;
             }
         }
-        
+
     }
 
     private void BaseSaveMesh(string fileName, SaveData data)
@@ -280,7 +295,6 @@ void Start()
         data._myVertices = _myVertices;
         data._myTriangles = _myTriangles;
         data._lowestPosIndex = _lowestPosIndex;
-        // data._dis = Vector3.Distance(_go.transform.position, _myVertices[_lowestPosIndex]);
         data._disX = _go.transform.position.x - _myVertices[_lowestPosIndex].x;
         data._disY = _go.transform.position.y - _myVertices[_lowestPosIndex].y;
         data._colorList = _setColor;
@@ -324,15 +338,14 @@ void Start()
         }
 
         var pos = _myVertices[3];
-        for(int i = 0; i < _myVertices.Length; i++)
+        for (int i = 0; i < _myVertices.Length; i++)
         {
-            if(pos.y > _myVertices[i].y)
+            if (pos.y > _myVertices[i].y)
             {
                 pos = _myVertices[i];
                 _lowestPosIndex = i;
             }
         }
-        Debug.Log(_lowestPosIndex);
         _isFinished = true;
         _allPanel.SetActive(true);
         SaveMesh();
@@ -408,20 +421,6 @@ void Start()
         _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
         _meshFilter.mesh = _myMesh;
         _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
-
-        //_lowestPos = _myVertices[0];
-
-        //for (int i = 0; i < _myVertices.Length; i++)
-        //{
-        //    if (_lowestPos.y > _myVertices[i].y)
-        //    {
-        //        _lowestPos = _myVertices[i];
-        //    }
-        //}
-
-        //_handlePos = _lowestPos - new Vector3(0, 0.5f, 0);
-
-        //_weaponHandle.transform.position = _handlePos;
     }
 
     private void CreateSouken(string name, float sX, float sY)
@@ -431,8 +430,6 @@ void Start()
         _meshFilter = go.AddComponent<MeshFilter>();
 
         _meshRenderer = go.AddComponent<MeshRenderer>();
-
-        // _radiuses = new float[_nVertices];   
 
         _myVertices = new Vector3[_nVertices];
 
@@ -499,7 +496,7 @@ void Start()
     /// メッシュの重心を取得する関数
     /// </summary>
     /// <param name="vertices"></param>
-    /// <returns></returns>
+    /// <returns>メッシュの重心座標</returns>
     private Vector3 GetCentroid(Vector3[] vertices)
     {
         Vector3 centroid = Vector3.zero;
@@ -521,6 +518,31 @@ void Start()
 
         return centroid;
     }
+
+    /// <summary>
+    /// メッシュの大きさを測る関数
+    /// </summary>
+    /// <returns>メッシュの横のサイズ</returns>
+    private float GetRange()
+    {
+        for (int i = 0; i < _myVertices.Length; i++)
+        {
+            if (_myVertices[_rightmostIndex].x < _myVertices[i].x)
+            {
+                _rightmostIndex = i;
+            }
+
+            if (_myVertices[_leftmostIndex].x > _myVertices[i].x)
+            {
+                _leftmostIndex = i;
+            }
+        }
+
+        var dis = _myVertices[_rightmostIndex].x - _myVertices[_leftmostIndex].x;
+
+        return Mathf.Abs(dis);
+    }
+
 }
 
 
