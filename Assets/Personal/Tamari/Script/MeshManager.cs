@@ -7,9 +7,11 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using UnityEngine.UI;
 
 /// <summary>
 /// TODO : 双剣の時のメッシュ2個作成をする
+/// TODO : Scene遷移時のブロッキング処理行う
 /// </summary>
 public class MeshManager : MonoBehaviour
 {
@@ -24,12 +26,6 @@ public class MeshManager : MonoBehaviour
     public static Vector3 HandlePos => _handlePos;
 
     private Vector3 _lowestPos = default;
-
-    /// <summary>
-    /// 重心の位置を表すオブジェクト(後で消す)
-    /// </summary>
-    [SerializeField]
-    private GameObject _jyuusin = default;
 
     private GameObject _go = default;
 
@@ -66,6 +62,8 @@ public class MeshManager : MonoBehaviour
     [SerializeField, Tooltip("中心の座標")]
     private Vector2 _centerPos = default;
 
+    public Vector2 CentorPos => _centerPos;
+
     [SerializeField, Tooltip("双剣用の中心の座標")]
     private Vector3 _sCenterPos = default;
 
@@ -79,7 +77,8 @@ public class MeshManager : MonoBehaviour
 
     private float _dis = 1000f;
 
-    private bool _isFinished;
+    public static bool _isFinished;
+
 
     private SaveData _saveData;
     public SaveData SaveData => _saveData;
@@ -91,6 +90,11 @@ public class MeshManager : MonoBehaviour
 
     [SerializeField]
     private string _nextSceneName = default;
+
+    WeaponSaveData _weaponSaveData;
+
+    [SerializeField]
+    private GameObject _allPanel = default;
 
     [ContextMenu("Make mesh from model")]
 
@@ -105,10 +109,8 @@ public class MeshManager : MonoBehaviour
     {
         _isFinished = false;
         _firstCenterPos = _centerPos;
-        foreach (var f in SaveManager._weaponFileList)
-        {
-            SaveManager.Load(f);
-        }
+
+        _weaponSaveData = new WeaponSaveData();
 
         if (!_isSouken)
         {
@@ -122,7 +124,11 @@ public class MeshManager : MonoBehaviour
     }
     void Update()
     {
-        _jyuusin.transform.position = _centerPos;
+        if (_isFinished)
+        {
+            return;
+        }
+
         _myMesh.SetColors(_setColor);
         if (Input.GetMouseButtonDown(0))
         {
@@ -133,11 +139,6 @@ public class MeshManager : MonoBehaviour
 
     void Calculation()
     {
-        if (_isFinished)
-        {
-            return;
-        }
-
         Vector3 mousePos = Input.mousePosition;
         var worldPos = Camera.main.ScreenToWorldPoint(mousePos);
         worldPos.z = 0;
@@ -197,22 +198,22 @@ public class MeshManager : MonoBehaviour
         {
             case WeaponType.GreatSword:
                 {
-                    BaseSaveMesh(SaveManager.GREATSWORDFILEPATH);
+                    BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
                 }
                 break;
             case WeaponType.DualBlades:
                 {
-                    BaseSaveMesh(SaveManager.DUALSWORDFILEPATH);
+                    BaseSaveMesh(SaveManager.DUALBLADES, WeaponSaveData.DBData);
                 }
                 break;
             case WeaponType.Hammer:
                 {
-                    BaseSaveMesh(SaveManager.HAMMERFILEPATH);
+                    BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
                 }
                 break;
             case WeaponType.Spear:
                 {
-                    BaseSaveMesh(SaveManager.SPEARFILEPATH);
+                    BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
                 }
                 break;
             default:
@@ -223,13 +224,13 @@ public class MeshManager : MonoBehaviour
         }
     }
 
-    private void BaseSaveMesh(string fileName)
+    private void BaseSaveMesh(string fileName, SaveData data)
     {
-        _saveData._prefabName = GameManager.BlacksmithType.ToString();
-        _saveData._myVertices = _myVertices;
-        _saveData._myTriangles = _myTriangles;
-        _saveData._colorList = _setColor;
-        SaveManager.Save(fileName, _saveData);
+        data._prefabName = GameManager.BlacksmithType.ToString();
+        data._myVertices = _myVertices;
+        data._myTriangles = _myTriangles;
+        data._colorList = _setColor;
+        SaveManager.Save(fileName, data);
     }
 
     /// <summary>
@@ -248,6 +249,10 @@ public class MeshManager : MonoBehaviour
     /// </summary>
     public void ResetMeshShape()
     {
+        if (_isFinished)
+        {
+            return;
+        }
         if (_go == null)
             return;
 
@@ -259,11 +264,12 @@ public class MeshManager : MonoBehaviour
 
     public async void ChangeScene()
     {
-        if(_isFinished)
+        if (_isFinished)
         {
             return;
         }
         _isFinished = true;
+        _allPanel.SetActive(true);
         SaveMesh();
         SoundManager.Instance.CriAtomPlay(CueSheet.CueSheet_0, "SE_Blacksmith_Finish");
         await UniTask.DelayFrame(2000);
@@ -273,7 +279,7 @@ public class MeshManager : MonoBehaviour
     public void CreateMesh()
     {
         _go = new GameObject("WeaponBase");
-        _go.transform.parent = _parentObj.transform.parent;
+        _go.transform.parent = _parentObj.transform;
 
         _meshFilter = _go.AddComponent<MeshFilter>();
 
@@ -349,9 +355,9 @@ public class MeshManager : MonoBehaviour
             }
         }
 
-        _handlePos = _lowestPos - new Vector3(0, 0.5f, 0);
+        //_handlePos = _lowestPos - new Vector3(0, 0.5f, 0);
 
-        _weaponHandle.transform.position = _handlePos;
+        //_weaponHandle.transform.position = _handlePos;
     }
 
     private void CreateSouken(string name, float sX, float sY)

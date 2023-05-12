@@ -6,6 +6,7 @@ public class NidangiriSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
+    private EnemyController _enemyStatus;
 
     public NidangiriSkill()
     {
@@ -20,6 +21,7 @@ public class NidangiriSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
+        _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -36,16 +38,16 @@ public class NidangiriSkill : SkillBase
         switch (weight / 10)
         {
             case 6:
-                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 20);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 20);
                 break;
             case 5:
-                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 15);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 15);
                 break;
             case 4:
-                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 10);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 10);
                 break;
             case 3:
-                _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 5);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 5);
                 break;
             default:
                 break;

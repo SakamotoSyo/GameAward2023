@@ -61,7 +61,7 @@ public class EquipEnemyWeapon
     /// <summary>
     /// •Ší‚Ö‚Ìƒ_ƒ[ƒW
     /// </summary>
-    public void AddDamage(float damage)
+    public void AddDamage(int damage)
     {
         _currentDurable.Value -= damage;
     }

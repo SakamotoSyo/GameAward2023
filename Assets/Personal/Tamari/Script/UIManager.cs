@@ -24,6 +24,9 @@ public class UIManager : MonoBehaviour
     [Header("リセット時に確認用に出すパネルに必要な情報")]
 
     [SerializeField]
+    private GameObject _allPanel = default;
+
+    [SerializeField]
     private Text _checkTextForReset = default;
 
     [SerializeField]
@@ -52,6 +55,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        _allPanel.SetActive(false);
         _panelForReset.SetActive(false);
         _panelForSample.SetActive(false);
         switch (GameManager.BlacksmithType)
@@ -86,11 +90,13 @@ public class UIManager : MonoBehaviour
 
     public void SwitchCheckForReset(bool flag)
     {
+        _allPanel.SetActive(flag);
         _panelForReset.SetActive(flag);
     }
 
     public void SwitchCheckForSample(bool flag)
     {
+        _allPanel.SetActive(flag);
         _panelForSample.SetActive(flag);
     }
 }

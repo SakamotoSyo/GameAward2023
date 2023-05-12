@@ -18,7 +18,7 @@ public class SaveManager
     const string YARIFILEPATH = "Yari.dat";
 #else
     public const string GREATSWORDFILEPATH = "Taiken.json";
-    public const string DUALSWORDFILEPATH = "Souken.json";
+    public const string DUALBLADES = "Souken.json";
     public const string HAMMERFILEPATH = "Hammer.json";
     public const string SPEARFILEPATH = "Yari.json";
 #endif
@@ -26,7 +26,7 @@ public class SaveManager
 
     public static void Initialize()
     {
-        _weaponFileList = new List<string>() { GREATSWORDFILEPATH, DUALSWORDFILEPATH, HAMMERFILEPATH, SPEARFILEPATH };
+        _weaponFileList = new List<string>() { GREATSWORDFILEPATH, DUALBLADES, HAMMERFILEPATH, SPEARFILEPATH };
     }
     static public SaveData Load(string filePath)
     {

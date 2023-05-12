@@ -42,14 +42,16 @@ public class TenkuugiriSkill : SkillBase
         {
             case ActorAttackType.Player:
             {
+                var dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
+
                 if (_playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value >= WeaponWeight)
                 {
-                    _playerStatus.AddDamage(
-                        _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * AddDamageValue + Damage);
+                    _enemyStatus.AddDamage(
+                        dmg * AddDamageValue + Damage);
                 }
                 else
                 {
-                    _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                    _enemyStatus.AddDamage(dmg + Damage);
                 }
             }
                 break;
@@ -59,11 +61,11 @@ public class TenkuugiriSkill : SkillBase
 
                 if (_enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight >= WeaponWeight)
                 {
-                    _enemyStatus.AddDamage((int)(dmg * AddDamageValue) + Damage);
+                    _playerStatus.AddDamage((dmg * AddDamageValue) + Damage);
                 }
                 else
                 {
-                    _enemyStatus.AddDamage((int)dmg + Damage);
+                    _playerStatus.AddDamage(dmg + Damage);
                 }
             }
                 break;
@@ -80,7 +82,7 @@ public class TenkuugiriSkill : SkillBase
         }
 
         _isUse = false;
-        
+
         switch (_actor)
         {
             case ActorAttackType.Player:
@@ -100,6 +102,5 @@ public class TenkuugiriSkill : SkillBase
 
     public override void BattleFinish()
     {
-        
     }
 }
