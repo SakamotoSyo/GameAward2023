@@ -1,32 +1,38 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ActiveWeaponMesh : MonoBehaviour
 {
-    [SerializeField, Tooltip("‘åŒ•‚ÌƒCƒ[ƒW")]
+    [SerializeField, Tooltip("å¤§å‰£ã®ã‚¤ãƒ¡ãƒ¼ã‚¸")]
     private GameObject _gsImage = default;
 
-    [SerializeField, Tooltip("‘oŒ•‚ÌƒCƒ[ƒW")]
-    private GameObject _dbImage = default;
+    [SerializeField, Tooltip("åŒå‰£(å³)ã®ã‚¤ãƒ¡ãƒ¼ã‚¸")]
+    private GameObject _dbImageR = default;
 
-    [SerializeField, Tooltip("ƒnƒ“ƒ}[‚ÌƒCƒ[ƒW")]
+    [SerializeField, Tooltip("åŒå‰£(å·¦)ã®ã‚¤ãƒ¡ãƒ¼ã‚¸")]
+    private GameObject _dbImageL = default;
+
+    [SerializeField, Tooltip("ãƒãƒ³ãƒãƒ¼ã®ã‚¤ãƒ¡ãƒ¼ã‚¸")]
     private GameObject _hImage = default;
 
-    [SerializeField, Tooltip("‚â‚è‚ÌƒCƒ[ƒW")]
+    [SerializeField, Tooltip("ã‚„ã‚Šã®ã‚¤ãƒ¡ãƒ¼ã‚¸")]
     private GameObject _sImage = default;
 
-    [SerializeField, Tooltip("‘åŒ•¶¬ƒ|ƒWƒVƒ‡ƒ“")]
+    [SerializeField, Tooltip("å¤§å‰£ç”Ÿæˆãƒã‚¸ã‚·ãƒ§ãƒ³")]
     private GameObject _gsPos = default;
 
-    [SerializeField, Tooltip("‘oŒ•¶¬ƒ|ƒWƒVƒ‡ƒ“")]
-    private GameObject _dbPos = default;
+    [SerializeField, Tooltip("åŒå‰£(å³)ç”Ÿæˆãƒã‚¸ã‚·ãƒ§ãƒ³")]
+    private GameObject _dbPosR = default;
 
-    [SerializeField, Tooltip("ƒnƒ“ƒ}[¶¬ƒ|ƒWƒVƒ‡ƒ“")]
+    [SerializeField, Tooltip("åŒå‰£(å·¦)ç”Ÿæˆãƒã‚¸ã‚·ãƒ§ãƒ³")]
+    private GameObject _dbPosL = default;
+
+    [SerializeField, Tooltip("ãƒãƒ³ãƒãƒ¼ç”Ÿæˆãƒã‚¸ã‚·ãƒ§ãƒ³")]
     private GameObject _hPos = default;
 
-    [SerializeField, Tooltip("‚â‚è¶¬ƒ|ƒWƒVƒ‡ƒ“")]
+    [SerializeField, Tooltip("ã‚„ã‚Šç”Ÿæˆãƒã‚¸ã‚·ãƒ§ãƒ³")]
     private GameObject _sPos = default;
 
     [SerializeField]
@@ -68,7 +74,9 @@ public class ActiveWeaponMesh : MonoBehaviour
 
         BaseActiveWeapon(_gsImage, _gsPos, WeaponSaveData.GSData);
 
-        BaseActiveWeapon(_dbImage, _dbPos, WeaponSaveData.DBData);
+        BaseActiveWeapon(_dbImageR, _dbPosR, WeaponSaveData.DBData);
+
+        BaseActiveWeapon(_dbImageL, _dbPosL, WeaponSaveData.DBData);
 
         BaseActiveWeapon(_hImage, _hPos, WeaponSaveData.HData);
 
@@ -80,17 +88,41 @@ public class ActiveWeaponMesh : MonoBehaviour
     {
         if (data._myVertices == null)
         {
-            Debug.Log("‘I‚ñ‚¾•Ší‚ÌƒZ[ƒuƒf[ƒ^‚Í‚ ‚è‚Ü‚¹‚ñ");
+            Debug.Log("é¸ã‚“ã æ­¦å™¨ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã¯ã‚ã‚Šã¾ã›ã‚“");
             return;
         }
         Mesh mesh = new Mesh();
         mesh.vertices = data._myVertices;
         mesh.triangles = data._myTriangles;
         mesh.SetColors(_setColorList);
-        
-        Vector3 vec = new Vector3(pos.transform.position.x, pos.transform.position.y + data._dis, pos.transform.position.z);
 
-        weapon.transform.position = vec;
+        if(weapon == _hImage || weapon == _sImage)
+        {
+            Vector3 vec = new Vector3(pos.transform.position.x + data._disX,
+                pos.transform.position.y + data._disY, pos.transform.position.z - 1);
+
+            weapon.transform.position = vec;
+        }
+
+        else if(weapon == _dbImageR)
+        {
+            Vector3 vec = new Vector3(pos.transform.position.x - data._disX,
+                pos.transform.position.y + data._disY, pos.transform.position.z);
+
+            weapon.transform.position = vec;
+
+            weapon.transform.Rotate(0, 180, 0);
+        }
+
+        else
+        {
+            Vector3 vec = new Vector3(pos.transform.position.x + data._disX,
+                pos.transform.position.y + data._disY, pos.transform.position.z);
+
+            weapon.transform.position = vec;
+
+        }
+        weapon.transform.parent.localScale = new Vector3(0.4f, 0.4f, 0.4f);
 
         MeshFilter meshFilter = weapon.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
@@ -124,7 +156,7 @@ public class ActiveWeaponMesh : MonoBehaviour
 //        break;
 //    default:
 //        {
-//            Debug.Log("w’è‚³‚ê‚½•Ší‚Ì–¼‘O : " + GameManager.BlacksmithType + " ‚Í‘¶İ‚µ‚Ü‚¹‚ñ");
+//            Debug.Log("æŒ‡å®šã•ã‚ŒãŸæ­¦å™¨ã®åå‰ : " + GameManager.BlacksmithType + " ã¯å­˜åœ¨ã—ã¾ã›ã‚“");
 //        }
 //        return;
 //}

@@ -18,16 +18,6 @@ public class MeshManager : MonoBehaviour
     [SerializeField]
     private GameObject _jyusin;
 
-    [SerializeField]
-    private GameObject _parentObj = default;
-
-    [SerializeField]
-    private GameObject _weaponHandle = default;
-
-    private static Vector3 _handlePos = default;
-
-    public static Vector3 HandlePos => _handlePos;
-
     private int _lowestPosIndex = default;
 
     private GameObject _go = default;
@@ -62,9 +52,10 @@ public class MeshManager : MonoBehaviour
 
     private Vector2 _firstCenterPos = default;
 
+    public Vector2 FirstCenterPos => _firstCenterPos;   
+
     [SerializeField, Tooltip("中心の座標")]
     private Vector2 _centerPos = default;
-
     public Vector2 CentorPos => _centerPos;
 
     [SerializeField, Tooltip("双剣用の中心の座標")]
@@ -80,8 +71,7 @@ public class MeshManager : MonoBehaviour
 
     private float _dis = 1000f;
 
-    public static bool _isFinished;
-
+    public static bool _isFinished;    
 
     private SaveData _saveData;
     public SaveData SaveData => _saveData;
@@ -99,6 +89,14 @@ public class MeshManager : MonoBehaviour
     [SerializeField]
     private GameObject _allPanel = default;
 
+#if UNITY_EDITOR
+    public WeaponType _weaponType;
+    public bool _isGS;
+    public bool _isDB;
+    public bool _isH;
+    public bool _isS;
+#endif
+
     [ContextMenu("Make mesh from model")]
 
     private void Awake()
@@ -106,9 +104,27 @@ public class MeshManager : MonoBehaviour
         _myMesh = new Mesh();
         _saveData = new SaveData();
         SaveManager.Initialize();
+#if UNITY_EDITOR
+        if(_isGS)
+        {
+            _weaponType = WeaponType.GreatSword;
+        }
+        if (_isDB)
+        {
+            _weaponType = WeaponType.DualBlades;
+        }
+        if (_isH)
+        {
+            _weaponType = WeaponType.Hammer;
+        }
+        if (_isS)
+        {
+            _weaponType = WeaponType.Spear;
+        }
+#endif
     }
 
-    void Start()
+void Start()
     {
         _isFinished = false;
         _firstCenterPos = _centerPos;
@@ -157,6 +173,14 @@ public class MeshManager : MonoBehaviour
             }
         }
 
+        _dis = 1000f;
+
+        if (_indexNum == 2)
+        {
+            Debug.Log("一番下の頂点は触れません");
+            return;
+        }
+
         // タップ位置と近い頂点との距離(ti)
         float tiDis = Vector3.Distance(worldPos, _centerPos);
 
@@ -189,7 +213,6 @@ public class MeshManager : MonoBehaviour
 
         _myMesh.SetVertices(_myVertices);
 
-        _dis = 1000f;
     }
 
     /// <summary>
@@ -198,34 +221,57 @@ public class MeshManager : MonoBehaviour
     /// <param name="weapon"></param>
     public void SaveMesh()
     {
-        switch (GameManager.BlacksmithType)
+#if UNITY_EDITOR
+        if (_isGS)
         {
-            case WeaponType.GreatSword:
-                {
-                    BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
-                }
-                break;
-            case WeaponType.DualBlades:
-                {
-                    BaseSaveMesh(SaveManager.DUALBLADES, WeaponSaveData.DBData);
-                }
-                break;
-            case WeaponType.Hammer:
-                {
-                    BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
-                }
-                break;
-            case WeaponType.Spear:
-                {
-                    BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
-                }
-                break;
-            default:
-                {
-                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
-                }
-                return;
+            BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
         }
+        else if (_isDB)
+        {
+            BaseSaveMesh(SaveManager.DUALBLADESFILEPATH, WeaponSaveData.DBData);
+        }
+        else if (_isH)
+        {
+            BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
+        }
+        else if (_isS)
+        {
+            BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
+        }
+
+        else
+#endif
+        {
+            switch (GameManager.BlacksmithType)
+            {
+                case WeaponType.GreatSword:
+                    {
+                        BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
+                    }
+                    break;
+                case WeaponType.DualBlades:
+                    {
+                        BaseSaveMesh(SaveManager.DUALBLADESFILEPATH, WeaponSaveData.DBData);
+                    }
+                    break;
+                case WeaponType.Hammer:
+                    {
+                        BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
+                    }
+                    break;
+                case WeaponType.Spear:
+                    {
+                        BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
+                    }
+                    break;
+                default:
+                    {
+                        Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
+                    }
+                    return;
+            }
+        }
+        
     }
 
     private void BaseSaveMesh(string fileName, SaveData data)
@@ -234,7 +280,9 @@ public class MeshManager : MonoBehaviour
         data._myVertices = _myVertices;
         data._myTriangles = _myTriangles;
         data._lowestPosIndex = _lowestPosIndex;
-        data._dis = Vector3.Distance(_go.transform.position, _myVertices[_lowestPosIndex]);
+        // data._dis = Vector3.Distance(_go.transform.position, _myVertices[_lowestPosIndex]);
+        data._disX = _go.transform.position.x - _myVertices[_lowestPosIndex].x;
+        data._disY = _go.transform.position.y - _myVertices[_lowestPosIndex].y;
         data._colorList = _setColor;
         SaveManager.Save(fileName, data);
     }
@@ -289,14 +337,13 @@ public class MeshManager : MonoBehaviour
         _allPanel.SetActive(true);
         SaveMesh();
         SoundManager.Instance.CriAtomPlay(CueSheet.CueSheet_0, "SE_Blacksmith_Finish");
-        await UniTask.DelayFrame(2000);
+        await UniTask.DelayFrame(500);
         SceneManager.LoadScene(_nextSceneName);
     }
 
     public void CreateMesh()
     {
         _go = new GameObject("WeaponBase");
-        _go.transform.parent = _parentObj.transform;
 
         _meshFilter = _go.AddComponent<MeshFilter>();
 

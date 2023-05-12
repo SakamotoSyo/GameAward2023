@@ -9,6 +9,7 @@ public class SaveData
     public Vector3[] _myVertices;
     public int[] _myTriangles;
     public int _lowestPosIndex;
-    public float _dis;
+    public float _disX;
+    public float _disY;
     public List<Color> _colorList = new List<Color>();
 }
