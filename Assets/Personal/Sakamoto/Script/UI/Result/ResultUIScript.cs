@@ -284,6 +284,7 @@ public class ResultUIScript : MonoBehaviour
 
             if (!judge)
             {
+                AddWeapon(weaponType);
                 _isBlacksmith = true;
                 GameManager.SetBlacksmithType((WeaponType)Enum.GetValues(typeof(WeaponType)).GetValue(i));
                 //SceneLoader.LoadScene(_blacksmithSceneName);
@@ -307,7 +308,7 @@ public class ResultUIScript : MonoBehaviour
         }
     }
 
-    public void ChangeSpecialSkill(SkillBase skill) 
+    public void ChangeSpecialSkill(SkillBase skill)
     {
         _actorGenerator.PlayerController.PlayerSkill.ChangeSpecialSkill(skill);
         if (_isBlacksmith)
@@ -326,5 +327,17 @@ public class ResultUIScript : MonoBehaviour
     {
         _oreSelectObj.SetActive(true);
         _enhanceSelectObj.SetActive(false);
+    }
+
+    private void AddWeapon(WeaponType weaponType)
+    {
+        var playerStatus = _actorGenerator.PlayerController.PlayerStatus;
+        for (int i = 0; i < playerStatus.WeaponDatas.Length; i++)
+        {
+            if (playerStatus.WeaponDatas[i] == null)
+            {
+                playerStatus.WeaponDatas[i] = new(1000, 1000, 50, 1000, WeaponData.AttributeType.None, weaponType);
+            }
+        }
     }
 }
