@@ -19,6 +19,11 @@ public class KasokugiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "重さが軽いほど連撃数が増える(上限4)";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

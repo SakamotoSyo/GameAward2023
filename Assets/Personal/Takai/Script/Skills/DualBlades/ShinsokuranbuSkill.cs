@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine.Playables;
 
 public class ShinsokuranbuSkill : SkillBase
@@ -16,6 +17,12 @@ public class ShinsokuranbuSkill : SkillBase
         Weapon = (WeaponType)1;
         Type = (SkillType)1;
         FlavorText = "重さが30以下のとき発動可能　※使用後元のステータスに戻る";
+    }
+
+    public override bool IsUseCheck(PlayerController player)
+    {
+        float weight = player.PlayerStatus.EquipWeapon.WeaponWeight.Value;
+        return (weight <= 30) ? true : false;
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
@@ -40,21 +47,13 @@ public class ShinsokuranbuSkill : SkillBase
             case ActorAttackType.Enemy:
             {
                 weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
-
-                if (weight <= 30) //素早さをに応じて発動できるか検知
-                {
-                    _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
-                }
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
             }
                 break;
             case ActorAttackType.Player:
             {
                 weight = _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight;
-
-                if (weight <= 30) //素早さをに応じて発動できるか検知
-                {
-                    _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
-                }
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
             }
                 break;
         }

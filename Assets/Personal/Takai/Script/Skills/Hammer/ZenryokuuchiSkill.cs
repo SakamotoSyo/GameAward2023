@@ -15,6 +15,12 @@ public class ZenryokuuchiSkill : SkillBase
         Damage = 60;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
+        FlavorText = "効果なし";
+    }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

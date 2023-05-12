@@ -16,6 +16,11 @@ public class IkishochinSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "敵の攻撃力20%を下げる";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

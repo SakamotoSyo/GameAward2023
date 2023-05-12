@@ -17,6 +17,10 @@ public class RenzokugiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "２つの剣による連続攻撃";
     }
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

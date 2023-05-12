@@ -21,6 +21,11 @@ public class RangiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "2ターンの間攻撃力が5%上昇(重複あり→5%,10%,15%)";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

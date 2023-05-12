@@ -19,6 +19,11 @@ public class KasokuSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "3ターンの間重さが5%下降(重複あり→5%,10%,15%)";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
