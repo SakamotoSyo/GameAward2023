@@ -17,7 +17,7 @@ public class WeaponSaveData
     public WeaponSaveData()
     {
         _gsData = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
-        _dbData = SaveManager.Load(SaveManager.DUALBLADES);
+        _dbData = SaveManager.Load(SaveManager.DUALBLADESFILEPATH);
         _hData = SaveManager.Load(SaveManager.HAMMERFILEPATH);
         _sData = SaveManager.Load(SaveManager.SPEARFILEPATH);
     }
