@@ -16,6 +16,7 @@ public class PlayerStatus
     private int _playerRankPoint = 0;
     private StateAnomaly _currentAnomaly = StateAnomaly.None;
 
+    private WeaponSaveData _weaponSaveData = default;
     private PlayerStatus()
     {
         //TODO:Œ±“IŒã‚Åíœ‚·‚é
@@ -25,25 +26,28 @@ public class PlayerStatus
         }
         _equipWeapon.ChangeWeapon(_weaponDatas[0], 0);
 
-        for(int i = 0; i < _weaponDatas.Length; i++)
-        {
-            if (_weaponDatas[i].WeaponType == WeaponType.GreatSword)
-            {
-                WeaponSaveData.GSData = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
-            }
-            if (_weaponDatas[i].WeaponType == WeaponType.DualBlades)
-            {
-                WeaponSaveData.DBData = SaveManager.Load(SaveManager.DUALBLADES);
-            }
-            if (_weaponDatas[i].WeaponType == WeaponType.Hammer)
-            {
-                WeaponSaveData.HData = SaveManager.Load(SaveManager.HAMMERFILEPATH);
-            }
-            if (_weaponDatas[i].WeaponType == WeaponType.Spear)
-            {
-                WeaponSaveData.SData = SaveManager.Load(SaveManager.SPEARFILEPATH);
-            }
-        }
+        _weaponSaveData = new WeaponSaveData();
+
+        //for(int i = 0; i < _weaponDatas.Length; i++)
+        //{
+        //    if (_weaponDatas[i].WeaponType == WeaponType.GreatSword)
+        //    {
+        //        WeaponSaveData.GSData = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
+        //    }
+        //    if (_weaponDatas[i].WeaponType == WeaponType.DualBlades)
+        //    {
+        //        WeaponSaveData.DBData = SaveManager.Load(SaveManager.DUALBLADES);
+        //    }
+        //    if (_weaponDatas[i].WeaponType == WeaponType.Hammer)
+        //    {
+        //        WeaponSaveData.HData = SaveManager.Load(SaveManager.HAMMERFILEPATH);
+        //    }
+        //    if (_weaponDatas[i].WeaponType == WeaponType.Spear)
+        //    {
+        //        WeaponSaveData.SData = SaveManager.Load(SaveManager.SPEARFILEPATH);
+        //    }
+        //}
+
     }
 
     public void ChangeWeponArray(WeaponData[] weaponDatas)

@@ -9,16 +9,16 @@ public class WeaponSaveData
     private static SaveData _hData = default;
     private static SaveData _sData = default;
 
-    public static SaveData GSData { get; set; }
-    public static SaveData DBData { get; set; }
-    public static SaveData HData { get; set; }
-    public static SaveData SData { get; set; }
+    public static SaveData GSData => _gsData;
+    public static SaveData DBData => _dbData;
+    public static SaveData HData => _hData; 
+    public static SaveData SData => _sData;
 
     public WeaponSaveData()
     {
-        GSData = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
-        DBData = SaveManager.Load(SaveManager.DUALBLADES);
-        HData = SaveManager.Load(SaveManager.HAMMERFILEPATH);
-        SData = SaveManager.Load(SaveManager.SPEARFILEPATH);
+        _gsData = SaveManager.Load(SaveManager.GREATSWORDFILEPATH);
+        _dbData = SaveManager.Load(SaveManager.DUALBLADESFILEPATH);
+        _hData = SaveManager.Load(SaveManager.HAMMERFILEPATH);
+        _sData = SaveManager.Load(SaveManager.SPEARFILEPATH);
     }
 }
