@@ -15,6 +15,7 @@ public class NidangiriSkill : SkillBase
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText = "重さが大きいほど2撃目のダメージが大きくなる(上限4)";
+        _anim = GetComponent<PlayableDirector>();
     }
     public override bool IsUseCheck(PlayerController player)
     {
@@ -27,6 +28,7 @@ public class NidangiriSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");

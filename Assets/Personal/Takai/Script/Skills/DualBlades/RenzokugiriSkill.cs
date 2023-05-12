@@ -16,6 +16,7 @@ public class RenzokugiriSkill : SkillBase
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "２つの剣による連続攻撃";
+        _anim = GetComponent<PlayableDirector>();
     }
     public override bool IsUseCheck(PlayerController player)
     {
@@ -29,6 +30,7 @@ public class RenzokugiriSkill : SkillBase
         _enemyStatus = enemy;
         _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());

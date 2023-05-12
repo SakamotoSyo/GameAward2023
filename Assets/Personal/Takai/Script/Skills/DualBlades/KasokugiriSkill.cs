@@ -18,6 +18,7 @@ public class KasokugiriSkill : SkillBase
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "重さが軽いほど連撃数が増える(上限4)";
+        _anim = GetComponent<PlayableDirector>();
     }
     
     public override bool IsUseCheck(PlayerController player)
@@ -32,6 +33,7 @@ public class KasokugiriSkill : SkillBase
         _enemyStatus = enemy;
         _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());

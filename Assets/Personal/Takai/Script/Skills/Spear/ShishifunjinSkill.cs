@@ -19,6 +19,7 @@ public class ShishifunjinSkill : SkillBase
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "経過ターンが多いほど攻撃回数アップ（上限 7回）";
+        _anim = GetComponent<PlayableDirector>();
     }
 
     public override bool IsUseCheck(PlayerController player)
@@ -32,6 +33,7 @@ public class ShishifunjinSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
