@@ -19,6 +19,11 @@ public class SeishintouitsuSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "3ターンの間、会心率%と会心時のダメージが20%上昇(発動ターン含まず）";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

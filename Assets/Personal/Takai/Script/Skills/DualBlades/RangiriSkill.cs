@@ -10,7 +10,8 @@ public class RangiriSkill : SkillBase
     private EnemyController _enemyStatus;
     const float AddDamageValue = 0.05f;
     const int Turn = 3;
-    int _count = 0;
+    private int _count = 0;
+    private int _turnCount;
 
     public RangiriSkill()
     {
@@ -20,6 +21,11 @@ public class RangiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "2ターンの間攻撃力が5%上昇(重複あり→5%,10%,15%)";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
@@ -28,25 +34,31 @@ public class RangiriSkill : SkillBase
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
     protected override void SkillEffect()
     {
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
-        if (_count >= Turn)
-        {
-            _count++;
-            _enemyStatus.AddDamage(dmg * (AddDamageValue * _count));
-        }
+
+        _count = (_count <= Turn) ? _count++ : _count;
+
+        //_enemyStatus.AddDamage(_count);
+        _enemyStatus.AddDamage(((AddDamageValue * _count) * dmg) + Damage + dmg);
     }
 
     public override bool TurnEnd()
     {
-        return false;
-    }
+        if (++_turnCount >= 3)
+        {
+            _count--;
+            _turnCount = 0;
+        }
 
+        return true;
+    }
 
     public override void BattleFinish()
     {

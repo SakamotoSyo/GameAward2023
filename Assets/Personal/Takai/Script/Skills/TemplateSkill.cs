@@ -15,6 +15,11 @@ public class TemplateSkill : SkillBase
         Type = (SkillType)0;
     }
 
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
+
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");

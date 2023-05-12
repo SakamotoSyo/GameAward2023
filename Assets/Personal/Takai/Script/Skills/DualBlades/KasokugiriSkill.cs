@@ -19,6 +19,11 @@ public class KasokugiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "重さが軽いほど連撃数が増える(上限4)";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
@@ -39,9 +44,8 @@ public class KasokugiriSkill : SkillBase
 
         switch (_actor)
         {
-            case ActorAttackType.Enemy:
+            case ActorAttackType.Player:
             {
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value += Damage;
                 float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
                 switch (Mathf.FloorToInt(weight / 10))
                 {
@@ -96,9 +100,8 @@ public class KasokugiriSkill : SkillBase
                 }
             }
                 break;
-            case ActorAttackType.Player:
+            case ActorAttackType.Enemy:
             {
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += Damage;
                 float weight = _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight;
                 switch (Mathf.FloorToInt(weight / 10))
                 {

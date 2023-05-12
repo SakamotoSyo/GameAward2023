@@ -16,6 +16,10 @@ public class OiuchiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "威力が低いが、敵にデバフがついていると威力が倍になる";
     }
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

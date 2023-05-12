@@ -18,6 +18,11 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         Type = (SkillType)1;
         FlavorText = "敵の攻撃、会心率、素早さを40%下げる　※使用した武器は壊れる";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

@@ -18,7 +18,27 @@ public class CreateSample : MonoBehaviour
     [SerializeField, Tooltip("やりのサンプル")]
     private List<Vector3> _yariSample = default;
 
-
+#if UNITY_EDITOR
+    private void Start()
+    {
+        if (_meshManager._isGS)
+        {
+            _meshManager._weaponType = WeaponType.GreatSword;
+        }
+        if (_meshManager._isDB)
+        {
+            _meshManager._weaponType = WeaponType.DualBlades;
+        }
+        if (_meshManager._isH)
+        {
+            _meshManager._weaponType = WeaponType.Hammer;
+        }
+        if (_meshManager._isS)
+        {
+            _meshManager._weaponType = WeaponType.Spear;
+        }
+    }
+#endif
     public void WeaponSamples()
     {
         switch (GameManager.BlacksmithType)
@@ -49,6 +69,39 @@ public class CreateSample : MonoBehaviour
                 }
                 return;
         }
+#if UNITY_EDITOR
+        if (_meshManager._isGS || _meshManager._isDB || _meshManager._isH || _meshManager._isS)
+        {
+            switch (_meshManager._weaponType)
+            {
+                case WeaponType.GreatSword:
+                    {
+                        SampleTaiken();
+                    }
+                    break;
+                case WeaponType.DualBlades:
+                    {
+                        SampleSouken();
+                    }
+                    break;
+                case WeaponType.Hammer:
+                    {
+                        SampleHammer();
+                    }
+                    break;
+                case WeaponType.Spear:
+                    {
+                        SampleYari();
+                    }
+                    break;
+                default:
+                    {
+                        Debug.Log("指定された武器の名前 : " + _meshManager._weaponType + " は存在しません");
+                    }
+                    return;
+            }
+        }
+#endif
 
         Debug.Log(GameManager.BlacksmithType + "のさんぷる");
     }
@@ -79,7 +132,7 @@ public class CreateSample : MonoBehaviour
         List<Vector3> posList = new List<Vector3>();
         for (int i = 0; i < weaponList.Count; i++)
         {
-            float x = weaponList[i].x + _meshManager.CentorPos.x;
+            float x = weaponList[i].x + _meshManager.FirstCenterPos.x;
 
             float y = weaponList[i].y;
 

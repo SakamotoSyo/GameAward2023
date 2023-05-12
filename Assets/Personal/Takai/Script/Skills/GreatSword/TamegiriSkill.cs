@@ -17,6 +17,10 @@ public class TamegiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "剣を大きく振りかぶる攻撃";
     }
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {

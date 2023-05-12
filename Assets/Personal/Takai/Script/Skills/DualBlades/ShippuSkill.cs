@@ -18,6 +18,11 @@ public class ShippuSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "2ターンの間敵に継続ダメージを与える";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
@@ -44,7 +49,7 @@ public class ShippuSkill : SkillBase
         {
             _count--;
             float durable = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value;
-            _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value -= durable * _subtractHpValue;
+            _enemyStatus.AddDamage(durable * _subtractHpValue);
         }
 
         return true;

@@ -19,6 +19,11 @@ public class KasokuSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "3ターンの間重さが5%下降(重複あり→5%,10%,15%)";
     }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
@@ -46,20 +51,20 @@ public class KasokuSkill : SkillBase
     {
         float spd = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
         
-        _turn--;
-        if (_turn <= 0)
+        if (--_turn <= 0)
         {
             _count = 0;
+            _turn = 0;
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
         }
-        else if(_turn <= 3)
+        else if(--_turn <= 3)
         {
             _count--;
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
             _speedValue += (spd * (ADD_VALUE * _count));
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value += (spd * (ADD_VALUE * _count));
         }
-        else if(_turn <= 6)
+        else if(--_turn <= 6)
         {
             _count--;
             _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value -= _speedValue;
