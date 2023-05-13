@@ -7,7 +7,7 @@ public class OiuchiSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-
+    
     public OiuchiSkill()
     {
         SkillName = "追い打ち";
@@ -15,8 +15,14 @@ public class OiuchiSkill : SkillBase
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "威力が低いが、敵にデバフがついていると威力が倍になる";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
+    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;

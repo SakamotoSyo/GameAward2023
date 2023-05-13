@@ -16,8 +16,13 @@ public class ZenryokuuchiSkill : SkillBase
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "効果なし";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
     
     public override bool IsUseCheck(PlayerController player)
     {

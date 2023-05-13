@@ -16,8 +16,13 @@ public class KyoukaSkill : SkillBase
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText = "次の技の攻撃力が1.5倍になる(重複なし)。攻撃後自ステータスが元に戻り、プレイヤーがひるむ";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;

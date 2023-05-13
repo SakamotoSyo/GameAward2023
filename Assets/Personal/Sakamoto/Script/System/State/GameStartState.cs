@@ -11,6 +11,7 @@ namespace SakamotoTest
     {
         protected override void OnEnter(State currentState)
         {
+            Owner.SkillManagement.CallBattleFinish();
             Owner.ActionSequentialDetermining();
             StateMachine.Dispatch((int)BattleStateController.BattleEvent.StartToNextActorState);
         }

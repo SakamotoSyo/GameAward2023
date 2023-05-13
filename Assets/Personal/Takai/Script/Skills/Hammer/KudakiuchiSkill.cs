@@ -17,8 +17,14 @@ public class KudakiuchiSkill : SkillBase
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "攻撃した武器に継続ダメージを受ける状態を付与";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
+    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;

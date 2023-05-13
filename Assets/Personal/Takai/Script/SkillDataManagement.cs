@@ -83,6 +83,18 @@ public class SkillDataManagement : MonoBehaviour
         }
     }
 
+    public void CallBattleFinish()
+    {
+        Debug.Log("BattleFinish呼び出し");
+        foreach (var skill in _skills)
+        {
+            if (skill.gameObject.activeSelf)
+            {
+                skill.BattleFinish();
+            }
+        } 
+    }
+
     public SkillBase SearchSkill()
     {
         foreach (var s in _skills)

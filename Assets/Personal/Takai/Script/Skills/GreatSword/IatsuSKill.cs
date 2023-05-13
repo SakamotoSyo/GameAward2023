@@ -18,6 +18,10 @@ public class IatsuSKill : SkillBase
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText = "2ターンの間敵の攻撃力を10%下げる";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
     
