@@ -54,4 +54,32 @@ public class PlayerEquipWeapon
         _weponType = weaponData.WeaponType;
         _weaponNum = arrayNum;
     }
+
+    public void FluctuationStatus(FluctuationStatusClass fluctuation) 
+    {
+        _offensivePower.Value += fluctuation.OffensivePower;
+        _weaponWeight.Value += fluctuation.WeaponWeight;
+        _criticalRate.Value += fluctuation.CriticalRate;
+        _maxDurable.Value += fluctuation.MaxDurable;
+        _currentDurable.Value += fluctuation.CurrentDurable;
+    }
 }
+
+public class FluctuationStatusClass 
+{
+    public float OffensivePower;
+    public float WeaponWeight;
+    public float CriticalRate;
+    public float MaxDurable;
+    public float CurrentDurable;
+
+    public FluctuationStatusClass(float offensivePower, float weaponWeight, float criticalRate, float maxDurable, float currentDurable)
+    {
+        OffensivePower = offensivePower;
+        WeaponWeight = weaponWeight;
+        CriticalRate = criticalRate;
+        MaxDurable = maxDurable;
+        CurrentDurable = currentDurable;
+    }   
+}
+
