@@ -91,6 +91,11 @@ public class BattleSelectUI : MonoBehaviour
             {
                 //必殺技
                 Debug.Log("必殺技");
+                SkillBase special = _playerController.PlayerSkill.SpecialAttack;
+                if (special)
+                {
+                    _skillDataManagement.OnSkillUse(ActorAttackType.Player, special.name);
+                }
                 _infoUI.SetActive(false);
             }
             else if (_actionUi[num] == _actionUi[3])
