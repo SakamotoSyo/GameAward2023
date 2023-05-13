@@ -15,8 +15,13 @@ public class IngaouhouSkill : SkillBase
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "発動したターンに攻撃を受けるとダメージを30%軽減し、反撃する。";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
     
     public override bool IsUseCheck(PlayerController player)
     {

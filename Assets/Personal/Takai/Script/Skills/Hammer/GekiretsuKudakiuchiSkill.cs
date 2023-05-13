@@ -17,8 +17,13 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         Weapon = (WeaponType)2;
         Type = (SkillType)1;
         FlavorText = "敵の攻撃、会心率、素早さを40%下げる　※使用した武器は壊れる";
+    }
+
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
     
     public override bool IsUseCheck(PlayerController player)
     {

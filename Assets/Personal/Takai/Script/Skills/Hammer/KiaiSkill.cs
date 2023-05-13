@@ -15,8 +15,13 @@ public class KiaiSkill : SkillBase
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "次の攻撃だけ威力が2倍に上昇";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
     
     public override bool IsUseCheck(PlayerController player)
     {

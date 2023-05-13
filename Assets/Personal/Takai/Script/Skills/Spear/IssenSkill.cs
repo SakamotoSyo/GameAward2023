@@ -9,7 +9,7 @@ public class IssenSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-
+    
     public IssenSkill()
     {
         SkillName = "一閃";
@@ -17,8 +17,13 @@ public class IssenSkill : SkillBase
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "効果なし";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
     
     public override bool IsUseCheck(PlayerController player)
     {

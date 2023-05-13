@@ -18,6 +18,10 @@ public class KasokugiriSkill : SkillBase
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "重さが軽いほど連撃数が増える(上限4)";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
     

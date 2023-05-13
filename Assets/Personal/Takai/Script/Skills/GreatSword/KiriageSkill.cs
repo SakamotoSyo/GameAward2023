@@ -17,6 +17,10 @@ public class KiriageSkill : SkillBase
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText= "2ターンの間攻撃力が5%上昇。(重複あり→5%,10%,15%)";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
     

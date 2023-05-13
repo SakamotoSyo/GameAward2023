@@ -16,8 +16,13 @@ public class TamegiriSkill : SkillBase
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText = "剣を大きく振りかぶる攻撃";
+    }
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
+    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;

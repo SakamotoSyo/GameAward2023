@@ -17,6 +17,10 @@ public class TenkamusoSkill : SkillBase
         Weapon = (WeaponType)3;
         Type = (SkillType)1;
         FlavorText = "経過ターンが多いほど威力上昇　※HP30％以下で発動可能";
+    }
+
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
 

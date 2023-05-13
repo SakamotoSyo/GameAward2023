@@ -9,6 +9,7 @@ public class HauchiSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float _subtractAttackValue = 0.2f;
+    
     public HauchiSkill()
     {
         SkillName = "刃打ち";
@@ -16,8 +17,13 @@ public class HauchiSkill : SkillBase
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "敵の攻撃力と会心率が20%下がる";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
     
     public override bool IsUseCheck(PlayerController player)
     {
