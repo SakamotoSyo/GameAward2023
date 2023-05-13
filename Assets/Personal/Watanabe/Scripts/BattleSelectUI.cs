@@ -124,7 +124,7 @@ public class BattleSelectUI : MonoBehaviour
             currentUi += _actionUi.Length;
         }
 
-        if (_actionUi[currentUi] == _actionUi[2])
+        if (_actionUi[currentUi] == _actionUi[1])
         {
             _infoUI.SetActive(true);
             SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
@@ -138,10 +138,12 @@ public class BattleSelectUI : MonoBehaviour
             else
             {
                 _skillText[0].text = "NoSkill";
+                _skillText[1].text = "";
+                _skillText[2].text = "";
             }
 
         }
-        else if (_actionUi[currentUi] == _actionUi[3])
+        else if (_actionUi[currentUi] == _actionUi[2])
         {
             _infoUI.SetActive(true);
             SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
@@ -154,10 +156,12 @@ public class BattleSelectUI : MonoBehaviour
             else
             {
                 _skillText[0].text = "NoSkill";
+                _skillText[1].text = "";
+                _skillText[2].text = "";
             }
 
         }
-        else if (_actionUi[currentUi] == _actionUi[1])
+        else if (_actionUi[currentUi] == _actionUi[3])
         {
             _infoUI.SetActive(true);
             var special = _playerController.PlayerSkill.SpecialAttack;
@@ -170,6 +174,8 @@ public class BattleSelectUI : MonoBehaviour
             else
             {
                 _skillText[0].text = "NoSkill";
+                _skillText[1].text = "";
+                _skillText[2].text = "";
             }
         }
         else
