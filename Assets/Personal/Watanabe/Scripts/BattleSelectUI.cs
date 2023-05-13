@@ -22,34 +22,39 @@ public class BattleSelectUI : MonoBehaviour
         _playerController = _generator.PlayerController;
         _playerStatus = _playerController.PlayerStatus;
         _enemyController = _generator.EnemyController;
+
+        _actionUi[_index].DOScale(new Vector3(2.5f, 2.5f, 1f), 0.2f);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            BattleSelect(false);
+            BattleSelect(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            BattleSelect(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        {
+            BattleSelect(3);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            BattleSelect(true);
+            BattleSelect(1);
         }
 
         Attack();
     }
 
-    private void BattleSelect(bool rot)
+    private void BattleSelect(int dir)
     {
         _actionUi[_index].DOScale(new Vector3(2f, 2f, 1f), 0.2f);
 
-        if (rot)
+        if (_index != dir)
         {
-            _index = (_index + 1) % _actionUi.Length;
-        }
-        else
-        {
-            _index = _index == 0 ? _actionUi.Length - 1 : _index - 1;
-            _index %= _actionUi.Length;
+            _index = dir;
         }
         _actionUi[_index].DOScale(new Vector3(2.5f, 2.5f, 1f), 0.2f);
     }
