@@ -18,6 +18,11 @@ public class ShinsokuranbuSkill : SkillBase
         Type = (SkillType)1;
         FlavorText = "重さが30以下のとき発動可能　※使用後元のステータスに戻る";
     }
+    
+    private void Start()
+    {
+        _anim = GetComponent<PlayableDirector>();
+    }
 
     public override bool IsUseCheck(PlayerController player)
     {
@@ -32,6 +37,7 @@ public class ShinsokuranbuSkill : SkillBase
         _enemyStatus = enemy;
         _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());

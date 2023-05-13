@@ -18,6 +18,12 @@ public class ZenryokuuchiSkill : SkillBase
         FlavorText = "効果なし";
     }
     
+    private void Start()
+    {
+        _anim = GetComponent<PlayableDirector>();
+    }
+
+    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -30,6 +36,7 @@ public class ZenryokuuchiSkill : SkillBase
         _enemyStatus = enemy;
         _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());

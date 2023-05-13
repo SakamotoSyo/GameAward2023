@@ -13,13 +13,15 @@ public class PlayerController : MonoBehaviour
     private DamageTextController _damegeController;
     [SerializeField, Tooltip("ダメージテキストを生成する座標")]
     private Transform _damagePos;
-    private PlayerSkill _playerSkill = new();
+    [SerializeField] private PlayerSkill _playerSkill = new();
     private PlayerStatus _playerStatus;
     private PlayerAnimation _playerAnimation = new();
 
     private void Start()
     {
        _playerSkill.Init(GameObject.Find("DataBase").GetComponent<SkillDataManagement>());
+       
+       
     }
 
     private void Update()

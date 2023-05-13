@@ -19,6 +19,11 @@ public class TenkamusoSkill : SkillBase
         FlavorText = "経過ターンが多いほど威力上昇　※HP30％以下で発動可能";
     }
 
+    private void Start()
+    {
+        _anim = GetComponent<PlayableDirector>();
+    }
+
 
     public override bool IsUseCheck(PlayerController player)
     {
@@ -33,6 +38,7 @@ public class TenkamusoSkill : SkillBase
         _enemyStatus = enemy;
         _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());

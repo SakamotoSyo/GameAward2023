@@ -20,6 +20,11 @@ public class IatsuSKill : SkillBase
         FlavorText = "2ターンの間敵の攻撃力を10%下げる";
     }
     
+    private void Start()
+    {
+        _anim = GetComponent<PlayableDirector>();
+    }
+    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -30,6 +35,7 @@ public class IatsuSKill : SkillBase
         Debug.Log("Use Skill");
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");

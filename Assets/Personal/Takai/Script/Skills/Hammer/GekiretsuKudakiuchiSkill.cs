@@ -18,6 +18,12 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         Type = (SkillType)1;
         FlavorText = "敵の攻撃、会心率、素早さを40%下げる　※使用した武器は壊れる";
     }
+
+    private void Start()
+    {
+        _anim = GetComponent<PlayableDirector>();
+    }
+
     
     public override bool IsUseCheck(PlayerController player)
     {
@@ -31,6 +37,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         _enemyStatus = enemy;
         _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());
