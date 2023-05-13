@@ -12,6 +12,7 @@ public class ResultUIScript : MonoBehaviour
     [SerializeField] private Button[] _weaponButton = new Button[4];
     [SerializeField] private Button[] _skillSelectButton = new Button[2];
     [SerializeField] private Button[] _blackSmithSelectButton = new Button[2];
+    [SerializeField] private Text[] _oreText = new Text[3];
     [SerializeField] private GameObject _oreSelectObj;
     [SerializeField] private GameObject _enhanceSelectObj;
     [SerializeField] private GameObject _skillSelectPanel;
@@ -61,7 +62,7 @@ public class ResultUIScript : MonoBehaviour
         _actorGenerator.PlayerController.PlayerStatus.AddRankPoint();
         for (int i = 0; i < _oreUiCs.Length; i++)
         {
-            var oreInfo = RarityLottery();
+            var oreInfo = RarityLottery(i);
             OreData Ore = new OreData(SetEnhanceData(oreInfo.rearity), oreInfo.rearity, oreInfo.randomSkill, oreInfo.oreImage);
             _oreUiCs[i].SetData(Ore);
             _oreButton[i].onClick.AddListener(() => EnhanceWeaponEvent(Ore));
@@ -99,7 +100,7 @@ public class ResultUIScript : MonoBehaviour
         return enhanceData;
     }
 
-    private (Sprite oreImage, OreRarity rearity, SkillBase randomSkill) RarityLottery()
+    private (Sprite oreImage, OreRarity rearity, SkillBase randomSkill) RarityLottery(int uiNum)
     {
         SkillBase randomSkill;
         OreRarity rearity = (OreRarity)Random.Range(0, 2);
@@ -116,6 +117,7 @@ public class ResultUIScript : MonoBehaviour
         }
 
         Sprite oreImage = _oreImage[(int)rearity];
+        _oreText[uiNum].text = rearity.ToString();
 
         return (oreImage, rearity, randomSkill);
     }
