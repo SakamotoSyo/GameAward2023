@@ -13,6 +13,7 @@ public class TemplateSkill : SkillBase
         Damage = 0;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
+        _anim = GetComponent<PlayableDirector>();
     }
 
     public override bool IsUseCheck(PlayerController player)
@@ -25,6 +26,7 @@ public class TemplateSkill : SkillBase
         Debug.Log("Use Skill");
         _status = player;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());

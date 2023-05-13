@@ -18,6 +18,7 @@ public class SeishintouitsuSkill : SkillBase
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "3ターンの間、会心率%と会心時のダメージが20%上昇(発動ターン含まず）";
+        _anim = GetComponent<PlayableDirector>();
     }
     
     public override bool IsUseCheck(PlayerController player)
@@ -30,6 +31,7 @@ public class SeishintouitsuSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");

@@ -15,6 +15,7 @@ public class OiuchiSkill : SkillBase
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "威力が低いが、敵にデバフがついていると威力が倍になる";
+        _anim = GetComponent<PlayableDirector>();
     }
     public override bool IsUseCheck(PlayerController player)
     {
@@ -27,6 +28,7 @@ public class OiuchiSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());

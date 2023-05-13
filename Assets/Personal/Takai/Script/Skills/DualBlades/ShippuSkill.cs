@@ -17,6 +17,7 @@ public class ShippuSkill : SkillBase
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "2ターンの間敵に継続ダメージを与える";
+        _anim = GetComponent<PlayableDirector>();
     }
     
     public override bool IsUseCheck(PlayerController player)
@@ -30,6 +31,7 @@ public class ShippuSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");

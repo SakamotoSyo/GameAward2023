@@ -18,6 +18,7 @@ public class KasokuSkill : SkillBase
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "3ターンの間重さが5%下降(重複あり→5%,10%,15%)";
+        _anim = GetComponent<PlayableDirector>();
     }
     
     public override bool IsUseCheck(PlayerController player)
@@ -30,6 +31,7 @@ public class KasokuSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");

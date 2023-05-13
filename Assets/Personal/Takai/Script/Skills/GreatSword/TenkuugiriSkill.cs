@@ -19,6 +19,7 @@ public class TenkuugiriSkill : SkillBase
         Weapon = (WeaponType)0;
         Type = (SkillType)1;
         FlavorText = "重さが100以上の時のときこの技の攻撃力が20%上がる ※使用後武器破壊";
+        _anim = GetComponent<PlayableDirector>();
     }
     
     public override bool IsUseCheck(PlayerController player)
@@ -33,6 +34,7 @@ public class TenkuugiriSkill : SkillBase
         _enemyStatus = enemy;
         _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());
