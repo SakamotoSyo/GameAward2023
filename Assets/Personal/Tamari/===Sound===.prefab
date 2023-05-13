@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _atomSource: {fileID: 5915392374090167109}
   _atomBGMSource: {fileID: 5915392373566283602}
-  changeBGMSpeed: 1
+  changeBGMSpeed: 0
   _bgmCueName: 
 --- !u!1 &5915392373566283600
 GameObject:
@@ -223,7 +223,7 @@ MonoBehaviour:
     - 0
     - 0
   _cueName: 
-  _cueSheet: 
+  _cueSheet: BGM
 --- !u!1 &5915392373733084634
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,9 +420,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acfFile: StreamingAssets_blacksmith0407/BlackSmith.acf
   cueSheets:
-  - name: CueSheet_0
+  - name: BGM
     acbFile: StreamingAssets_blacksmith0407/CueSheet_0.acb
-    awbFile: 
+    awbFile: StreamingAssets_blacksmith0407/CueSheet_0.awb
     loaderStatus: 0
   - name: SE
     acbFile: StreamingAssets_blacksmith0407/SE.acb
