@@ -934,12 +934,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -999
-  m_Sprite: {fileID: 21300000, guid: a145b5fa5e5e4fa47964d4831ce2ce57, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b2bddf04c4e8e8a40bd5d150bf8ae018, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 19.8, y: 10.8}
+  m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -954,7 +954,7 @@ Transform:
   m_GameObject: {fileID: 483050119}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.93, y: 0.93, z: 0.93}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2194,7 +2194,6 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 3350868331910801773, guid: ac43eb4691ec5c642808d424e5e7478b, type: 3}
   _bossButtonObj: {fileID: 132594238}
   _rankText: {fileID: 100104087}
-  _enemyData: {fileID: 11400000, guid: f7d206990175bc046bf856feb81a5ffa, type: 2}
   _rankPointRange: 200
   _battleScene: MainBattleScene
 --- !u!1 &1627243613
@@ -2469,7 +2468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 1976353851}
+  m_Material: {fileID: 1998895607}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -3122,7 +3121,7 @@ MonoBehaviour:
   _challengedButton: {fileID: 1971996497}
   _rankPointRange: 100
   _battleScene: MainBattleScene
---- !u!21 &1976353851
+--- !u!21 &1998895607
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
