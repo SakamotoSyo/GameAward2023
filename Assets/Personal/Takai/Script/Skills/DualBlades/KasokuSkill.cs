@@ -19,12 +19,23 @@ public class KasokuSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "3ターンの間重さが5%下降(重複あり→5%,10%,15%)";
     }
+    
+    private void Start()
+    {
+        _anim = GetComponent<PlayableDirector>();
+    }
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");

@@ -1,31 +1,21 @@
-﻿#if UNITY_EDITOR
-using System.IO;
-using UnityEditor;
-#endif
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using System.Threading;
-using UnityEngine.UI;
 
 /// <summary>
-/// TODO : 双剣の時のメッシュ2個作成をする
-/// TODO : Scene遷移時のブロッキング処理行う
+/// TODO : 鍛冶中に完成予想図を見せることでプレイヤーにわかりやすくする
 /// </summary>
 public class MeshManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _parentObj = default;
+    private GameObject _jyusin;
 
-    [SerializeField]
-    private GameObject _weaponHandle = default;
+    private int _lowestPosIndex = default;
 
-    private static Vector3 _handlePos = default;
+    private int _rightmostIndex = default;
 
-    public static Vector3 HandlePos => _handlePos;
-
-    private Vector3 _lowestPos = default;
+    private int _leftmostIndex = default;
 
     private GameObject _go = default;
 
@@ -59,9 +49,10 @@ public class MeshManager : MonoBehaviour
 
     private Vector2 _firstCenterPos = default;
 
+    public Vector2 FirstCenterPos => _firstCenterPos;
+
     [SerializeField, Tooltip("中心の座標")]
     private Vector2 _centerPos = default;
-
     public Vector2 CentorPos => _centerPos;
 
     [SerializeField, Tooltip("双剣用の中心の座標")]
@@ -73,20 +64,22 @@ public class MeshManager : MonoBehaviour
     [SerializeField, Tooltip("叩ける範囲")]
     private float _minRange = 1.5f;
 
+    [SerializeField, Tooltip("大きさの限界")]
+    private float _sizeLimit = default;
+
+    private float _size = default;
+
     private int _indexNum = default;
 
     private float _dis = 1000f;
 
     public static bool _isFinished;
 
-
     private SaveData _saveData;
     public SaveData SaveData => _saveData;
 
     [SerializeField]
     private List<Color> _setColor = new List<Color>();
-
-    public List<Color> SetColor { get { return _setColor; } }
 
     [SerializeField]
     private string _nextSceneName = default;
@@ -96,6 +89,14 @@ public class MeshManager : MonoBehaviour
     [SerializeField]
     private GameObject _allPanel = default;
 
+#if UNITY_EDITOR
+    public WeaponType _weaponType;
+    public bool _isGS;
+    public bool _isDB;
+    public bool _isH;
+    public bool _isS;
+#endif
+
     [ContextMenu("Make mesh from model")]
 
     private void Awake()
@@ -103,6 +104,24 @@ public class MeshManager : MonoBehaviour
         _myMesh = new Mesh();
         _saveData = new SaveData();
         SaveManager.Initialize();
+#if UNITY_EDITOR
+        if (_isGS)
+        {
+            _weaponType = WeaponType.GreatSword;
+        }
+        if (_isDB)
+        {
+            _weaponType = WeaponType.DualBlades;
+        }
+        if (_isH)
+        {
+            _weaponType = WeaponType.Hammer;
+        }
+        if (_isS)
+        {
+            _weaponType = WeaponType.Spear;
+        }
+#endif
     }
 
     void Start()
@@ -110,12 +129,16 @@ public class MeshManager : MonoBehaviour
         _isFinished = false;
         _firstCenterPos = _centerPos;
 
+        _rightmostIndex = 4;
+        _leftmostIndex = 0;
+
         _weaponSaveData = new WeaponSaveData();
 
         if (!_isSouken)
         {
             CreateMesh();
         }
+        // 作成後に二つ作成することに成功したから双剣用はもういらないかも
         else
         {
             CreateSouken("Souken1", _sCenterPos.x, _sCenterPos.y);
@@ -124,16 +147,21 @@ public class MeshManager : MonoBehaviour
     }
     void Update()
     {
+        _jyusin.transform.position = _centerPos;
         if (_isFinished)
         {
             return;
         }
 
         _myMesh.SetColors(_setColor);
+
+        _centerPos = GetCentroid(_myVertices);
+
         if (Input.GetMouseButtonDown(0))
         {
+            _size = GetRange();
+
             Calculation();
-            _centerPos = GetCentroid(_myVertices);
         }
     }
 
@@ -153,6 +181,15 @@ public class MeshManager : MonoBehaviour
             }
         }
 
+        _dis = 1000f;
+
+        // 何かの不都合を感じてこれ書いたけどたぶんいらない。また不都合を感じた時のために残しておく
+        //if (_indexNum == 2)
+        //{
+        //    Debug.Log("一番下の頂点は触れません");
+        //    return;
+        //}
+
         // タップ位置と近い頂点との距離(ti)
         float tiDis = Vector3.Distance(worldPos, _centerPos);
 
@@ -165,12 +202,18 @@ public class MeshManager : MonoBehaviour
         float disX = worldPos.x - _myVertices[_indexNum].x;
         float disY = worldPos.y - _myVertices[_indexNum].y;
 
-        // 叩いた頂点がメッシュの内部に入り込むことを避けたい
-        // 現状スタート時の中心からずれなければ入り込まない判定をとれる
-        // が、各頂点がずれていくとうまく動かない(中心点が連動しないから)
+        // メッシュの過剰なめり込みと収縮防止
         if (toDis < _minRange && toDis > ioDis)
         {
             Debug.Log("これ以上中に打ち込めません");
+            return;
+        }
+
+        // メッシュの過剰な拡大を防止
+        if (_size >= _sizeLimit && ioDis >= toDis && _indexNum == _rightmostIndex
+            || _size >= _sizeLimit && ioDis >= toDis && _indexNum == _leftmostIndex)
+        {
+            Debug.Log("これ以上横に大きくできません");
             return;
         }
 
@@ -185,7 +228,6 @@ public class MeshManager : MonoBehaviour
 
         _myMesh.SetVertices(_myVertices);
 
-        _dis = 1000f;
     }
 
     /// <summary>
@@ -194,34 +236,57 @@ public class MeshManager : MonoBehaviour
     /// <param name="weapon"></param>
     public void SaveMesh()
     {
-        switch (GameManager.BlacksmithType)
+#if UNITY_EDITOR
+        if (_isGS)
         {
-            case WeaponType.GreatSword:
-                {
-                    BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
-                }
-                break;
-            case WeaponType.DualBlades:
-                {
-                    BaseSaveMesh(SaveManager.DUALBLADES, WeaponSaveData.DBData);
-                }
-                break;
-            case WeaponType.Hammer:
-                {
-                    BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
-                }
-                break;
-            case WeaponType.Spear:
-                {
-                    BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
-                }
-                break;
-            default:
-                {
-                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
-                }
-                return;
+            BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
         }
+        else if (_isDB)
+        {
+            BaseSaveMesh(SaveManager.DUALBLADESFILEPATH, WeaponSaveData.DBData);
+        }
+        else if (_isH)
+        {
+            BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
+        }
+        else if (_isS)
+        {
+            BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
+        }
+
+        else
+#endif
+        {
+            switch (GameManager.BlacksmithType)
+            {
+                case WeaponType.GreatSword:
+                    {
+                        BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
+                    }
+                    break;
+                case WeaponType.DualBlades:
+                    {
+                        BaseSaveMesh(SaveManager.DUALBLADESFILEPATH, WeaponSaveData.DBData);
+                    }
+                    break;
+                case WeaponType.Hammer:
+                    {
+                        BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
+                    }
+                    break;
+                case WeaponType.Spear:
+                    {
+                        BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
+                    }
+                    break;
+                default:
+                    {
+                        Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
+                    }
+                    return;
+            }
+        }
+
     }
 
     private void BaseSaveMesh(string fileName, SaveData data)
@@ -229,6 +294,9 @@ public class MeshManager : MonoBehaviour
         data._prefabName = GameManager.BlacksmithType.ToString();
         data._myVertices = _myVertices;
         data._myTriangles = _myTriangles;
+        data._lowestPosIndex = _lowestPosIndex;
+        data._disX = _go.transform.position.x - _myVertices[_lowestPosIndex].x;
+        data._disY = _go.transform.position.y - _myVertices[_lowestPosIndex].y;
         data._colorList = _setColor;
         SaveManager.Save(fileName, data);
     }
@@ -268,18 +336,27 @@ public class MeshManager : MonoBehaviour
         {
             return;
         }
+
+        var pos = _myVertices[3];
+        for (int i = 0; i < _myVertices.Length; i++)
+        {
+            if (pos.y > _myVertices[i].y)
+            {
+                pos = _myVertices[i];
+                _lowestPosIndex = i;
+            }
+        }
         _isFinished = true;
         _allPanel.SetActive(true);
         SaveMesh();
         SoundManager.Instance.CriAtomPlay(CueSheet.CueSheet_0, "SE_Blacksmith_Finish");
-        await UniTask.DelayFrame(2000);
+        await UniTask.DelayFrame(500);
         SceneManager.LoadScene(_nextSceneName);
     }
 
     public void CreateMesh()
     {
         _go = new GameObject("WeaponBase");
-        _go.transform.parent = _parentObj.transform;
 
         _meshFilter = _go.AddComponent<MeshFilter>();
 
@@ -344,20 +421,6 @@ public class MeshManager : MonoBehaviour
         _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
         _meshFilter.mesh = _myMesh;
         _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
-
-        _lowestPos = _myVertices[0];
-
-        for (int i = 0; i < _myVertices.Length; i++)
-        {
-            if (_lowestPos.y > _myVertices[i].y)
-            {
-                _lowestPos = _myVertices[i];
-            }
-        }
-
-        //_handlePos = _lowestPos - new Vector3(0, 0.5f, 0);
-
-        //_weaponHandle.transform.position = _handlePos;
     }
 
     private void CreateSouken(string name, float sX, float sY)
@@ -367,8 +430,6 @@ public class MeshManager : MonoBehaviour
         _meshFilter = go.AddComponent<MeshFilter>();
 
         _meshRenderer = go.AddComponent<MeshRenderer>();
-
-        // _radiuses = new float[_nVertices];   
 
         _myVertices = new Vector3[_nVertices];
 
@@ -435,7 +496,7 @@ public class MeshManager : MonoBehaviour
     /// メッシュの重心を取得する関数
     /// </summary>
     /// <param name="vertices"></param>
-    /// <returns></returns>
+    /// <returns>メッシュの重心座標</returns>
     private Vector3 GetCentroid(Vector3[] vertices)
     {
         Vector3 centroid = Vector3.zero;
@@ -457,6 +518,31 @@ public class MeshManager : MonoBehaviour
 
         return centroid;
     }
+
+    /// <summary>
+    /// メッシュの大きさを測る関数
+    /// </summary>
+    /// <returns>メッシュの横のサイズ</returns>
+    private float GetRange()
+    {
+        for (int i = 0; i < _myVertices.Length; i++)
+        {
+            if (_myVertices[_rightmostIndex].x < _myVertices[i].x)
+            {
+                _rightmostIndex = i;
+            }
+
+            if (_myVertices[_leftmostIndex].x > _myVertices[i].x)
+            {
+                _leftmostIndex = i;
+            }
+        }
+
+        var dis = _myVertices[_rightmostIndex].x - _myVertices[_leftmostIndex].x;
+
+        return Mathf.Abs(dis);
+    }
+
 }
 
 

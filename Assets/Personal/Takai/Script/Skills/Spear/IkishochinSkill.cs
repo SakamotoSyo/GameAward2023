@@ -8,6 +8,7 @@ public class IkishochinSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     float _subtractValue = 0.2f;
+    
     public IkishochinSkill()
     {
         SkillName = "意気消沈";
@@ -16,6 +17,17 @@ public class IkishochinSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "敵の攻撃力20%を下げる";
     }
+    
+    private void Start()
+    {
+        _anim = GetComponent<PlayableDirector>();
+    }
+
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
@@ -23,6 +35,7 @@ public class IkishochinSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");

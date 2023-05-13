@@ -18,6 +18,17 @@ public class KudakiuchiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "攻撃した武器に継続ダメージを受ける状態を付与";
     }
+    
+    private void Start()
+    {
+        _anim = GetComponent<PlayableDirector>();
+    }
+
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
@@ -25,6 +36,7 @@ public class KudakiuchiSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());

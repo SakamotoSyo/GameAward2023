@@ -2,6 +2,7 @@ Shader "Unlit/VertexColorShader"
 {
 	SubShader
 	{
+	  Cull Off
 	  Pass
 	  {
 		CGPROGRAM

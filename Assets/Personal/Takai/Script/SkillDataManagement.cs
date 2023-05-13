@@ -47,7 +47,7 @@ public class SkillDataManagement : MonoBehaviour
 
     public bool OnUseCheck(SkillBase skill)
     {
-        return skill.IsUseCheck;
+        return skill.IsUseCheck(_actorGenerator.PlayerController);
     }
 
     public void OnSkillUse(ActorAttackType actorType, string skillName)
@@ -55,6 +55,7 @@ public class SkillDataManagement : MonoBehaviour
         SkillBase skill = _skills.Find(skill => skill.name == skillName);
         if (skill != null)
         {
+            
             _pStatus = _actorGenerator.PlayerController;
             _eStatus = _actorGenerator.EnemyController;
             Debug.Log(skill.name);

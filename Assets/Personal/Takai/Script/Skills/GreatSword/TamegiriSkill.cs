@@ -17,6 +17,16 @@ public class TamegiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "剣を大きく振りかぶる攻撃";
     }
+    private void Start()
+    {
+        _anim = GetComponent<PlayableDirector>();
+    }
+
+    
+    public override bool IsUseCheck(PlayerController player)
+    {
+        return true;
+    }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
@@ -25,6 +35,7 @@ public class TamegiriSkill : SkillBase
         _enemyStatus = enemy;
         _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
+        _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());
