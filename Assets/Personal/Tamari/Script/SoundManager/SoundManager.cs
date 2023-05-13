@@ -112,7 +112,8 @@ public class SoundManager// : Singleton<SoundManager>
 public enum CueSheet
 {
     CueSheet_0,
-    ME
+    ME,
+    SE
 }
 
 
