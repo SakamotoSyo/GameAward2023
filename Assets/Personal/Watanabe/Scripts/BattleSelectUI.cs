@@ -23,7 +23,7 @@ public class BattleSelectUI : MonoBehaviour
         _playerStatus = _playerController.PlayerStatus;
         _enemyController = _generator.EnemyController;
 
-        _actionUi[_index].DOScale(new Vector3(2.5f, 2.5f, 1f), 0.2f);
+        _actionUi[0].DOScale(new Vector3(1.2f, 1.2f, 1f), 0.2f);
     }
 
     private void Update()
@@ -50,13 +50,13 @@ public class BattleSelectUI : MonoBehaviour
 
     private void BattleSelect(int dir)
     {
-        _actionUi[_index].DOScale(new Vector3(2f, 2f, 1f), 0.2f);
+        _actionUi[_index].DOScale(new Vector3(1f, 1f, 1f), 0.2f);
 
         if (_index != dir)
         {
             _index = dir;
         }
-        _actionUi[_index].DOScale(new Vector3(2.5f, 2.5f, 1f), 0.2f);
+        _actionUi[_index].DOScale(new Vector3(1.2f, 1.2f, 1f), 0.2f);
     }
 
     private void Attack()
