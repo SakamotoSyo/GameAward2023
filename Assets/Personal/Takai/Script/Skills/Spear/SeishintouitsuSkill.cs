@@ -10,7 +10,7 @@ public class SeishintouitsuSkill : SkillBase
     private int _count;
     private float _value;
     private bool _isSkill = false;
-
+    
     public SeishintouitsuSkill()
     {
         SkillName = "精神統一";
@@ -18,8 +18,13 @@ public class SeishintouitsuSkill : SkillBase
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "3ターンの間、会心率%と会心時のダメージが20%上昇(発動ターン含まず）";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
     
     public override bool IsUseCheck(PlayerController player)
     {

@@ -13,8 +13,13 @@ public class TemplateSkill : SkillBase
         Damage = 0;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
 
     public override bool IsUseCheck(PlayerController player)
     {

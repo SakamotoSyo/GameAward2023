@@ -8,6 +8,7 @@ public class IkishochinSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     float _subtractValue = 0.2f;
+    
     public IkishochinSkill()
     {
         SkillName = "意気消沈";
@@ -15,8 +16,13 @@ public class IkishochinSkill : SkillBase
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "敵の攻撃力20%を下げる";
+    }
+    
+    private void Start()
+    {
         _anim = GetComponent<PlayableDirector>();
     }
+
     
     public override bool IsUseCheck(PlayerController player)
     {
