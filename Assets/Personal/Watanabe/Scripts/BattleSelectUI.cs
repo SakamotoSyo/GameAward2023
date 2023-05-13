@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class BattleSelectUI : MonoBehaviour
 {
     [SerializeField] private Transform[] _actionUi = new Transform[4];
+    [SerializeField] private Text[] _skillText = new Text[3];
 
     [SerializeField] private GameObject _commandUI = default;
     [SerializeField] private GameObject _infoUI = default;
@@ -57,6 +59,8 @@ public class BattleSelectUI : MonoBehaviour
             _index = dir;
         }
         _actionUi[_index].DOScale(new Vector3(1.2f, 1.2f, 1f), 0.2f);
+
+        SkillInfo();
     }
 
     private void Attack()
@@ -91,11 +95,6 @@ public class BattleSelectUI : MonoBehaviour
             {
                 //必殺技
                 Debug.Log("必殺技");
-                SkillBase special = _playerController.PlayerSkill.SpecialAttack;
-                if (special)
-                {
-                    _skillDataManagement.OnSkillUse(ActorAttackType.Player, special.name);
-                }
                 _infoUI.SetActive(false);
             }
             else if (_actionUi[num] == _actionUi[3])
@@ -114,6 +113,68 @@ public class BattleSelectUI : MonoBehaviour
             _battleChangeWeaponCs.ChangeWeaponUiOpen();
             //TODO:遷移の機能を別の場所に移す
             //_battleStateController.ActorStateEnd();
+        }
+    }
+
+    private void SkillInfo()
+    {
+        var currentUi = _index % _actionUi.Length;
+        if (currentUi < 0)
+        {
+            currentUi += _actionUi.Length;
+        }
+
+        if (_actionUi[currentUi] == _actionUi[2])
+        {
+            _infoUI.SetActive(true);
+            SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
+            if (skill1 != null)
+            {
+                _skillText[0].text = skill1.name;
+                _skillText[1].text = skill1.Damage.ToString();
+                _skillText[2].text = skill1.FlavorText;
+                Debug.Log("テキストです");
+            }
+            else
+            {
+                _skillText[0].text = "NoSkill";
+            }
+
+        }
+        else if (_actionUi[currentUi] == _actionUi[3])
+        {
+            _infoUI.SetActive(true);
+            SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
+            if (skill2 != null)
+            {
+                _skillText[0].text = skill2.name;
+                _skillText[1].text = skill2.Damage.ToString();
+                _skillText[2].text = skill2.FlavorText;
+            }
+            else
+            {
+                _skillText[0].text = "NoSkill";
+            }
+
+        }
+        else if (_actionUi[currentUi] == _actionUi[1])
+        {
+            _infoUI.SetActive(true);
+            var special = _playerController.PlayerSkill.SpecialAttack;
+            if (special != null)
+            {
+                _skillText[0].text = special.name;
+                _skillText[1].text = special.Damage.ToString();
+                _skillText[2].text = special.FlavorText;
+            }
+            else
+            {
+                _skillText[0].text = "NoSkill";
+            }
+        }
+        else
+        {
+            _infoUI.SetActive(false);
         }
     }
 }
