@@ -25,12 +25,16 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
     {
         if (_preparationScript.SetWeaponTypeConfirmation(_weaponData) && !_isSet)
         {
+            gameObject.transform.GetChild(1).gameObject.GetComponent<Image>().color = Color.green;
+
             _button.image.color = Color.green;
             _isSet = true;
             Debug.Log("Set‚µ‚Ü‚µ‚½");
         }
-        else if (_isSet) 
+        else if (_isSet)
         {
+            gameObject.transform.GetChild(1).gameObject.GetComponent<Image>().color = Color.cyan;
+
             _preparationScript.WeaponDatas.Remove(_weaponData);
             _button.image.color = Color.white;
             _isSet = false;
