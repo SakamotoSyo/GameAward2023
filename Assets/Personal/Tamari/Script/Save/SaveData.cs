@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
-    public string _prefabName;
-    public Vector3[] _myVertices;
-    public int[] _myTriangles;
-    public int _lowestPosIndex;
-    public float _disX;
-    public float _disY;
-    public List<Color> _colorList = new List<Color>();
+    public string PREHABNAME;
+    public Vector3[] MYVERTICES;
+    public int[] MYTRIANGLES;
+    public int LOWESTPOSINDEX;
+    public float DISX;
+    public float DISY;
+    public List<Color> COLORLIST = new List<Color>();
 }
