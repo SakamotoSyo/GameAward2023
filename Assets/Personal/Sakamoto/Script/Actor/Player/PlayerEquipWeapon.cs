@@ -19,14 +19,50 @@ public class PlayerEquipWeapon
     private ReactiveProperty<float> _criticalRate = new();
     private ReactiveProperty<float> _maxDurable = new();
     private ReactiveProperty<float> _currentDurable = new();
+    private bool _isEpicSkill1 = false, _isEpicSkill2 = false;
     private WeaponData.AttributeType _attribute;
     private WeaponType _weponType;
     [Tooltip("âΩî‘ñ⁄Ç…éùÇ¡ÇƒÇ¢ÇÈïêäÌÇ©")]
     private int _weaponNum;
 
+
+    public float GetPowerPram()
+    {
+        if (_isEpicSkill2) 
+        {
+            return _offensivePower.Value * 1.4f;
+        } 
+        return _offensivePower.Value;
+    }
+
+    public float GetWeightPram() 
+    {
+        if (_isEpicSkill2) 
+        {
+            return _criticalRate.Value * 1.4f;
+        }
+        return _criticalRate.Value;
+    }
+
+    public float GetCriticalPram() 
+    {
+        if (_isEpicSkill2) 
+        {
+            return _criticalRate.Value * 1.4f;
+        }
+        return _criticalRate.Value; 
+    }
+
     public virtual void AddDamage(float damage)
     {
-        _currentDurable.Value -= damage;
+        if (_isEpicSkill2)
+        {
+            ChangeCurrentDurable(damage * -1 * 2);
+        }
+        else 
+        {
+            ChangeCurrentDurable(damage * -1);
+        }
     }
 
     /// <summary>
@@ -37,21 +73,77 @@ public class PlayerEquipWeapon
     /// <returns></returns>
     public bool DownJudge(float damage)
     {
+        if (_isEpicSkill2)
+        {
+            return 0 < _currentDurable.Value - damage * 2;
+        }
         return 0 < _currentDurable.Value - damage;
     }
 
     /// <summary>
     /// ïêäÌÇïœçXÇ∑ÇÈç€Ç…égópÇ∑ÇÈä÷êî
     /// </summary>
-    public void ChangeWeapon(WeaponData weaponData, int arrayNum) 
+    public void ChangeWeapon(WeaponData weaponData, int arrayNum)
     {
         _offensivePower.Value = weaponData.OffensivePower;
         _weaponWeight.Value = weaponData.WeaponWeight;
         _criticalRate.Value = weaponData.CriticalRate;
         _maxDurable.Value = weaponData.MaxDurable;
-        _currentDurable.Value = weaponData.CurrentDurable;
+        ChangeCurrentDurable(weaponData.CurrentDurable);
         _attribute = weaponData.Attribute;
         _weponType = weaponData.WeaponType;
         _weaponNum = arrayNum;
     }
+
+    public void FluctuationStatus(FluctuationStatusClass fluctuation)
+    {
+        _offensivePower.Value += fluctuation.OffensivePower;
+        _weaponWeight.Value += fluctuation.WeaponWeight;
+        _criticalRate.Value += fluctuation.CriticalRate;
+        _maxDurable.Value += fluctuation.MaxDurable;
+        ChangeCurrentDurable(fluctuation.CurrentDurable);
+    }
+
+    public void EpicSkill1()
+    {
+        _maxDurable.Value = 5;
+        _currentDurable.Value = 5;
+        _isEpicSkill1 = true;
+    }
+
+    public void EpicSkill2() 
+    {
+        _isEpicSkill2 = true; 
+    }
+
+    private void ChangeCurrentDurable(float num)
+    {
+        if (_isEpicSkill1)
+        {
+
+        }
+        else
+        {
+            _currentDurable.Value += num;
+        }
+    }
 }
+
+public class FluctuationStatusClass
+{
+    public float OffensivePower;
+    public float WeaponWeight;
+    public float CriticalRate;
+    public float MaxDurable;
+    public float CurrentDurable;
+
+    public FluctuationStatusClass(float offensivePower, float weaponWeight, float criticalRate, float maxDurable, float currentDurable)
+    {
+        OffensivePower = offensivePower;
+        WeaponWeight = weaponWeight;
+        CriticalRate = criticalRate;
+        MaxDurable = maxDurable;
+        CurrentDurable = currentDurable;
+    }
+}
+

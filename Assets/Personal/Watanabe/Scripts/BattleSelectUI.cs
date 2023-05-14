@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class BattleSelectUI : MonoBehaviour
 {
@@ -19,6 +19,8 @@ public class BattleSelectUI : MonoBehaviour
     private PlayerStatus _playerStatus = default;
     private EnemyController _enemyController = default;
 
+    public Transform[] ActionUI => _actionUi;
+
     private void Start()
     {
         _playerController = _generator.PlayerController;
@@ -30,6 +32,7 @@ public class BattleSelectUI : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             BattleSelect(0);
@@ -47,10 +50,13 @@ public class BattleSelectUI : MonoBehaviour
             BattleSelect(1);
         }
 
-        Attack();
+        if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
+        {
+            Attack();
+        }
     }
 
-    private void BattleSelect(int dir)
+    public void BattleSelect(int dir)
     {
         _actionUi[_index].DOScale(new Vector3(1f, 1f, 1f), 0.2f);
 
@@ -63,57 +69,54 @@ public class BattleSelectUI : MonoBehaviour
         SkillInfo();
     }
 
-    private void Attack()
+    public void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
+        var num = _index % _actionUi.Length;
+        if (num < 0)
         {
-            var num = _index % _actionUi.Length;
-            if (num < 0)
-            {
-                num += _actionUi.Length;
-            }
-
-
-            if (_actionUi[num] == _actionUi[0])
-            {
-                Debug.Log("attack");
-                _infoUI.SetActive(false);
-                _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack));
-            }
-            else if (_actionUi[num] == _actionUi[1])
-            {
-                //skill 1
-
-                _infoUI.SetActive(true);
-                SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
-                if (skill1)
-                {
-                    _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
-                }
-            }
-            else if (_actionUi[num] == _actionUi[2])
-            {
-                //必殺技
-                Debug.Log("必殺技");
-                _infoUI.SetActive(false);
-            }
-            else if (_actionUi[num] == _actionUi[3])
-            {
-                //skill 2
-
-                _infoUI.SetActive(true);
-                SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
-                if (skill2)
-                {
-                    _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
-                }
-            }
-
-            _commandUI.SetActive(false);
-            _battleChangeWeaponCs.ChangeWeaponUiOpen();
-            //TODO:遷移の機能を別の場所に移す
-            //_battleStateController.ActorStateEnd();
+            num += _actionUi.Length;
         }
+
+
+        if (_actionUi[num] == _actionUi[0])
+        {
+            Debug.Log("attack");
+            _infoUI.SetActive(false);
+            _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack));
+        }
+        else if (_actionUi[num] == _actionUi[1])
+        {
+            //skill 1
+
+            _infoUI.SetActive(true);
+            SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
+            if (skill1)
+            {
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
+            }
+        }
+        else if (_actionUi[num] == _actionUi[2])
+        {
+            //必殺技
+            Debug.Log("必殺技");
+            _infoUI.SetActive(false);
+        }
+        else if (_actionUi[num] == _actionUi[3])
+        {
+            //skill 2
+
+            _infoUI.SetActive(true);
+            SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
+            if (skill2)
+            {
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
+            }
+        }
+
+        _commandUI.SetActive(false);
+        _battleChangeWeaponCs.ChangeWeaponUiOpen();
+        //TODO:遷移の機能を別の場所に移す
+        //_battleStateController.ActorStateEnd();
     }
 
     private void SkillInfo()
@@ -124,7 +127,7 @@ public class BattleSelectUI : MonoBehaviour
             currentUi += _actionUi.Length;
         }
 
-        if (_actionUi[currentUi] == _actionUi[2])
+        if (_actionUi[currentUi] == _actionUi[1])
         {
             _infoUI.SetActive(true);
             SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
@@ -138,10 +141,12 @@ public class BattleSelectUI : MonoBehaviour
             else
             {
                 _skillText[0].text = "NoSkill";
+                _skillText[1].text = "";
+                _skillText[2].text = "";
             }
 
         }
-        else if (_actionUi[currentUi] == _actionUi[3])
+        else if (_actionUi[currentUi] == _actionUi[2])
         {
             _infoUI.SetActive(true);
             SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
@@ -154,10 +159,12 @@ public class BattleSelectUI : MonoBehaviour
             else
             {
                 _skillText[0].text = "NoSkill";
+                _skillText[1].text = "";
+                _skillText[2].text = "";
             }
 
         }
-        else if (_actionUi[currentUi] == _actionUi[1])
+        else if (_actionUi[currentUi] == _actionUi[3])
         {
             _infoUI.SetActive(true);
             var special = _playerController.PlayerSkill.SpecialAttack;
@@ -170,6 +177,8 @@ public class BattleSelectUI : MonoBehaviour
             else
             {
                 _skillText[0].text = "NoSkill";
+                _skillText[1].text = "";
+                _skillText[2].text = "";
             }
         }
         else
