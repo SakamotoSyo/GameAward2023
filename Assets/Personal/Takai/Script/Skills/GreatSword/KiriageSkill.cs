@@ -49,9 +49,9 @@ public class KiriageSkill : SkillBase
     protected override void SkillEffect()
     {
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
-        // スキルの効果処理を実装する
+        _enemyStatus.AddDamage(dmg + Damage);
 
-        if (_count <= Turn)
+        if (++_count <= Turn)
         {
             FluctuationStatusClass fluctuation;
             if (_count != 0)
@@ -62,8 +62,6 @@ public class KiriageSkill : SkillBase
                 _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
             }
 
-            _count++;
-            _enemyStatus.AddDamage(dmg + Damage);
             _buffValue = dmg * (AddDamageValue * _count);
             fluctuation = new FluctuationStatusClass(
                 _buffValue,
@@ -77,8 +75,7 @@ public class KiriageSkill : SkillBase
     {
         if (_count > 0)
         {
-            _turnCount++;
-            if (_turnCount >= 3)
+            if (++_turnCount >= Turn)
             {
                 _count--;
 
