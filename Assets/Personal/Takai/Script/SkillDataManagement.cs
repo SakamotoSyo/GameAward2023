@@ -67,6 +67,12 @@ public class SkillDataManagement : MonoBehaviour
         }
     }
 
+    public bool CounterCheck()
+    {
+        //_skillUsePoolにカウンターがあるか調べてSkillの関数を発動する
+        return default;
+    }
+
     public void TurnCall()
     {
         Debug.Log("TurnCall呼び出し");
