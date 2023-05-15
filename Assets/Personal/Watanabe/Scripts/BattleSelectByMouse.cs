@@ -16,8 +16,6 @@ public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerC
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log(_index);
-
         _selectUI.BattleSelect(_index);
     }
 

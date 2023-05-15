@@ -90,12 +90,14 @@ public class UIManager : MonoBehaviour
 
     public void SwitchCheckForReset(bool flag)
     {
+        Debug.Log("リセット確認のパネル表示");
         _allPanel.SetActive(flag);
         _panelForReset.SetActive(flag);
     }
 
     public void SwitchCheckForSample(bool flag)
     {
+        Debug.Log("サンプル生成確認のパネル表示");
         _allPanel.SetActive(flag);
         _panelForSample.SetActive(flag);
     }

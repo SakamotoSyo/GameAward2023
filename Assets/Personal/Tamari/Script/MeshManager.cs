@@ -87,6 +87,9 @@ public class MeshManager : MonoBehaviour
     WeaponSaveData _weaponSaveData;
 
     [SerializeField]
+    private ActiveWeaponMesh _activeWeaponMesh;
+
+    [SerializeField]
     private GameObject _allPanel = default;
 
 #if UNITY_EDITOR
@@ -220,6 +223,7 @@ public class MeshManager : MonoBehaviour
         if (Mathf.Abs(disX) < _radius / 3 && Mathf.Abs(disY) < _radius / 3)
         {
             _myVertices[_indexNum] -= new Vector3(disX, disY, 0);
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith");
         }
         else
         {
@@ -291,13 +295,13 @@ public class MeshManager : MonoBehaviour
 
     private void BaseSaveMesh(string fileName, SaveData data)
     {
-        data._prefabName = GameManager.BlacksmithType.ToString();
-        data._myVertices = _myVertices;
-        data._myTriangles = _myTriangles;
-        data._lowestPosIndex = _lowestPosIndex;
-        data._disX = _go.transform.position.x - _myVertices[_lowestPosIndex].x;
-        data._disY = _go.transform.position.y - _myVertices[_lowestPosIndex].y;
-        data._colorList = _setColor;
+        data.PREHABNAME = GameManager.BlacksmithType.ToString();
+        data.MYVERTICES = _myVertices;
+        data.MYTRIANGLES = _myTriangles;
+        data.LOWESTPOSINDEX = _lowestPosIndex;
+        data.DISX = _go.transform.position.x - _myVertices[_lowestPosIndex].x;
+        data.DISY = _go.transform.position.y - _myVertices[_lowestPosIndex].y;
+        data.COLORLIST = _setColor;
         SaveManager.Save(fileName, data);
     }
 
@@ -490,6 +494,40 @@ public class MeshManager : MonoBehaviour
         _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
         _meshFilter.mesh = _myMesh;
         _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
+    }
+
+
+    public void ActiveSelectWeapon()
+    {
+        switch (GameManager.BlacksmithType)
+        {
+            case WeaponType.GreatSword:
+                {
+
+                }
+                break;
+            case WeaponType.DualBlades:
+                {
+
+                }
+                break;
+            case WeaponType.Hammer:
+                {
+
+                }
+                break;
+            case WeaponType.Spear:
+                {
+
+                }
+                break;
+            default:
+                {
+                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
+                }
+                return;
+        }
+
     }
 
     /// <summary>
