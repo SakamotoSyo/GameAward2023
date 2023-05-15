@@ -64,10 +64,11 @@ public class KiriageSkill : SkillBase
 
             _count++;
             _enemyStatus.AddDamage(dmg + Damage);
-            fluctuation = new FluctuationStatusClass(
-                dmg * (AddDamageValue * _count),
-                0, 0, 0, 0);
             _buffValue = dmg * (AddDamageValue * _count);
+            fluctuation = new FluctuationStatusClass(
+                _buffValue,
+                0, 0, 0, 0);
+            
             _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
         }
     }
