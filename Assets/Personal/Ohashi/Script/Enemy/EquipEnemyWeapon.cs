@@ -93,4 +93,13 @@ public class EquipEnemyWeapon
         _weaponWeight = weaponData.WeaponWeight;
     }
 
+    public void FluctuationStatus(FluctuationStatusClass fluctuation)
+    {
+        _currentOffensivePower += fluctuation.OffensivePower;
+        _currentWeaponWeight += fluctuation.WeaponWeight;
+        _currentCriticalRate += fluctuation.CriticalRate;
+        _maxDurable += fluctuation.MaxDurable;
+        _currentDurable.Value += fluctuation.CurrentDurable;
+    }
+
 }
