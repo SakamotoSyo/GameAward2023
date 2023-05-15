@@ -7,5 +7,6 @@ public enum WeaponType
     GreatSword,
     DualBlades,
     Hammer,
-    Spear
+    Spear,
+    Any
 }
