@@ -14,6 +14,7 @@ public class SkillGenerator : EditorWindow
     private WeaponType _weapon;
     private SkillType _type;
     private SkillDataManagement _skillDataManagement;
+    private string _flaverText = "";
 
     private string _className = "";
 
@@ -34,6 +35,7 @@ public class SkillGenerator : EditorWindow
         _weapon = (WeaponType)EditorGUILayout.EnumPopup("武器種類", _weapon);
         _type = (SkillType)EditorGUILayout.EnumPopup("タイプ", _type);
         _className = EditorGUILayout.TextField("クラス名", _className);
+        _flaverText = EditorGUILayout.TextField("フレーバーテキスト", _flaverText);
 
         if (GUILayout.Button("リセット"))
         {
@@ -58,6 +60,7 @@ public class SkillGenerator : EditorWindow
         _skillName = "";
         _damage = 0;
         _className = "";
+        _flaverText = "";
     }
 
     private void CreatPrefab()
@@ -115,6 +118,9 @@ public class SkillGenerator : EditorWindow
             case WeaponType.Spear:
                 path = $"Assets/Personal/Takai/Script/Skills/Spear/{_className}.cs";
                 break;
+            case WeaponType.Any:
+                path = $"Assets/Personal/Takai/Script/Skills/Any/{_className}.cs";
+                break;
         }
 
         if (AssetDatabase.LoadAssetAtPath(path, typeof(MonoScript)))
@@ -130,13 +136,8 @@ public class SkillGenerator : EditorWindow
 
     public class " + _className + @" : SkillBase
     {
-        public override string SkillName { get; protected set; }
-        public override int Damage { get; protected set; }
-        public override WeaponType Weapon { get; protected set; }
-        public override SkillType Type { get; protected set; }
-        public override string FlavorText { get; protected set; }
         private PlayableDirector _anim;
-        private PlayerStatus _status;
+        private PlayerController _playerStatus;
 
     public " + _className + @"()
     {
@@ -144,15 +145,28 @@ public class SkillGenerator : EditorWindow
         Damage = " + _damage + @";
         Weapon = (" + typeof(WeaponType) + @")" + (int)_weapon + @";
         Type = (" + typeof(SkillType) + @")" + (int)_type + @";
+        FlavorText = """ + _flaverText + @""";
     }
+        
+        private void Start()
+        {
+            _anim = GetComponent<PlayableDirector>();
+        }
 
-        public async override UniTask UseSkill(PlayerStatus status)
+
+        public override bool IsUseCheck(PlayerController player)
+        {
+            return true;
+        }    
+    
+
+        public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
         {
             Debug.Log(""Use Skill"");
-            _status = status;
+            _playerStatus = player;
             _anim = GetComponent<PlayableDirector>();
-            SkillEffect(status);
-            await UniTask.WaitUntil(() => _anim.state == PlayState.Paused);
+            SkillEffect();
+            await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
             Debug.Log(""Anim End"");
         }
 
@@ -161,9 +175,14 @@ public class SkillGenerator : EditorWindow
             // スキルの効果処理を実装する
         }
 
+        public override bool TurnEnd()
+        {
+            return false;
+        }
+
         public override void BattleFinish()
         {
-            // 戦闘終了時の処理
+
         }
     }";
 
