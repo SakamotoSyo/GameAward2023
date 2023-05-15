@@ -30,6 +30,8 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
             gameObject.transform.GetChild(1).gameObject.SetActive(true);
 
             //_button.image.color = Color.green;
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
+
             _isSet = true;
             Debug.Log("SetÇµÇ‹ÇµÇΩ");
         }
@@ -39,6 +41,8 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
 
             _preparationScript.WeaponDatas.Remove(_weaponData);
             //_button.image.color = Color.white;
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Cancel");
+
             _isSet = false;
             Debug.Log("çÌèúÇµÇ‹ÇµÇΩ");
         }
@@ -50,6 +54,8 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select");
+
         _infoText.text = DataBaseScript.WeaponDescriptionData[_weaponType];
         _infoPanel.SetActive(true);
     }
