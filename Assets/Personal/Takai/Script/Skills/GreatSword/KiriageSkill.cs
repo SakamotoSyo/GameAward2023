@@ -68,7 +68,7 @@ public class KiriageSkill : SkillBase
             fluctuation = new FluctuationStatusClass(
                 _buffValue,
                 0, 0, 0, 0);
-            
+
             _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
         }
     }
@@ -95,8 +95,7 @@ public class KiriageSkill : SkillBase
 
     public override void BattleFinish()
     {
-        FluctuationStatusClass fluctuation = new FluctuationStatusClass(
-            -_buffValue, 0, 0, 0, 0);
+        FluctuationStatusClass fluctuation = new FluctuationStatusClass(-_buffValue, 0, 0, 0, 0);
         _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
 
         _count = 0;
