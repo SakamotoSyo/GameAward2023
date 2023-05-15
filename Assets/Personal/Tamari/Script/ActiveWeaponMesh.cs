@@ -39,6 +39,9 @@ public class ActiveWeaponMesh : MonoBehaviour
     private List<Color> _setColorList = new List<Color>();
 
     [SerializeField]
+    private float _size = default;
+
+    [SerializeField]
     private ActorGenerator _generator;
 
     private PlayerStatus _status;
@@ -46,10 +49,17 @@ public class ActiveWeaponMesh : MonoBehaviour
     private WeaponSaveData _weaponSaveData = default;
     private void Start()
     {
-        _status = _generator.PlayerController.PlayerStatus;
+        if(_generator != null)
+        {
+            _status = _generator.PlayerController.PlayerStatus;
+        }
         _weaponSaveData = new WeaponSaveData();
-        ActiveWeapon();
+
+        // 武器表示をしたいときに呼ぶ
+        // ActiveWeapon();
     }
+
+    //TODO:所持している武器に対応した表示をする
     public void ActiveWeapon()
     {
         //for (int i = 0; i < _status.WeaponDatas.Length; i++)
@@ -58,19 +68,23 @@ public class ActiveWeaponMesh : MonoBehaviour
         //    {
         //        BaseActiveWeapon(_gsImage, _gsPos, WeaponSaveData.GSData);
         //    }
-        //    if (_status.WeaponDatas[i].WeaponType == WeaponType.DualBlades)
+        //    else if (_status.WeaponDatas[i].WeaponType == WeaponType.DualBlades)
         //    {
-        //        BaseActiveWeapon(_dbImage, _dbPos, WeaponSaveData.DBData);
+        //        BaseActiveWeapon(_dbImageL, _dbPosL, WeaponSaveData.DBData);
+
+        //        BaseActiveWeapon(_dbImageR, _dbPosR, WeaponSaveData.DBData);
+
         //    }
-        //    if (_status.WeaponDatas[i].WeaponType == WeaponType.Hammer)
+        //    else if (_status.WeaponDatas[i].WeaponType == WeaponType.Hammer)
         //    {
         //        BaseActiveWeapon(_hImage, _hPos, WeaponSaveData.HData);
         //    }
-        //    if (_status.WeaponDatas[i].WeaponType == WeaponType.Spear)
+        //    else
         //    {
         //        BaseActiveWeapon(_sImage, _sPos, WeaponSaveData.SData);
         //    }
         //}
+
 
         BaseActiveWeapon(_gsImage, _gsPos, WeaponSaveData.GSData);
 
@@ -82,32 +96,39 @@ public class ActiveWeaponMesh : MonoBehaviour
 
         BaseActiveWeapon(_sImage, _sPos, WeaponSaveData.SData);
 
+
+    }
+
+    // TODO:鍛冶シーンで完成予想図を表示できるようにする
+    public void SelectActiveWeapon()
+    {
+
     }
 
     private void BaseActiveWeapon(GameObject weapon, GameObject pos, SaveData data)
     {
-        if (data._myVertices == null)
+        if (data.MYVERTICES == null)
         {
             Debug.Log("選んだ武器のセーブデータはありません");
             return;
         }
         Mesh mesh = new Mesh();
-        mesh.vertices = data._myVertices;
-        mesh.triangles = data._myTriangles;
+        mesh.vertices = data.MYVERTICES;
+        mesh.triangles = data.MYTRIANGLES;
         mesh.SetColors(_setColorList);
 
-        if(weapon == _hImage || weapon == _sImage)
+        if (weapon == _hImage || weapon == _sImage)
         {
-            Vector3 vec = new Vector3(pos.transform.position.x + data._disX,
-                pos.transform.position.y + data._disY, pos.transform.position.z - 1);
+            Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
         }
 
-        else if(weapon == _dbImageR)
+        else if (weapon == _dbImageR)
         {
-            Vector3 vec = new Vector3(pos.transform.position.x - data._disX,
-                pos.transform.position.y + data._disY, pos.transform.position.z);
+            Vector3 vec = new Vector3(pos.transform.position.x - data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z);
 
             weapon.transform.position = vec;
 
@@ -116,13 +137,13 @@ public class ActiveWeaponMesh : MonoBehaviour
 
         else
         {
-            Vector3 vec = new Vector3(pos.transform.position.x + data._disX,
-                pos.transform.position.y + data._disY, pos.transform.position.z);
+            Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z);
 
             weapon.transform.position = vec;
 
         }
-        weapon.transform.parent.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        weapon.transform.parent.localScale = new Vector3(_size, _size, _size);
 
         MeshFilter meshFilter = weapon.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
@@ -131,6 +152,52 @@ public class ActiveWeaponMesh : MonoBehaviour
         meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
     }
 
+    public void BaseActiveWeapon(GameObject weapon, GameObject pos, Vector3[] _myVec, int[] _myTri, float disX, float disY)
+    {
+        if (_myVec == null)
+        {
+            Debug.Log("選んだ武器のセーブデータはありません");
+            return;
+        }
+        Mesh mesh = new Mesh();
+        mesh.vertices = _myVec;
+        mesh.triangles = _myTri;
+        mesh.SetColors(_setColorList);
+
+        if (weapon == _hImage || weapon == _sImage)
+        {
+            Vector3 vec = new Vector3(pos.transform.position.x + disX,
+                pos.transform.position.y + disY, pos.transform.position.z - 1);
+
+            weapon.transform.position = vec;
+        }
+
+        else if (weapon == _dbImageR)
+        {
+            Vector3 vec = new Vector3(pos.transform.position.x - disX,
+                pos.transform.position.y + disY, pos.transform.position.z);
+
+            weapon.transform.position = vec;
+
+            weapon.transform.Rotate(0, 180, 0);
+        }
+
+        else
+        {
+            Vector3 vec = new Vector3(pos.transform.position.x + disX,
+                pos.transform.position.y + disY, pos.transform.position.z);
+
+            weapon.transform.position = vec;
+
+        }
+        weapon.transform.parent.localScale = new Vector3(_size, _size, _size);
+
+        MeshFilter meshFilter = weapon.AddComponent<MeshFilter>();
+        meshFilter.mesh = mesh;
+
+        MeshRenderer meshRenderer = weapon.AddComponent<MeshRenderer>();
+        meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
+    }
 }
 //switch (GameManager.BlacksmithType)
 //{

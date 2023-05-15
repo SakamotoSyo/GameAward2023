@@ -12,9 +12,13 @@ public class IntialPreparationDecisionButton : MonoBehaviour
     {
         if (_preparationScript.WeaponDatas.Count == 2)
         {
+            //SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
+
             var playerData = new PlayerSaveData();
             playerData.WeaponArray = _preparationScript.WeaponDatas.ToArray();
             GameManager.SetPlayerData(playerData);
+            //SceneLoader.LoadScene(_nextScene);
+
             SceneLoader.LoadScene(_nextScene);
         }
         else 

@@ -16,13 +16,13 @@ public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerC
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log(_index);
-
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select");
         _selectUI.BattleSelect(_index);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
         Debug.Log("attack");
         _selectUI.Attack();
     }
