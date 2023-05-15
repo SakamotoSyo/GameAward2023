@@ -6,8 +6,9 @@ public class KyoukaSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
-    private const float DamageFactor = 1.5f;
-    private int _turn;
+    private const float ADDVALUE = 0.5f;
+    private int _turn = 0;
+    private float _buffValue;
 
     public KyoukaSkill()
     {
@@ -17,12 +18,12 @@ public class KyoukaSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "次の技の攻撃力が1.5倍になる(重複なし)。攻撃後自ステータスが元に戻り、プレイヤーがひるむ";
     }
-    
+
     private void Start()
     {
         _anim = GetComponent<PlayableDirector>();
     }
-    
+
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -35,16 +36,20 @@ public class KyoukaSkill : SkillBase
         _anim = GetComponent<PlayableDirector>();
         _anim.Play();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
-    
+
     protected override void SkillEffect()
     {
+        FluctuationStatusClass fluctuation;
+
         if (_turn == 0)
         {
-            _turn++;
-            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value *= DamageFactor;
+            _buffValue = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * ADDVALUE;
+            fluctuation = new FluctuationStatusClass(_buffValue, 0, 0, 0, 0);
+            _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
         }
         else
         {
@@ -55,9 +60,11 @@ public class KyoukaSkill : SkillBase
     public override bool TurnEnd()
     {
         _turn++;
-        if (_turn > 2)
+        if (_turn >= 2)
         {
-            _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value /= DamageFactor;
+            FluctuationStatusClass fluctuation = new FluctuationStatusClass(-_buffValue, 0, 0, 0, 0);
+            _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
+            _buffValue = 0;
             // プレイヤーがひるむ
             _turn = 0;
         }
@@ -67,6 +74,7 @@ public class KyoukaSkill : SkillBase
 
     public override void BattleFinish()
     {
+        _buffValue = 0;
         _turn = 0;
     }
 }
