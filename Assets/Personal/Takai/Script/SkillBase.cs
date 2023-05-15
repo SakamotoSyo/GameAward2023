@@ -22,4 +22,5 @@ public enum SkillType
 {
     Skill,
     Special,
+    Epic,
 }
