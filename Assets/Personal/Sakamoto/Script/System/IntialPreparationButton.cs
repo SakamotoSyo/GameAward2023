@@ -18,6 +18,8 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
     {
         _weaponData = new WeaponData(1000, 1000, 50, 1000, WeaponData.AttributeType.None, _weaponType);
         _button = GetComponent<Button>();
+
+        gameObject.transform.GetChild(1).gameObject.SetActive(false);
     }
 
 
@@ -25,18 +27,18 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
     {
         if (_preparationScript.SetWeaponTypeConfirmation(_weaponData) && !_isSet)
         {
-            gameObject.transform.GetChild(1).gameObject.GetComponent<Image>().color = Color.green;
+            gameObject.transform.GetChild(1).gameObject.SetActive(true);
 
-            _button.image.color = Color.green;
+            //_button.image.color = Color.green;
             _isSet = true;
             Debug.Log("SetÇµÇ‹ÇµÇΩ");
         }
         else if (_isSet)
         {
-            gameObject.transform.GetChild(1).gameObject.GetComponent<Image>().color = Color.cyan;
+            gameObject.transform.GetChild(1).gameObject.SetActive(false);
 
             _preparationScript.WeaponDatas.Remove(_weaponData);
-            _button.image.color = Color.white;
+            //_button.image.color = Color.white;
             _isSet = false;
             Debug.Log("çÌèúÇµÇ‹ÇµÇΩ");
         }
