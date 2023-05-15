@@ -74,6 +74,8 @@ public class KyoukaSkill : SkillBase
 
     public override void BattleFinish()
     {
+        FluctuationStatusClass fluctuation = new FluctuationStatusClass(-_buffValue, 0, 0, 0, 0);
+        _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
         _buffValue = 0;
         _turn = 0;
     }
