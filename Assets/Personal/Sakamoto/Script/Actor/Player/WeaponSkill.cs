@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerSkill
+public class WeaponSkill
 {
     public SkillBase SpecialAttack => _specialAttack;
-    public SkillBase[] PlayerSkillArray => _skillArray;
+    public SkillBase[] WeaponSkillArray => _skillArray;
     public SkillDataManagement SkillDataManagement => _skillDataManagement;
     [Tooltip("•KŽE‹Z")]
     private SkillBase _specialAttack;
@@ -23,22 +23,9 @@ public class PlayerSkill
         }
     }
 
-    public void SaveSkill(PlayerSaveData saveData) 
-    {
-        saveData.SpecialAttack = _specialAttack;
-        saveData.PlayerSkillArray = _skillArray;
-    }
-
     public void ChangeSpecialSkill(SkillBase skill) 
     {
         _specialAttack = skill;
-    }
-
-    public void LoadSkill(PlayerSaveData playerSaveData) 
-    {
-        _skillArray = playerSaveData.PlayerSkillArray;
-        Debug.Log(_skillArray.Length);
-        _specialAttack = playerSaveData.SpecialAttack;
     }
 
     public SkillBase CounterCheck() 

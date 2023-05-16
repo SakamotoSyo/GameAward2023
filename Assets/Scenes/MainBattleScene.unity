@@ -557,6 +557,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95449793}
   m_CullTransparentMesh: 1
+--- !u!114 &95765077 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 66634225, guid: ce246762ac7019d4484fa9ea9a378ce5, type: 3}
+  m_PrefabInstance: {fileID: 702701034}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &118139286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,6 +2667,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749394330}
   m_CullTransparentMesh: 1
+--- !u!114 &761250339 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 66634225, guid: ce246762ac7019d4484fa9ea9a378ce5, type: 3}
+  m_PrefabInstance: {fileID: 458415063}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &807299763
 GameObject:
   m_ObjectHideFlags: 0
@@ -4273,7 +4295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1119593173
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4330,9 +4352,9 @@ MonoBehaviour:
   - {fileID: 1039801335}
   - {fileID: 195655064}
   _oreText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 95765077}
+  - {fileID: 761250339}
+  - {fileID: 1700833579}
   _oreSelectObj: {fileID: 1518915171}
   _enhanceSelectObj: {fileID: 1591514298}
   _skillSelectPanel: {fileID: 550772863}
@@ -4353,7 +4375,7 @@ MonoBehaviour:
   - {fileID: 1252261932}
   _blacksmithSceneName: MeshTestScene
   _resultSceneTest: 0
-  _homeScene: InitialPreparationScene
+  _homeScene: Home
 --- !u!114 &1119593175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6263,7 +6285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1591514299
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6500,6 +6522,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1700833579 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 66634225, guid: ce246762ac7019d4484fa9ea9a378ce5, type: 3}
+  m_PrefabInstance: {fileID: 1803889231}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1706326848 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9008499120592106835, guid: ce246762ac7019d4484fa9ea9a378ce5, type: 3}
@@ -7822,6 +7855,9 @@ MonoBehaviour:
   _battleChangeWeaponCs: {fileID: 1270061012}
   _skillDataManagement: {fileID: 1792050435}
   _lotateNum: 0
+  _weaponStatus: {fileID: 0}
+  _playerController: {fileID: 0}
+  _enemyController: {fileID: 0}
 --- !u!1 &1564127939221359681
 GameObject:
   m_ObjectHideFlags: 0

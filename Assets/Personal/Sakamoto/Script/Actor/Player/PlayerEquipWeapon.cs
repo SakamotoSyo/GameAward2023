@@ -12,6 +12,7 @@ public class PlayerEquipWeapon
     public IReactiveProperty<float> CurrentDurable => _currentDurable;
     public WeaponData.AttributeType Attribute => _attribute;
     public WeaponType WeaponType => _weponType;
+    public WeaponSkill WeaponSkill => _weaponSkill;
     public int WeaponNum => _weaponNum;
     public bool IsEpicSkill2 => _isEpicSkill2;
     public bool IsEpicSkill3 => _isEpicSkill3;  
@@ -22,6 +23,7 @@ public class PlayerEquipWeapon
     private ReactiveProperty<float> _maxDurable = new();
     private ReactiveProperty<float> _currentDurable = new();
     private bool _isEpicSkill1 = false, _isEpicSkill2 = false, _isEpicSkill3 = false;
+    private WeaponSkill _weaponSkill;
     private WeaponData.AttributeType _attribute;
     private WeaponType _weponType;
     [Tooltip("âΩî‘ñ⁄Ç…éùÇ¡ÇƒÇ¢ÇÈïêäÌÇ©")]
@@ -95,6 +97,7 @@ public class PlayerEquipWeapon
         _attribute = weaponData.Attribute;
         _weponType = weaponData.WeaponType;
         _weaponNum = arrayNum;
+        _weaponSkill = weaponData.WeaponSkill;
     }
 
     public void FluctuationStatus(FluctuationStatusClass fluctuation)
