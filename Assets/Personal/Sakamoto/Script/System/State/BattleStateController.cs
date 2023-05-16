@@ -41,6 +41,8 @@ public class BattleStateController : MonoBehaviour
                                   ((int)BattleEvent.StartToNextActorState);
         _stateMachine.AddTransition<SelectNextActorTransitionState, SPlayerAttackState>
                                   ((int)BattleEvent.SelectStateToPlayerTrun);
+        _stateMachine.AddTransition<SPlayerAttackState, SPlayerAttackState>
+                                  ((int)BattleEvent.ReturnPlayer);
         _stateMachine.AddTransition<SelectNextActorTransitionState, SEnemyAttackState>
                                   ((int)BattleEvent.SelectStateToEnemyTrun);
         _stateMachine.AddTransition<SPlayerAttackState, SelectNextActorTransitionState>
@@ -116,7 +118,7 @@ public class BattleStateController : MonoBehaviour
     /// <summary>
     /// ActorÇÃçsìÆÇÃèIÇÌÇËÇ…åƒÇ‘ä÷êî
     /// </summary>
-    public void ActorStateEnd() 
+    public async void ActorStateEnd() 
     {
         ClearCheck();
 
@@ -131,7 +133,16 @@ public class BattleStateController : MonoBehaviour
 
         if (_stateMachine.CurrentState == _stateMachine.GetOrAddState<SPlayerAttackState>())
         {
-            _stateMachine.Dispatch((int)BattleEvent.PlayerTurnToSelectState);
+            var result = await _skillManagement.InEffectCheck("ï±ãN", ActorAttackType.Player);
+            if (result)
+            {
+                _stateMachine.Dispatch((int)BattleEvent.ReturnPlayer);
+            }
+            else 
+            {
+                _stateMachine.Dispatch((int)BattleEvent.PlayerTurnToSelectState);
+            }
+            
         }
         else if (_stateMachine.CurrentState == _stateMachine.GetOrAddState<SEnemyAttackState>()) 
         {
@@ -158,6 +169,7 @@ public class BattleStateController : MonoBehaviour
         StartToNextActorState,
         PlayerTurnToSelectState,
         EnemyToSelectState,
+        ReturnPlayer,
         SelectStateToPlayerTrun,
         SelectStateToEnemyTrun,
         BattleEnd,
