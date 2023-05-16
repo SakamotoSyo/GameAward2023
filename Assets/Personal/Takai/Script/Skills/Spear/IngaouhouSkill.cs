@@ -7,11 +7,6 @@ public class IngaouhouSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    private const float ADD_VALUE = 0.2f;
-    private const int TURN = 4;
-    private int _count;
-    private int _turnCount;
-    private float _addValue;
 
     public IngaouhouSkill()
     {
@@ -49,43 +44,16 @@ public class IngaouhouSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装す
-        FluctuationStatusClass fluctuation;
-        _count++;
-        float value = _addValue;
-        _addValue = _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * ADD_VALUE;
-        fluctuation = new FluctuationStatusClass(0, 0, -value, 0, 0);
-        fluctuation = new FluctuationStatusClass(0, 0, _addValue, 0, 0);
+        
     }
 
     public override bool TurnEnd()
     {
-        if (_count > 0)
-        {
-            if (_turnCount <= TURN)
-            {
-                _turnCount++;
-            }
-            else
-            {
-                _count--;
-                _turnCount = 0;
-                float value = _addValue;
-                FluctuationStatusClass  fluctuation = new FluctuationStatusClass(0, 0, -value, 0, 0);
-                _addValue = _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * ADD_VALUE;
-                if (_count <= 0)
-                {
-                    _count = 0;
-                    _addValue = 0;
-                }
-            }
-        }
-
-        return true;
+        
+        return false;
     }
 
     public override void BattleFinish()
     {
-        _turnCount = 0;
-        _addValue = 0;
     }
 }
