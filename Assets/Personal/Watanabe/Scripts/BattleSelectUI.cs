@@ -146,7 +146,7 @@ public class BattleSelectUI : MonoBehaviour
             }
 
         }
-        else if (_actionUi[currentUi] == _actionUi[2])
+        else if (_actionUi[currentUi] == _actionUi[3])
         {
             _infoUI.SetActive(true);
             SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
@@ -164,7 +164,7 @@ public class BattleSelectUI : MonoBehaviour
             }
 
         }
-        else if (_actionUi[currentUi] == _actionUi[3])
+        else if (_actionUi[currentUi] == _actionUi[2])
         {
             _infoUI.SetActive(true);
             SkillBase special = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
