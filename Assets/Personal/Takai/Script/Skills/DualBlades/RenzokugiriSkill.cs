@@ -17,12 +17,12 @@ public class RenzokugiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "２つの剣による連続攻撃";
     }
-    
+
     private void Start()
     {
         _anim = GetComponent<PlayableDirector>();
     }
-    
+
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -49,9 +49,11 @@ public class RenzokugiriSkill : SkillBase
         {
             case ActorAttackType.Player:
                 _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                 Debug.Log($"ダメージ{_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage}");
                 break;
             case ActorAttackType.Enemy:
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
                 _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
                 break;
         }
