@@ -44,26 +44,29 @@ public class NidangiriSkill : SkillBase
     protected override void SkillEffect()
     {
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
-        float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
+        float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value / 10;
         
-        _playerStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
 
-        switch (weight / 10)
+        if (weight >= 6)
         {
-            case 6:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 20);
-                break;
-            case 5:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 15);
-                break;
-            case 4:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 10);
-                break;
-            case 3:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 5);
-                break;
-            default:
-                break;
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 20+ Damage);
+        }
+        else if(weight >= 5)
+        {
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 15+ Damage);
+        }
+        else if (weight >= 4)
+        {
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 10+ Damage);
+        }
+        else if (weight >= 3)
+        {
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 5+ Damage);
+        }
+        else
+        {
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         }
     }
 

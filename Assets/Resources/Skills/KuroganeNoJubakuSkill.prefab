@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6625449378565728167
+--- !u!1 &6484809522722083164
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3435012257383539944}
-  - component: {fileID: 1249360177063923940}
-  - component: {fileID: 6726504645624603953}
-  - component: {fileID: -7121538176124355767}
+  - component: {fileID: 1874972874919642522}
+  - component: {fileID: 7032720789665292882}
+  - component: {fileID: 3159519995861214854}
   m_Layer: 0
-  m_Name: KyoukaSkill
+  m_Name: KuroganeNoJubakuSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3435012257383539944
+--- !u!4 &1874972874919642522
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6625449378565728167}
+  m_GameObject: {fileID: 6484809522722083164}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,13 +33,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!320 &1249360177063923940
+--- !u!320 &7032720789665292882
 PlayableDirector:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6625449378565728167}
+  m_GameObject: {fileID: 6484809522722083164}
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 0}
@@ -51,27 +50,15 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References: []
---- !u!114 &6726504645624603953
+--- !u!114 &3159519995861214854
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6625449378565728167}
+  m_GameObject: {fileID: 6484809522722083164}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30469f84033a92f49aa3da4d7870220d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-7121538176124355767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6625449378565728167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4afdcb1cbadf954ba8b1cf465429e17, type: 3}
+  m_Script: {fileID: 11500000, guid: f15482041d1c707418984d5d488d07b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

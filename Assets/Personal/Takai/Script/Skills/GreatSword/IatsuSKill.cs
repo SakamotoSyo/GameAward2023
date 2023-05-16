@@ -7,9 +7,8 @@ public class IatsuSKill : SkillBase
     private PlayableDirector _anim;
     private EnemyController _enemyStatus;
     private const float PowerDown = 0.1f;
-    private const int Turn = 2;
     private int _turn;
-    private float _attackValue = 0;
+    private float _deBuffValue = 0;
 
     public IatsuSKill()
     {
@@ -19,12 +18,12 @@ public class IatsuSKill : SkillBase
         Type = (SkillType)0;
         FlavorText = "2ターンの間敵の攻撃力を10%下げる";
     }
-    
+
     private void Start()
     {
         _anim = GetComponent<PlayableDirector>();
     }
-    
+
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -47,23 +46,26 @@ public class IatsuSKill : SkillBase
         float dmg = _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower;
         if (_turn == 0)
         {
-            _attackValue += dmg * PowerDown;
-            _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= dmg * PowerDown;
+            _turn+=3;
+            _deBuffValue += dmg * PowerDown;
+            FluctuationStatusClass fluctuation = new FluctuationStatusClass(-_deBuffValue, 0, 0, 0, 0);
+            _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
         }
         else
         {
+            _turn += 3;
             Debug.Log("重複できません");
         }
     }
 
     public override bool TurnEnd()
     {
-        _turn++;
-        if (_turn > Turn)
+        if (--_turn <= 0)
         {
-            _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower += _attackValue;
+            FluctuationStatusClass fluctuation = new FluctuationStatusClass(_deBuffValue, 0, 0, 0, 0);
+            _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
             _turn = 0;
-            _attackValue = 0;
+            _deBuffValue = 0;
         }
 
         return true;
@@ -71,7 +73,9 @@ public class IatsuSKill : SkillBase
 
     public override void BattleFinish()
     {
+        FluctuationStatusClass fluctuation = new FluctuationStatusClass(_deBuffValue, 0, 0, 0, 0);
+        _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
         _turn = 0;
-        _attackValue = 0;
+        _deBuffValue = 0;
     }
 }
