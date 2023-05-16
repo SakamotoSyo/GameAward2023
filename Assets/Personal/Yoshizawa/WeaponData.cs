@@ -11,6 +11,7 @@ public class WeaponData
     public float MaxDurable;
     public float CurrentDurable;
     public float[] StatusArray;
+    public WeaponSkill WeaponSkill = new();
     public AttributeType Attribute;
     public WeaponType WeaponType;
 
