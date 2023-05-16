@@ -13,13 +13,15 @@ public class PlayerEquipWeapon
     public WeaponData.AttributeType Attribute => _attribute;
     public WeaponType WeaponType => _weponType;
     public int WeaponNum => _weaponNum;
+    public bool IsEpicSkill2 => _isEpicSkill2;
+    public bool IsEpicSkill3 => _isEpicSkill3;  
 
     private ReactiveProperty<float> _offensivePower = new();
     private ReactiveProperty<float> _weaponWeight = new();
     private ReactiveProperty<float> _criticalRate = new();
     private ReactiveProperty<float> _maxDurable = new();
     private ReactiveProperty<float> _currentDurable = new();
-    private bool _isEpicSkill1 = false, _isEpicSkill2 = false;
+    private bool _isEpicSkill1 = false, _isEpicSkill2 = false, _isEpicSkill3 = false;
     private WeaponData.AttributeType _attribute;
     private WeaponType _weponType;
     [Tooltip("‰½”Ô–Ú‚É‚Á‚Ä‚¢‚é•Ší‚©")]

@@ -7,6 +7,7 @@ public class PlayerSkill
 {
     public SkillBase SpecialAttack => _specialAttack;
     public SkillBase[] PlayerSkillArray => _skillArray;
+    public SkillDataManagement SkillDataManagement => _skillDataManagement;
     [Tooltip("必殺技")]
     private SkillBase _specialAttack;
     private SkillBase[] _skillArray = new SkillBase[2];
@@ -40,6 +41,12 @@ public class PlayerSkill
         _specialAttack = playerSaveData.SpecialAttack;
     }
 
+    public SkillBase CounterCheck() 
+    {
+        //return _skillDataManagement.CounterCheck();
+        return default;
+    }
+
     public bool AddSpecialSkill(SkillBase skill) 
     {
         if (!_specialAttack) 
@@ -62,5 +69,19 @@ public class PlayerSkill
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Eipcスキルをチェックしてあれば処理する
+    /// </summary>
+    public void EpicSkillCheck() 
+    {
+        for(int i = 0; i < _skillArray.Length; i++) 
+        {
+            if (_skillArray[i].Type == SkillType.Epic) 
+            {
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, _skillArray[i].name);
+            }
+        }
     }
 }
