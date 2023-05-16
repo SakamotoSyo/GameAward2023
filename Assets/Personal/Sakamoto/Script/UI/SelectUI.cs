@@ -115,7 +115,7 @@ public class SelectUI : MonoBehaviour
             else if (_actionUi[num] == _actionUi[2])
             {
                 _infoUI.SetActive(true);
-                SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
+                SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
                 if (skill1) 
                 {
                     _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
@@ -124,7 +124,7 @@ public class SelectUI : MonoBehaviour
             else if (_actionUi[num] == _actionUi[3])
             {
                 _infoUI.SetActive(true);
-                SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
+                SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
                 if (skill2)
                 {
                     _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
@@ -150,7 +150,7 @@ public class SelectUI : MonoBehaviour
         if (_actionUi[currentUi] == _actionUi[2])
         {
             _infoUI.SetActive(true);
-            SkillBase skill1 = _playerController.PlayerSkill.PlayerSkillArray[0];
+            SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
             if (skill1 != null)
             {
                 _skillText[0].text = skill1.name;
@@ -167,7 +167,7 @@ public class SelectUI : MonoBehaviour
         else if (_actionUi[currentUi] == _actionUi[3])
         {
             _infoUI.SetActive(true);
-            SkillBase skill2 = _playerController.PlayerSkill.PlayerSkillArray[1];
+            SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
             if (skill2 != null)
             {
                 _skillText[0].text = skill2.name;
@@ -183,7 +183,7 @@ public class SelectUI : MonoBehaviour
         else if (_actionUi[currentUi] == _actionUi[1]) 
         {
             _infoUI.SetActive(true);
-            var special = _playerController.PlayerSkill.SpecialAttack;
+            var special = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
             if (special != null)
             {
                 _skillText[0].text = special.name;
@@ -203,11 +203,11 @@ public class SelectUI : MonoBehaviour
 
     public void StartPlayerTurn()
     {
-        var playerSkill = _playerController.PlayerSkill;
-        _skillText[0].text = playerSkill.SpecialAttack.SkillName;
-        for (int i = 1; i < playerSkill.PlayerSkillArray.Length + 1; i++)
+        var weaponSkill = _playerController.PlayerStatus.EquipWeapon.WeaponSkill;
+        _skillText[0].text = weaponSkill.SpecialAttack.SkillName;
+        for (int i = 1; i < weaponSkill.WeaponSkillArray.Length + 1; i++)
         {
-            _skillText[i].text = playerSkill.PlayerSkillArray[i - 1].SkillName;
+            _skillText[i].text =weaponSkill.WeaponSkillArray[i - 1].SkillName;
         }
 
         _commandUI.SetActive(true);

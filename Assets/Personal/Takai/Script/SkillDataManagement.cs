@@ -67,10 +67,19 @@ public class SkillDataManagement : MonoBehaviour
         }
     }
 
-    public bool CounterCheck()
+    public async UniTask<bool> InEffectCheck(string skillName, ActorAttackType attackType)
     {
+        foreach (var s in _skillUsePool)
+        {
+            if (s.SkillName == skillName)
+            {
+                await s.InEffectSkill(attackType);
+                return true;
+            }
+        }
+
+        return false;
         //_skillUsePoolにカウンターがあるか調べてSkillの関数を発動する
-        return default;
     }
 
     public void TurnCall()
