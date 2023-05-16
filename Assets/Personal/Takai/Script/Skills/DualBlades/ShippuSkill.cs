@@ -44,7 +44,7 @@ public class ShippuSkill : SkillBase
     {
         // スキルの効果処理を実装する
         _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
-
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
         _count += 2;
     }
 
@@ -53,8 +53,8 @@ public class ShippuSkill : SkillBase
         if (_count <= 0)
         {
             _count--;
-            float durable = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value;
-            _enemyStatus.AddDamage(durable * _subtractHpValue);
+            float durable = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value* _subtractHpValue;
+            _enemyStatus.AddDamage(durable);
         }
 
         return true;

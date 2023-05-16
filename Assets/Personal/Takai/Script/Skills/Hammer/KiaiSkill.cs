@@ -6,7 +6,8 @@ public class KiaiSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
-    private EnemyController _enemyStatus;
+    private float _attackValue;
+    private int _count;
 
     public KiaiSkill()
     {
@@ -16,13 +17,13 @@ public class KiaiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "次の攻撃だけ威力が2倍に上昇";
     }
-    
+
     private void Start()
     {
         _anim = GetComponent<PlayableDirector>();
     }
 
-    
+
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -32,7 +33,6 @@ public class KiaiSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
-        _enemyStatus = enemy;
         _anim = GetComponent<PlayableDirector>();
         _anim.Play();
         SkillEffect();
@@ -44,16 +44,36 @@ public class KiaiSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * 2);
+        _count++;
+
+        _attackValue = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
+        FluctuationStatusClass fluctuation =
+            new FluctuationStatusClass(_attackValue, 0, 0, 0, 0);
+        _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
     }
 
     public override bool TurnEnd()
     {
-        return false;
+        if (_count > 0)
+        {
+            _count--;
+        }
+        else
+        {
+            FluctuationStatusClass fluctuation =
+                new FluctuationStatusClass(-_attackValue, 0, 0, 0, 0);
+            _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
+            _attackValue = 0;
+        }
+
+        return true;
     }
 
     public override void BattleFinish()
     {
-        
+        FluctuationStatusClass fluctuation =
+            new FluctuationStatusClass(-_attackValue, 0, 0, 0, 0);
+        _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
+        _attackValue = 0;
     }
 }
