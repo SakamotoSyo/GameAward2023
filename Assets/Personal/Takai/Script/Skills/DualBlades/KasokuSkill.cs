@@ -76,7 +76,7 @@ public class KasokuSkill : SkillBase
                 _count--;
 
                 FluctuationStatusClass fluctuation = new FluctuationStatusClass(
-                    -_buffValue, 0, 0, 0, 0);
+                    0, -_buffValue, 0, 0, 0);
                 _buffValue = 0;
                 _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
             }
@@ -87,6 +87,9 @@ public class KasokuSkill : SkillBase
 
     public override void BattleFinish()
     {
+        FluctuationStatusClass fluctuation = new FluctuationStatusClass(0, -_buffValue, 0, 0, 0);
+        _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
+        
         _count = 0;
         _turnCount = 0;
         _buffValue = 0;

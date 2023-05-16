@@ -168,11 +168,11 @@ public class ResultUIScript : MonoBehaviour
     /// </summary>
     public void WeaponEnhanceEvent(WeaponData weaponData, OreData oreData)
     {
-        var playerSkill = _actorGenerator.PlayerController.PlayerSkill;
+        var weaponSkill = weaponData.WeaponSkill;
         if (!oreData.Skill) return;
         if (oreData.Skill.Type == SkillType.Skill)
         {
-            if (playerSkill.AddSkillJudge(oreData.Skill))
+            if (weaponSkill.AddSkillJudge(oreData.Skill))
             {
                 weaponData.EnhanceParam(oreData.EnhancedData);
                 //スキルを追加出来たときの処理
@@ -192,24 +192,24 @@ public class ResultUIScript : MonoBehaviour
                 //スキルが追加できなかったときPlayerに選択させる
                 _enhanceSelectObj.SetActive(false);
                 _skillSelectPanel.SetActive(true);
-                _skillSelectButtonCs[0].SetCurrentSkill(playerSkill.PlayerSkillArray[0]);
-                _skillSelectButtonCs[1].SetCurrentSkill(playerSkill.PlayerSkillArray[1]);
+                _skillSelectButtonCs[0].SetCurrentSkill(weaponSkill.WeaponSkillArray[0]);
+                _skillSelectButtonCs[1].SetCurrentSkill(weaponSkill.WeaponSkillArray[1]);
                 _skillSelectButton[0].onClick.AddListener(() =>
                 {
-                    ChangeSkill(0, oreData.Skill);
+                    ChangeSkill(0, oreData.Skill, weaponData);
                     weaponData.EnhanceParam(oreData.EnhancedData);
 
                 });
                 _skillSelectButton[1].onClick.AddListener(() =>
                 {
-                    ChangeSkill(1, oreData.Skill);
+                    ChangeSkill(1, oreData.Skill, weaponData);
                     weaponData.EnhanceParam(oreData.EnhancedData);
                 });
             }
         }
         else if (oreData.Skill.Type == SkillType.Special)
         {
-            if (playerSkill.AddSpecialSkill(oreData.Skill))
+            if (weaponSkill.AddSpecialSkill(oreData.Skill))
             {
                 weaponData.EnhanceParam(oreData.EnhancedData);
                 //スキルを追加出来たときの処理
@@ -228,11 +228,11 @@ public class ResultUIScript : MonoBehaviour
                 Debug.Log("必殺技");
                 _enhanceSelectObj.SetActive(false);
                 _skillSelectPanel.SetActive(true);
-                _skillSelectButtonCs[0].SetCurrentSkill(playerSkill.SpecialAttack);
+                _skillSelectButtonCs[0].SetCurrentSkill(weaponSkill.SpecialAttack);
                 _skillSelectButtonCs[1].SetCurrentSkill(oreData.Skill);
                 _skillSelectButton[0].onClick.AddListener(() =>
                 {
-                    ChangeSpecialSkill(oreData.Skill);
+                    ChangeSpecialSkill(oreData.Skill, weaponData);
                     weaponData.EnhanceParam(oreData.EnhancedData);
 
                 });
@@ -294,9 +294,9 @@ public class ResultUIScript : MonoBehaviour
         }
     }
 
-    public void ChangeSkill(int num, SkillBase skill)
+    public void ChangeSkill(int num, SkillBase skill, WeaponData weaponData)
     {
-        _actorGenerator.PlayerController.PlayerSkill.PlayerSkillArray[num] = skill;
+        weaponData.WeaponSkill.WeaponSkillArray[num] = skill;
         Debug.Log($"{skill}に変更しました");
 
         if (_isBlacksmith)
@@ -310,9 +310,9 @@ public class ResultUIScript : MonoBehaviour
         }
     }
 
-    public void ChangeSpecialSkill(SkillBase skill)
+    public void ChangeSpecialSkill(SkillBase skill, WeaponData weaponData)
     {
-        _actorGenerator.PlayerController.PlayerSkill.ChangeSpecialSkill(skill);
+         weaponData.WeaponSkill.ChangeSpecialSkill(skill);
         if (_isBlacksmith)
         {
             BlacksmithJudge();

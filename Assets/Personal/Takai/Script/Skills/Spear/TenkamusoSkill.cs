@@ -68,7 +68,7 @@ public class TenkamusoSkill : SkillBase
     {
         _count++;
 
-        return false;
+        return true;
     }
 
     public override void BattleFinish()

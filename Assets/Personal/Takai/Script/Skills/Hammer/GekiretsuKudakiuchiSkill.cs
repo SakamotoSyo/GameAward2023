@@ -24,7 +24,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         _anim = GetComponent<PlayableDirector>();
     }
 
-    
+
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -46,6 +46,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
 
     protected override void SkillEffect()
     {
+        FluctuationStatusClass fluctuation;
         switch (_actor)
         {
             case ActorAttackType.Player:
@@ -53,14 +54,11 @@ public class GekiretsuKudakiuchiSkill : SkillBase
                 // スキルの効果処理を実装する
                 _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
 
-                // 防御、素早さを40%下げる。
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -=
-                    _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue;
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentCriticalRate -=
-                    _enemyStatus.EnemyStatus.EquipWeapon.CriticalRate * _subtractValue;
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentWeaponWeight -=
-                    _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight * _subtractValue;
-
+                fluctuation =
+                    new FluctuationStatusClass(-_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue,
+                        -_enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight * _subtractValue,
+                        -_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate * _subtractValue, 0, 0);
+                _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
                 _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value = 0;
             }
                 break;
@@ -68,14 +66,11 @@ public class GekiretsuKudakiuchiSkill : SkillBase
             {
                 _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
 
-                // 防御、素早さを40%下げる。
-                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value -=
-                    _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * _subtractValue;
-                _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value -=
-                    _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * _subtractValue;
-                _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value -=
-                    _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value * _subtractValue;
-
+                fluctuation =
+                    new FluctuationStatusClass(-_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * _subtractValue,
+                        -_playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value * _subtractValue,
+                        -_playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * _subtractValue * _subtractValue, 0, 0);
+                _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
                 _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value = 0;
             }
                 break;
@@ -89,6 +84,5 @@ public class GekiretsuKudakiuchiSkill : SkillBase
 
     public override void BattleFinish()
     {
-        
     }
 }

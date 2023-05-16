@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerSkill
+public class WeaponSkill
 {
     public SkillBase SpecialAttack => _specialAttack;
-    public SkillBase[] PlayerSkillArray => _skillArray;
+    public SkillBase[] WeaponSkillArray => _skillArray;
+    public SkillDataManagement SkillDataManagement => _skillDataManagement;
     [Tooltip("必殺技")]
     private SkillBase _specialAttack;
     private SkillBase[] _skillArray = new SkillBase[2];
@@ -22,22 +23,15 @@ public class PlayerSkill
         }
     }
 
-    public void SaveSkill(PlayerSaveData saveData) 
-    {
-        saveData.SpecialAttack = _specialAttack;
-        saveData.PlayerSkillArray = _skillArray;
-    }
-
     public void ChangeSpecialSkill(SkillBase skill) 
     {
         _specialAttack = skill;
     }
 
-    public void LoadSkill(PlayerSaveData playerSaveData) 
+    public SkillBase CounterCheck() 
     {
-        _skillArray = playerSaveData.PlayerSkillArray;
-        Debug.Log(_skillArray.Length);
-        _specialAttack = playerSaveData.SpecialAttack;
+        //return _skillDataManagement.CounterCheck();
+        return default;
     }
 
     public bool AddSpecialSkill(SkillBase skill) 
@@ -62,5 +56,19 @@ public class PlayerSkill
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Eipcスキルをチェックしてあれば処理する
+    /// </summary>
+    public void EpicSkillCheck() 
+    {
+        for(int i = 0; i < _skillArray.Length; i++) 
+        {
+            if (_skillArray[i].Type == SkillType.Epic) 
+            {
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, _skillArray[i].name);
+            }
+        }
     }
 }
