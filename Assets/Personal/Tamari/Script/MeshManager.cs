@@ -9,7 +9,7 @@ using Cysharp.Threading.Tasks;
 public class MeshManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _jyusin;
+    private GameObject _jyusin = default;
 
     private int _lowestPosIndex = default;
 
@@ -19,15 +19,17 @@ public class MeshManager : MonoBehaviour
 
     private GameObject _go = default;
 
+    public GameObject GO => _go;
+
     [SerializeField, Tooltip("双剣ver")]
     private bool _isSouken = default;
 
     private MeshFilter _meshFilter = default;
 
-    private Mesh _myMesh;
+    private Mesh _myMesh = default;
     public Mesh MyMesh => _myMesh;
 
-    private MeshRenderer _meshRenderer;
+    private MeshRenderer _meshRenderer = default;
 
     public Material _meshMaterial;
 
@@ -36,6 +38,8 @@ public class MeshManager : MonoBehaviour
     public Vector3[] MyVertices { get { return _myVertices; } }
 
     private int[] _myTriangles = default;
+
+    public int[] MyTriangles => _myTriangles;
 
     private Vector3[] _myNormals = default;
 
@@ -67,7 +71,9 @@ public class MeshManager : MonoBehaviour
     [SerializeField, Tooltip("大きさの限界")]
     private float _sizeLimit = default;
 
-    private float _size = default;
+    private float _sizeRight = default;
+
+    private float _sizeLeft = default;
 
     private int _indexNum = default;
 
@@ -75,7 +81,7 @@ public class MeshManager : MonoBehaviour
 
     public static bool _isFinished;
 
-    private SaveData _saveData;
+    private SaveData _saveData = default;
     public SaveData SaveData => _saveData;
 
     [SerializeField]
@@ -84,10 +90,14 @@ public class MeshManager : MonoBehaviour
     [SerializeField]
     private string _nextSceneName = default;
 
-    WeaponSaveData _weaponSaveData;
+    private float _deltaX = default;
+    public float DeltaX => _deltaX;
 
-    [SerializeField]
-    private ActiveWeaponMesh _activeWeaponMesh;
+    private float _deltaY = default;
+
+    public float DeltaY => _deltaY;
+
+    WeaponSaveData _weaponSaveData;
 
     [SerializeField]
     private GameObject _allPanel = default;
@@ -162,7 +172,11 @@ public class MeshManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            _size = GetRange();
+            _sizeRight = GetRange().x;
+            _sizeLeft = GetRange().y;
+
+            Debug.Log(_sizeRight);
+            Debug.Log(_sizeLeft);
 
             Calculation();
         }
@@ -213,8 +227,8 @@ public class MeshManager : MonoBehaviour
         }
 
         // メッシュの過剰な拡大を防止
-        if (_size >= _sizeLimit && ioDis >= toDis && _indexNum == _rightmostIndex
-            || _size >= _sizeLimit && ioDis >= toDis && _indexNum == _leftmostIndex)
+        if (_sizeRight >= _sizeLimit && ioDis >= toDis && _indexNum == _rightmostIndex
+            || _sizeLeft >= _sizeLimit && ioDis >= toDis && _indexNum == _leftmostIndex)
         {
             Debug.Log("これ以上横に大きくできません");
             return;
@@ -224,6 +238,8 @@ public class MeshManager : MonoBehaviour
         {
             _myVertices[_indexNum] -= new Vector3(disX, disY, 0);
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith");
+            _deltaX = _go.transform.position.x - _myVertices[_lowestPosIndex].x;
+            _deltaY = _go.transform.position.y - _myVertices[_lowestPosIndex].y;
         }
         else
         {
@@ -315,7 +331,6 @@ public class MeshManager : MonoBehaviour
             SaveManager.ResetSaveData(f);
         }
     }
-
     /// <summary>
     /// メッシュの形を元に戻す
     /// </summary>
@@ -353,7 +368,7 @@ public class MeshManager : MonoBehaviour
         _isFinished = true;
         _allPanel.SetActive(true);
         SaveMesh();
-        SoundManager.Instance.CriAtomPlay(CueSheet.CueSheet_0, "SE_Blacksmith_Finish");
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith_Finish");
         await UniTask.DelayFrame(500);
         SceneManager.LoadScene(_nextSceneName);
     }
@@ -496,7 +511,6 @@ public class MeshManager : MonoBehaviour
         _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
     }
 
-
     public void ActiveSelectWeapon()
     {
         switch (GameManager.BlacksmithType)
@@ -561,7 +575,7 @@ public class MeshManager : MonoBehaviour
     /// メッシュの大きさを測る関数
     /// </summary>
     /// <returns>メッシュの横のサイズ</returns>
-    private float GetRange()
+    private Vector2 GetRange()
     {
         for (int i = 0; i < _myVertices.Length; i++)
         {
@@ -576,9 +590,11 @@ public class MeshManager : MonoBehaviour
             }
         }
 
-        var dis = _myVertices[_rightmostIndex].x - _myVertices[_leftmostIndex].x;
+        var disRight = _firstCenterPos.x - _myVertices[_rightmostIndex].x;
 
-        return Mathf.Abs(dis);
+        var disLeft = _firstCenterPos.x - _myVertices[_leftmostIndex].x;
+
+        return new Vector2(Mathf.Abs(disRight), Mathf.Abs(disLeft));
     }
 
 }
