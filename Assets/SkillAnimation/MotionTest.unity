@@ -364,7 +364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.902359, y: -0.714612, z: -10}
+  m_LocalPosition: {x: -4.512642, y: -0.714612, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1138,6 +1138,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero_Hammer
       objectReference: {fileID: 0}
+    - target: {fileID: 1661037498315977709, guid: cd537356aeb67ce46b2555f5331aedcf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd537356aeb67ce46b2555f5331aedcf, type: 3}
 --- !u!1001 &2461147444385508191
@@ -1151,14 +1155,6 @@ PrefabInstance:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 1927565627}
-    - target: {fileID: 305882812309136454, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.36588034
-      objectReference: {fileID: 0}
-    - target: {fileID: 305882812309136454, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.714334
-      objectReference: {fileID: 0}
     - target: {fileID: 559898916182649742, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -1206,26 +1202,6 @@ PrefabInstance:
     - target: {fileID: 1661037498315977709, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Name
       value: Hero_Spear
-      objectReference: {fileID: 0}
-    - target: {fileID: 1661037498315977709, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2461147444322880394, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2461147444441378386, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2461147445268745956, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4073093194428231284, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
