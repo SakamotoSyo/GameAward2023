@@ -2,6 +2,9 @@
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /// <summary>
 /// TODO : 鍛冶中に完成予想図を見せることでプレイヤーにわかりやすくする
@@ -32,8 +35,6 @@ public class MeshManager : MonoBehaviour
     public Mesh MyMesh => _myMesh;
 
     private MeshRenderer _meshRenderer = default;
-
-    public Material _meshMaterial;
 
     private Vector3[] _myVertices = default;
 
@@ -114,6 +115,8 @@ public class MeshManager : MonoBehaviour
     [SerializeField]
     private GameObject _allPanel = default;
 
+    int _countNum = 0;
+
 #if UNITY_EDITOR
     public WeaponType _weaponType;
     public bool _isGS;
@@ -121,8 +124,6 @@ public class MeshManager : MonoBehaviour
     public bool _isH;
     public bool _isS;
 #endif
-
-    [ContextMenu("Make mesh from model")]
 
     private void Awake()
     {
@@ -183,6 +184,10 @@ public class MeshManager : MonoBehaviour
         _myMesh.SetColors(_setColor);
 
         _centerPos = GetCentroid(_myVertices);
+        //if(Input.GetButtonDown("Jump"))
+        //{
+        //    MakeMesh();
+        //}
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -460,7 +465,7 @@ public class MeshManager : MonoBehaviour
         _meshFilter.sharedMesh = _myMesh;
         _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
         _meshFilter.mesh = _myMesh;
-        _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
+        // _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
     }
 
     private void CreateSouken(string name, float sX, float sY)
@@ -529,7 +534,6 @@ public class MeshManager : MonoBehaviour
         _meshFilter.sharedMesh = _myMesh;
         _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
         _meshFilter.mesh = _myMesh;
-        _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
     }
 
     public void ActiveSelectWeapon()
@@ -643,6 +647,18 @@ public class MeshManager : MonoBehaviour
 
         return new Vector2(Mathf.Abs(disUpperHalf), Mathf.Abs(disLowerHalf));
     }
+
+//    [ContextMenu("Make mesh from model")]
+//    public void MakeMesh()
+//    {
+//#if UNITY_EDITOR
+//        // var mesh = _go.GetComponent<MeshFilter>();
+//        var meshRenderer = _go.GetComponent<MeshRenderer>();
+//        AssetDatabase.CreateAsset(_myMesh, "Assets/Personal/Tamari/MeshPrefab/Weapon" + _weaponType + ".asset");
+//        AssetDatabase.SaveAssets();
+//        _countNum++;
+//#endif
+//    }
 
 }
 
