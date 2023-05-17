@@ -34,16 +34,8 @@ public class IngaouhouSkill : SkillBase
         return true;
     }
 
-    public override void AnimStart()
-    {
-        Debug.Log("ANimStart");
-       
-    }
-
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
-        
-        Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
         _playerObj.SetActive(true);
@@ -54,7 +46,6 @@ public class IngaouhouSkill : SkillBase
         _anim.Stop();
         await UniTask.Delay(TimeSpan.FromSeconds(0.5));
         _playerStatus.gameObject.SetActive(true);
-        Debug.Log("Anim End");
         _playerObj.SetActive(false);
     }
 
@@ -67,9 +58,11 @@ public class IngaouhouSkill : SkillBase
     {
         if (attackType == ActorAttackType.Player)
         {
+            _playerObj.SetActive(true);
             _anim.Play();
             _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
             await UniTask.WaitUntil(() => _anim.time >= _anim.duration - 0.1, cancellationToken: this.GetCancellationTokenOnDestroy());
+            _playerObj.SetActive(false);
         }
         else 
         {
