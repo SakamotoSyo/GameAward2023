@@ -45,27 +45,28 @@ public class KyoukaSkill : SkillBase
     {
         FluctuationStatusClass fluctuation;
 
-        if (_turn == 0)
-        {
-            _buffValue = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * ADDVALUE;
-            fluctuation = new FluctuationStatusClass(_buffValue, 0, 0, 0, 0);
-            _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
-        }
-        else
-        {
-            Debug.Log("重複できない");
-        }
+        _buffValue = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * ADDVALUE;
+        fluctuation = new FluctuationStatusClass(_buffValue, 0, 0, 0, 0);
+        _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
+        Debug.Log(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value);
     }
 
     public override bool TurnEnd()
     {
         _turn++;
+        Debug.Log(_turn);
         if (_turn >= 2)
         {
+            Debug.Log("スタン");
             FluctuationStatusClass fluctuation = new FluctuationStatusClass(-_buffValue, 0, 0, 0, 0);
             _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
             _buffValue = 0;
             // プレイヤーがひるむ
+            _playerStatus.PlayerStatus.SetStateAnomaly(StateAnomaly.Stun);
+        }
+        else if (_turn >= 3)
+        {
+            _playerStatus.PlayerStatus.SetStateAnomaly(StateAnomaly.None);
             _turn = 0;
         }
 

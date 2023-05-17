@@ -27,7 +27,7 @@ public class ShinsokuranbuSkill : SkillBase
     public override bool IsUseCheck(PlayerController player)
     {
         float weight = player.PlayerStatus.EquipWeapon.WeaponWeight.Value;
-        return (weight <= 30) ? true : false;
+        return (weight >= 100) ? true : false;
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
@@ -67,6 +67,8 @@ public class ShinsokuranbuSkill : SkillBase
 
     public override bool TurnEnd()
     {
+        //ステータスが元に戻る処理
+
         return false;
     }
 
