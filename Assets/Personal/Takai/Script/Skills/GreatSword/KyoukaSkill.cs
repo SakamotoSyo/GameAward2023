@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -7,8 +8,8 @@ public class KyoukaSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private const float ADDVALUE = 0.5f;
-    private int _turn = 0;
-    private float _buffValue;
+    [NonSerialized] private int _turn = 0;
+    [NonSerialized] private float _buffValue;
 
     public KyoukaSkill()
     {
@@ -55,7 +56,12 @@ public class KyoukaSkill : SkillBase
     {
         _turn++;
         Debug.Log(_turn);
-        if (_turn >= 2)
+        if (_turn >= 3)
+        {
+            _playerStatus.PlayerStatus.SetStateAnomaly(StateAnomaly.None);
+            _turn = 0;
+        }
+        else if (_turn >= 2)
         {
             Debug.Log("スタン");
             FluctuationStatusClass fluctuation = new FluctuationStatusClass(-_buffValue, 0, 0, 0, 0);
@@ -64,12 +70,7 @@ public class KyoukaSkill : SkillBase
             // プレイヤーがひるむ
             _playerStatus.PlayerStatus.SetStateAnomaly(StateAnomaly.Stun);
         }
-        else if (_turn >= 3)
-        {
-            _playerStatus.PlayerStatus.SetStateAnomaly(StateAnomaly.None);
-            _turn = 0;
-        }
-
+        
         return true;
     }
 

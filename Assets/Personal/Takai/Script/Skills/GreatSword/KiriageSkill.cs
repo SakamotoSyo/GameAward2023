@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
@@ -10,9 +11,9 @@ public class KiriageSkill : SkillBase
     private PlayableDirector _anim;
     private const float AddDamageValue = 0.05f;
     private const int Turn = 3;
-    private int _count = 0;
-    private int _turnCount;
-    private float _buffValue = 0;
+    [NonSerialized] private int _count = 0;
+    [NonSerialized] private int _turnCount;
+    [NonSerialized] private float _buffValue = 0;
 
     public KiriageSkill()
     {

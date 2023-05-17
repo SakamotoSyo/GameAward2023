@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -9,9 +10,9 @@ public class SeishintouitsuSkill : SkillBase
     private EnemyController _enemyStatus;
     private const float ADD_VALUE = 0.2f;
     private const int TURN = 4;
-    private int _count;
-    private int _turnCount;
-    private float _addValue;
+    [NonSerialized] private int _count;
+    [NonSerialized] private int _turnCount;
+    [NonSerialized] private float _addValue;
     
     public SeishintouitsuSkill()
     {

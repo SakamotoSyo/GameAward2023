@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -8,7 +9,7 @@ public class TenkamusoSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    private int _count;
+    [NonSerialized] private int _count;
 
     public TenkamusoSkill()
     {

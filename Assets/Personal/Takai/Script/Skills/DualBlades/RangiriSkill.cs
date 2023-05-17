@@ -1,7 +1,7 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class RangiriSkill : SkillBase
 {
@@ -10,9 +10,9 @@ public class RangiriSkill : SkillBase
     private EnemyController _enemyStatus;
     const float AddDamageValue = 0.05f;
     private const int Turn = 3;
-    private int _count;
-    private int _turnCount;
-    private float _buffValue;
+    [NonSerialized]private int _count;
+    [NonSerialized]private int _turnCount;
+    [NonSerialized]private float _buffValue;
 
     public RangiriSkill()
     {

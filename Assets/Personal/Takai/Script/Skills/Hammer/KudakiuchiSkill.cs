@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -8,7 +9,7 @@ public class KudakiuchiSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float _subtractValue = 0.2f;
-    private bool _isSkill = false;
+    [NonSerialized] private bool _isSkill = false;
 
     public KudakiuchiSkill()
     {

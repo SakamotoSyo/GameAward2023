@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -8,7 +9,7 @@ public class ShippuSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float _subtractHpValue = 0.02f;
-    int _count = 3;
+    [NonSerialized] int _count = 3;
 
     public ShippuSkill()
     {

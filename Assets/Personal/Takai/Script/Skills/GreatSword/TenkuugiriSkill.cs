@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -10,7 +11,7 @@ public class TenkuugiriSkill : SkillBase
     private ActorAttackType _actor;
     private const float WeaponWeight = 100;
     private const float AddDamageValue = 0.2f;
-    private bool _isUse = false;
+    [NonSerialized] private bool _isUse = false;
 
     public TenkuugiriSkill()
     {

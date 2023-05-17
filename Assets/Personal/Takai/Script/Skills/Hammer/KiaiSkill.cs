@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -6,8 +7,8 @@ public class KiaiSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
-    private float _attackValue;
-    private int _count;
+    [NonSerialized] private float _attackValue;
+    [NonSerialized] private int _count;
 
     public KiaiSkill()
     {

@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
+
 
 public class KasokuSkill : SkillBase
 {
@@ -8,9 +10,9 @@ public class KasokuSkill : SkillBase
     private PlayerController _playerStatus;
     private const float ADD_VALUE = 0.05f;
     private const int Turn = 4;
-    private int _count;
-    private int _turnCount;
-    private float _buffValue;
+    [NonSerialized]private int _count;
+    [NonSerialized]private int _turnCount;
+    [NonSerialized]private float _buffValue;
 
     public KasokuSkill()
     {
