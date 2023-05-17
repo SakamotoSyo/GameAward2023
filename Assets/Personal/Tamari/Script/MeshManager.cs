@@ -184,10 +184,10 @@ public class MeshManager : MonoBehaviour
         _myMesh.SetColors(_setColor);
 
         _centerPos = GetCentroid(_myVertices);
-        if(Input.GetButtonDown("Jump"))
-        {
-            MakeMesh();
-        }
+        //if(Input.GetButtonDown("Jump"))
+        //{
+        //    MakeMesh();
+        //}
 
         if (Input.GetMouseButtonDown(0))
         {
