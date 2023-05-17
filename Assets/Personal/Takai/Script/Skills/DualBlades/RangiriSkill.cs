@@ -9,9 +9,10 @@ public class RangiriSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float AddDamageValue = 0.05f;
-    const int Turn = 3;
-    private int _count = 0;
+    private const int Turn = 3;
+    private int _count;
     private int _turnCount;
+    private float _buffValue;
 
     public RangiriSkill()
     {
@@ -21,12 +22,12 @@ public class RangiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "2ターンの間攻撃力が5%上昇(重複あり→5%,10%,15%)";
     }
-    
+
     private void Start()
     {
         _anim = GetComponent<PlayableDirector>();
     }
-    
+
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -47,19 +48,41 @@ public class RangiriSkill : SkillBase
     protected override void SkillEffect()
     {
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
+        _enemyStatus.AddDamage(dmg + Damage);
 
-        _count = (_count <= Turn) ? _count++ : _count;
+        if (++_count <= Turn)
+        {
+            FluctuationStatusClass fluctuation;
+            if (_count != 0)
+            {
+                fluctuation = new FluctuationStatusClass(
+                    -_buffValue, 0, 0, 0, 0);
+                _buffValue = 0;
+                _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
+            }
 
-        //_enemyStatus.AddDamage(_count);
-        _enemyStatus.AddDamage(((AddDamageValue * _count) * dmg) + Damage + dmg);
+            _buffValue = dmg * (AddDamageValue * _count);
+            fluctuation = new FluctuationStatusClass(
+                _buffValue,
+                0, 0, 0, 0);
+
+            _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
+        }
     }
 
     public override bool TurnEnd()
     {
-        if (++_turnCount >= 3)
+        if (_count > 0)
         {
-            _count--;
-            _turnCount = 0;
+            if (++_turnCount >= Turn)
+            {
+                _count--;
+
+                FluctuationStatusClass fluctuation = new FluctuationStatusClass(
+                    -_buffValue, 0, 0, 0, 0);
+                _buffValue = 0;
+                _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
+            }
         }
 
         return true;
@@ -67,6 +90,10 @@ public class RangiriSkill : SkillBase
 
     public override void BattleFinish()
     {
+        FluctuationStatusClass fluctuation = new FluctuationStatusClass(-_buffValue, 0, 0, 0, 0);
+        _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
+
         _count = 0;
+        _buffValue = 0;
     }
 }

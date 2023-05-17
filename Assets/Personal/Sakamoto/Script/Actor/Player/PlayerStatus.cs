@@ -66,8 +66,15 @@ public class PlayerStatus
     /// <param name="weaponData"></param>
     public void EquipWeponChange(WeaponData weaponData, int arrayNum)
     {
-        _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
-        _equipWeapon.ChangeWeapon(weaponData, arrayNum);
+        if (_equipWeapon.IsEpicSkill2)
+        {
+            _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
+            _equipWeapon.ChangeWeapon(weaponData, arrayNum);
+        }
+        else 
+        {
+            Debug.LogWarning("EpicSkill‚Ì‰e‹¿‚Å•ŠíŒğŠ·‚ªo—ˆ‚Ü‚¹‚ñ‚Å‚µ‚½");
+        }
     }
 
     /// <summary>

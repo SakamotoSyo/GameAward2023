@@ -7,21 +7,21 @@ public class PlayerController : MonoBehaviour
 {
     public Action GameOverAction;
     public PlayerStatus PlayerStatus => _playerStatus;
-    public PlayerSkill PlayerSkill => _playerSkill;
 
     [SerializeField, Tooltip("ダメージテキストのクラス")]
     private DamageTextController _damegeController;
     [SerializeField, Tooltip("ダメージテキストを生成する座標")]
     private Transform _damagePos;
-    [SerializeField] private PlayerSkill _playerSkill = new();
     private PlayerStatus _playerStatus;
     private PlayerAnimation _playerAnimation = new();
+    private SkillDataManagement _skillDataManagement;
+
+    private bool _isCounter = false;
 
     private void Start()
     {
-       _playerSkill.Init(GameObject.Find("DataBase").GetComponent<SkillDataManagement>());
-       
-       
+        _skillDataManagement = GameObject.Find("DataBase").GetComponent<SkillDataManagement>();
+        _playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.SearchSkill());
     }
 
     private void Update()
@@ -38,6 +38,11 @@ public class PlayerController : MonoBehaviour
           _damagePos.position,
            Quaternion.identity);
         damageController.TextInit((int)damage);
+
+        //if (_playerSkill.SkillDataManagement.InEffectCheck) 
+        //{ 
+            
+        //}
         if (_playerStatus.EquipWeapon.DownJudge(damage))
         {
             //アニメーションがあったらここでダメージを受ける処理を呼ぶ
@@ -87,7 +92,6 @@ public class PlayerController : MonoBehaviour
     {
         PlayerSaveData playerSaveData = new PlayerSaveData();
         _playerStatus.SaveStatus(playerSaveData);
-        _playerSkill.SaveSkill(playerSaveData);
         GameManager.SetPlayerData(playerSaveData);
         Debug.Log("Saveされました");
     }
@@ -95,14 +99,11 @@ public class PlayerController : MonoBehaviour
     public void LoadPlayerData(PlayerSaveData playerSaveData) 
     {
         _playerStatus.LoadStatus(playerSaveData);
-        _playerSkill.LoadSkill(playerSaveData);
     }
 }
 
 public enum PlayerAttackType 
 {
     ConventionalAttack,
-    NinjaThrowingKnives,
-    Skill1,
-    Skill2,
+    CounterAttack,
 }

@@ -19,12 +19,12 @@ public class KasokugiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "重さが軽いほど連撃数が増える(上限4)";
     }
-    
+
     private void Start()
     {
         _anim = GetComponent<PlayableDirector>();
     }
-    
+
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -44,7 +44,7 @@ public class KasokugiriSkill : SkillBase
         Debug.Log("Anim End");
     }
 
-    protected override async void SkillEffect()
+    protected override void SkillEffect()
     {
         int num = 0;
 
@@ -53,114 +53,107 @@ public class KasokugiriSkill : SkillBase
             case ActorAttackType.Player:
             {
                 float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
-                switch (Mathf.FloorToInt(weight / 10))
+
+                if (weight >= 41)
                 {
-                    case 1:
-                        // 重さが20以下の場合の処理
-                        num = 8;
-                        for (int i = 0; i < num; i++)
-                        {
-                            await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
-                                cancellationToken: this.GetCancellationTokenOnDestroy());
-                            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value +
-                                                   Damage);
-                        }
-
-                        break;
-                    case 2:
-                        // 重さが21~30以下の場合の処理
-                        num = 7;
-                        for (int i = 0; i < num; i++)
-                        {
-                            await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
-                                cancellationToken: this.GetCancellationTokenOnDestroy());
-                            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value +
-                                                   Damage);
-                        }
-
-                        break;
-                    case 3:
-                        // 重さが31~40以下の場合の処理
-                        num = 6;
-                        for (int i = 0; i < num; i++)
-                        {
-                            await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
-                                cancellationToken: this.GetCancellationTokenOnDestroy());
-                            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value +
-                                                   Damage);
-                        }
-
-                        break;
-                    default:
-                        // 重さが40より大きい場合の処理
-                        num = 5;
-                        for (int i = 0; i < num; i++)
-                        {
-                            await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
-                                cancellationToken: this.GetCancellationTokenOnDestroy());
-                            _enemyStatus.AddDamage(
-                                _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
-                        }
-
-                        break;
+                    // 41以上の処理
+                    num = 5;
+                    for (int i = 0; i < num; i++)
+                    {
+                        AddDamage();
+                    }
                 }
-            }
+                else if (weight >= 31)
+                {
+                    // 31~40の処理
+                    num = 6;
+                    for (int i = 0; i < num; i++)
+                    {
+                        AddDamage();
+                    }
+                }
+                else if (weight >= 21)
+                {
+                    // 21~30の処理
+                    num = 7;
+                    for (int i = 0; i < num; i++)
+                    {
+                        AddDamage();
+                    }
+                }
+                else
+                {
+                    // 20以下の処理
+                    num = 8;
+                    for (int i = 0; i < num; i++)
+                    {
+                        AddDamage();
+                    }
+                }
+
                 break;
+            }
             case ActorAttackType.Enemy:
             {
                 float weight = _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight;
-                switch (Mathf.FloorToInt(weight / 10))
+                if (weight >= 41)
                 {
-                    case 1:
-                        // 重さが20以下の場合の処理
-                        num = 8;
-                        for (int i = 0; i < num; i++)
-                        {
-                            await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
-                                cancellationToken: this.GetCancellationTokenOnDestroy());
-                            _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
-                        }
-
-                        break;
-                    case 2:
-                        // 重さが21~30以下の場合の処理
-                        num = 7;
-                        for (int i = 0; i < num; i++)
-                        {
-                            await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
-                                cancellationToken: this.GetCancellationTokenOnDestroy());
-                            _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
-                        }
-
-                        break;
-                    case 3:
-                        // 重さが31~40以下の場合の処理
-                        num = 6;
-                        for (int i = 0; i < num; i++)
-                        {
-                            await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
-                                cancellationToken: this.GetCancellationTokenOnDestroy());
-                            _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
-                        }
-
-                        break;
-                    default:
-                        // 重さが40より大きい場合の処理
-                        num = 5;
-                        for (int i = 0; i < num; i++)
-                        {
-                            await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
-                                cancellationToken: this.GetCancellationTokenOnDestroy());
-                            _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
-                        }
-
-                        break;
+                    // 41以上の処理
+                    num = 5;
+                    for (int i = 0; i < num; i++)
+                    {
+                        AddDamage();
+                    }
+                }
+                else if (weight >= 31)
+                {
+                    // 31~40の処理
+                    num = 6;
+                    for (int i = 0; i < num; i++)
+                    {
+                        AddDamage();
+                    }
+                }
+                else if (weight >= 21)
+                {
+                    // 21~30の処理
+                    num = 7;
+                    for (int i = 0; i < num; i++)
+                    {
+                        AddDamage();
+                    }
+                }
+                else
+                {
+                    // 20以下の処理
+                    num = 8;
+                    for (int i = 0; i < num; i++)
+                    {
+                        AddDamage();
+                    }
                 }
             }
                 break;
         }
     }
 
+    private async void AddDamage()
+    {
+        switch (_actor)
+        {
+            case ActorAttackType.Player:
+                await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
+                    cancellationToken: this.GetCancellationTokenOnDestroy());
+                _enemyStatus.AddDamage(
+                    _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                break;
+            case ActorAttackType.Enemy:
+                await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
+                    cancellationToken: this.GetCancellationTokenOnDestroy());
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
+                break;
+        }
+    }
 
     public override bool TurnEnd()
     {

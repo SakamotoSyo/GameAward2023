@@ -26,7 +26,6 @@ public class TenkuugiriSkill : SkillBase
         _anim = GetComponent<PlayableDirector>();
     }
 
-    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;

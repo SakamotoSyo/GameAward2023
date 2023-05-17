@@ -41,6 +41,8 @@ public class BattleStateController : MonoBehaviour
                                   ((int)BattleEvent.StartToNextActorState);
         _stateMachine.AddTransition<SelectNextActorTransitionState, SPlayerAttackState>
                                   ((int)BattleEvent.SelectStateToPlayerTrun);
+        _stateMachine.AddTransition<SPlayerAttackState, SPlayerAttackState>
+                                  ((int)BattleEvent.ReturnPlayer);
         _stateMachine.AddTransition<SelectNextActorTransitionState, SEnemyAttackState>
                                   ((int)BattleEvent.SelectStateToEnemyTrun);
         _stateMachine.AddTransition<SPlayerAttackState, SelectNextActorTransitionState>
@@ -83,10 +85,10 @@ public class BattleStateController : MonoBehaviour
     /// <summary>
     /// Listの中から次に行動するActorを決定させる
     /// </summary>
-    public void NextActorStateTransition()
+    public async void NextActorStateTransition()
     {
         var token = this.GetCancellationTokenOnDestroy();
-        UniTask.WaitUntil(() => _stateMachine.CurrentState == _stateMachine.GetOrAddState<SelectNextActorTransitionState>(), cancellationToken: token);
+        UniTask.WaitUntil(() => _stateMachine.CurrentState == _stateMachine.GetOrAddState<SelectNextActorTransitionState>(), cancellationToken: token).Forget();
 
         for (int i = 0; i < _actionSequentialList.Count; i++)
         {
@@ -97,7 +99,18 @@ public class BattleStateController : MonoBehaviour
             }
             else if (_actionSequentialList[i].EnemyController && !_actionSequentialList[i].alreadyActedOn)
             {
-                _stateMachine.Dispatch((int)BattleEvent.SelectStateToEnemyTrun);
+                var result = await _skillManagement.InEffectCheck("因果応報", ActorAttackType.Player);
+                if (result)
+                {
+                    Debug.Log("敵出来ない");
+                    //敵の行動を終了させる
+                    ActorStateEnd();
+                }
+                else 
+                {
+                    Debug.Log("敵");
+                    _stateMachine.Dispatch((int)BattleEvent.SelectStateToEnemyTrun);
+                }
                 break;
             }
             else if (_actionSequentialList[i].PlayerController && _actionSequentialList[i].EnemyController)
@@ -116,7 +129,7 @@ public class BattleStateController : MonoBehaviour
     /// <summary>
     /// Actorの行動の終わりに呼ぶ関数
     /// </summary>
-    public void ActorStateEnd() 
+    public async void ActorStateEnd() 
     {
         ClearCheck();
 
@@ -131,7 +144,16 @@ public class BattleStateController : MonoBehaviour
 
         if (_stateMachine.CurrentState == _stateMachine.GetOrAddState<SPlayerAttackState>())
         {
-            _stateMachine.Dispatch((int)BattleEvent.PlayerTurnToSelectState);
+            var result = await _skillManagement.InEffectCheck("奮起", ActorAttackType.Player);
+            if (result)
+            {
+                _stateMachine.Dispatch((int)BattleEvent.ReturnPlayer);
+            }
+            else 
+            {
+                _stateMachine.Dispatch((int)BattleEvent.PlayerTurnToSelectState);
+            }
+            
         }
         else if (_stateMachine.CurrentState == _stateMachine.GetOrAddState<SEnemyAttackState>()) 
         {
@@ -158,6 +180,7 @@ public class BattleStateController : MonoBehaviour
         StartToNextActorState,
         PlayerTurnToSelectState,
         EnemyToSelectState,
+        ReturnPlayer,
         SelectStateToPlayerTrun,
         SelectStateToEnemyTrun,
         BattleEnd,

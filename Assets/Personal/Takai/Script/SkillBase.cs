@@ -12,6 +12,15 @@ public abstract class SkillBase : MonoBehaviour
     
     public abstract bool IsUseCheck(PlayerController player);
     public abstract UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType);
+    /// <summary>
+    /// Œø‰Ê”­“®’†‚Ì‚ÉŒÄ‚Ño‚·ŠÖ”
+    /// </summary>
+    /// <param name="attackType"></param>
+    /// <returns></returns>
+    public virtual async UniTask InEffectSkill(ActorAttackType attackType) 
+    {
+        
+    }
     protected abstract void SkillEffect();
     public abstract bool TurnEnd();
     public abstract void BattleFinish();
@@ -22,4 +31,5 @@ public enum SkillType
 {
     Skill,
     Special,
+    Epic,
 }
