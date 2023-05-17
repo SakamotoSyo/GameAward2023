@@ -85,10 +85,10 @@ public class BattleStateController : MonoBehaviour
     /// <summary>
     /// List‚Ì’†‚©‚çŸ‚És“®‚·‚éActor‚ğŒˆ’è‚³‚¹‚é
     /// </summary>
-    public void NextActorStateTransition()
+    public async void NextActorStateTransition()
     {
         var token = this.GetCancellationTokenOnDestroy();
-        UniTask.WaitUntil(() => _stateMachine.CurrentState == _stateMachine.GetOrAddState<SelectNextActorTransitionState>(), cancellationToken: token);
+        UniTask.WaitUntil(() => _stateMachine.CurrentState == _stateMachine.GetOrAddState<SelectNextActorTransitionState>(), cancellationToken: token).Forget();
 
         for (int i = 0; i < _actionSequentialList.Count; i++)
         {
@@ -99,7 +99,18 @@ public class BattleStateController : MonoBehaviour
             }
             else if (_actionSequentialList[i].EnemyController && !_actionSequentialList[i].alreadyActedOn)
             {
-                _stateMachine.Dispatch((int)BattleEvent.SelectStateToEnemyTrun);
+                var result = await _skillManagement.InEffectCheck("ˆö‰Ê‰•ñ", ActorAttackType.Player);
+                if (result)
+                {
+                    Debug.Log("“Go—ˆ‚È‚¢");
+                    //“G‚Ìs“®‚ğI—¹‚³‚¹‚é
+                    ActorStateEnd();
+                }
+                else 
+                {
+                    Debug.Log("“G");
+                    _stateMachine.Dispatch((int)BattleEvent.SelectStateToEnemyTrun);
+                }
                 break;
             }
             else if (_actionSequentialList[i].PlayerController && _actionSequentialList[i].EnemyController)

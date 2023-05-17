@@ -109,6 +109,11 @@ public class PlayerEquipWeapon
         ChangeCurrentDurable(fluctuation.CurrentDurable);
     }
 
+    public void SetDebugSkill(SkillBase skill) 
+    {
+        WeaponSkill.WeaponSkillArray[0] = skill;
+    }
+
     public void EpicSkill1()
     {
         _maxDurable.Value = 5;

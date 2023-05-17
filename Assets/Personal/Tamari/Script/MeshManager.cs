@@ -11,6 +11,8 @@ public class MeshManager : MonoBehaviour
     [SerializeField]
     private GameObject _jyusin = default;
 
+    private int _higestPosIndex = default;
+
     private int _lowestPosIndex = default;
 
     private int _rightmostIndex = default;
@@ -68,12 +70,22 @@ public class MeshManager : MonoBehaviour
     [SerializeField, Tooltip("叩ける範囲")]
     private float _minRange = 1.5f;
 
-    [SerializeField, Tooltip("大きさの限界")]
-    private float _sizeLimit = default;
+    [SerializeField, Tooltip("横幅の大きさの限界")]
+    private float _wightLimit = default;
+
+    [SerializeField, Tooltip("上側の大きさの限界")]
+    private float _heightLimit = default;
+
+    [SerializeField, Tooltip("下側の大きさの限界")]
+    private float _lowLimit = default;
 
     private float _sizeRight = default;
 
     private float _sizeLeft = default;
+
+    private float _sizeUpperHalf = default;
+
+    private float _sizeLowerHalf = default;
 
     private int _indexNum = default;
 
@@ -144,6 +156,8 @@ public class MeshManager : MonoBehaviour
 
         _rightmostIndex = 4;
         _leftmostIndex = 0;
+        _lowestPosIndex = 2;
+        _higestPosIndex = 3;
 
         _weaponSaveData = new WeaponSaveData();
 
@@ -172,11 +186,11 @@ public class MeshManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            _sizeRight = GetRange().x;
-            _sizeLeft = GetRange().y;
+            _sizeRight = GetWidthRange().x;
+            _sizeLeft = GetWidthRange().y;
 
-            Debug.Log(_sizeRight);
-            Debug.Log(_sizeLeft);
+            _sizeUpperHalf = GetHeightRange().x;
+            _sizeLowerHalf = GetHeightRange().y;
 
             Calculation();
         }
@@ -226,9 +240,16 @@ public class MeshManager : MonoBehaviour
             return;
         }
 
+        if(_sizeUpperHalf >= _heightLimit && ioDis >= toDis && _indexNum == _higestPosIndex
+            || _sizeLowerHalf >= _lowLimit && ioDis >= toDis && _indexNum == _lowestPosIndex)
+        {
+            Debug.Log("これ以上縦に伸びません");
+            return;
+        }
+
         // メッシュの過剰な拡大を防止
-        if (_sizeRight >= _sizeLimit && ioDis >= toDis && _indexNum == _rightmostIndex
-            || _sizeLeft >= _sizeLimit && ioDis >= toDis && _indexNum == _leftmostIndex)
+        if (_sizeRight >= _wightLimit && ioDis >= toDis && _indexNum == _rightmostIndex
+            || _sizeLeft >= _wightLimit && ioDis >= toDis && _indexNum == _leftmostIndex)
         {
             Debug.Log("これ以上横に大きくできません");
             return;
@@ -572,10 +593,10 @@ public class MeshManager : MonoBehaviour
     }
 
     /// <summary>
-    /// メッシュの大きさを測る関数
+    /// メッシュの横の大きさを測る関数
     /// </summary>
     /// <returns>メッシュの横のサイズ</returns>
-    private Vector2 GetRange()
+    private Vector2 GetWidthRange()
     {
         for (int i = 0; i < _myVertices.Length; i++)
         {
@@ -595,6 +616,32 @@ public class MeshManager : MonoBehaviour
         var disLeft = _firstCenterPos.x - _myVertices[_leftmostIndex].x;
 
         return new Vector2(Mathf.Abs(disRight), Mathf.Abs(disLeft));
+    }
+
+    /// <summary>
+    /// メッシュの縦の大きさを測る関数
+    /// </summary>
+    /// <returns>メッシュの横のサイズ</returns>
+    private Vector2 GetHeightRange()
+    {
+        for (int i = 0; i < _myVertices.Length; i++)
+        {
+            if (_myVertices[_higestPosIndex].y < _myVertices[i].y)
+            {
+                _higestPosIndex = i;
+            }
+
+            if (_myVertices[_lowestPosIndex].y > _myVertices[i].y)
+            {
+                _lowestPosIndex = i;
+            }
+        }
+
+        var disUpperHalf = _firstCenterPos.y - _myVertices[_higestPosIndex].y;
+
+        var disLowerHalf = _firstCenterPos.y - _myVertices[_lowestPosIndex].y;
+
+        return new Vector2(Mathf.Abs(disUpperHalf), Mathf.Abs(disLowerHalf));
     }
 
 }
