@@ -14,11 +14,14 @@ public class PlayerController : MonoBehaviour
     private Transform _damagePos;
     private PlayerStatus _playerStatus;
     private PlayerAnimation _playerAnimation = new();
+    private SkillDataManagement _skillDataManagement;
+
     private bool _isCounter = false;
 
     private void Start()
-    {  
-       
+    {
+        _skillDataManagement = GameObject.Find("DataBase").GetComponent<SkillDataManagement>();
+        _playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.SearchSkill());
     }
 
     private void Update()
