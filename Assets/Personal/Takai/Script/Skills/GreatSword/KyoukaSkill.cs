@@ -66,6 +66,11 @@ public class KyoukaSkill : SkillBase
             _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
             _buffValue = 0;
             // プレイヤーがひるむ
+            _playerStatus.PlayerStatus.SetStateAnomaly(StateAnomaly.Stun);
+        }
+        else if(_turn >= 3)
+        {
+            _playerStatus.PlayerStatus.SetStateAnomaly(StateAnomaly.None);
             _turn = 0;
         }
 
