@@ -9,7 +9,9 @@ using Cysharp.Threading.Tasks;
 public class MeshManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _jyusin;
+    private GameObject _jyusin = default;
+
+    private int _higestPosIndex = default;
 
     private int _lowestPosIndex = default;
 
@@ -19,15 +21,17 @@ public class MeshManager : MonoBehaviour
 
     private GameObject _go = default;
 
+    public GameObject GO => _go;
+
     [SerializeField, Tooltip("双剣ver")]
     private bool _isSouken = default;
 
     private MeshFilter _meshFilter = default;
 
-    private Mesh _myMesh;
+    private Mesh _myMesh = default;
     public Mesh MyMesh => _myMesh;
 
-    private MeshRenderer _meshRenderer;
+    private MeshRenderer _meshRenderer = default;
 
     public Material _meshMaterial;
 
@@ -36,6 +40,8 @@ public class MeshManager : MonoBehaviour
     public Vector3[] MyVertices { get { return _myVertices; } }
 
     private int[] _myTriangles = default;
+
+    public int[] MyTriangles => _myTriangles;
 
     private Vector3[] _myNormals = default;
 
@@ -64,10 +70,22 @@ public class MeshManager : MonoBehaviour
     [SerializeField, Tooltip("叩ける範囲")]
     private float _minRange = 1.5f;
 
-    [SerializeField, Tooltip("大きさの限界")]
-    private float _sizeLimit = default;
+    [SerializeField, Tooltip("横幅の大きさの限界")]
+    private float _wightLimit = default;
 
-    private float _size = default;
+    [SerializeField, Tooltip("上側の大きさの限界")]
+    private float _heightLimit = default;
+
+    [SerializeField, Tooltip("下側の大きさの限界")]
+    private float _lowLimit = default;
+
+    private float _sizeRight = default;
+
+    private float _sizeLeft = default;
+
+    private float _sizeUpperHalf = default;
+
+    private float _sizeLowerHalf = default;
 
     private int _indexNum = default;
 
@@ -75,7 +93,7 @@ public class MeshManager : MonoBehaviour
 
     public static bool _isFinished;
 
-    private SaveData _saveData;
+    private SaveData _saveData = default;
     public SaveData SaveData => _saveData;
 
     [SerializeField]
@@ -84,10 +102,14 @@ public class MeshManager : MonoBehaviour
     [SerializeField]
     private string _nextSceneName = default;
 
-    WeaponSaveData _weaponSaveData;
+    private float _deltaX = default;
+    public float DeltaX => _deltaX;
 
-    [SerializeField]
-    private ActiveWeaponMesh _activeWeaponMesh;
+    private float _deltaY = default;
+
+    public float DeltaY => _deltaY;
+
+    WeaponSaveData _weaponSaveData;
 
     [SerializeField]
     private GameObject _allPanel = default;
@@ -134,6 +156,8 @@ public class MeshManager : MonoBehaviour
 
         _rightmostIndex = 4;
         _leftmostIndex = 0;
+        _lowestPosIndex = 2;
+        _higestPosIndex = 3;
 
         _weaponSaveData = new WeaponSaveData();
 
@@ -162,7 +186,11 @@ public class MeshManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            _size = GetRange();
+            _sizeRight = GetWidthRange().x;
+            _sizeLeft = GetWidthRange().y;
+
+            _sizeUpperHalf = GetHeightRange().x;
+            _sizeLowerHalf = GetHeightRange().y;
 
             Calculation();
         }
@@ -212,9 +240,16 @@ public class MeshManager : MonoBehaviour
             return;
         }
 
+        if(_sizeUpperHalf >= _heightLimit && ioDis >= toDis && _indexNum == _higestPosIndex
+            || _sizeLowerHalf >= _lowLimit && ioDis >= toDis && _indexNum == _lowestPosIndex)
+        {
+            Debug.Log("これ以上縦に伸びません");
+            return;
+        }
+
         // メッシュの過剰な拡大を防止
-        if (_size >= _sizeLimit && ioDis >= toDis && _indexNum == _rightmostIndex
-            || _size >= _sizeLimit && ioDis >= toDis && _indexNum == _leftmostIndex)
+        if (_sizeRight >= _wightLimit && ioDis >= toDis && _indexNum == _rightmostIndex
+            || _sizeLeft >= _wightLimit && ioDis >= toDis && _indexNum == _leftmostIndex)
         {
             Debug.Log("これ以上横に大きくできません");
             return;
@@ -224,6 +259,8 @@ public class MeshManager : MonoBehaviour
         {
             _myVertices[_indexNum] -= new Vector3(disX, disY, 0);
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith");
+            _deltaX = _go.transform.position.x - _myVertices[_lowestPosIndex].x;
+            _deltaY = _go.transform.position.y - _myVertices[_lowestPosIndex].y;
         }
         else
         {
@@ -315,7 +352,6 @@ public class MeshManager : MonoBehaviour
             SaveManager.ResetSaveData(f);
         }
     }
-
     /// <summary>
     /// メッシュの形を元に戻す
     /// </summary>
@@ -353,7 +389,7 @@ public class MeshManager : MonoBehaviour
         _isFinished = true;
         _allPanel.SetActive(true);
         SaveMesh();
-        SoundManager.Instance.CriAtomPlay(CueSheet.CueSheet_0, "SE_Blacksmith_Finish");
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith_Finish");
         await UniTask.DelayFrame(500);
         SceneManager.LoadScene(_nextSceneName);
     }
@@ -496,7 +532,6 @@ public class MeshManager : MonoBehaviour
         _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
     }
 
-
     public void ActiveSelectWeapon()
     {
         switch (GameManager.BlacksmithType)
@@ -558,10 +593,10 @@ public class MeshManager : MonoBehaviour
     }
 
     /// <summary>
-    /// メッシュの大きさを測る関数
+    /// メッシュの横の大きさを測る関数
     /// </summary>
     /// <returns>メッシュの横のサイズ</returns>
-    private float GetRange()
+    private Vector2 GetWidthRange()
     {
         for (int i = 0; i < _myVertices.Length; i++)
         {
@@ -576,9 +611,37 @@ public class MeshManager : MonoBehaviour
             }
         }
 
-        var dis = _myVertices[_rightmostIndex].x - _myVertices[_leftmostIndex].x;
+        var disRight = _firstCenterPos.x - _myVertices[_rightmostIndex].x;
 
-        return Mathf.Abs(dis);
+        var disLeft = _firstCenterPos.x - _myVertices[_leftmostIndex].x;
+
+        return new Vector2(Mathf.Abs(disRight), Mathf.Abs(disLeft));
+    }
+
+    /// <summary>
+    /// メッシュの縦の大きさを測る関数
+    /// </summary>
+    /// <returns>メッシュの横のサイズ</returns>
+    private Vector2 GetHeightRange()
+    {
+        for (int i = 0; i < _myVertices.Length; i++)
+        {
+            if (_myVertices[_higestPosIndex].y < _myVertices[i].y)
+            {
+                _higestPosIndex = i;
+            }
+
+            if (_myVertices[_lowestPosIndex].y > _myVertices[i].y)
+            {
+                _lowestPosIndex = i;
+            }
+        }
+
+        var disUpperHalf = _firstCenterPos.y - _myVertices[_higestPosIndex].y;
+
+        var disLowerHalf = _firstCenterPos.y - _myVertices[_lowestPosIndex].y;
+
+        return new Vector2(Mathf.Abs(disUpperHalf), Mathf.Abs(disLowerHalf));
     }
 
 }

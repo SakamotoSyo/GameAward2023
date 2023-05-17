@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
@@ -8,8 +7,9 @@ public class HauchiSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    const float _subtractAttackValue = 0.2f;
-    
+    private ActorAttackType _actor;
+    const float _subtractValue = 0.4f;
+
     public HauchiSkill()
     {
         SkillName = "刃打ち";
@@ -18,13 +18,13 @@ public class HauchiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "敵の攻撃力と会心率が20%下がる";
     }
-    
+
     private void Start()
     {
         _anim = GetComponent<PlayableDirector>();
     }
 
-    
+
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -35,19 +35,35 @@ public class HauchiSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
+        _actor = actorType;
         _anim = GetComponent<PlayableDirector>();
         _anim.Play();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }
 
     protected override void SkillEffect()
     {
-        // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
-        _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower -= _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + _subtractAttackValue;
-        _enemyStatus.EnemyStatus.EquipWeapon.CurrentCriticalRate -= _enemyStatus.EnemyStatus.EquipWeapon.CriticalRate * _subtractAttackValue;
+        FluctuationStatusClass fluctuation;
+        switch (_actor)
+        {
+            case ActorAttackType.Player:
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                fluctuation = new FluctuationStatusClass(
+                    -_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue, 0,
+                    -_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate * _subtractValue, 0, 0);
+            _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
+                break;
+            case ActorAttackType.Enemy:
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
+                fluctuation = new FluctuationStatusClass(
+                    - _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * _subtractValue, 0,
+                    -_playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * _subtractValue, 0, 0);
+                _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
+                break;
+        }
     }
 
     public override bool TurnEnd()
@@ -57,6 +73,5 @@ public class HauchiSkill : SkillBase
 
     public override void BattleFinish()
     {
-        
     }
 }

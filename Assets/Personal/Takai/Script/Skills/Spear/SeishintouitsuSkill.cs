@@ -6,10 +6,12 @@ public class SeishintouitsuSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
-    const float AddValue = 0.2f;
+    private EnemyController _enemyStatus;
+    private const float ADD_VALUE = 0.2f;
+    private const int TURN = 4;
     private int _count;
-    private float _value;
-    private bool _isSkill = false;
+    private int _turnCount;
+    private float _addValue;
     
     public SeishintouitsuSkill()
     {
@@ -44,38 +46,44 @@ public class SeishintouitsuSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        // スキルの効果処理を実装する
-        _count += 4;
-        if(!_isSkill)
-        {
-            _isSkill = true;
-            _value += _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
-            _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value += _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * (1 + AddValue);
-        }
-        // 会心時のダメージが20%上昇
+        FluctuationStatusClass fluctuation;
+        _count++;
+        float value = _addValue;
+        _addValue = _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * ADD_VALUE;
+        fluctuation = new FluctuationStatusClass(0, 0, -value, 0, 0);
+        fluctuation = new FluctuationStatusClass(0, 0, _addValue, 0, 0);
 
     }
 
     public override bool TurnEnd()
     {
-        if (_count <= 0 && _isSkill)
+        if (_count > 0)
         {
-            _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value -= _value;
-            _value = 0;
-            _isSkill = false;
-        }
-        else 
-        {
-            _count--;
+            if (_turnCount <= TURN)
+            {
+                _turnCount++;
+            }
+            else
+            {
+                _count--;
+                _turnCount = 0;
+                float value = _addValue;
+                FluctuationStatusClass  fluctuation = new FluctuationStatusClass(0, 0, -value, 0, 0);
+                _addValue = _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * ADD_VALUE;
+                if (_count <= 0)
+                {
+                    _count = 0;
+                    _addValue = 0;
+                }
+            }
         }
 
-        return false;
+        return true;
     }
 
     public override void BattleFinish()
     {
-        _value = 0;
-        _count = 0;
-        _isSkill = false;
+        _turnCount = 0;
+        _addValue = 0;
     }
 }

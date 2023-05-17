@@ -55,15 +55,15 @@ public class SkillDataManagement : MonoBehaviour
         SkillBase skill = _skills.Find(skill => skill.name == skillName);
         if (skill != null)
         {
-            
             _pStatus = _actorGenerator.PlayerController;
             _eStatus = _actorGenerator.EnemyController;
             Debug.Log(skill.name);
             skill.UseSkill(_pStatus, _eStatus, actorType);
+            _skillUsePool.Add(skill);
         }
         else
         {
-            Debug.Log("スキルが見つかりません");
+            Debug.LogError("スキルが見つかりません");
         }
     }
 
@@ -94,6 +94,10 @@ public class SkillDataManagement : MonoBehaviour
                 {
                     _skillUsePool.Add(skill);
                 }
+                else
+                {
+                    _skillUsePool.Remove(skill);
+                }
             }
         }
     }
@@ -107,7 +111,7 @@ public class SkillDataManagement : MonoBehaviour
             {
                 skill.BattleFinish();
             }
-        } 
+        }
     }
 
     public SkillBase SearchSkill()
@@ -120,7 +124,10 @@ public class SkillDataManagement : MonoBehaviour
             }
         }
 
-        Debug.Log("スキル名が一致しません");
+        if (_skillName != "")
+        {
+            Debug.LogError("スキル名が一致しません");
+        }
         return null;
     }
 }

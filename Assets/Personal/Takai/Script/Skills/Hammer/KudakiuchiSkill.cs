@@ -59,11 +59,11 @@ public class KudakiuchiSkill : SkillBase
     {
         if (_isSkill)
         {
-            float hp = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value;
-            _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value -= hp * _subtractValue;
+            float hp = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value * _subtractValue;
+            _enemyStatus.AddDamage(hp);
         }
 
-        return false;
+        return true;
     }
 
     public override void BattleFinish()
