@@ -93,6 +93,7 @@ public class SkillDataManagement : MonoBehaviour
     public void TurnCall()
     {
         Debug.Log("TurnCall呼び出し");
+        List<SkillBase> skillsToRemove = new List<SkillBase>();
         foreach (var skill in _skillUsePool)
         {
             if (skill.gameObject.activeSelf)
@@ -100,9 +101,14 @@ public class SkillDataManagement : MonoBehaviour
                 bool IsUse = skill.TurnEnd();
                 if (!IsUse)
                 {
-                    _skillUsePool.Remove(skill);
+                    skillsToRemove.Add(skill);
                 }
             }
+        }
+
+        foreach (var skillToRemove in skillsToRemove)
+        {
+            _skillUsePool.Remove(skillToRemove);
         }
     }
 
