@@ -380,6 +380,7 @@ RectTransform:
   - {fileID: 1810314739}
   - {fileID: 845776703}
   - {fileID: 744714362}
+  - {fileID: 780664153}
   m_Father: {fileID: 765226594}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -552,8 +553,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1118739577}
-        m_TargetAssemblyTypeName: MeshManager, Assembly-CSharp
+      - m_Target: {fileID: 1457129397}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 1
         m_Arguments:
@@ -1630,6 +1631,82 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &780664152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780664153}
+  - component: {fileID: 780664154}
+  - component: {fileID: 780664155}
+  m_Layer: 5
+  m_Name: FinishImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &780664153
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780664152}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 169540071}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &780664154
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780664152}
+  m_CullTransparentMesh: 1
+--- !u!114 &780664155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780664152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &786981259
 GameObject:
   m_ObjectHideFlags: 0
@@ -2523,16 +2600,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jyusin: {fileID: 1720798613}
-  _isSouken: 0
-  _maxDelta: 0
   _nVertices: 6
   _centerPos: {x: 0.8, y: -2}
   _sCenterPos: {x: 0, y: 0, z: 0}
   _radius: 1.3
-  _minRange: 1.3
+  _minRange: 1.5
+  _tapRange: 1
   _wightLimit: 3.5
   _heightLimit: 6
-  _lowLimit: 2
+  _lowLimit: 1.5
   _setColor:
   - {r: 1, g: 0.6784314, b: 0.03137255, a: 0}
   - {r: 1, g: 0.34117648, b: 0, a: 0}
@@ -2540,8 +2616,7 @@ MonoBehaviour:
   - {r: 1, g: 0.007843138, b: 0, a: 0}
   - {r: 1, g: 0.6784314, b: 0.03137255, a: 0}
   - {r: 1, g: 0.34117648, b: 0, a: 0}
-  _nextSceneName: LoadWeapon
-  _allPanel: {fileID: 1345740483}
+  _particle: {fileID: 5378912279447416427, guid: 2ab7f0b0723f70847aa141bce5b7f823, type: 3}
   _weaponType: 0
   _isGS: 0
   _isDB: 0
@@ -2631,8 +2706,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1118739577}
-        m_TargetAssemblyTypeName: MeshManager, Assembly-CSharp
+      - m_Target: {fileID: 1457129397}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ResetMeshShape
         m_Mode: 1
         m_Arguments:
@@ -2892,6 +2967,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef4a3fad571fc347a058020c2f56a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _finishImage: {fileID: 780664155}
+  _meshManager: {fileID: 1118739577}
+  _nextSceneName: LoadWeapon
   _finishButton: {fileID: 196725564}
   _resetButton: {fileID: 1748480837}
   _sampleCreateButton: {fileID: 1810314740}
