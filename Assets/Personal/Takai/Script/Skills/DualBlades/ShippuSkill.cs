@@ -9,7 +9,7 @@ public class ShippuSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float _subtractHpValue = 0.02f;
-    [NonSerialized] int _count = 3;
+     int _count = 3;
 
     public ShippuSkill()
     {

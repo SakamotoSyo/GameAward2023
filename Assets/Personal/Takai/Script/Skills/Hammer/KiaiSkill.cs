@@ -7,8 +7,8 @@ public class KiaiSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
-    [NonSerialized] private float _attackValue;
-    [NonSerialized] private int _count;
+    private float _attackValue;
+    private int _count;
 
     public KiaiSkill()
     {

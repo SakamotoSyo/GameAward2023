@@ -8,8 +8,8 @@ public class IatsuSKill : SkillBase
     private PlayableDirector _anim;
     private EnemyController _enemyStatus;
     private const float PowerDown = 0.1f;
-    [NonSerialized] private int _turn;
-    [NonSerialized] private float _deBuffValue = 0;
+    private int _turn;
+    private float _deBuffValue = 0;
 
     public IatsuSKill()
     {

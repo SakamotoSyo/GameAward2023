@@ -9,7 +9,7 @@ public class TenkamusoSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    [NonSerialized] private int _count;
+    private int _count;
 
     public TenkamusoSkill()
     {

@@ -8,8 +8,8 @@ public class KyoukaSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private const float ADDVALUE = 0.5f;
-    [NonSerialized] private int _turn = 0;
-    [NonSerialized] private float _buffValue;
+    private int _turn = 0;
+    private float _buffValue;
 
     public KyoukaSkill()
     {

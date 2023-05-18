@@ -11,7 +11,7 @@ public class TenkuugiriSkill : SkillBase
     private ActorAttackType _actor;
     private const float WeaponWeight = 100;
     private const float AddDamageValue = 0.2f;
-    [NonSerialized] private bool _isUse = false;
+    private bool _isUse = false;
 
     public TenkuugiriSkill()
     {

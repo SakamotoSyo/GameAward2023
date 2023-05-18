@@ -8,7 +8,7 @@ public class IkishochinSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    [NonSerialized] float _subtractValue = 0.2f;
+    private float _subtractValue = 0.2f;
 
     public IkishochinSkill()
     {
