@@ -10,13 +10,14 @@ public class BattleChangeWeapon : MonoBehaviour
     //private BattleChangeWeaponButton[] _weaponUiButton = new BattleChangeWeaponButton[4];
     [SerializeField] private Button[] _weaponButton = new Button[4];
     [SerializeField] private Text[] _weaponTypeText = new Text[4];
-    [SerializeField] private BattleStateController _battleStateController;
+    [SerializeField] private GameObject _selectUi;
     private GameObject _buttonInsPos;
     private PlayerStatus _playerStatus;
 
     private void Start()
     {
         _playerStatus = _generator.PlayerController.PlayerStatus;
+        Debug.Log(_playerStatus);
     }
 
     /// <summary>
@@ -25,6 +26,7 @@ public class BattleChangeWeapon : MonoBehaviour
     public void ChangeWeaponUiOpen()
     {
         _weaponUiPanel.SetActive(true);
+        _selectUi.SetActive(false);
         for (int i = 0; i < _weaponButton.Length; i++)
         {
             if (i < _playerStatus.WeaponDatas.Length - 1)
@@ -41,7 +43,6 @@ public class BattleChangeWeapon : MonoBehaviour
                 _weaponTypeText[i].text = _playerStatus.WeaponDatas[num].WeaponType.ToString();
                 _weaponButton[i].onClick.RemoveAllListeners();
                 _weaponButton[i].onClick.AddListener(() => OnClickChangeWeapon(_playerStatus.WeaponDatas[num], num));
-                _weaponButton[i].onClick.AddListener(() => _battleStateController.ActorStateEnd());
             }
             else
             {
@@ -63,6 +64,5 @@ public class BattleChangeWeapon : MonoBehaviour
     public void CancelButton() 
     {
         _weaponUiPanel.SetActive(false);
-        _battleStateController.ActorStateEnd();
     }
 }

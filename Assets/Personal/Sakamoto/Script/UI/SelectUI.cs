@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
@@ -89,7 +90,7 @@ public class SelectUI : MonoBehaviour
      
     }
 
-    public void Attack()
+    public async void Attack()
     {
         if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
         {
@@ -118,7 +119,7 @@ public class SelectUI : MonoBehaviour
                 SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
                 if (skill1) 
                 {
-                    _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
+                   await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
                 }
             }
             else if (_actionUi[num] == _actionUi[3])
@@ -127,7 +128,7 @@ public class SelectUI : MonoBehaviour
                 SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
                 if (skill2)
                 {
-                    _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
+                   await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
                 }
             }
 
@@ -141,6 +142,7 @@ public class SelectUI : MonoBehaviour
 
     private void SkillInfo() 
     {
+        Debug.Log("SkillInfo");
         var currentUi = _lotateNum % _actionUi.Length;
         if (currentUi < 0)
         {
@@ -156,10 +158,11 @@ public class SelectUI : MonoBehaviour
                 _skillText[0].text = skill1.name;
                 _skillText[1].text = skill1.Damage.ToString();
                 _skillText[2].text = skill1.FlavorText;
-                Debug.Log("ƒeƒLƒXƒg‚Å‚·");
+                
             }
             else
             {
+                Debug.Log("Skill1");
                 _skillText[0].text = "NoSkill";
             }
 
@@ -176,6 +179,7 @@ public class SelectUI : MonoBehaviour
             }
             else
             {
+                Debug.Log("Skill2");
                 _skillText[0].text = "NoSkill";
             }
 
@@ -192,6 +196,7 @@ public class SelectUI : MonoBehaviour
             }
             else 
             {
+                Debug.Log("U‚ÁŽE");
                 _skillText[0].text = "NoSkill";
             }
         }
