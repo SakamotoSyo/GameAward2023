@@ -33,7 +33,7 @@ public class IngaouhouSkill : SkillBase
         _playerStatus.gameObject.SetActive(false);
         _anim.Play();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+        await UniTask.WaitUntil(() => _anim.time >= _anim.duration - 0.05,
             cancellationToken: this.GetCancellationTokenOnDestroy());
         _anim.Stop();
         await UniTask.Delay(TimeSpan.FromSeconds(0.5));
