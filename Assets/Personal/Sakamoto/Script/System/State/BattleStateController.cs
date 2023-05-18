@@ -119,6 +119,7 @@ public class BattleStateController : MonoBehaviour
             }
             else if(_actionSequentialList.Count -1 == i)
             {
+                _skillManagement.TurnCall();
                 ActionSequentialDetermining();
                 Debug.Log("‘S‚Äs“®Ï‚İ‚È‚Ì‚Ås“®‡‚ğŒˆ‚ß‚È‚¨‚·");
                NextActorStateTransition();

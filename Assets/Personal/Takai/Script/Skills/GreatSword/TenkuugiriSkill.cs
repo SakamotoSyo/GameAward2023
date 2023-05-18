@@ -58,7 +58,7 @@ public class TenkuugiriSkill : SkillBase
                 if (_playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value >= WeaponWeight)
                 {
                     _enemyStatus.AddDamage(
-                        dmg * AddDamageValue + Damage);
+                      dmg + Damage + (dmg * AddDamageValue ));
                 }
                 else
                 {
@@ -72,7 +72,7 @@ public class TenkuugiriSkill : SkillBase
 
                 if (_enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight >= WeaponWeight)
                 {
-                    _playerStatus.AddDamage((dmg * AddDamageValue) + Damage);
+                    _playerStatus.AddDamage(dmg + Damage +(dmg * AddDamageValue));
                 }
                 else
                 {

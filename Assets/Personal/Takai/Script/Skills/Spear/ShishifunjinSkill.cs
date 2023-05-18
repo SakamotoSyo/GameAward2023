@@ -10,7 +10,7 @@ public class ShishifunjinSkill : SkillBase
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    private int _count;
+    private int _count ;
 
     public ShishifunjinSkill()
     {

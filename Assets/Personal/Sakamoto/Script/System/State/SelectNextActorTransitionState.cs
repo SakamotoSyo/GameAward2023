@@ -9,7 +9,6 @@ public class SelectNextActorTransitionState : State
 {
     protected override void OnEnter(State currentState)
     {
-       Owner.SkillManagement.TurnCall();
        Owner.NextActorStateTransition();
     }
 
