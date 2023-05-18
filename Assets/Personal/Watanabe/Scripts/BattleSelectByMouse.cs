@@ -4,12 +4,12 @@ using UnityEngine.EventSystems;
 
 public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerClickHandler
 {
-    private BattleSelectUI _selectUI = default;
+    [SerializeField] private BattleChangeWeapon _changeWeapon;
+    [SerializeField] private BattleSelectUI _selectUI = default;
     private int _index = 0;
 
     private void Start()
     {
-        _selectUI = transform.parent.GetComponent<BattleSelectUI>();
 
         _index = Array.IndexOf(_selectUI.ActionUI, transform);
     }
@@ -24,6 +24,6 @@ public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerC
     {
         SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
         Debug.Log("attack");
-        _selectUI.Attack();
+        _changeWeapon.ChangeWeaponUiOpen();
     }
 }
