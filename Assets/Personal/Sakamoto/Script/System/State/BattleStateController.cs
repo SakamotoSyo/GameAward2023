@@ -15,6 +15,7 @@ public class BattleStateController : MonoBehaviour
     public EnemyController EnemyController => _enemyController;
     public ResultUIScript ResultUIScript => _resultUIScript;
     public SkillDataManagement SkillManagement => _skillManagement;
+    public StateMachine<BattleStateController> StateMachine => _stateMachine;
 
     [SerializeField] private GameObject _commandObj;
     [SerializeField] private ActorGenerator _generator;
@@ -85,16 +86,18 @@ public class BattleStateController : MonoBehaviour
     /// <summary>
     /// Listの中から次に行動するActorを決定させる
     /// </summary>
-    public async void NextActorStateTransition()
+    public async UniTask NextActorStateTransition()
     {
         var token = this.GetCancellationTokenOnDestroy();
-        UniTask.WaitUntil(() => _stateMachine.CurrentState == _stateMachine.GetOrAddState<SelectNextActorTransitionState>(), cancellationToken: token).Forget();
-
+        Debug.Log(_stateMachine.CurrentState);
         for (int i = 0; i < _actionSequentialList.Count; i++)
         {
+            Debug.Log(_actionSequentialList[i].EnemyController && !_actionSequentialList[i].alreadyActedOn);
+            Debug.Log("まわってる");
             if (_actionSequentialList[i].PlayerController && !_actionSequentialList[i].alreadyActedOn)
             {
                 _stateMachine.Dispatch((int)BattleEvent.SelectStateToPlayerTrun);
+                Debug.Log("Player");
                 break;
             }
             else if (_actionSequentialList[i].EnemyController && !_actionSequentialList[i].alreadyActedOn)
@@ -105,23 +108,30 @@ public class BattleStateController : MonoBehaviour
                     Debug.Log("敵出来ない");
                     //敵の行動を終了させる
                     ActorStateEnd();
+                    await NextActorStateTransition();
                 }
-                else 
+                else
                 {
                     Debug.Log("敵");
-                    _stateMachine.Dispatch((int)BattleEvent.SelectStateToEnemyTrun);
+                   
                 }
+                _stateMachine.Dispatch((int)BattleEvent.SelectStateToEnemyTrun);
                 break;
             }
             else if (_actionSequentialList[i].PlayerController && _actionSequentialList[i].EnemyController)
             {
                 Debug.LogError("想定外のDataが含まれています");
             }
-            else if(_actionSequentialList.Count -1 == i)
+            else if (_actionSequentialList.Count - 1 == i)
             {
+                _skillManagement.TurnCall();
                 ActionSequentialDetermining();
                 Debug.Log("全て行動済みなので行動順を決めなおす");
-               NextActorStateTransition();
+                NextActorStateTransition();
+            }
+            else 
+            {
+                Debug.Log("なんでやねん");
             }
         }
     }

@@ -1,14 +1,16 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 
 public class IkishochinSkill : SkillBase
 {
-    private PlayableDirector _anim;
+    [SerializeField] private PlayableDirector _anim;
+    [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    float _subtractValue = 0.2f;
-    
+    private float _subtractValue = 0.2f;
+
     public IkishochinSkill()
     {
         SkillName = "意気消沈";
@@ -17,13 +19,13 @@ public class IkishochinSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "敵の攻撃力20%を下げる";
     }
-    
+
     private void Start()
     {
         _anim = GetComponent<PlayableDirector>();
     }
 
-    
+
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -34,21 +36,27 @@ public class IkishochinSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
-        _anim = GetComponent<PlayableDirector>();
+        _playerObj.SetActive(true);
+        _playerStatus.gameObject.SetActive(false);
         _anim.Play();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
+        _anim.Stop();
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+        _playerStatus.gameObject.SetActive(true);
         Debug.Log("Anim End");
+        _playerObj.SetActive(false);
     }
 
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
         _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
-         FluctuationStatusClass fluctuation =
+        FluctuationStatusClass fluctuation =
             new FluctuationStatusClass(-_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + _subtractValue, 0, 0, 0,
                 0);
-         _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
+        _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
     }
 
     public override bool TurnEnd()
@@ -58,6 +66,5 @@ public class IkishochinSkill : SkillBase
 
     public override void BattleFinish()
     {
-        
     }
 }
