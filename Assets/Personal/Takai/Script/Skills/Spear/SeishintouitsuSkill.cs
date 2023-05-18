@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 
 public class SeishintouitsuSkill : SkillBase
 {
-    private PlayableDirector _anim;
+    [SerializeField] private PlayableDirector _anim;
+    [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private const float ADD_VALUE = 0.2f;
@@ -37,11 +39,17 @@ public class SeishintouitsuSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
-        _anim = GetComponent<PlayableDirector>();
+        _playerObj.SetActive(true);
+        _playerStatus.gameObject.SetActive(false);
         _anim.Play();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
+        _anim.Stop();
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+        _playerStatus.gameObject.SetActive(true);
         Debug.Log("Anim End");
+        _playerObj.SetActive(false);
     }
 
     protected override void SkillEffect()
