@@ -10,10 +10,8 @@ public class SkillDataManagement : MonoBehaviour
     [Header("スキル検索"), SerializeField] private string _skillName;
 
     [SerializeField] private ActorGenerator _actorGenerator;
-    [SerializeField] private Transform _transform;
     [SerializeField] private PlayerController _pStatus;
     [SerializeField] private EnemyController _eStatus;
-    [SerializeField] private List<GameObject> _skillPrefab = new();
 
     private List<SkillBase> _skills = new List<SkillBase>();
     private List<SkillBase> _skillUsePool = new List<SkillBase>();
@@ -21,19 +19,13 @@ public class SkillDataManagement : MonoBehaviour
 
     private void Awake()
     {
-       // SkillBase[] skillPrefabs = Resources.LoadAll<SkillBase>("Skills");
+        SkillBase[] skillPrefabs = Resources.LoadAll<SkillBase>("Skills");
 
-        for (int i = 0; i < _skillPrefab.Count; i++) 
+        foreach (var skill in skillPrefabs)
         {
-            var skillObj = Instantiate(_skillPrefab[i], _transform);
-            _skills.Add(skillObj.GetComponent<SkillBase>());
+            Instantiate(skill, transform);
+            _skills.Add(skill);
         }
-
-        //foreach (var skill in skillPrefabs)
-        //{
-        //    Instantiate(skill, transform);
-        //    _skills.Add(skill);
-        //}
     }
 
     public SkillBase OnSkillCall(WeaponType weapon, SkillType type)
@@ -58,7 +50,7 @@ public class SkillDataManagement : MonoBehaviour
         return skill.IsUseCheck(_actorGenerator.PlayerController);
     }
 
-    public async UniTask OnSkillUse(ActorAttackType actorType, string skillName)
+    public void OnSkillUse(ActorAttackType actorType, string skillName)
     {
         SkillBase skill = _skills.Find(skill => skill.name == skillName);
         if (skill != null)
@@ -66,7 +58,7 @@ public class SkillDataManagement : MonoBehaviour
             _pStatus = _actorGenerator.PlayerController;
             _eStatus = _actorGenerator.EnemyController;
             Debug.Log(skill.name);
-            await skill.UseSkill(_pStatus, _eStatus, actorType);
+            skill.UseSkill(_pStatus, _eStatus, actorType);
             _skillUsePool.Add(skill);
         }
         else
@@ -93,22 +85,20 @@ public class SkillDataManagement : MonoBehaviour
     public void TurnCall()
     {
         Debug.Log("TurnCall呼び出し");
-        List<SkillBase> skillsToRemove = new List<SkillBase>();
         foreach (var skill in _skillUsePool)
         {
             if (skill.gameObject.activeSelf)
             {
                 bool IsUse = skill.TurnEnd();
-                if (!IsUse)
+                if (IsUse)
                 {
-                    skillsToRemove.Add(skill);
+                    _skillUsePool.Add(skill);
+                }
+                else
+                {
+                    _skillUsePool.Remove(skill);
                 }
             }
-        }
-
-        foreach (var skillToRemove in skillsToRemove)
-        {
-            _skillUsePool.Remove(skillToRemove);
         }
     }
 

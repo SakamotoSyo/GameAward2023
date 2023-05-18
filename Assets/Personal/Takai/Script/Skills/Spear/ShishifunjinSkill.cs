@@ -7,11 +7,10 @@ public class ShishifunjinSkill : SkillBase
 {
     [Tooltip("攻撃間の待機時間")]
     [SerializeField] private int _attackWaitTime;
-    [SerializeField] private PlayableDirector _anim;
-    [SerializeField] private GameObject _playerObj;
+    private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    private int _count ;
+    private int _count;
 
     public ShishifunjinSkill()
     {
@@ -38,17 +37,11 @@ public class ShishifunjinSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
-        _playerObj.SetActive(true);
-        _playerStatus.gameObject.SetActive(false);
+        _anim = GetComponent<PlayableDirector>();
         _anim.Play();
         SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
-            cancellationToken: this.GetCancellationTokenOnDestroy());
-        _anim.Stop();
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-        _playerStatus.gameObject.SetActive(true);
+        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
-        _playerObj.SetActive(false);
     }
 
     protected override async void SkillEffect()

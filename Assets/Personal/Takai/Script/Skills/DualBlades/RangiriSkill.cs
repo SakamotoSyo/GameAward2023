@@ -1,19 +1,18 @@
-using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class RangiriSkill : SkillBase
 {
-    [SerializeField] private PlayableDirector _anim;
-    [SerializeField] private GameObject _playerObj;
+    private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float AddDamageValue = 0.05f;
     private const int Turn = 3;
     private int _count;
     private int _turnCount;
-   private float _buffValue;
+    private float _buffValue;
 
     public RangiriSkill()
     {
@@ -39,17 +38,11 @@ public class RangiriSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
-        _playerObj.SetActive(true);
-        _playerStatus.gameObject.SetActive(false);
-        _anim.Play();
+        _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());
-        _anim.Stop();
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-        _playerStatus.gameObject.SetActive(true);
         Debug.Log("Anim End");
-        _playerObj.SetActive(false);
     }
 
     protected override void SkillEffect()

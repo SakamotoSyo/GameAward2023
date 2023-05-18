@@ -13,7 +13,6 @@ public class BattleSelectUI : MonoBehaviour
     [SerializeField] private ActorGenerator _generator = default;
     [SerializeField] private BattleChangeWeapon _battleChangeWeaponCs = default;
     [SerializeField] private SkillDataManagement _skillDataManagement = default;
-    [SerializeField] private BattleStateController _battleStateController;
 
     private int _index = 0;
     private PlayerController _playerController = default;
@@ -53,7 +52,7 @@ public class BattleSelectUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
         {
-            _battleChangeWeaponCs.ChangeWeaponUiOpen();
+            Attack();
         }
     }
 
@@ -70,7 +69,7 @@ public class BattleSelectUI : MonoBehaviour
         SkillInfo();
     }
 
-    public async void AttackEvent()
+    public void Attack()
     {
         var num = _index % _actionUi.Length;
         if (num < 0)
@@ -78,7 +77,6 @@ public class BattleSelectUI : MonoBehaviour
             num += _actionUi.Length;
         }
 
-        _commandUI.SetActive(false);
 
         if (_actionUi[num] == _actionUi[0])
         {
@@ -94,7 +92,7 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
             if (skill1)
             {
-               await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
             }
         }
         else if (_actionUi[num] == _actionUi[2])
@@ -111,10 +109,14 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
             if (skill2)
             {
-              await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
             }
         }
-        _battleStateController.ActorStateEnd();
+
+        _commandUI.SetActive(false);
+        _battleChangeWeaponCs.ChangeWeaponUiOpen();
+        //TODO:遷移の機能を別の場所に移す
+        //_battleStateController.ActorStateEnd();
     }
 
     private void SkillInfo()

@@ -1,12 +1,10 @@
-using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 
 public class TenkuugiriSkill : SkillBase
 {
-    [SerializeField] private PlayableDirector _anim;
-    [SerializeField] private GameObject _playerObj;
+    private PlayableDirector _anim;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
@@ -39,17 +37,12 @@ public class TenkuugiriSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _actor = actorType;
-        _playerObj.SetActive(true);
-        _playerStatus.gameObject.SetActive(false);
+        _anim = GetComponent<PlayableDirector>();
         _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());
-        _anim.Stop();
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-        _playerStatus.gameObject.SetActive(true);
         Debug.Log("Anim End");
-        _playerObj.SetActive(false);
     }
 
     protected override void SkillEffect()
@@ -65,7 +58,7 @@ public class TenkuugiriSkill : SkillBase
                 if (_playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value >= WeaponWeight)
                 {
                     _enemyStatus.AddDamage(
-                      dmg + Damage + (dmg * AddDamageValue ));
+                        dmg * AddDamageValue + Damage);
                 }
                 else
                 {
@@ -79,7 +72,7 @@ public class TenkuugiriSkill : SkillBase
 
                 if (_enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight >= WeaponWeight)
                 {
-                    _playerStatus.AddDamage(dmg + Damage +(dmg * AddDamageValue));
+                    _playerStatus.AddDamage((dmg * AddDamageValue) + Damage);
                 }
                 else
                 {

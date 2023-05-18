@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
@@ -6,10 +5,9 @@ using UnityEngine.Playables;
 
 public class KiriageSkill : SkillBase
 {
-    [SerializeField] private PlayableDirector _anim;
-    [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
+    private PlayableDirector _anim;
     private const float AddDamageValue = 0.05f;
     private const int Turn = 3;
     private int _count = 0;
@@ -40,17 +38,12 @@ public class KiriageSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
-        _playerObj.SetActive(true);
-        _playerStatus.gameObject.SetActive(false);
+        _anim = GetComponent<PlayableDirector>();
         _anim.Play();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
             cancellationToken: this.GetCancellationTokenOnDestroy());
-        _anim.Stop();
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-        _playerStatus.gameObject.SetActive(true);
         Debug.Log("Anim End");
-        _playerObj.SetActive(false);
     }
 
     protected override void SkillEffect()
