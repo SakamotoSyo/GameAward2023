@@ -127,7 +127,7 @@ public class BattleStateController : MonoBehaviour
                 _skillManagement.TurnCall();
                 ActionSequentialDetermining();
                 Debug.Log("‘S‚Äs“®Ï‚İ‚È‚Ì‚Ås“®‡‚ğŒˆ‚ß‚È‚¨‚·");
-                NextActorStateTransition();
+                await NextActorStateTransition();
             }
             else 
             {
