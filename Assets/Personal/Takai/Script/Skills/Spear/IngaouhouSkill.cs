@@ -46,7 +46,7 @@ public class IngaouhouSkill : SkillBase
     {
     }
 
-    public override async UniTask InEffectSkill(ActorAttackType attackType)
+    public override async UniTask<bool> InEffectSkill(ActorAttackType attackType)
     {
         if (attackType == ActorAttackType.Player)
         {
@@ -63,6 +63,8 @@ public class IngaouhouSkill : SkillBase
             _anim.Play();
             // _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
         }
+
+        return true;
     }
 
     public override bool TurnEnd()

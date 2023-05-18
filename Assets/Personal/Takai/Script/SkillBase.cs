@@ -15,15 +15,20 @@ public abstract class SkillBase : MonoBehaviour
     public abstract UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType);
 
     /// <summary>
-    /// ���ʔ������̎��ɌĂяo���֐�
+    /// Skill効果発動中に外部からSkillを呼び出す用の関数
     /// </summary>
     /// <param name="attackType"></param>
     /// <returns></returns>
-    public virtual async UniTask InEffectSkill(ActorAttackType attackType)
+    public virtual async UniTask<bool> InEffectSkill(ActorAttackType attackType)
     {
+        return default;
     }
 
     protected abstract void SkillEffect();
+    /// <summary>
+    /// falseにするとUsePoolから削除される
+    /// </summary>
+    /// <returns></returns>
     public abstract bool TurnEnd();
     public abstract void BattleFinish();
 }
