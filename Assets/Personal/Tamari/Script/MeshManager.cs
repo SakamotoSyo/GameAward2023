@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -26,9 +27,6 @@ public class MeshManager : MonoBehaviour
 
     public GameObject GO => _go;
 
-    [SerializeField, Tooltip("双剣ver")]
-    private bool _isSouken = default;
-
     private MeshFilter _meshFilter = default;
 
     private Mesh _myMesh = default;
@@ -46,9 +44,6 @@ public class MeshManager : MonoBehaviour
 
     private Vector3[] _myNormals = default;
 
-    [SerializeField, Tooltip("最大範囲")]
-    private float _maxDelta = default;
-
     [SerializeField, Tooltip("頂点数")]
     private int _nVertices = 6;
 
@@ -60,7 +55,11 @@ public class MeshManager : MonoBehaviour
 
     [SerializeField, Tooltip("中心の座標")]
     private Vector2 _centerPos = default;
-    public Vector2 CentorPos => _centerPos;
+    public Vector2 CentorPos
+    {
+        get { return _centerPos; }
+        set { _centerPos = value; }
+    }
 
     [SerializeField, Tooltip("双剣用の中心の座標")]
     private Vector3 _sCenterPos = default;
@@ -70,6 +69,9 @@ public class MeshManager : MonoBehaviour
 
     [SerializeField, Tooltip("叩ける範囲")]
     private float _minRange = 1.5f;
+
+    [SerializeField, Tooltip("内側からの叩ける範囲")]
+    private float _tapRange = default;
 
     [SerializeField, Tooltip("横幅の大きさの限界")]
     private float _wightLimit = default;
@@ -100,9 +102,6 @@ public class MeshManager : MonoBehaviour
     [SerializeField]
     private List<Color> _setColor = new List<Color>();
 
-    [SerializeField]
-    private string _nextSceneName = default;
-
     private float _deltaX = default;
     public float DeltaX => _deltaX;
 
@@ -112,10 +111,10 @@ public class MeshManager : MonoBehaviour
 
     WeaponSaveData _weaponSaveData;
 
-    [SerializeField]
-    private GameObject _allPanel = default;
-
     int _countNum = 0;
+
+    [SerializeField]
+    GameObject _particle = default; 
 
 #if UNITY_EDITOR
     public WeaponType _weaponType;
@@ -162,16 +161,7 @@ public class MeshManager : MonoBehaviour
 
         _weaponSaveData = new WeaponSaveData();
 
-        if (!_isSouken)
-        {
-            CreateMesh();
-        }
-        // 作成後に二つ作成することに成功したから双剣用はもういらないかも
-        else
-        {
-            CreateSouken("Souken1", _sCenterPos.x, _sCenterPos.y);
-            CreateSouken("Souken2", -_sCenterPos.x, _sCenterPos.y);
-        }
+        CreateMesh();
     }
     void Update()
     {
@@ -235,6 +225,9 @@ public class MeshManager : MonoBehaviour
         // 中心とタップ位置との距離(to)
         float toDis = Vector3.Distance(worldPos, _centerPos);
 
+        // toDis > ioDis => 外側を叩いてる
+        // toDis < ioDis => 内側を叩いてる
+
         float disX = worldPos.x - _myVertices[_indexNum].x;
         float disY = worldPos.y - _myVertices[_indexNum].y;
 
@@ -260,18 +253,22 @@ public class MeshManager : MonoBehaviour
             return;
         }
 
-        if (Mathf.Abs(disX) < _radius / 3 && Mathf.Abs(disY) < _radius / 3)
+        if (Mathf.Abs(disX) < _tapRange && Mathf.Abs(disY) < _tapRange)
         {
             _myVertices[_indexNum] -= new Vector3(disX, disY, 0);
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith");
             _deltaX = _go.transform.position.x - _myVertices[_lowestPosIndex].x;
             _deltaY = _go.transform.position.y - _myVertices[_lowestPosIndex].y;
+
+            worldPos.z = -2;
+            Instantiate(_particle, worldPos, Quaternion.identity);
         }
         else
         {
             Debug.Log($"叩いた場所が一番近い頂点{_indexNum}から離れすぎてます");
         }
 
+        
         _myMesh.SetVertices(_myVertices);
 
     }
@@ -357,47 +354,6 @@ public class MeshManager : MonoBehaviour
             SaveManager.ResetSaveData(f);
         }
     }
-    /// <summary>
-    /// メッシュの形を元に戻す
-    /// </summary>
-    public void ResetMeshShape()
-    {
-        if (_isFinished)
-        {
-            return;
-        }
-        if (_go == null)
-            return;
-
-        Destroy(_go);
-
-        _centerPos = _firstCenterPos;
-        CreateMesh();
-    }
-
-    public async void ChangeScene()
-    {
-        if (_isFinished)
-        {
-            return;
-        }
-
-        var pos = _myVertices[3];
-        for (int i = 0; i < _myVertices.Length; i++)
-        {
-            if (pos.y > _myVertices[i].y)
-            {
-                pos = _myVertices[i];
-                _lowestPosIndex = i;
-            }
-        }
-        _isFinished = true;
-        _allPanel.SetActive(true);
-        SaveMesh();
-        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith_Finish");
-        await UniTask.DelayFrame(500);
-        SceneManager.LoadScene(_nextSceneName);
-    }
 
     public void CreateMesh()
     {
@@ -466,74 +422,6 @@ public class MeshManager : MonoBehaviour
         _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
         _meshFilter.mesh = _myMesh;
         // _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
-    }
-
-    private void CreateSouken(string name, float sX, float sY)
-    {
-        GameObject go = new GameObject(name);
-
-        _meshFilter = go.AddComponent<MeshFilter>();
-
-        _meshRenderer = go.AddComponent<MeshRenderer>();
-
-        _myVertices = new Vector3[_nVertices];
-
-        _myNormals = new Vector3[_nVertices];
-
-        // 一辺当たりの中心角の 1 / 2
-        float halfStep = Mathf.PI / _nVertices;
-
-        for (int i = 0; i < _nVertices; i++)
-        {
-            // 中心から i 番目の頂点に向かう角度
-            float angle = (i + 1) * halfStep;
-
-            float x = _radius * Mathf.Cos(angle);
-
-            float y = _radius * Mathf.Sin(angle);
-            // 下側の頂点の位置と法線
-            _myVertices[i].Set(sX - x, sY - y, 0);
-            _myNormals[i] = Vector3.forward;
-            i++;
-            // 最後の頂点を生成したら終了
-            if (i >= _nVertices) break;
-            // 上側の頂点の位置と法線
-            _myVertices[i].Set(sY - x, sY + y, 0);
-            _myNormals[i] = Vector3.forward;
-        }
-
-        _myMesh.SetVertices(_myVertices);
-
-        _myMesh.SetNormals(_myNormals);
-
-        int nPolygons = _nVertices - 2;
-        int nTriangles = nPolygons * 3;
-
-        _myTriangles = new int[nTriangles];
-
-        for (int i = 0; i < nPolygons; i++)
-        {
-            // １つ目の三角形の最初の頂点の頂点番号の格納先
-            int firstI = i * 3;
-            // １つ目の三角形の頂点番号
-            _myTriangles[firstI + 0] = i;
-            _myTriangles[firstI + 1] = i + 1;
-            _myTriangles[firstI + 2] = i + 2;
-            i++;
-            // 最後の頂点番号を格納したら終了
-            if (i >= nPolygons) break;
-            // ２つ目の三角形の頂点番号
-            _myTriangles[firstI + 3] = i + 2;
-            _myTriangles[firstI + 4] = i + 1;
-            _myTriangles[firstI + 5] = i;
-        }
-
-        _myMesh.SetTriangles(_myTriangles, 0);
-
-        _myMesh.SetColors(_setColor);
-        _meshFilter.sharedMesh = _myMesh;
-        _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
-        _meshFilter.mesh = _myMesh;
     }
 
     public void ActiveSelectWeapon()
