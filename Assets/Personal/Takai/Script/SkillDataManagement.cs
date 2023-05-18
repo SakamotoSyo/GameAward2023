@@ -66,7 +66,6 @@ public class SkillDataManagement : MonoBehaviour
             _pStatus = _actorGenerator.PlayerController;
             _eStatus = _actorGenerator.EnemyController;
             Debug.Log(skill.name);
-            skill.AnimStart();
             await skill.UseSkill(_pStatus, _eStatus, actorType);
             _skillUsePool.Add(skill);
         }
