@@ -1,11 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     WeaponType _weaponType;
+
+    [SerializeField, Tooltip("完成後のフェードイン用Image")]
+    Image _finishImage = default;
+
+    [SerializeField]
+    MeshManager _meshManager;
+
+    [SerializeField]
+    private string _nextSceneName = default;
+
 
     [Header("常に置いてあるUI")]
 
@@ -100,5 +111,36 @@ public class UIManager : MonoBehaviour
         Debug.Log("サンプル生成確認のパネル表示");
         _allPanel.SetActive(flag);
         _panelForSample.SetActive(flag);
+    }
+
+    public async void ChangeScene()
+    {
+        if (MeshManager._isFinished)
+        {
+            return;
+        }
+
+        MeshManager._isFinished = true;
+        _allPanel.SetActive(true);
+        _meshManager.SaveMesh();
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith_Finish");
+        await _finishImage.DOFade(1.0f, 5f);
+        await UniTask.DelayFrame(10);
+        SceneManager.LoadScene(_nextSceneName);
+    }
+
+    public void ResetMeshShape()
+    {
+        if (MeshManager._isFinished)
+        {
+            return;
+        }
+        if (_meshManager.GO == null)
+            return;
+
+        Destroy(_meshManager.GO);
+
+        _meshManager.CentorPos = _meshManager.FirstCenterPos;
+        _meshManager.CreateMesh();
     }
 }
