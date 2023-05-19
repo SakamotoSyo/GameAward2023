@@ -15,6 +15,7 @@ public class TamegiriSkill : SkillBase
     {
         SkillName = "溜め斬り";
         Damage = 60;
+        RequiredPoint = 5;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText = "剣を大きく振りかぶる攻撃";

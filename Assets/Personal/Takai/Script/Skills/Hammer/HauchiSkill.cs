@@ -16,6 +16,7 @@ public class HauchiSkill : SkillBase
     {
         SkillName = "刃打ち";
         Damage = 50;
+        RequiredPoint = 5;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "敵の攻撃力と会心率が20%下がる";

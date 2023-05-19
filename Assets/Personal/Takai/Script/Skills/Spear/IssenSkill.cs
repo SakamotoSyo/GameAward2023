@@ -16,6 +16,7 @@ public class IssenSkill : SkillBase
     {
         SkillName = "一閃";
         Damage = 60;
+        RequiredPoint = 5;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "効果なし";

@@ -15,6 +15,7 @@ public class KiaiSkill : SkillBase
     {
         SkillName = "気合い";
         Damage = 0;
+        RequiredPoint = 5;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "次の攻撃だけ威力が2倍に上昇";

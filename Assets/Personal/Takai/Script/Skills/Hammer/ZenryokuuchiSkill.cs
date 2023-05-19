@@ -15,6 +15,7 @@ public class ZenryokuuchiSkill : SkillBase
     {
         SkillName = "全力打ち";
         Damage = 60;
+        RequiredPoint = 5;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "効果なし";

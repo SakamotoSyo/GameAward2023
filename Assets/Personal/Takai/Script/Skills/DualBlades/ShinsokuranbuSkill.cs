@@ -16,6 +16,7 @@ public class ShinsokuranbuSkill : SkillBase
     {
         SkillName = "神速乱舞";
         Damage = 150;
+        RequiredPoint = 5;
         Weapon = (WeaponType)1;
         Type = (SkillType)1;
         FlavorText = "重さが30以下のとき発動可能　※使用後元のステータスに戻る";

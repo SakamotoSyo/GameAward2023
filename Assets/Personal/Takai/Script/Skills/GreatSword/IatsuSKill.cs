@@ -17,6 +17,7 @@ public class IatsuSKill : SkillBase
     {
         SkillName = "威圧";
         Damage = 0;
+        RequiredPoint = 5;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText = "2ターンの間敵の攻撃力を10%下げる";

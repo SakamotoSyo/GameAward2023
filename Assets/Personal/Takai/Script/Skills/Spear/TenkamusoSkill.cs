@@ -16,6 +16,7 @@ public class TenkamusoSkill : SkillBase
     {
         SkillName = "天下無双";
         Damage = 120;
+        RequiredPoint = 5;
         Weapon = (WeaponType)3;
         Type = (SkillType)1;
         FlavorText = "経過ターンが多いほど威力上昇　※HP30％以下で発動可能";
