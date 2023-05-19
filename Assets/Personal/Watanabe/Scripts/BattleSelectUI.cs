@@ -70,51 +70,45 @@ public class BattleSelectUI : MonoBehaviour
         SkillInfo();
     }
 
+    public void EffectCheck() 
+    {
+
+    }
+
     public async void AttackEvent()
     {
-        var num = _index % _actionUi.Length;
-        if (num < 0)
+        if (_actionUi[_index] == _actionUi[0])
         {
-            num += _actionUi.Length;
-        }
-
-        _commandUI.SetActive(false);
-
-        if (_actionUi[num] == _actionUi[0])
-        {
-            Debug.Log("attack");
-            _infoUI.SetActive(false);
             _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack));
+            _battleStateController.ActorStateEnd();
         }
-        else if (_actionUi[num] == _actionUi[1])
+        else if (_actionUi[_index] == _actionUi[1])
         {
-            //skill 1
-
-            _infoUI.SetActive(true);
             SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
-            if (skill1)
+            if (skill1 && skill1.IsUseCheck(_playerController))
             {
-               await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
+                await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
+                _battleStateController.ActorStateEnd();
             }
         }
-        else if (_actionUi[num] == _actionUi[2])
+        else if (_actionUi[_index] == _actionUi[2])
         {
-            //必殺技
-            Debug.Log("必殺技");
-            _infoUI.SetActive(false);
+            SkillBase spcialSkill = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
+            if (spcialSkill && spcialSkill.IsUseCheck(_playerController))
+            {
+                await _skillDataManagement.OnSkillUse(ActorAttackType.Player, spcialSkill.name);
+                _battleStateController.ActorStateEnd();
+            }
         }
-        else if (_actionUi[num] == _actionUi[3])
+        else if (_actionUi[_index] == _actionUi[3])
         {
-            //skill 2
-
-            _infoUI.SetActive(true);
             SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
-            if (skill2)
+            if (skill2 && skill2.IsUseCheck(_playerController))
             {
-              await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
+                await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
+                _battleStateController.ActorStateEnd();
             }
         }
-        _battleStateController.ActorStateEnd();
     }
 
     private void SkillInfo()
