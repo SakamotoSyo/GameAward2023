@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,8 @@ public class BattleSelectUI : MonoBehaviour
     private PlayerStatus _playerStatus = default;
     private EnemyController _enemyController = default;
 
+    private bool[] _isAttackable = new bool[3];
+
     public Transform[] ActionUI => _actionUi;
 
     private void Start()
@@ -29,11 +32,30 @@ public class BattleSelectUI : MonoBehaviour
         _enemyController = _generator.EnemyController;
 
         _actionUi[0].DOScale(new Vector3(1.2f, 1.2f, 1f), 0.2f);
+
+        for (int i = 0; i < _isAttackable.Length; i++)
+        {
+            _isAttackable[i] = true;
+
+            if (i == _isAttackable.Length - 1)
+            {
+                if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack == null)
+                {
+                    _isAttackable[i] = false;
+                }
+            }
+            else
+            {
+                if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[i] == null)
+                {
+                    _isAttackable[i] = false;
+                }
+            }
+        }
     }
 
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             BattleSelect(0);
@@ -82,7 +104,7 @@ public class BattleSelectUI : MonoBehaviour
             _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack));
             _battleStateController.ActorStateEnd();
         }
-        else if (_actionUi[_index] == _actionUi[1])
+        else if (_actionUi[_index] == _actionUi[1] && _isAttackable[0])
         {
             SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
             if (skill1 && skill1.IsUseCheck(_playerController))
@@ -91,7 +113,7 @@ public class BattleSelectUI : MonoBehaviour
                 _battleStateController.ActorStateEnd();
             }
         }
-        else if (_actionUi[_index] == _actionUi[2])
+        else if (_actionUi[_index] == _actionUi[2] && _isAttackable[2])
         {
             SkillBase spcialSkill = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
             if (spcialSkill && spcialSkill.IsUseCheck(_playerController))
@@ -100,7 +122,7 @@ public class BattleSelectUI : MonoBehaviour
                 _battleStateController.ActorStateEnd();
             }
         }
-        else if (_actionUi[_index] == _actionUi[3])
+        else if (_actionUi[_index] == _actionUi[3] && _isAttackable[1])
         {
             SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
             if (skill2 && skill2.IsUseCheck(_playerController))
