@@ -16,6 +16,7 @@ public class ShippuSkill : SkillBase
     {
         SkillName = "疾風";
         Damage = 30;
+        RequiredPoint = 5;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "2ターンの間敵に継続ダメージを与える";

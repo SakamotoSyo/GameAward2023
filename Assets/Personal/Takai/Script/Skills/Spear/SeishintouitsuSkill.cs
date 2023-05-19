@@ -19,6 +19,7 @@ public class SeishintouitsuSkill : SkillBase
     {
         SkillName = "精神統一";
         Damage = 0;
+        RequiredPoint = 5;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "3ターンの間、会心率%と会心時のダメージが20%上昇(発動ターン含まず）";

@@ -16,6 +16,7 @@ public class KasokugiriSkill : SkillBase
     {
         SkillName = "加速斬り";
         Damage = 20;
+        RequiredPoint = 5;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "重さが軽いほど連撃数が増える(上限4)";

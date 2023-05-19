@@ -13,6 +13,7 @@ public class TemplateSkill : SkillBase
     {
         SkillName = "テンプレート";
         Damage = 0;
+        RequiredPoint = 5;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
     }
