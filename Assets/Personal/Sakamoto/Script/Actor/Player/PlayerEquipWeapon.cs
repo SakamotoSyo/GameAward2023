@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 using UniRx;
 
 public class PlayerEquipWeapon
@@ -15,7 +16,7 @@ public class PlayerEquipWeapon
     public WeaponSkill WeaponSkill => _weaponSkill;
     public int WeaponNum => _weaponNum;
     public bool IsEpicSkill2 => _isEpicSkill2;
-    public bool IsEpicSkill3 => _isEpicSkill3;  
+    public bool IsEpicSkill3 => _isEpicSkill3;
 
     private ReactiveProperty<float> _offensivePower = new();
     private ReactiveProperty<float> _weaponWeight = new();
@@ -28,33 +29,39 @@ public class PlayerEquipWeapon
     private WeaponType _weponType;
     [Tooltip("‰½”Ô–Ú‚É‚Á‚Ä‚¢‚é•Ší‚©")]
     private int _weaponNum;
+    private SkillDataManagement _skillDataManagement;
 
+    public void Init(SkillDataManagement skillDataManagement) 
+    {
+       _skillDataManagement = skillDataManagement;
+        EpicSkillCheck();
+    }
 
     public float GetPowerPram()
     {
-        if (_isEpicSkill2) 
+        if (_isEpicSkill2)
         {
             return _offensivePower.Value * 1.4f;
-        } 
+        }
         return _offensivePower.Value;
     }
 
-    public float GetWeightPram() 
+    public float GetWeightPram()
     {
-        if (_isEpicSkill2) 
+        if (_isEpicSkill2)
         {
             return _criticalRate.Value * 1.4f;
         }
         return _criticalRate.Value;
     }
 
-    public float GetCriticalPram() 
+    public float GetCriticalPram()
     {
-        if (_isEpicSkill2) 
+        if (_isEpicSkill2)
         {
             return _criticalRate.Value * 1.4f;
         }
-        return _criticalRate.Value; 
+        return _criticalRate.Value;
     }
 
     public virtual void AddDamage(float damage)
@@ -63,7 +70,7 @@ public class PlayerEquipWeapon
         {
             ChangeCurrentDurable(damage * -1 * 2);
         }
-        else 
+        else
         {
             ChangeCurrentDurable(damage * -1);
         }
@@ -98,6 +105,25 @@ public class PlayerEquipWeapon
         _weponType = weaponData.WeaponType;
         _weaponNum = arrayNum;
         _weaponSkill = weaponData.WeaponSkill;
+        if (_skillDataManagement) 
+        {
+            EpicSkillCheck();
+        }
+    }
+
+    /// <summary>
+    /// •Ší‚ğ“ü‚ê‘Ö‚¦‚½‚Æ‚«‚È‚Ç‚ÉEpicSkill‚ª‚ ‚é‚©‚Ç‚¤‚©Šm”F‚µ‚Ä”­“®‚·‚é
+    /// </summary>
+    public void EpicSkillCheck() 
+    {
+        for (int i = 0; i < _weaponSkill.WeaponSkillArray.Length; i++) 
+        {
+            if (_weaponSkill.WeaponSkillArray[i] != null && _weaponSkill.WeaponSkillArray[i].Type == SkillType.Epic) 
+            {
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player,_weaponSkill.WeaponSkillArray[i].SkillName).Forget();
+                Debug.Log("Epic”­“®");
+            }
+        }
     }
 
     public void FluctuationStatus(FluctuationStatusClass fluctuation)
