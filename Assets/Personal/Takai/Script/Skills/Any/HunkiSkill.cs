@@ -7,6 +7,7 @@ public class HunkiSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
+    private bool _playerTurnAgain = false;
 
     public HunkiSkill()
     {
@@ -42,9 +43,19 @@ public class HunkiSkill : SkillBase
         // スキルの効果処理を実装する
     }
 
+    public override async UniTask<bool> InEffectSkill(ActorAttackType attackType)
+    {
+        bool result = _playerTurnAgain;
+        _playerTurnAgain = false;
+        //ここにAnimationがあったら処理を変える
+        await UniTask.Yield();
+        return result;
+    }
+
     public override bool TurnEnd()
     {
-        return false;
+        _playerTurnAgain = true;
+        return true;
     }
 
     public override void BattleFinish()
