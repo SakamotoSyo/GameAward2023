@@ -6,25 +6,26 @@ public abstract class SkillBase : MonoBehaviour
 {
     public string SkillName { get; protected set; }
     public int Damage { get; protected set; }
-    public  WeaponType Weapon { get; protected set; }
+    public int RequiredPoint { get; protected set; }
+    public WeaponType Weapon { get; protected set; }
     public SkillType Type { get; protected set; }
     public string FlavorText { get; protected set; }
-    
+
     public abstract bool IsUseCheck(PlayerController player);
     public abstract UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType);
+
     /// <summary>
-    /// Œø‰Ê”­“®’†‚Ì‚ÉŒÄ‚Ño‚·ŠÖ”
+    /// ï¿½ï¿½ï¿½Ê”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ÉŒÄ‚Ñoï¿½ï¿½ï¿½Öï¿½
     /// </summary>
     /// <param name="attackType"></param>
     /// <returns></returns>
-    public virtual async UniTask InEffectSkill(ActorAttackType attackType) 
+    public virtual async UniTask InEffectSkill(ActorAttackType attackType)
     {
-        
     }
+
     protected abstract void SkillEffect();
     public abstract bool TurnEnd();
     public abstract void BattleFinish();
-    
 }
 
 public enum SkillType
