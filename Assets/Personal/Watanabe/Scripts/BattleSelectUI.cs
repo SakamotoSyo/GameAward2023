@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +23,7 @@ public class BattleSelectUI : MonoBehaviour
     private bool[] _isAttackable = new bool[3];
 
     public Transform[] ActionUI => _actionUi;
+    public bool[] IsAttackable => _isAttackable;
 
     private void Start()
     {
@@ -36,21 +36,22 @@ public class BattleSelectUI : MonoBehaviour
         for (int i = 0; i < _isAttackable.Length; i++)
         {
             _isAttackable[i] = true;
+        }
 
-            if (i == _isAttackable.Length - 1)
-            {
-                if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack == null)
-                {
-                    _isAttackable[i] = false;
-                }
-            }
-            else
-            {
-                if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[i] == null)
-                {
-                    _isAttackable[i] = false;
-                }
-            }
+        if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0] == null)
+        {
+            Debug.Log("ない");
+
+            _isAttackable[0] = false;
+        }
+        if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1] == null)
+        {
+            Debug.Log("ない");
+            _isAttackable[2] = false;
+        }
+        if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack == null)
+        {
+            _isAttackable[1] = false;
         }
     }
 
@@ -75,7 +76,7 @@ public class BattleSelectUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
         {
-            if (_index == 0 || _index != 0 && _isAttackable[_index])
+            if (_index == 0 || (_index != 0 && _isAttackable[_index]))
             {
                 _battleChangeWeaponCs.ChangeWeaponUiOpen();
             }
@@ -96,7 +97,7 @@ public class BattleSelectUI : MonoBehaviour
         SkillInfo();
     }
 
-    public void EffectCheck() 
+    public void EffectCheck()
     {
 
     }
