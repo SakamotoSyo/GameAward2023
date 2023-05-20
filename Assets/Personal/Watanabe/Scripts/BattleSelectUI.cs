@@ -20,7 +20,10 @@ public class BattleSelectUI : MonoBehaviour
     private PlayerStatus _playerStatus = default;
     private EnemyController _enemyController = default;
 
+    private bool[] _isAttackable = new bool[3];
+
     public Transform[] ActionUI => _actionUi;
+    public bool[] IsAttackable => _isAttackable;
 
     private void Start()
     {
@@ -29,31 +32,67 @@ public class BattleSelectUI : MonoBehaviour
         _enemyController = _generator.EnemyController;
 
         _actionUi[0].DOScale(new Vector3(1.2f, 1.2f, 1f), 0.2f);
+
+        for (int i = 0; i < _isAttackable.Length; i++)
+        {
+            _isAttackable[i] = true;
+        }
+
+        if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0] == null)
+        {
+            _isAttackable[0] = false;
+            _actionUi[1].GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
+        if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1] == null)
+        {
+            _isAttackable[2] = false;
+            _actionUi[3].GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
+        if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack == null)
+        {
+            _isAttackable[1] = false;
+            _actionUi[2].GetComponent<Image>().color = Color.gray;
+        }
     }
 
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             BattleSelect(0);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
+            if (!_isAttackable[1])
+            {
+                return;
+            }
             BattleSelect(2);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
+            if (!_isAttackable[2])
+            {
+                return;
+            }
             BattleSelect(3);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
+            if (!_isAttackable[0])
+            {
+                return;
+            }
             BattleSelect(1);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
         {
-            _battleChangeWeaponCs.ChangeWeaponUiOpen();
+            if (_index == 0 || (_index != 0 && _isAttackable[_index]))
+            {
+                _battleChangeWeaponCs.ChangeWeaponUiOpen();
+            }
+
         }
     }
 
@@ -70,7 +109,7 @@ public class BattleSelectUI : MonoBehaviour
         SkillInfo();
     }
 
-    public void EffectCheck() 
+    public void EffectCheck()
     {
 
     }

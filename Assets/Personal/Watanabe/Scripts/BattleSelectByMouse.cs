@@ -10,20 +10,25 @@ public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerC
 
     private void Start()
     {
-
         _index = Array.IndexOf(_selectUI.ActionUI, transform);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select");
-        _selectUI.BattleSelect(_index);
+        if ((_index != 0 && _selectUI.IsAttackable[_index - 1]) || _index == 0)
+        {
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select");
+            _selectUI.BattleSelect(_index);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
-        Debug.Log("attack");
-        _changeWeapon.ChangeWeaponUiOpen();
+        if ((_index != 0 && _selectUI.IsAttackable[_index - 1]) || _index == 0)
+        {
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
+            Debug.Log("attack");
+            _changeWeapon.ChangeWeaponUiOpen();
+        }
     }
 }
