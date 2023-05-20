@@ -40,18 +40,18 @@ public class BattleSelectUI : MonoBehaviour
 
         if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0] == null)
         {
-            Debug.Log("ない");
-
             _isAttackable[0] = false;
+            _actionUi[1].GetChild(0).GetComponent<Image>().color = Color.gray;
         }
         if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1] == null)
         {
-            Debug.Log("ない");
             _isAttackable[2] = false;
+            _actionUi[3].GetChild(0).GetComponent<Image>().color = Color.gray;
         }
         if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack == null)
         {
             _isAttackable[1] = false;
+            _actionUi[2].GetComponent<Image>().color = Color.gray;
         }
     }
 
@@ -63,14 +63,26 @@ public class BattleSelectUI : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
+            if (!_isAttackable[1])
+            {
+                return;
+            }
             BattleSelect(2);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
+            if (!_isAttackable[2])
+            {
+                return;
+            }
             BattleSelect(3);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
+            if (!_isAttackable[0])
+            {
+                return;
+            }
             BattleSelect(1);
         }
 
