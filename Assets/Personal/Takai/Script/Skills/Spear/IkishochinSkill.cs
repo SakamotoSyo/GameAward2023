@@ -37,9 +37,9 @@ public class IkishochinSkill : SkillBase
         var dura = _anim.duration * 0.99f;
         await UniTask.WaitUntil(() => _anim.time >= dura,
             cancellationToken: this.GetCancellationTokenOnDestroy());
+        SkillEffect();
         _anim.Stop();
         await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-        SkillEffect();
         _playerStatus.gameObject.SetActive(true);
         Debug.Log("Anim End");
         _playerObj.SetActive(false);
