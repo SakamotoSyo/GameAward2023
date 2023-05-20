@@ -24,6 +24,10 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public EnemyStatus EnemyStatus => _enemyStatus;
 
+    private EnemyColor _enemyColor;
+
+    public EnemyColor EnemyColor => _enemyColor;
+
     private void Start()
     {
         _enemyAttack.Init(_enemyStatus.EquipWeapon.CurrentOffensivePower, _animator);
@@ -81,5 +85,6 @@ public class EnemyController : MonoBehaviour, IAddDamage
         _enemyStatus.SetWeaponDates(enemyDate);
         _animator = enemyDate.EnemyAnim;
         _renderer.sprite = enemyDate.EnemySprite;
+        _enemyColor = enemyDate.EnemyColor;
     }
 }
