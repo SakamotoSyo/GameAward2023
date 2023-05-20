@@ -75,7 +75,11 @@ public class BattleSelectUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
         {
-            _battleChangeWeaponCs.ChangeWeaponUiOpen();
+            if (_index == 0 || _index != 0 && _isAttackable[_index])
+            {
+                _battleChangeWeaponCs.ChangeWeaponUiOpen();
+            }
+
         }
     }
 
@@ -104,7 +108,7 @@ public class BattleSelectUI : MonoBehaviour
             _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack));
             _battleStateController.ActorStateEnd();
         }
-        else if (_actionUi[_index] == _actionUi[1] && _isAttackable[0])
+        else if (_actionUi[_index] == _actionUi[1])
         {
             SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
             if (skill1 && skill1.IsUseCheck(_playerController))
@@ -113,7 +117,7 @@ public class BattleSelectUI : MonoBehaviour
                 _battleStateController.ActorStateEnd();
             }
         }
-        else if (_actionUi[_index] == _actionUi[2] && _isAttackable[2])
+        else if (_actionUi[_index] == _actionUi[2])
         {
             SkillBase spcialSkill = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
             if (spcialSkill && spcialSkill.IsUseCheck(_playerController))
@@ -122,7 +126,7 @@ public class BattleSelectUI : MonoBehaviour
                 _battleStateController.ActorStateEnd();
             }
         }
-        else if (_actionUi[_index] == _actionUi[3] && _isAttackable[1])
+        else if (_actionUi[_index] == _actionUi[3])
         {
             SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
             if (skill2 && skill2.IsUseCheck(_playerController))
