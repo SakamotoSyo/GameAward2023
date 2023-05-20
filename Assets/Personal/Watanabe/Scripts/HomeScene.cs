@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class HomeScene : MonoBehaviour
 {
+    [Tooltip("経験値の判定")]
+    [SerializeField] private PlayerExperiencePoint _point = default;
+
     #region ランクアップ関連
     [Header("ランクアップ関連")]
     [SerializeField] private Sprite[] _ranks = default;
@@ -17,8 +20,6 @@ public class HomeScene : MonoBehaviour
     [Header("Debug")]
     [Tooltip("ランクが上がったか")]
     [SerializeField] private bool _isRankUp = false;
-    [Tooltip("昇格戦挑戦可か")]
-    [SerializeField] private bool _isChallengablePromotionMatch = false;
 
     private RectTransform _rankRect = default;
     private Vector3 _pos = Vector3.zero;
@@ -27,23 +28,23 @@ public class HomeScene : MonoBehaviour
     #endregion
 
     #region カット演出系
+    [SerializeField] private GameObject _battleSelectPanel = default;
     [SerializeField] private GameObject _cutPanelParent = default;
     [SerializeField] private float _waitSecondCutStaging = 1f;
+    [Tooltip("昇格戦挑戦可か")]
+    [SerializeField] private bool _isChallengablePromotionMatch = false;
 
     private Image[] _cutPanels = new Image[3];
     private Text[] _cutTexts = new Text[2];
+    
     #endregion
 
     private void Start()
     {
+        _index = _point.RankSetting();
+
         SettingsRankUI();
         SettingsCutPanel();
-
-        if (_isChallengablePromotionMatch)
-        {
-            //カットシーン演出
-            Fade.Instance.FadeOut();
-        }
     }
 
     private void Update()
@@ -69,7 +70,8 @@ public class HomeScene : MonoBehaviour
         _pos = _rankRect.localPosition;
         _image = _currentRank.GetComponent<Image>();
 
-        _index = Array.IndexOf(_ranks, _image.sprite);
+        _image.sprite = _ranks[_index];
+        //_index = Array.IndexOf(_ranks, _image.sprite);
     }
 
     private void SettingsCutPanel()
@@ -121,53 +123,18 @@ public class HomeScene : MonoBehaviour
     /// <summary> カットシーン演出(昇格戦解放時に呼ぶ) </summary>
     public void CutSceneLike()
     {
-        var sequence = DOTween.Sequence();
-
-                //1, Panel表示
-        sequence.Append(_cutPanels[0].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
-                .Join(_cutPanels[1].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
-                .AppendCallback(() =>
-                {
-                    //出現させるのと一緒に音を流す
-                    SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
-                })
-                .AppendInterval(_waitSecondCutStaging)
-
-                //2, Text表示
-                .Append(_cutTexts[0].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
-                .Join(_cutTexts[1].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
-                .AppendCallback(() =>
-                {
-                    SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
-                })
-                .AppendInterval(_waitSecondCutStaging)
-
-                //3, BossImage表示
-                .Append(_cutPanels[2].transform.DOScale(new Vector3(2.2f, 2.2f, 2.2f), 0.2f))
-                 .AppendCallback(() =>
-                 {
-                     SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
-                 })
-                .AppendInterval(_waitSecondCutStaging)
-
-                //4, フェードで消す
-                .AppendCallback(() =>
-                {
-                    foreach (var panel in _cutPanels)
-                    {
-                        panel.DOFade(0f, 1f).OnComplete(() => panel.gameObject.SetActive(false));
-                    }
-
-                    foreach (var text in _cutTexts)
-                    {
-                        text.DOFade(0f, 1f).OnComplete(() => text.gameObject.SetActive(false));
-                    }
-                    Fade.Instance.FadeIn();
-                });
+        if (!_isChallengablePromotionMatch)
+        {
+            _battleSelectPanel.SetActive(true);
+            return;
+        }
+        Fade.Instance.FadeOut();
     }
 
-    public void CutSceneLikeBoss()
+    public void CutMove()
     {
+        _battleSelectPanel.SetActive(true);
+
         var sequence = DOTween.Sequence();
 
         //1, Panel表示
@@ -182,10 +149,10 @@ public class HomeScene : MonoBehaviour
 
                 //2, BossImage表示
                 .Append(_cutPanels[2].transform.DOScale(new Vector3(2.2f, 2.2f, 2.2f), 0.2f))
-                 .AppendCallback(() =>
-                 {
-                     SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
-                 })
+                .AppendCallback(() =>
+                {
+                    SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
+                })
                 .AppendInterval(_waitSecondCutStaging)
 
                 //3, Text表示
