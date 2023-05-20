@@ -30,7 +30,7 @@ public class EnemyStatus
     /// </summary>
     public void SetWeaponDates(EnemyData enemyData)
     {
-        _weaponDatas = enemyData.WeaponDates;
+        _weaponDatas = enemyData.WeaponDatas;
         _epicWeapon.ChangeWeapon(_weaponDatas[0]);
     }
 

@@ -80,11 +80,11 @@ public class EnemyController : MonoBehaviour, IAddDamage
     /// <summary>
     /// EnemyDateから参照してくる
     /// </summary>
-    public void SetEnemyData(EnemyData enemyDate)
+    public void SetEnemyData(EnemyData enemyData)
     {
-        _enemyStatus.SetWeaponDates(enemyDate);
-        _animator = enemyDate.EnemyAnim;
-        _renderer.sprite = enemyDate.EnemySprite;
-        _enemyColor = enemyDate.EnemyColor;
+        _enemyStatus.SetWeaponDates(enemyData);
+        _animator = enemyData.EnemyAnim;
+        _renderer.sprite = enemyData.EnemySprite;
+        _enemyColor = enemyData.EnemyColor;
     }
 }

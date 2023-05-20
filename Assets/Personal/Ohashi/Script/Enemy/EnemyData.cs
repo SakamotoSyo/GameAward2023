@@ -15,7 +15,7 @@ public class EnemyData : ScriptableObject
 
     public GameObject EnemyPrefab;
 
-    public WeaponData[] WeaponDates;
+    public WeaponData[] WeaponDatas;
 
     public bool IsBoss;
 
