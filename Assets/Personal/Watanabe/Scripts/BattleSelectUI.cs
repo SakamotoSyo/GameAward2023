@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +23,7 @@ public class BattleSelectUI : MonoBehaviour
     private bool[] _isAttackable = new bool[3];
 
     public Transform[] ActionUI => _actionUi;
+    public bool[] IsAttackable => _isAttackable;
 
     private void Start()
     {
@@ -36,21 +36,22 @@ public class BattleSelectUI : MonoBehaviour
         for (int i = 0; i < _isAttackable.Length; i++)
         {
             _isAttackable[i] = true;
+        }
 
-            if (i == _isAttackable.Length - 1)
-            {
-                if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack == null)
-                {
-                    _isAttackable[i] = false;
-                }
-            }
-            else
-            {
-                if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[i] == null)
-                {
-                    _isAttackable[i] = false;
-                }
-            }
+        if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0] == null)
+        {
+            _isAttackable[0] = false;
+            _actionUi[1].GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
+        if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1] == null)
+        {
+            _isAttackable[2] = false;
+            _actionUi[3].GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
+        if (_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack == null)
+        {
+            _isAttackable[1] = false;
+            _actionUi[2].GetComponent<Image>().color = Color.gray;
         }
     }
 
@@ -62,20 +63,32 @@ public class BattleSelectUI : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
+            if (!_isAttackable[1])
+            {
+                return;
+            }
             BattleSelect(2);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
+            if (!_isAttackable[2])
+            {
+                return;
+            }
             BattleSelect(3);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
+            if (!_isAttackable[0])
+            {
+                return;
+            }
             BattleSelect(1);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
         {
-            if (_index == 0 || _index != 0 && _isAttackable[_index])
+            if (_index == 0 || (_index != 0 && _isAttackable[_index]))
             {
                 _battleChangeWeaponCs.ChangeWeaponUiOpen();
             }
@@ -96,7 +109,7 @@ public class BattleSelectUI : MonoBehaviour
         SkillInfo();
     }
 
-    public void EffectCheck() 
+    public void EffectCheck()
     {
 
     }
