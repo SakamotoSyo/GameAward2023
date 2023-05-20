@@ -25,11 +25,6 @@ public class KasokuSkill : SkillBase
         FlavorText = "3ターンの間重さが5%下降(重複あり→5%,10%,15%)";
     }
 
-    private void Start()
-    {
-        _anim = GetComponent<PlayableDirector>();
-    }
-
     public override bool IsUseCheck(PlayerController player)
     {
         return true;

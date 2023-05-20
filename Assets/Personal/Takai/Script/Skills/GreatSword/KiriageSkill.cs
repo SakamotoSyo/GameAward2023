@@ -26,11 +26,6 @@ public class KiriageSkill : SkillBase
         FlavorText = "2ターンの間攻撃力が5%上昇。(重複あり→5%,10%,15%)";
     }
 
-    private void Start()
-    {
-        _anim = GetComponent<PlayableDirector>();
-    }
-
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -44,11 +39,12 @@ public class KiriageSkill : SkillBase
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
         _anim.Play();
-        SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+        var dura = _anim.duration * 0.99f;
+        await UniTask.WaitUntil(() => _anim.time >= dura,
             cancellationToken: this.GetCancellationTokenOnDestroy());
         _anim.Stop();
         await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+        SkillEffect();
         _playerStatus.gameObject.SetActive(true);
         Debug.Log("Anim End");
         _playerObj.SetActive(false);

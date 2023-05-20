@@ -28,7 +28,6 @@ public class SkillDataManagement : MonoBehaviour
             var skillObj = Instantiate(_skillPrefab[i], _transform);
             _skills.Add(skillObj.GetComponent<SkillBase>());
         }
-
         //foreach (var skill in skillPrefabs)
         //{
         //    Instantiate(skill, transform);
@@ -60,6 +59,7 @@ public class SkillDataManagement : MonoBehaviour
 
     public async UniTask OnSkillUse(ActorAttackType actorType, string skillName)
     {
+        Debug.Log(skillName);
         SkillBase skill = _skills.Find(skill => skill.name == skillName);
         if (skill != null)
         {
