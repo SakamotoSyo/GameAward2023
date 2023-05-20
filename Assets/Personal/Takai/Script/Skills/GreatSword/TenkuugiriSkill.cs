@@ -2,11 +2,14 @@ using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
+using UnityEngine.Serialization;
 
 public class TenkuugiriSkill : SkillBase
 {
-    [SerializeField] private PlayableDirector _anim;
+    [SerializeField] private PlayableDirector _playerAnim;
     [SerializeField] private GameObject _playerObj;
+    [SerializeField] private PlayableDirector _enemyAnim;
+    [SerializeField] private GameObject _enemyObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
@@ -37,12 +40,12 @@ public class TenkuugiriSkill : SkillBase
         _actor = actorType;
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
-        _anim.Play();
-        var dura = _anim.duration * 0.99f;
-        await UniTask.WaitUntil(() => _anim.time >= dura,
+        _playerAnim.Play();
+        var dura = _playerAnim.duration * 0.99f;
+        await UniTask.WaitUntil(() => _playerAnim.time >= dura,
             cancellationToken: this.GetCancellationTokenOnDestroy());
         SkillEffect();
-        _anim.Stop();
+        _playerAnim.Stop();
         await UniTask.Delay(TimeSpan.FromSeconds(0.5));
         _playerStatus.gameObject.SetActive(true);
         Debug.Log("Anim End");
