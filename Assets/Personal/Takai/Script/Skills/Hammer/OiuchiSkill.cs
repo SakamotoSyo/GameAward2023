@@ -19,13 +19,7 @@ public class OiuchiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "威力が低いが、敵にデバフがついていると威力が倍になる";
     }
-    
-    private void Start()
-    {
-        _anim = GetComponent<PlayableDirector>();
-    }
 
-    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -39,9 +33,10 @@ public class OiuchiSkill : SkillBase
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
         _anim.Play();
-        SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+        var dura = _anim.duration * 0.99f;
+        await UniTask.WaitUntil(() => _anim.time >= dura,
             cancellationToken: this.GetCancellationTokenOnDestroy());
+        SkillEffect();
         _anim.Stop();
         await UniTask.Delay(TimeSpan.FromSeconds(0.5));
         _playerStatus.gameObject.SetActive(true);

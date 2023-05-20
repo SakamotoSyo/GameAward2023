@@ -20,13 +20,7 @@ public class KiaiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "次の攻撃だけ威力が2倍に上昇";
     }
-
-    private void Start()
-    {
-        _anim = GetComponent<PlayableDirector>();
-    }
-
-
+    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -36,13 +30,13 @@ public class KiaiSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
-        _anim = GetComponent<PlayableDirector>();
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
         _anim.Play();
-        SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+        var dura = _anim.duration * 0.99f;
+        await UniTask.WaitUntil(() => _anim.time >= dura,
             cancellationToken: this.GetCancellationTokenOnDestroy());
+        SkillEffect();
         _anim.Stop();
         await UniTask.Delay(TimeSpan.FromSeconds(0.5));
         _playerStatus.gameObject.SetActive(true);

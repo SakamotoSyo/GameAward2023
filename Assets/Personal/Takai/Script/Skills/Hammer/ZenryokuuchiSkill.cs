@@ -20,13 +20,7 @@ public class ZenryokuuchiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "効果なし";
     }
-    
-    private void Start()
-    {
-        _anim = GetComponent<PlayableDirector>();
-    }
 
-    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -41,9 +35,10 @@ public class ZenryokuuchiSkill : SkillBase
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
         _anim.Play();
-        SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+        var dura = _anim.duration * 0.99f;
+        await UniTask.WaitUntil(() => _anim.time >= dura,
             cancellationToken: this.GetCancellationTokenOnDestroy());
+        SkillEffect();
         _anim.Stop();
         await UniTask.Delay(TimeSpan.FromSeconds(0.5));
         _playerStatus.gameObject.SetActive(true);
