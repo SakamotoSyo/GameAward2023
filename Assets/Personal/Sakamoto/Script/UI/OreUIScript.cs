@@ -9,23 +9,39 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     [SerializeField] private GameObject _infoPanel;
     [SerializeField] private Image _oreImage;
-    [SerializeField] private ActorGenerator _actorGenerator;
     [SerializeField] private Text _rearityText;
     [SerializeField] private Text _enhanceText;
+    [SerializeField] private bool _isSelect = false;
     private OreData _data;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _infoPanel.SetActive(true);
+        if (_isSelect)
+        {
+            SetData(_data);
+        }
+        else 
+        {
+            _infoPanel.SetActive(true);
+        }
+        
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _infoPanel.SetActive(false);
+        if (_isSelect)
+        {
+            _enhanceText.text = "";
+        }
+        else 
+        {
+            _infoPanel.SetActive(false);
+        }
     }
 
     public void SetData(OreData oreData)
     {
+        _data = oreData;
         _rearityText.text = oreData.Rarity.ToString();
         for (int i = 0; i < oreData.EnhancedData.Length; i++)
         {
@@ -47,6 +63,13 @@ public class OreUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _enhanceText.text += "\n" + oreData.Skill.SkillName;
         _enhanceText.text += "\n" + oreData.Skill.FlavorText;
         _oreImage.sprite = oreData.OreImage;
+    }
+
+    public void SetOreData(OreData oreData) 
+    {
+        _data = oreData;
+        _oreImage.sprite = oreData.OreImage;
+        _rearityText.text = oreData.Rarity.ToString();
     }
 
     public void ResetPanel()
