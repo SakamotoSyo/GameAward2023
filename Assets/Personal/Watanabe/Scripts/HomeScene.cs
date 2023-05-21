@@ -1,32 +1,9 @@
 ﻿using DG.Tweening;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HomeScene : MonoBehaviour
 {
-    [Tooltip("経験値の判定")]
-    [SerializeField] private PlayerExperiencePoint _point = default;
-
-    #region ランクアップ関連
-    [Header("ランクアップ関連")]
-    [SerializeField] private Sprite[] _ranks = default;
-    [SerializeField] private GameObject _currentRank = default;
-    [Tooltip("拡大値")]
-    [SerializeField] private float _scaleValue = 1f;
-    [Tooltip("拡大後、縮小するまで待つ秒数")]
-    [SerializeField] private float _waitSecondForRank = 1f;
-
-    [Header("Debug")]
-    [Tooltip("ランクが上がったか")]
-    [SerializeField] private bool _isRankUp = false;
-
-    private RectTransform _rankRect = default;
-    private Vector3 _pos = Vector3.zero;
-    private Image _image = default;
-    private int _index = 0;
-    #endregion
-
     #region カット演出系
     [SerializeField] private GameObject _battleSelectPanel = default;
     [SerializeField] private GameObject _cutPanelParent = default;
@@ -41,37 +18,17 @@ public class HomeScene : MonoBehaviour
 
     private void Start()
     {
-        _index = _point.RankSetting();
-
-        SettingsRankUI();
         SettingsCutPanel();
     }
 
     private void Update()
     {
         //以下test
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //ランクアップ演出
-            RankUp();
-        }
-
         if (Input.GetKeyDown(KeyCode.A))
         {
             //カットシーン演出
             Fade.Instance.FadeOut();
         }
-    }
-
-    private void SettingsRankUI()
-    {
-        //RankUI関連の情報を取得
-        _rankRect = _currentRank.GetComponent<RectTransform>();
-        _pos = _rankRect.localPosition;
-        _image = _currentRank.GetComponent<Image>();
-
-        _image.sprite = _ranks[_index];
-        //_index = Array.IndexOf(_ranks, _image.sprite);
     }
 
     private void SettingsCutPanel()
@@ -94,29 +51,6 @@ public class HomeScene : MonoBehaviour
             {
                 _cutTexts[i - 1] = _cutPanelParent.transform.GetChild(i).GetComponent<Text>();
             }
-        }
-    }
-
-    /// <summary> ランクアップ演出(フェード、経験値上昇の動きが終わってから呼ぶ) </summary>
-    private void RankUp()
-    {
-        //最大ランクでなければ
-        if (_index != _ranks.Length - 1)
-        {
-            var sequence = DOTween.Sequence();
-
-            //RankUIの一連の動きをDOTweenでやる
-            sequence.Append(_rankRect.DOAnchorPos(new Vector3(0f, 0f, 0f), 1f))
-                    .AppendInterval(_waitSecondForRank)
-                    .AppendCallback(() =>
-                    {
-                        _index++;
-                        _image.sprite = _ranks[_index];
-                    })
-                    .Append(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f) * _scaleValue, 0.2f))
-                    .AppendInterval(_waitSecondForRank)
-                    .Append(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f), 1.5f))
-                    .Join(_rankRect.DOAnchorPos(_pos, 1.5f));
         }
     }
 
