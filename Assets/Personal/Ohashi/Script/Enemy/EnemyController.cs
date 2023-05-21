@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     private void Start()
     {
-        _enemyAttack.Init(_enemyStatus.EquipWeapon.CurrentOffensivePower, _animator);
+        _enemyAttack.Init(_enemyStatus.EquipWeapon, _animator);
     }
 
     private void Update()
