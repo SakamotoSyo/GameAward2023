@@ -164,7 +164,7 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
             if (skill1 != null)
             {
-                _skillText[0].text = skill1.name;
+                _skillText[0].text = skill1.SkillName;
                 _skillText[1].text = skill1.Damage.ToString();
                 _skillText[2].text = skill1.FlavorText;
                 Debug.Log("テキストです");
@@ -183,7 +183,7 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
             if (skill2 != null)
             {
-                _skillText[0].text = skill2.name;
+                _skillText[0].text = skill2.SkillName;
                 _skillText[1].text = skill2.Damage.ToString();
                 _skillText[2].text = skill2.FlavorText;
             }
@@ -201,7 +201,7 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase special = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
             if (special != null)
             {
-                _skillText[0].text = special.name;
+                _skillText[0].text = special.SkillName;
                 _skillText[1].text = special.Damage.ToString();
                 _skillText[2].text = special.FlavorText;
             }

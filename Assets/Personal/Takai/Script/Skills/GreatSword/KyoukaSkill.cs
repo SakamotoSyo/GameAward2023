@@ -22,11 +22,6 @@ public class KyoukaSkill : SkillBase
         FlavorText = "次の技の攻撃力が1.5倍になる(重複なし)。攻撃後自ステータスが元に戻り、プレイヤーがひるむ";
     }
 
-    private void Start()
-    {
-        _anim = GetComponent<PlayableDirector>();
-    }
-
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -39,9 +34,10 @@ public class KyoukaSkill : SkillBase
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
         _anim.Play();
-        SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
+        var dura = _anim.duration * 0.99f;
+        await UniTask.WaitUntil(() => _anim.time >= dura,
             cancellationToken: this.GetCancellationTokenOnDestroy());
+        SkillEffect();
         _anim.Stop();
         await UniTask.Delay(TimeSpan.FromSeconds(0.5));
         _playerStatus.gameObject.SetActive(true);

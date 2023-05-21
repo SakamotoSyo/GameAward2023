@@ -35,15 +35,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void AddDamage(float damage) 
     {
+        if (_playerStatus.EquipWeapon.IsEpicSkill1)
+        {
+            damage = 0;
+        }
+
         var damageController = Instantiate(_damegeController,
           _damagePos.position,
            Quaternion.identity);
         damageController.TextInit((int)damage);
 
-        //if (_playerSkill.SkillDataManagement.InEffectCheck) 
-        //{ 
-            
-        //}
         if (_playerStatus.EquipWeapon.DownJudge(damage))
         {
             //アニメーションがあったらここでダメージを受ける処理を呼ぶ
@@ -64,7 +65,35 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("入れ替えました");
             }
         }
-        
+    }
+
+    /// <summary>
+    /// スキルを使用する場合に呼ぶ関数
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <returns></returns>
+    public bool UseSkillDamage(float damage)
+    {
+        if (_playerStatus.EquipWeapon.IsEpicSkill1)
+        {
+            damage = 1;
+        }
+
+        var damageController = Instantiate(_damegeController,
+          _damagePos.position,
+           Quaternion.identity);
+        damageController.TextInit((int)damage);
+
+        if (_playerStatus.EquipWeapon.DownJudge(damage))
+        {
+            //アニメーションがあったらここでダメージを受ける処理を呼ぶ
+            _playerStatus.EquipWeapon.AddDamage(damage);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /// <summary>

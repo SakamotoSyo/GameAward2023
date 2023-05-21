@@ -15,6 +15,7 @@ public class PlayerEquipWeapon
     public WeaponType WeaponType => _weponType;
     public WeaponSkill WeaponSkill => _weaponSkill;
     public int WeaponNum => _weaponNum;
+    public bool IsEpicSkill1 => _isEpicSkill1;
     public bool IsEpicSkill2 => _isEpicSkill2;
     public bool IsEpicSkill3 => _isEpicSkill3;
 
@@ -31,9 +32,9 @@ public class PlayerEquipWeapon
     private int _weaponNum;
     private SkillDataManagement _skillDataManagement;
 
-    public void Init(SkillDataManagement skillDataManagement) 
+    public void Init(SkillDataManagement skillDataManagement)
     {
-       _skillDataManagement = skillDataManagement;
+        _skillDataManagement = skillDataManagement;
         EpicSkillCheck();
     }
 
@@ -105,7 +106,7 @@ public class PlayerEquipWeapon
         _weponType = weaponData.WeaponType;
         _weaponNum = arrayNum;
         _weaponSkill = weaponData.WeaponSkill;
-        if (_skillDataManagement) 
+        if (_skillDataManagement)
         {
             EpicSkillCheck();
         }
@@ -114,13 +115,13 @@ public class PlayerEquipWeapon
     /// <summary>
     /// •Ší‚ğ“ü‚ê‘Ö‚¦‚½‚Æ‚«‚È‚Ç‚ÉEpicSkill‚ª‚ ‚é‚©‚Ç‚¤‚©Šm”F‚µ‚Ä”­“®‚·‚é
     /// </summary>
-    public void EpicSkillCheck() 
+    public void EpicSkillCheck()
     {
-        for (int i = 0; i < _weaponSkill.WeaponSkillArray.Length; i++) 
+        for (int i = 0; i < _weaponSkill.WeaponSkillArray.Length; i++)
         {
-            if (_weaponSkill.WeaponSkillArray[i] != null && _weaponSkill.WeaponSkillArray[i].Type == SkillType.Epic) 
+            if (_weaponSkill.WeaponSkillArray[i] != null && _weaponSkill.WeaponSkillArray[i].Type == SkillType.Epic)
             {
-                _skillDataManagement.OnSkillUse(ActorAttackType.Player,_weaponSkill.WeaponSkillArray[i].SkillName).Forget();
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, _weaponSkill.WeaponSkillArray[i].name).Forget();
                 Debug.Log("Epic”­“®");
             }
         }
@@ -135,7 +136,7 @@ public class PlayerEquipWeapon
         ChangeCurrentDurable(fluctuation.CurrentDurable);
     }
 
-    public void SetDebugSkill(SkillBase skill) 
+    public void SetDebugSkill(SkillBase skill)
     {
         WeaponSkill.WeaponSkillArray[0] = skill;
     }
@@ -147,21 +148,14 @@ public class PlayerEquipWeapon
         _isEpicSkill1 = true;
     }
 
-    public void EpicSkill2() 
+    public void EpicSkill2()
     {
-        _isEpicSkill2 = true; 
+        _isEpicSkill2 = true;
     }
 
     private void ChangeCurrentDurable(float num)
     {
-        if (_isEpicSkill1)
-        {
-
-        }
-        else
-        {
-            _currentDurable.Value += num;
-        }
+        _currentDurable.Value += num;
     }
 }
 

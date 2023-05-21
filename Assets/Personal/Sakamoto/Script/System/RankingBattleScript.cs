@@ -88,6 +88,7 @@ public class RankingBattleScript : MonoBehaviour
 
     public void ButtonBossSelect()
     {
+        Debug.Log("‚«‚½");
         GameManager.SetEnemyData(_enemyBossData[0]);
         SceneLoader.LoadScene(_battleScene);
     }
@@ -103,7 +104,7 @@ public class RankingBattleScript : MonoBehaviour
             weaponDatas[i].CurrentDurable = weaponDatas[i].MaxDurable;
         }
         GameManager.PlayerSaveData.WeaponArray = weaponDatas;
-        _rankText.text = GameManager.PlayerSaveData.PlayerRankPoint.ToString();
+       // _rankText.text = GameManager.PlayerSaveData.PlayerRankPoint.ToString();
     }
 
     public void PlayerDataInit()

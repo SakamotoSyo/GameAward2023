@@ -2,12 +2,15 @@ using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
+using UnityEngine.Serialization;
 
 public class KasokugiriSkill : SkillBase
 {
-    [Tooltip("攻撃間の待機時間")] [SerializeField] private int _attackWaitTime;
-    [SerializeField] private PlayableDirector _anim;
+    [SerializeField] private PlayableDirector _playerAnim;
     [SerializeField] private GameObject _playerObj;
+    [SerializeField] private PlayableDirector _enemyAnim;
+    [SerializeField] private GameObject _enemyObj;
+
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
@@ -21,12 +24,7 @@ public class KasokugiriSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "重さが軽いほど連撃数が増える(上限4)";
     }
-
-    private void Start()
-    {
-        _anim = GetComponent<PlayableDirector>();
-    }
-
+    
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -38,17 +36,36 @@ public class KasokugiriSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _actor = actorType;
-        _playerObj.SetActive(true);
-        _playerStatus.gameObject.SetActive(false);
-        _anim.Play();
-        SkillEffect();
-        await UniTask.WaitUntil(() => _anim.state == PlayState.Paused,
-            cancellationToken: this.GetCancellationTokenOnDestroy());
-        _anim.Stop();
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-        _playerStatus.gameObject.SetActive(true);
-        Debug.Log("Anim End");
-        _playerObj.SetActive(false);
+        if (_actor == ActorAttackType.Player)
+        {
+            _playerObj.SetActive(true);
+            _playerStatus.gameObject.SetActive(false);
+            _playerAnim.Play();
+            var dura = _playerAnim.duration * 0.99f;
+            await UniTask.WaitUntil(() => _playerAnim.time >= dura,
+                cancellationToken: this.GetCancellationTokenOnDestroy());
+            SkillEffect();
+            _playerAnim.Stop();
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+            _playerStatus.gameObject.SetActive(true);
+            Debug.Log("Anim End");
+            _playerObj.SetActive(false);
+        }
+        else if (_actor == ActorAttackType.Enemy)
+        {
+            _enemyObj.SetActive(true);
+            _enemyStatus.gameObject.SetActive(false);
+            _enemyAnim.Play();
+            var dura = _enemyAnim.duration * 0.99f;
+            await UniTask.WaitUntil(() => _enemyAnim.time >= dura,
+                cancellationToken: this.GetCancellationTokenOnDestroy());
+            SkillEffect();
+            _enemyAnim.Stop();
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+            _enemyStatus.gameObject.SetActive(true);
+            Debug.Log("Anim End");
+            _enemyObj.SetActive(false);
+        }
     }
 
     protected override void SkillEffect()
@@ -149,13 +166,13 @@ public class KasokugiriSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
+                await UniTask.Delay(TimeSpan.FromSeconds(0),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
                 _enemyStatus.AddDamage(
                     _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
                 break;
             case ActorAttackType.Enemy:
-                await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime),
+                await UniTask.Delay(TimeSpan.FromSeconds(0),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
                 _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
                 break;
