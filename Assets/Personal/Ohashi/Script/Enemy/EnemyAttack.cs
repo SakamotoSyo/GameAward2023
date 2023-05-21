@@ -11,9 +11,11 @@ public class EnemyAttack
 
     private EnemyAttackType _attackType = new();
 
-    public void Init(float offensivePower, Animator anim)
+    private EquipEnemyWeapon _equipWepon;
+
+    public void Init(EquipEnemyWeapon equipWepon, Animator anim)
     {
-        _offensivePower = offensivePower;
+        _equipWepon = equipWepon;
         _anim = anim;
     }
 
@@ -45,7 +47,7 @@ public class EnemyAttack
     public async UniTask NormalAttack(PlayerController playerController)
     {
         Debug.Log("normal");
-        playerController.AddDamage(_offensivePower);
+        playerController.AddDamage(_equipWepon.CurrentOffensivePower);
        // await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
     }
 
@@ -58,13 +60,13 @@ public class EnemyAttack
         if(r == 0)
         {
             Debug.Log("skill1");
-            playerController.AddDamage(_offensivePower);
+            playerController.AddDamage(_equipWepon.CurrentOffensivePower);
             //await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         }
         else
         {
             Debug.Log("skill2");
-            playerController.AddDamage(_offensivePower);
+            playerController.AddDamage(_equipWepon.CurrentOffensivePower);
             //await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         }
     }
@@ -75,7 +77,7 @@ public class EnemyAttack
     private async UniTask SpecialAttack(PlayerController playerController)
     {
         Debug.Log("special");
-        playerController.AddDamage(_offensivePower);
+        playerController.AddDamage(_equipWepon.CurrentOffensivePower);
         //await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
     }
 }
