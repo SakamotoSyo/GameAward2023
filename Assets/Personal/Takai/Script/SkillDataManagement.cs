@@ -8,12 +8,12 @@ using Random = UnityEngine.Random;
 public class SkillDataManagement : MonoBehaviour
 {
     [Header("スキル検索"), SerializeField] private string _skillName;
-
     [SerializeField] private ActorGenerator _actorGenerator;
     [SerializeField] private Transform _transform;
     [SerializeField] private PlayerController _pStatus;
     [SerializeField] private EnemyController _eStatus;
     [SerializeField] private List<GameObject> _skillPrefab = new();
+    [SerializeField] private Transform _playerVec;
 
     private List<SkillBase> _skills = new List<SkillBase>();
     private List<SkillBase> _skillUsePool = new List<SkillBase>();
@@ -27,6 +27,7 @@ public class SkillDataManagement : MonoBehaviour
         {
             var skillObj = Instantiate(_skillPrefab[i], _transform);
             _skills.Add(skillObj.GetComponent<SkillBase>());
+            skillObj.transform.position = new Vector2(_playerVec.position.x + 2.5f,_playerVec.position.y - 1.5f);
         }
         //foreach (var skill in skillPrefabs)
         //{
