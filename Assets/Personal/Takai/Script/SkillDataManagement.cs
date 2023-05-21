@@ -27,7 +27,7 @@ public class SkillDataManagement : MonoBehaviour
         {
             var skillObj = Instantiate(_skillPrefab[i], _transform);
             _skills.Add(skillObj.GetComponent<SkillBase>());
-            skillObj.transform.position = new Vector2(_playerVec.position.x + 3,_playerVec.position.y - 1);
+            skillObj.transform.position = new Vector2(_playerVec.position.x + 2.5f,_playerVec.position.y - 1.5f);
         }
         //foreach (var skill in skillPrefabs)
         //{
