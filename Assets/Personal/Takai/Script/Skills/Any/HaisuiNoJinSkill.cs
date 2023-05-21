@@ -35,6 +35,7 @@ public class HaisuiNoJinSkill : SkillBase
         _playerStatus = player;
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
+        _playerStatus.PlayerStatus.EquipWeapon.EpicSkill1();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());
         Debug.Log("Anim End");
     }

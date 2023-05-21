@@ -23,6 +23,7 @@ public class BattleStateController : MonoBehaviour
     [SerializeField] private ResultUIScript _resultUIScript;
     [SerializeField] private SkillDataManagement _skillManagement;
     [SerializeField] private GameObject _gameOverTextObj;
+    [SerializeField] private GameObject _gameClearObj;
     private StateMachine<BattleStateController> _stateMachine;
     private List<ActionSequentialData> _actionSequentialList = new();
     private PlayerController _playerController;
@@ -171,16 +172,20 @@ public class BattleStateController : MonoBehaviour
         }
     }
 
-    public void ClearCheck() 
+    public async void ClearCheck() 
     {
         if (_enemyController.EnemyStatus.IsWeaponsAllBrek()) 
         {
+            _gameClearObj.SetActive(true);
+            await UniTask.Delay(TimeSpan.FromSeconds(3));
+            _gameClearObj.SetActive(false); 
             _stateMachine.Dispatch((int)BattleEvent.BattleEnd);
         }
     }
 
     public void GameOver() 
     {
+        _gameOverTextObj.SetActive(true);
         _stateMachine.Dispatch((int)BattleEvent.GameOver);
     }
 
