@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +23,8 @@ public class PlayerExperiencePoint : MonoBehaviour
     private int _index = 0;
     #endregion
 
+    [Tooltip("バトルにいく前の経験値")]
+    [SerializeField] private int _beforeBattlePoint = 0;
     [Tooltip("Playerの経験値")]
     [SerializeField] private int _experiencePoint = 0;
     [Tooltip("Cランクの最大値")]
@@ -41,26 +42,21 @@ public class PlayerExperiencePoint : MonoBehaviour
     private const int RANK_A = 2;
     private const int RANK_S = 3;
     private int _currentRankNum = 0;
+    private float _value = 0;
 
-    public int RankCMaxValue => _rankCMaxValue;
-    public int RankBMaxValue => _rankBMaxValue;
-    public int RankAMaxValue => _rankAMaxValue;
-    public int RankSMaxValue => _rankSMaxValue;
+    public static PlayerExperiencePoint Instance = default;
+
+    public int BeforeBattlePoint { get => _beforeBattlePoint; set => _beforeBattlePoint = value; }
     public int ExperiencePoint { get => _experiencePoint; set => _experiencePoint = value; }
 
     private void Start()
     {
         _index = RankSetting();
+        ValueSet(_index);
+        _pointValueImage.fillAmount = _beforeBattlePoint / _value;
 
         SettingsRankUI();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PointSetting();
-        }
+        Instance = this;
     }
 
     private void SettingsRankUI()
@@ -75,17 +71,17 @@ public class PlayerExperiencePoint : MonoBehaviour
 
     public int RankSetting()
     {
-        if (_experiencePoint < _rankCMaxValue)
+        if (_beforeBattlePoint < _rankCMaxValue)
         {
             _currentRankNum = RANK_C;
             return RANK_C;
         }
-        else if (_experiencePoint < _rankBMaxValue)
+        else if (_beforeBattlePoint < _rankBMaxValue)
         {
             _currentRankNum = RANK_B;
             return RANK_B;
         }
-        else if (_experiencePoint < _rankAMaxValue)
+        else if (_beforeBattlePoint < _rankAMaxValue)
         {
             _currentRankNum = RANK_A;
             return RANK_A;
@@ -95,53 +91,70 @@ public class PlayerExperiencePoint : MonoBehaviour
     }
 
     /// <summary> 経験値の反映 </summary>
-    private void PointSetting()
+    public void PointSetting()
     {
-        float value = _currentRankNum switch
-        {
-            RANK_C => _rankCMaxValue,
-            RANK_B => _rankCMaxValue + _rankBMaxValue,
-            RANK_A => _rankCMaxValue + _rankBMaxValue + _rankAMaxValue,
-            RANK_S => _rankCMaxValue + _rankBMaxValue + _rankAMaxValue + _rankSMaxValue,
-            _ => 0,
-        };
+        ValueSet(_currentRankNum);
 
-        try
-        {
-            _pointValueImage.DOFillAmount(_experiencePoint / value, 1.5f);
-        }
-        catch (DivideByZeroException d)
-        {
-            Debug.LogError(d.Message);
-        }
+        var sequence = DOTween.Sequence();
 
-        //経験値がランク上限までいったら
-        if (_pointValueImage.fillAmount > 1)
-        {
-            RankUp();
-        }
+        sequence.Append(_pointValueImage.DOFillAmount(_experiencePoint / _value, 1.5f))
+                .AppendCallback(() =>
+                {
+                    _beforeBattlePoint = _experiencePoint;
+                })
+                .AppendCallback(() =>
+                {
+                    //経験値がランク上限までいったら
+                    if (Mathf.Approximately(_pointValueImage.fillAmount, 1f))
+                    {
+                        Debug.Log("rankup");
+                        RankUp();
+                    }
+                });
     }
 
     /// <summary> ランクアップ演出(フェード、経験値上昇の動きが終わってから呼ぶ) </summary>
     private void RankUp()
     {
+        if (_index == RANK_S)
+        {
+            return;
+        }
+
         //最大ランクでなければ
         if (_index != _ranks.Length - 1)
         {
             var sequence = DOTween.Sequence();
 
             //RankUIの一連の動きをDOTweenでやる
-            sequence.Append(_rankRect.DOAnchorPos(new Vector3(0f, 0f, 0f), 1f))
+            sequence.Append(_rankRect.DOAnchorPos(new Vector3(0f, 0f, 0f), 0.6f))
                     .AppendInterval(_waitSecondForRank)
                     .AppendCallback(() =>
                     {
                         _index++;
                         _image.sprite = _ranks[_index];
                     })
-                    .Append(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f) * _scaleValue, 0.2f))
+                    .AppendCallback(() =>
+                    {
+                        ValueSet(_index);
+                        _pointValueImage.fillAmount = _experiencePoint / _value;
+                    })
+                    .Join(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f) * _scaleValue, 0.2f))
                     .AppendInterval(_waitSecondForRank)
                     .Append(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f), 1.5f))
                     .Join(_rankRect.DOAnchorPos(_pos, 1.5f));
         }
+    }
+
+    private void ValueSet(int num)
+    {
+        _value = num switch
+        {
+            RANK_C => _rankCMaxValue,
+            RANK_B => _rankCMaxValue + _rankBMaxValue,
+            RANK_A => _rankCMaxValue + _rankBMaxValue + _rankAMaxValue,
+            RANK_S => _rankCMaxValue + _rankBMaxValue + _rankAMaxValue + _rankSMaxValue,
+            _ => 1,
+        };
     }
 }
