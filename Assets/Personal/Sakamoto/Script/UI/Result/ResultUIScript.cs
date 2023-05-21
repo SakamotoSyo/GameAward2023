@@ -22,6 +22,10 @@ public class ResultUIScript : MonoBehaviour
     [SerializeField] private SkillDataManagement _playerSkillDataManagement;
     [SerializeField] private Sprite[] _oreImage = new Sprite[3];
     [SerializeField] private ResultWeaponButton[] _resultUICs = new ResultWeaponButton[4];
+    private WeaponData[] _saveWeaponData;
+    private OreData _selectOreData;
+    private int _currentSelectWeapon;
+
     [SceneName]
     [SerializeField] private string _blacksmithSceneName;
     [Tooltip("リザルトシーンのテスト用")]
@@ -43,11 +47,7 @@ public class ResultUIScript : MonoBehaviour
             FindWeaponTypeDontHave();
         }
     }
-
-    void Update()
-    {
-
-    }
+    
     public void StartResultLottery()
     {
         _oreSelectObj.SetActive(true);
@@ -151,7 +151,7 @@ public class ResultUIScript : MonoBehaviour
                 _weaponButton[i].enabled = true;
                 _resultUICs[i].SetUpInfo(weaponDatas[i], selectOreData);
                 var num = i;
-                _weaponButton[i].onClick.AddListener(() => WeaponEnhanceEvent(weaponDatas[num], selectOreData));
+                _weaponButton[i].onClick.AddListener(() => SetSaveEnhanceData(weaponDatas, selectOreData, num));
             }
             else
             {
@@ -162,19 +162,48 @@ public class ResultUIScript : MonoBehaviour
 
     }
 
+    public void SetSaveEnhanceData(WeaponData[] weaponDatas, OreData oredata, int selectButton) 
+    {
+        _resultUICs[_currentSelectWeapon].ActiveOutLine(false);
+        _saveWeaponData = weaponDatas;
+        _selectOreData = oredata;
+        _currentSelectWeapon = selectButton;
+        _resultUICs[_currentSelectWeapon].ActiveOutLine(true);
+    }
+
 
     /// <summary>
     /// 武器の強化したときのButtonEvent
     /// </summary>
-    public void WeaponEnhanceEvent(WeaponData weaponData, OreData oreData)
+    public void WeaponEnhanceEvent()
     {
-        var weaponSkill = weaponData.WeaponSkill;
-        if (!oreData.Skill) return;
-        if (oreData.Skill.Type == SkillType.Skill)
+        var weaponSkill = _saveWeaponData[_currentSelectWeapon].WeaponSkill;
+        if (!_selectOreData.Skill) return;
+        if (_selectOreData.Skill.Type == SkillType.Skill)
         {
-            if (weaponSkill.AddSkillJudge(oreData.Skill))
+            if (weaponSkill.GetSkillData() == weaponSkill.WeaponSkillArray.Length)
             {
-                weaponData.EnhanceParam(oreData.EnhancedData);
+                //スキルが追加できなかったときPlayerに選択させる
+                _enhanceSelectObj.SetActive(false);
+                _skillSelectPanel.SetActive(true);
+                _skillSelectButtonCs[0].SetCurrentSkill(weaponSkill.WeaponSkillArray[0]);
+                _skillSelectButtonCs[1].SetCurrentSkill(weaponSkill.WeaponSkillArray[1]);
+                _skillSelectButton[0].onClick.AddListener(() =>
+                {
+                    ChangeSkill(0, _selectOreData.Skill, _saveWeaponData[_currentSelectWeapon]);
+                    _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
+
+                });
+                _skillSelectButton[1].onClick.AddListener(() =>
+                {
+                    ChangeSkill(1, _selectOreData.Skill, _saveWeaponData[_currentSelectWeapon]);
+                    _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
+                });
+            }
+            else
+            {
+                var result = weaponSkill.AddSkillJudge(_selectOreData.Skill);
+                _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
                 //スキルを追加出来たときの処理
                 if (_isBlacksmith)
                 {
@@ -186,32 +215,17 @@ public class ResultUIScript : MonoBehaviour
                     SceneLoader.LoadScene(_homeScene);
                 }
 
-            }
-            else
-            {
-                //スキルが追加できなかったときPlayerに選択させる
-                _enhanceSelectObj.SetActive(false);
-                _skillSelectPanel.SetActive(true);
-                _skillSelectButtonCs[0].SetCurrentSkill(weaponSkill.WeaponSkillArray[0]);
-                _skillSelectButtonCs[1].SetCurrentSkill(weaponSkill.WeaponSkillArray[1]);
-                _skillSelectButton[0].onClick.AddListener(() =>
+                if (!result) 
                 {
-                    ChangeSkill(0, oreData.Skill, weaponData);
-                    weaponData.EnhanceParam(oreData.EnhancedData);
-
-                });
-                _skillSelectButton[1].onClick.AddListener(() =>
-                {
-                    ChangeSkill(1, oreData.Skill, weaponData);
-                    weaponData.EnhanceParam(oreData.EnhancedData);
-                });
+                    Debug.Log("武器の種類が合わなかったため追加できませんでした");
+                }
             }
         }
-        else if (oreData.Skill.Type == SkillType.Special)
+        else if (_selectOreData.Skill.Type == SkillType.Special)
         {
-            if (weaponSkill.AddSpecialSkill(oreData.Skill))
+            if (weaponSkill.AddSpecialSkill(_selectOreData.Skill))
             {
-                weaponData.EnhanceParam(oreData.EnhancedData);
+                _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
                 //スキルを追加出来たときの処理
                 if (_isBlacksmith)
                 {
@@ -229,16 +243,16 @@ public class ResultUIScript : MonoBehaviour
                 _enhanceSelectObj.SetActive(false);
                 _skillSelectPanel.SetActive(true);
                 _skillSelectButtonCs[0].SetCurrentSkill(weaponSkill.SpecialAttack);
-                _skillSelectButtonCs[1].SetCurrentSkill(oreData.Skill);
+                _skillSelectButtonCs[1].SetCurrentSkill(_selectOreData.Skill);
                 _skillSelectButton[0].onClick.AddListener(() =>
                 {
-                    ChangeSpecialSkill(oreData.Skill, weaponData);
-                    weaponData.EnhanceParam(oreData.EnhancedData);
+                    ChangeSpecialSkill(_selectOreData.Skill, _saveWeaponData[_currentSelectWeapon]);
+                    _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
 
                 });
                 _skillSelectButton[1].onClick.AddListener(() =>
                 {
-                    weaponData.EnhanceParam(oreData.EnhancedData);
+                    _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
                     SceneLoader.LoadScene(_homeScene);
                 });
             }
@@ -312,7 +326,7 @@ public class ResultUIScript : MonoBehaviour
 
     public void ChangeSpecialSkill(SkillBase skill, WeaponData weaponData)
     {
-         weaponData.WeaponSkill.ChangeSpecialSkill(skill);
+        weaponData.WeaponSkill.ChangeSpecialSkill(skill);
         if (_isBlacksmith)
         {
             BlacksmithJudge();
