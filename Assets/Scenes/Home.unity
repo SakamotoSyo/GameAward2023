@@ -683,8 +683,8 @@ MonoBehaviour:
   _scaleValue: 3
   _waitSecondForRank: 1
   _isRankUp: 0
+  _beforeBattlePoint: 50
   _experiencePoint: 120
-  _goToPoint: 0
   _rankCMaxValue: 100
   _rankBMaxValue: 200
   _rankAMaxValue: 300
@@ -1424,6 +1424,10 @@ PrefabInstance:
     - target: {fileID: 3427665085080179669, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
+      propertyPath: _isPointSet
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3427665085080179670, guid: 2f980af0730987f47b283e15dad0f2aa, type: 3}
       propertyPath: _onCompleteFadeOut.m_PersistentCalls.m_Calls.Array.size
