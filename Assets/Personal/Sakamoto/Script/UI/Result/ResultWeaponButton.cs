@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ResultWeaponButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Text _statusInfoText;
+    [SerializeField] private GameObject _outlineObj;
     private ActorGenerator _actorGenerator;
     private WeaponData _weaponData;
     private OreData _oreData;
@@ -22,7 +23,7 @@ public class ResultWeaponButton : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_isSetUp) 
+        if (_isSetUp)
         {
             for (int i = 0; i < _oreData.EnhancedData.Length; i++)
             {
@@ -37,9 +38,17 @@ public class ResultWeaponButton : MonoBehaviour, IPointerEnterHandler, IPointerE
                 //_statusInfoText.text += _actorGenerator.PlayerController.PlayerStatus.PlayerSkillList;
             }
 
-            _statusInfoText.text += "<color=blue>" + _oreData.Skill.SkillName + "</color>\n";
+            if (_weaponData.WeaponType == _oreData.Skill.Weapon) 
+            {
+                _statusInfoText.text += "<color=blue>" + _oreData.Skill.SkillName + "</color>\n";
+            }
         }
      
+    }
+
+    public void ActiveOutLine(bool active) 
+    {
+        _outlineObj.SetActive(active);
     }
 
     public void OnPointerExit(PointerEventData eventData)
