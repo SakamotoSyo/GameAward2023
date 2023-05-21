@@ -2,8 +2,7 @@ using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
-
-
+    
 public class KasokuSkill : SkillBase
 {
     [SerializeField] private PlayableDirector _anim;

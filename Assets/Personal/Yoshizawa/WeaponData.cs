@@ -27,6 +27,7 @@ public class WeaponData
         CurrentDurable = durableValue;
         Attribute = attributeType;
         WeaponType = weponType;
+        WeaponSkill.SetWeaponType(WeaponType);
 
         StatusArray = new float[4];
         StatusArray[0] = offensivePower;

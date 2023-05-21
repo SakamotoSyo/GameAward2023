@@ -50,7 +50,7 @@ public class ActorGenerator : MonoBehaviour
         }
         else if (GameManager.EnemyData)
         {
-            Debug.Log(GameManager.EnemyData.WeaponDates[0].WeaponType);
+            Debug.Log(GameManager.EnemyData.WeaponDatas[0].WeaponType);
             _enemyController.SetEnemyData(GameManager.EnemyData);
         }
         else 

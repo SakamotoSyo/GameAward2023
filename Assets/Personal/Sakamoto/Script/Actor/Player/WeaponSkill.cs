@@ -12,6 +12,7 @@ public class WeaponSkill
     private SkillBase _specialAttack;
     private SkillBase[] _skillArray = new SkillBase[2];
     private SkillDataManagement _skillDataManagement;
+    private WeaponType _weaponType;
     [SerializeField] private bool _isSkillDebug;
 
     public void Init(SkillDataManagement skillManagement) 
@@ -21,6 +22,11 @@ public class WeaponSkill
         {
             _skillArray[0] = _skillDataManagement.SearchSkill();
         }
+    }
+
+    public void SetWeaponType(WeaponType weaponType) 
+    {
+        _weaponType = weaponType;
     }
 
     public void ChangeSpecialSkill(SkillBase skill) 
@@ -48,7 +54,7 @@ public class WeaponSkill
     {
         for (int i = 0; i < _skillArray.Length; i++) 
         {
-            if (_skillArray[i] == null) 
+            if (_skillArray[i] == null && skill.Weapon == _weaponType) 
             {
                 _skillArray[i] = skill;
                 return true;
@@ -56,6 +62,19 @@ public class WeaponSkill
         }
 
         return false;
+    }
+
+    public int GetSkillData() 
+    {
+        int value = 0;
+        for(int i = 0; i < _skillArray.Length; i++) 
+        {
+            if (_skillArray[i] != null) 
+            {
+                value++;
+            }
+        }
+        return value;
     }
 
     /// <summary>
