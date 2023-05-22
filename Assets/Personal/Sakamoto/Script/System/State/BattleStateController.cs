@@ -28,6 +28,7 @@ public class BattleStateController : MonoBehaviour
     private List<ActionSequentialData> _actionSequentialList = new();
     private PlayerController _playerController;
     private EnemyController _enemyController;
+    private bool _isClaer = false;
 
 
     void Start()
@@ -90,15 +91,11 @@ public class BattleStateController : MonoBehaviour
     public async UniTask NextActorStateTransition()
     {
         var token = this.GetCancellationTokenOnDestroy();
-        Debug.Log(_stateMachine.CurrentState);
         for (int i = 0; i < _actionSequentialList.Count; i++)
         {
-            Debug.Log(_actionSequentialList[i].EnemyController && !_actionSequentialList[i].alreadyActedOn);
-            Debug.Log("‚Ü‚í‚Á‚Ä‚é");
             if (_actionSequentialList[i].PlayerController && !_actionSequentialList[i].alreadyActedOn)
             {
                 _stateMachine.Dispatch((int)BattleEvent.SelectStateToPlayerTrun);
-                Debug.Log("Player");
                 break;
             }
             else if (_actionSequentialList[i].EnemyController && !_actionSequentialList[i].alreadyActedOn)
@@ -106,14 +103,12 @@ public class BattleStateController : MonoBehaviour
                 var result = await _skillManagement.InEffectCheck("ˆö‰Ê‰ž•ñ", ActorAttackType.Player);
                 if (result)
                 {
-                    Debug.Log("“Go—ˆ‚È‚¢");
                     //“G‚Ìs“®‚ðI—¹‚³‚¹‚é
                     ActorStateEnd();
                     await NextActorStateTransition();
                 }
                 else
                 {
-                    Debug.Log("“G");
                    
                 }
                 _stateMachine.Dispatch((int)BattleEvent.SelectStateToEnemyTrun);
@@ -127,12 +122,11 @@ public class BattleStateController : MonoBehaviour
             {
                 _skillManagement.TurnCall();
                 ActionSequentialDetermining();
-                Debug.Log("‘S‚Äs“®Ï‚Ý‚È‚Ì‚Ås“®‡‚ðŒˆ‚ß‚È‚¨‚·");
                 await NextActorStateTransition();
             }
             else 
             {
-                Debug.Log("‚È‚ñ‚Å‚â‚Ë‚ñ");
+
             }
         }
     }
@@ -174,8 +168,10 @@ public class BattleStateController : MonoBehaviour
 
     public async void ClearCheck() 
     {
-        if (_enemyController.EnemyStatus.IsWeaponsAllBrek()) 
+        if (_enemyController.EnemyStatus.IsWeaponsAllBrek() 
+            && !_isClaer) 
         {
+            _isClaer = true;
             _gameClearObj.SetActive(true);
             await UniTask.Delay(TimeSpan.FromSeconds(3));
             _gameClearObj.SetActive(false); 
