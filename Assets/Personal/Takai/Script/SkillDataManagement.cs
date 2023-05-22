@@ -15,7 +15,7 @@ public class SkillDataManagement : MonoBehaviour
     [SerializeField] private Transform _playerVec;
 
     private ActorGenerator _actorGenerator;
-    private List<SkillBase> _skills = new List<SkillBase>();
+    private static List<SkillBase> _skills = new List<SkillBase>();
     private List<SkillBase> _skillUsePool = new List<SkillBase>();
     private static SkillDataManagement _skill;
     public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
@@ -24,7 +24,6 @@ public class SkillDataManagement : MonoBehaviour
     {
         // SkillBase[] skillPrefabs = Resources.LoadAll<SkillBase>("Skills");
         var skillIns = FindObjectOfType<SkillDataManagement>();
-        _actorGenerator = GameObject.Find("ActorGenerator").GetComponent<ActorGenerator>();
         if (_skill == null) 
         {
             DontDestroyOnLoad(this.gameObject);
@@ -73,6 +72,10 @@ public class SkillDataManagement : MonoBehaviour
 
     public async UniTask OnSkillUse(ActorAttackType actorType, string skillName)
     {
+        if (!_actorGenerator) 
+        {
+            _actorGenerator = GameObject.Find("ActorGenerator").GetComponent<ActorGenerator>();
+        }
         Debug.Log(skillName);
         SkillBase skill = _skills.Find(skill => skill.name == skillName);
         if (skill != null)
