@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class ResultUIScript : MonoBehaviour
 {
     [SerializeField] private OreUIScript[] _oreUiCs = new OreUIScript[3];
+    [SerializeField] private OreUIScript _selectWeaponOre; 
     [SerializeField] private Button[] _oreButton = new Button[3];
     [SerializeField] private Button[] _weaponButton = new Button[4];
     [SerializeField] private Button[] _skillSelectButton = new Button[2];
@@ -129,6 +130,7 @@ public class ResultUIScript : MonoBehaviour
     {
         _oreSelectObj.SetActive(false);
         _enhanceSelectObj.SetActive(true);
+        _selectWeaponOre.SetOreData(selectOreData);
         WeaponData[] weaponDatas;
 
         if (_resultSceneTest)

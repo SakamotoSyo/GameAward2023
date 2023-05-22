@@ -33,6 +33,7 @@ public class KuroganeNoJubakuSkill : SkillBase
     {
         Debug.Log("Use Skill");
         _playerStatus = player;
+        _playerStatus.PlayerStatus.EquipWeapon.EpicSkill2();
         _anim = GetComponent<PlayableDirector>();
         SkillEffect();
         await UniTask.WaitUntil(() => _anim.state == PlayState.Paused, cancellationToken: this.GetCancellationTokenOnDestroy());

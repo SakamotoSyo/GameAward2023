@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("ダメージテキストを生成する座標")]
     private Transform _damagePos;
     private PlayerStatus _playerStatus;
-    private PlayerAnimation _playerAnimation = new();
+    [SerializeField] private PlayerAnimation _playerAnimation = new();
     private SkillDataManagement _skillDataManagement;
 
     private bool _isCounter = false;
@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
         _skillDataManagement = GameObject.Find("DataBase").GetComponent<SkillDataManagement>();
         _playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.SearchSkill());
         _playerStatus.EquipWeapon.Init(_skillDataManagement);
+        _playerAnimation.Init(_playerStatus.EquipWeapon);
     }
 
     private void Update()
@@ -109,8 +110,13 @@ public class PlayerController : MonoBehaviour
            // case PlayerAttackType.Skill1:
              //   return
         }
-
         return 0;
+    }
+
+    public void EquipWeaponChange(WeaponData weaponData, int arrayNum) 
+    {
+        _playerStatus.EquipWeponChange(weaponData, arrayNum);
+        _playerAnimation.WeaponIdle();
     }
 
     public void SetPlayerStatus(PlayerStatus playerStatus) 

@@ -11,14 +11,20 @@ public class HomeScene : MonoBehaviour
     [Tooltip("昇格戦挑戦可か")]
     [SerializeField] private bool _isChallengablePromotionMatch = false;
 
+    private bool _isPlayCutMove = false;
     private Image[] _cutPanels = new Image[3];
     private Text[] _cutTexts = new Text[2];
-    
     #endregion
+
+    public static HomeScene Instance = default;
+
+    public bool IsChallengablePromotionMatch => _isChallengablePromotionMatch;
 
     private void Start()
     {
         SettingsCutPanel();
+
+        Instance = this;
     }
 
     private void Update()
@@ -57,7 +63,7 @@ public class HomeScene : MonoBehaviour
     /// <summary> カットシーン演出(昇格戦解放時に呼ぶ) </summary>
     public void CutSceneLike()
     {
-        if (!_isChallengablePromotionMatch)
+        if (!_isChallengablePromotionMatch || _isPlayCutMove)
         {
             _battleSelectPanel.SetActive(true);
             return;
@@ -67,6 +73,11 @@ public class HomeScene : MonoBehaviour
 
     public void CutMove()
     {
+        if (_isPlayCutMove)
+        {
+            return;
+        }
+
         _battleSelectPanel.SetActive(true);
 
         var sequence = DOTween.Sequence();
@@ -112,5 +123,7 @@ public class HomeScene : MonoBehaviour
                     }
                     Fade.Instance.FadeIn();
                 });
+
+        _isPlayCutMove = true;
     }
 }
