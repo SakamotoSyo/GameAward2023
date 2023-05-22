@@ -76,7 +76,7 @@ public class KasokugiriSkill : SkillBase
         {
             case ActorAttackType.Player:
             {
-                float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
+                float weight = _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram();
 
                 if (weight >= 41)
                 {
@@ -169,7 +169,7 @@ public class KasokugiriSkill : SkillBase
                 await UniTask.Delay(TimeSpan.FromSeconds(0),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
                 _enemyStatus.AddDamage(
-                    _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                    _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
                 break;
             case ActorAttackType.Enemy:
                 await UniTask.Delay(TimeSpan.FromSeconds(0),

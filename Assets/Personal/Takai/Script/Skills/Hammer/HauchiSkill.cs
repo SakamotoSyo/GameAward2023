@@ -75,7 +75,7 @@ public class HauchiSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
                 fluctuation = new FluctuationStatusClass(
                     -_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue, 0,
                     -_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate * _subtractValue, 0, 0);
@@ -84,8 +84,8 @@ public class HauchiSkill : SkillBase
             case ActorAttackType.Enemy:
                 _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
                 fluctuation = new FluctuationStatusClass(
-                    - _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * _subtractValue, 0,
-                    -_playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * _subtractValue, 0, 0);
+                    - _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * _subtractValue, 0,
+                    -_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram() * _subtractValue, 0, 0);
                 _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
                 break;
         }
