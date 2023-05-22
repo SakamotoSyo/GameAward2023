@@ -134,9 +134,11 @@ public class BattleStateController : MonoBehaviour
     /// <summary>
     /// ActorÇÃçsìÆÇÃèIÇÌÇËÇ…åƒÇ‘ä÷êî
     /// </summary>
-    public async void ActorStateEnd() 
+    public async void ActorStateEnd()
     {
-        ClearCheck();
+        var check = await ClearCheck();
+        if (check) return;
+        
 
         for (int i = 0; i < _actionSequentialList.Count; i++) 
         {
@@ -166,17 +168,18 @@ public class BattleStateController : MonoBehaviour
         }
     }
 
-    public async void ClearCheck() 
+    public async UniTask<bool> ClearCheck() 
     {
-        if (_enemyController.EnemyStatus.IsWeaponsAllBrek() 
-            && !_isClaer) 
+        if (_enemyController.EnemyStatus.IsWeaponsAllBrek()) 
         {
-            _isClaer = true;
             _gameClearObj.SetActive(true);
             await UniTask.Delay(TimeSpan.FromSeconds(3));
             _gameClearObj.SetActive(false); 
             _stateMachine.Dispatch((int)BattleEvent.BattleEnd);
+            return true;
         }
+
+        return false;
     }
 
     public void GameOver() 

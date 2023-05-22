@@ -14,8 +14,8 @@ public class GameOverState : State
 
     public async UniTask TextActive() 
     {
-        Owner.GameOverTextObj.SetActive(true);
-        await UniTask.Delay(TimeSpan.FromSeconds(1));
+        //Owner.GameOverTextObj.SetActive(true);
+        await UniTask.Delay(TimeSpan.FromSeconds(3));
         SceneLoader.LoadScene("InitialPreparationScene");
     }
 }

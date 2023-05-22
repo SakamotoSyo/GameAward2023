@@ -61,6 +61,7 @@ public class ResultUIScript : MonoBehaviour
     private void RewardLottery()
     {
         _actorGenerator.PlayerController.PlayerStatus.AddRankPoint();
+        Debug.Log("抽選");
         for (int i = 0; i < _oreUiCs.Length; i++)
         {
             var oreInfo = RarityLottery(i);
@@ -180,11 +181,16 @@ public class ResultUIScript : MonoBehaviour
     public void WeaponEnhanceEvent()
     {
         var weaponSkill = _saveWeaponData[_currentSelectWeapon].WeaponSkill;
-        if (!_selectOreData.Skill) return;
+        if (!_selectOreData.Skill) 
+        {
+            Debug.Log("SkillがNull");
+            return;
+        }
         if (_selectOreData.Skill.Type == SkillType.Skill)
         {
             if (weaponSkill.GetSkillData() == weaponSkill.WeaponSkillArray.Length)
             {
+                Debug.Log("スキルの追加");
                 //スキルが追加できなかったときPlayerに選択させる
                 _enhanceSelectObj.SetActive(false);
                 _skillSelectPanel.SetActive(true);

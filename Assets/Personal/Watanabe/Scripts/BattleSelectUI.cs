@@ -25,6 +25,11 @@ public class BattleSelectUI : MonoBehaviour
     public Transform[] ActionUI => _actionUi;
     public bool[] IsAttackable => _isAttackable;
 
+    private void Awake()
+    {
+        _skillDataManagement = GameObject.Find("SkillDataBase").GetComponent<SkillDataManagement>();
+    }
+
     private void Start()
     {
         _playerController = _generator.PlayerController;
