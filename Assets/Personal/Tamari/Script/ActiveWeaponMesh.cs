@@ -119,8 +119,6 @@ public class ActiveWeaponMesh : MonoBehaviour
 
         //BaseActiveWeapon(_sImage, WeaponSaveData.SData);
 
-        BaseActiveWeapon(_sImage, _sPos, WeaponSaveData.SData);
-        Debug.Log("A");
 
         BaseActiveWeapon(_gsImage, _gsPos, WeaponSaveData.GSData);
         Debug.Log("B");
@@ -129,6 +127,8 @@ public class ActiveWeaponMesh : MonoBehaviour
         BaseActiveWeapon(_dbImageL, _dbPosL, WeaponSaveData.DBData);
         Debug.Log("D");
         BaseActiveWeapon(_hImage, _hPos, WeaponSaveData.HData);
+        BaseActiveWeapon(_sImage, _sPos, WeaponSaveData.SData);
+        Debug.Log("A");
         Debug.Log("e");
 
     }
@@ -256,7 +256,8 @@ public class ActiveWeaponMesh : MonoBehaviour
         else if (weapon == _sImage)
         {
             var parentWeapon = GameObject.Find("SWeapon");
-            if (parentWeapon == null)
+            var parentWeapon2 = GameObject.Find("Spear");
+            if (parentWeapon == null && parentWeapon2 == null)
             {
                 return;
             }
@@ -265,6 +266,8 @@ public class ActiveWeaponMesh : MonoBehaviour
 
             weapon.transform.position = vec;
             parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _sRotateAngle);
+            parentWeapon2.transform.rotation = Quaternion.Euler(0, 0, 29.92f);
+            Debug.Log(_sRotateAngle);
         }
 
         else if (weapon == _dbImageL)
