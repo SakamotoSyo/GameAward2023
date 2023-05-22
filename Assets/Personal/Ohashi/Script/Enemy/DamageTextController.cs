@@ -16,6 +16,15 @@ public class DamageTextController : MonoBehaviour
     [SerializeField, Tooltip("フェード時間")]
     private float _fadeTime = 0.5f;
 
+    [SerializeField]
+    private Image _image;
+
+    [SerializeField]
+    private Sprite _normal;
+
+    [SerializeField]
+    private Sprite _critical;
+
     private int _damage;
 
     private void Start()
@@ -23,10 +32,14 @@ public class DamageTextController : MonoBehaviour
         //仮の条件
         if (_damage >= 100)
         {
+            _damageText.color = Color.yellow;
+            _image.sprite = _critical;
             BigDamageAnimation();
         }
         else
         {
+            _damageText.color = Color.white;
+            _image.sprite = _normal;
             DamageAnimation();
         }
     }
