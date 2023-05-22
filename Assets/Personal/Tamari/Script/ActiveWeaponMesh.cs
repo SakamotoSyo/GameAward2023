@@ -5,6 +5,17 @@ using UnityEngine.UI;
 
 public class ActiveWeaponMesh : MonoBehaviour
 {
+    public GameObject GSImage => _gsImage;
+
+    public GameObject DBImageR => _dbImageR;
+
+    public GameObject DBImageL => _dbImageL;
+
+    public GameObject HImage => _hImage;
+
+    public GameObject SImage => _sImage;
+
+
     [SerializeField, Tooltip("大剣のイメージ")]
     private GameObject _gsImage = default;
 
@@ -35,6 +46,18 @@ public class ActiveWeaponMesh : MonoBehaviour
     [SerializeField, Tooltip("やり生成ポジション")]
     private GameObject _sPos = default;
 
+    [SerializeField, Tooltip("大剣の回転角度")]
+    private float _gsRotateAngle = 0;
+
+    [SerializeField, Tooltip("双剣の回転角度")]
+    private float _dbRotateAngle = 0;
+
+    [SerializeField, Tooltip("ハンマーの回転角度")]
+    private float _hRotateAngle = 0;
+
+    [SerializeField, Tooltip("やりの回転角度")]
+    private float _sRotateAngle = 0;
+
     [SerializeField]
     private List<Color> _setColorList = new List<Color>();
 
@@ -47,19 +70,19 @@ public class ActiveWeaponMesh : MonoBehaviour
     private PlayerStatus _status;
 
     private WeaponSaveData _weaponSaveData = default;
+
     private void Start()
     {
-        if(_generator != null)
+        if (_generator != null)
         {
             _status = _generator.PlayerController.PlayerStatus;
         }
         _weaponSaveData = new WeaponSaveData();
 
         // 武器表示をしたいときに呼ぶ
-        // ActiveWeapon();
+        ActiveWeapon();
     }
 
-    //TODO:所持している武器に対応した表示をする
     public void ActiveWeapon()
     {
         //for (int i = 0; i < _status.WeaponDatas.Length; i++)
@@ -86,6 +109,16 @@ public class ActiveWeaponMesh : MonoBehaviour
         //}
 
 
+        //BaseActiveWeapon(_gsImage, WeaponSaveData.GSData);
+
+        //BaseActiveWeapon(_dbImageR, WeaponSaveData.DBData);
+
+        //BaseActiveWeapon(_dbImageL, WeaponSaveData.DBData);
+
+        //BaseActiveWeapon(_hImage, WeaponSaveData.HData);
+
+        //BaseActiveWeapon(_sImage, WeaponSaveData.SData);
+
         BaseActiveWeapon(_gsImage, _gsPos, WeaponSaveData.GSData);
 
         BaseActiveWeapon(_dbImageR, _dbPosR, WeaponSaveData.DBData);
@@ -96,26 +129,62 @@ public class ActiveWeaponMesh : MonoBehaviour
 
         BaseActiveWeapon(_sImage, _sPos, WeaponSaveData.SData);
 
-
     }
+    //TODO:所持している武器に対応した表示をする
+    //public void ActiveSelectWeapon()
+    //{
+    //    switch(_meshManager._weaponType)
+    //    {
+    //        case WeaponType.GreatSword:
+    //            {
+    //                BaseActiveWeapon(_gsImage, _gsPos, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
+    //            }
+    //            break;
+    //        case WeaponType.DualBlades:
+    //            {
+    //                BaseActiveWeapon(_dbImageR, _dbPosR, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
 
-    // TODO:鍛冶シーンで完成予想図を表示できるようにする
-    public void SelectActiveWeapon()
-    {
+    //                BaseActiveWeapon(_dbImageL, _dbPosL, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
+    //            }
+    //            break;
+    //        case WeaponType.Hammer:
+    //            {
+    //                BaseActiveWeapon(_hImage, _hPos, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
+    //            }
+    //            break;
+    //        case WeaponType.Spear:
+    //            {
+    //                BaseActiveWeapon(_sImage, _sPos, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
+    //            }
+    //            break;
+    //        default:
+    //            {
+    //                Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
+    //            }
+    //            return;
+    //    }
+    //}
 
-    }
-
-    private void BaseActiveWeapon(GameObject weapon, GameObject pos, SaveData data)
+    private void BaseActiveWeapon(GameObject weapon, SaveData data)
     {
         if (data.MYVERTICES == null)
         {
             Debug.Log("選んだ武器のセーブデータはありません");
             return;
         }
+
         Mesh mesh = new Mesh();
         mesh.vertices = data.MYVERTICES;
         mesh.triangles = data.MYTRIANGLES;
         mesh.SetColors(_setColorList);
+
+        // 大剣の時はこれ
+        // TODO:ちゃんと変数にする、武器ごとの確認をする
+        var pos = GameObject.Find("SwordPos");
+        var pos2 = GameObject.Find("Sword");
+        weapon.transform.parent = pos2.transform;
+
+        // weapon.transform.rotation = pos2.transform.rotation;
 
         if (weapon == _hImage || weapon == _sImage)
         {
@@ -128,7 +197,7 @@ public class ActiveWeaponMesh : MonoBehaviour
         else if (weapon == _dbImageR)
         {
             Vector3 vec = new Vector3(pos.transform.position.x - data.DISX,
-                pos.transform.position.y + data.DISY, pos.transform.position.z);
+                pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
 
@@ -138,60 +207,89 @@ public class ActiveWeaponMesh : MonoBehaviour
         else
         {
             Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
-                pos.transform.position.y + data.DISY, pos.transform.position.z);
+                pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
-
         }
         weapon.transform.parent.localScale = new Vector3(_size, _size, _size);
-
+        // weapon.transform.localScale = new Vector3(_size, _size, _size);
         MeshFilter meshFilter = weapon.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
 
         MeshRenderer meshRenderer = weapon.AddComponent<MeshRenderer>();
         meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
+
+        // 大剣の時はこれ
+        // TODO:ちゃんと変数にする、武器ごとの確認をする
+        pos2.transform.rotation = Quaternion.Euler(0, 0, -86.588f);
     }
 
-    public void BaseActiveWeapon(GameObject weapon, GameObject pos, Vector3[] _myVec, int[] _myTri, float disX, float disY)
+    private void BaseActiveWeapon(GameObject weapon, GameObject pos, SaveData data)
     {
-        if (_myVec == null)
+        if (data.MYVERTICES == null)
         {
             Debug.Log("選んだ武器のセーブデータはありません");
             return;
         }
+
         Mesh mesh = new Mesh();
-        mesh.vertices = _myVec;
-        mesh.triangles = _myTri;
+        mesh.vertices = data.MYVERTICES;
+        mesh.triangles = data.MYTRIANGLES;
         mesh.SetColors(_setColorList);
 
-        if (weapon == _hImage || weapon == _sImage)
+        if (weapon == _hImage)
         {
-            Vector3 vec = new Vector3(pos.transform.position.x + disX,
-                pos.transform.position.y + disY, pos.transform.position.z - 1);
+            var parentWeapon = GameObject.Find("HWeapon");
+            Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _hRotateAngle);
         }
 
-        else if (weapon == _dbImageR)
+        if (weapon == _sImage)
         {
-            Vector3 vec = new Vector3(pos.transform.position.x - disX,
-                pos.transform.position.y + disY, pos.transform.position.z);
+            var parentWeapon = GameObject.Find("SWeapon");
+            Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
+
+            weapon.transform.position = vec;
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _sRotateAngle);
+        }
+
+        if(weapon == _dbImageL)
+        {
+            var parentWeapon = GameObject.Find("DBLWeapon");
+            Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z + 1);
+
+            weapon.transform.position = vec;
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
+        }
+
+        if (weapon == _dbImageR)
+        {
+            var parentWeapon = GameObject.Find("DBRWeapon");
+            Vector3 vec = new Vector3(pos.transform.position.x - data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z + 1);
 
             weapon.transform.position = vec;
 
             weapon.transform.Rotate(0, 180, 0);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
         }
 
-        else
+        if(weapon == _gsImage)
         {
-            Vector3 vec = new Vector3(pos.transform.position.x + disX,
-                pos.transform.position.y + disY, pos.transform.position.z);
+            var parentWeapon = GameObject.Find("GSWeapon");
+            Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
-
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _gsRotateAngle);
         }
         weapon.transform.parent.localScale = new Vector3(_size, _size, _size);
-
+        // weapon.transform.localScale = new Vector3(_size, _size, _size);
         MeshFilter meshFilter = weapon.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
 
