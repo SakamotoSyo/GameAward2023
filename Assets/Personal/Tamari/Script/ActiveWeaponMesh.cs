@@ -119,15 +119,17 @@ public class ActiveWeaponMesh : MonoBehaviour
 
         //BaseActiveWeapon(_sImage, WeaponSaveData.SData);
 
-        BaseActiveWeapon(_gsImage, _gsPos, WeaponSaveData.GSData);
-
-        BaseActiveWeapon(_dbImageR, _dbPosR, WeaponSaveData.DBData);
-
-        BaseActiveWeapon(_dbImageL, _dbPosL, WeaponSaveData.DBData);
-
-        BaseActiveWeapon(_hImage, _hPos, WeaponSaveData.HData);
-
         BaseActiveWeapon(_sImage, _sPos, WeaponSaveData.SData);
+        Debug.Log("A");
+
+        BaseActiveWeapon(_gsImage, _gsPos, WeaponSaveData.GSData);
+        Debug.Log("B");
+        BaseActiveWeapon(_dbImageR, _dbPosR, WeaponSaveData.DBData);
+        Debug.Log("C");
+        BaseActiveWeapon(_dbImageL, _dbPosL, WeaponSaveData.DBData);
+        Debug.Log("D");
+        BaseActiveWeapon(_hImage, _hPos, WeaponSaveData.HData);
+        Debug.Log("e");
 
     }
     //TODO:所持している武器に対応した表示をする
@@ -226,11 +228,11 @@ public class ActiveWeaponMesh : MonoBehaviour
 
     private void BaseActiveWeapon(GameObject weapon, GameObject pos, SaveData data)
     {
-        if (data.MYVERTICES == null)
-        {
-            Debug.Log("選んだ武器のセーブデータはありません");
-            return;
-        }
+        //if (data.MYVERTICES == null)
+        //{
+        //    Debug.Log("選んだ武器のセーブデータはありません");
+        //    return;
+        //}
 
         Mesh mesh = new Mesh();
         mesh.vertices = data.MYVERTICES;
@@ -240,6 +242,10 @@ public class ActiveWeaponMesh : MonoBehaviour
         if (weapon == _hImage)
         {
             var parentWeapon = GameObject.Find("HWeapon");
+            if(parentWeapon == null)
+            {
+                return;
+            }
             Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
@@ -247,9 +253,13 @@ public class ActiveWeaponMesh : MonoBehaviour
             parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _hRotateAngle);
         }
 
-        if (weapon == _sImage)
+        else if (weapon == _sImage)
         {
             var parentWeapon = GameObject.Find("SWeapon");
+            if (parentWeapon == null)
+            {
+                return;
+            }
             Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
@@ -257,9 +267,13 @@ public class ActiveWeaponMesh : MonoBehaviour
             parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _sRotateAngle);
         }
 
-        if(weapon == _dbImageL)
+        else if (weapon == _dbImageL)
         {
             var parentWeapon = GameObject.Find("DBLWeapon");
+            if (parentWeapon == null)
+            {
+                return;
+            }
             Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
                 pos.transform.position.y + data.DISY, pos.transform.position.z + 1);
 
@@ -267,9 +281,13 @@ public class ActiveWeaponMesh : MonoBehaviour
             parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
         }
 
-        if (weapon == _dbImageR)
+        else if (weapon == _dbImageR)
         {
             var parentWeapon = GameObject.Find("DBRWeapon");
+            if (parentWeapon == null)
+            {
+                return;
+            }
             Vector3 vec = new Vector3(pos.transform.position.x - data.DISX,
                 pos.transform.position.y + data.DISY, pos.transform.position.z + 1);
 
@@ -279,9 +297,13 @@ public class ActiveWeaponMesh : MonoBehaviour
             parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
         }
 
-        if(weapon == _gsImage)
+        else if (weapon == _gsImage)
         {
             var parentWeapon = GameObject.Find("GSWeapon");
+            if (parentWeapon == null)
+            {
+                return;
+            }
             Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
