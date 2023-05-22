@@ -73,7 +73,7 @@ public class IssenSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
                 break;
             case ActorAttackType.Enemy:
                 _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);

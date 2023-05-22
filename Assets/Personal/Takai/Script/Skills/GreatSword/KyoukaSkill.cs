@@ -49,10 +49,9 @@ public class KyoukaSkill : SkillBase
     {
         FluctuationStatusClass fluctuation;
 
-        _buffValue = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value * ADDVALUE;
+        _buffValue = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * ADDVALUE;
         fluctuation = new FluctuationStatusClass(_buffValue, 0, 0, 0, 0);
         _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
-        Debug.Log(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value);
     }
 
     public override bool TurnEnd()

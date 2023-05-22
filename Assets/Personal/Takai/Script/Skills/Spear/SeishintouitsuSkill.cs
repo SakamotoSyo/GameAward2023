@@ -53,7 +53,7 @@ public class SeishintouitsuSkill : SkillBase
         FluctuationStatusClass fluctuation;
         _count++;
         float value = _addValue;
-        _addValue = _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * ADD_VALUE;
+        _addValue = _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram() * ADD_VALUE;
         fluctuation = new FluctuationStatusClass(0, 0, -value, 0, 0);
         fluctuation = new FluctuationStatusClass(0, 0, _addValue, 0, 0);
 
@@ -73,7 +73,7 @@ public class SeishintouitsuSkill : SkillBase
                 _turnCount = 0;
                 float value = _addValue;
                 FluctuationStatusClass  fluctuation = new FluctuationStatusClass(0, 0, -value, 0, 0);
-                _addValue = _playerStatus.PlayerStatus.EquipWeapon.CriticalRate.Value * ADD_VALUE;
+                _addValue = _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram() * ADD_VALUE;
                 if (_count <= 0)
                 {
                     _count = 0;

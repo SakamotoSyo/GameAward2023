@@ -50,7 +50,7 @@ public class KasokuSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        float spd = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value;
+        float spd = _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram();
 
         if (++_count <= Turn)
         {

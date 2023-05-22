@@ -75,7 +75,7 @@ public class TenkamusoSkill : SkillBase
         {
             case ActorAttackType.Player:
             {
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage +
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage +
                                        (_count * 10));
             }
                 break;

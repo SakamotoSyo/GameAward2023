@@ -52,7 +52,7 @@ public class KiriageSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
+        float dmg = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
         _enemyStatus.AddDamage(dmg + Damage);
 
         if (++_count <= Turn)

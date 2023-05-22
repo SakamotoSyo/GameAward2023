@@ -121,9 +121,9 @@ public class TenkuugiriSkill : SkillBase
         {
             case ActorAttackType.Player:
             {
-                var dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
+                var dmg = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
 
-                if (_playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value >= WeaponWeight)
+                if (_playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() >= WeaponWeight)
                 {
                     _enemyStatus.AddDamage(
                         dmg + Damage + (dmg * AddDamageValue));
