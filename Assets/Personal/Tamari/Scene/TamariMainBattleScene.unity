@@ -4222,6 +4222,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 614323768, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 286998738966185747, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -4272,7 +4276,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1383596852801953648, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918894225237675413, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918894225237675414, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918894225237675414, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918894225237675415, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_Size.x
+      value: 3.4133334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918894225237675415, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_Size.y
+      value: 3.4133334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918894225237675415, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918894225237675415, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918894225237675415, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918894225237675415, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5541237287486128302, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
@@ -8856,6 +8900,10 @@ PrefabInstance:
     - target: {fileID: 1661037498315977709, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Name
       value: Hero_Spear
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661037498315977709, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
