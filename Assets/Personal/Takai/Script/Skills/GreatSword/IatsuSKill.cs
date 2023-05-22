@@ -51,6 +51,7 @@ public class IatsuSKill : SkillBase
     {
         // スキルの効果処理を実装する
         float dmg = _enemyStatus.EnemyStatus.EquipWeapon.OffensivePower;
+        Debug.Log(dmg);
         if (_turn == 0)
         {
             _turn+=3;

@@ -47,30 +47,30 @@ public class NidangiriSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        float dmg = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
-        float weight = _playerStatus.PlayerStatus.EquipWeapon.WeaponWeight.Value / 10;
+        float dmg = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
+        float weight = _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() / 10;
         
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+        _enemyStatus.AddDamage(dmg + Damage);
 
         if (weight >= 6)
         {
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 20+ Damage);
+            _enemyStatus.AddDamage(dmg + 20+ Damage);
         }
         else if(weight >= 5)
         {
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 15+ Damage);
+            _enemyStatus.AddDamage(dmg + 15+ Damage);
         }
         else if (weight >= 4)
         {
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 10+ Damage);
+            _enemyStatus.AddDamage(dmg + 10+ Damage);
         }
         else if (weight >= 3)
         {
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + 5+ Damage);
+            _enemyStatus.AddDamage(dmg + 5+ Damage);
         }
         else
         {
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+            _enemyStatus.AddDamage(dmg + Damage);
         }
     }
 
