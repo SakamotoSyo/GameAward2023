@@ -49,7 +49,7 @@ public class KiaiSkill : SkillBase
         // スキルの効果処理を実装する
         _count++;
 
-        _attackValue = _playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value;
+        _attackValue = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
         FluctuationStatusClass fluctuation =
             new FluctuationStatusClass(_attackValue, 0, 0, 0, 0);
         _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);

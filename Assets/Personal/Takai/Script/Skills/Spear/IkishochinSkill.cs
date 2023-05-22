@@ -48,7 +48,7 @@ public class IkishochinSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
         FluctuationStatusClass fluctuation =
             new FluctuationStatusClass(-_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + _subtractValue, 0, 0, 0,
                 0);

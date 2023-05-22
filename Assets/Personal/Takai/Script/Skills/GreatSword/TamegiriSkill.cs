@@ -28,11 +28,6 @@ public class TamegiriSkill : SkillBase
         FlavorText = "剣を大きく振りかぶる攻撃";
     }
 
-    private void Start()
-    {
-    }
-
-
     public override bool IsUseCheck(PlayerController player)
     {
         return true;
@@ -121,7 +116,7 @@ public class TamegiriSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
                 break;
             case ActorAttackType.Enemy:
                 _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
