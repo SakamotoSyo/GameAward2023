@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 public class RankingBattleScript : MonoBehaviour
 {
+    [SerializeField] private Image _bossImage = default;
     [SerializeField] private Sprite[] _rankSprite = new Sprite[5];
 
     [SerializeField] private EnemyDataBase _enemyDataBase;
     [SerializeField] private GameObject _buttonInsPos;
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _bossButtonObj;
-    [SerializeField] private Text _rankText;
     [SerializeField] private int _rankPointRange = 100;
     [SceneName]
     [SerializeField] private string _battleScene;
@@ -56,6 +56,11 @@ public class RankingBattleScript : MonoBehaviour
             enemyButtonPrefab.GetComponent<Image>().sprite = _rankSprite[index];
 
             var randomIndex = Random.Range(0, enemyDataHigh.Length);
+
+            if (i == 0)
+            {
+                _bossImage.sprite = enemyDataHigh[randomIndex].EnemySprite;
+            }
 
             button.onClick.AddListener(() => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite));
             button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
