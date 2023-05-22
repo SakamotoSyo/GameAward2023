@@ -424,8 +424,15 @@ public class MeshManager : MonoBehaviour
         // _meshMaterial.SetInt("GameObject", (int)UnityEngine.Rendering.CullMode.Off);
     }
 
-    public void ActiveSelectWeapon()
+    public void ActiveSelectWeapon(SaveData data)
     {
+        data.PREHABNAME = GameManager.BlacksmithType.ToString();
+        data.MYVERTICES = _myVertices;
+        data.MYTRIANGLES = _myTriangles;
+        data.LOWESTPOSINDEX = _lowestPosIndex;
+        data.DISX = _go.transform.position.x - _myVertices[_lowestPosIndex].x;
+        data.DISY = _go.transform.position.y - _myVertices[_lowestPosIndex].y;
+        data.COLORLIST = _setColor;
         switch (GameManager.BlacksmithType)
         {
             case WeaponType.GreatSword:
@@ -535,6 +542,8 @@ public class MeshManager : MonoBehaviour
 
         return new Vector2(Mathf.Abs(disUpperHalf), Mathf.Abs(disLowerHalf));
     }
+
+    
 
 //    [ContextMenu("Make mesh from model")]
 //    public void MakeMesh()
