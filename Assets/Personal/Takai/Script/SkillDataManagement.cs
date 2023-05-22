@@ -8,27 +8,40 @@ using Random = UnityEngine.Random;
 public class SkillDataManagement : MonoBehaviour
 {
     [Header("スキル検索"), SerializeField] private string _skillName;
-    [SerializeField] private ActorGenerator _actorGenerator;
     [SerializeField] private Transform _transform;
     [SerializeField] private PlayerController _pStatus;
     [SerializeField] private EnemyController _eStatus;
     [SerializeField] private List<GameObject> _skillPrefab = new();
     [SerializeField] private Transform _playerVec;
 
+    private ActorGenerator _actorGenerator;
     private List<SkillBase> _skills = new List<SkillBase>();
     private List<SkillBase> _skillUsePool = new List<SkillBase>();
+    private static SkillDataManagement _skill;
     public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
 
     private void Awake()
     {
-       // SkillBase[] skillPrefabs = Resources.LoadAll<SkillBase>("Skills");
+        // SkillBase[] skillPrefabs = Resources.LoadAll<SkillBase>("Skills");
+        var skillIns = FindObjectOfType<SkillDataManagement>();
+        _actorGenerator = GameObject.Find("ActorGenerator").GetComponent<ActorGenerator>();
+        if (_skill == null) 
+        {
+            DontDestroyOnLoad(this.gameObject);
+            _skill = this;
+        }
+        else if(skillIns != _skill)
+        {
+            Destroy(this);
+        }
 
         for (int i = 0; i < _skillPrefab.Count; i++) 
         {
-            var skillObj = Instantiate(_skillPrefab[i], _transform);
+            var skillObj = Instantiate(_skillPrefab[i], this.transform);
             _skills.Add(skillObj.GetComponent<SkillBase>());
             skillObj.transform.position = new Vector2(_playerVec.position.x + 2.5f,_playerVec.position.y - 1.5f);
         }
+
         //foreach (var skill in skillPrefabs)
         //{
         //    Instantiate(skill, transform);
