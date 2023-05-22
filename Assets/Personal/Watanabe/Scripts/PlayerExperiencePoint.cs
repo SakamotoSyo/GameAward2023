@@ -113,7 +113,7 @@ public class PlayerExperiencePoint : MonoBehaviour
                 });
     }
 
-    /// <summary> ランクアップ演出(フェード、経験値上昇の動きが終わってから呼ぶ) </summary>
+    /// <summary> ランクアップ演出 </summary>
     private void RankUp()
     {
         if (_index == RANK_S)
@@ -126,7 +126,6 @@ public class PlayerExperiencePoint : MonoBehaviour
         {
             var sequence = DOTween.Sequence();
 
-            //RankUIの一連の動きをDOTweenでやる
             sequence.Append(_rankRect.DOAnchorPos(new Vector3(0f, 0f, 0f), 0.6f))
                     .AppendInterval(_waitSecondForRank)
                     .AppendCallback(() =>
