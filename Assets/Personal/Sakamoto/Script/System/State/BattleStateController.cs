@@ -108,6 +108,7 @@ public class BattleStateController : MonoBehaviour
                 if (result)
                 {
                     //“G‚Ìs“®‚ğI—¹‚³‚¹‚é
+                    _stateMachine.Dispatch((int)BattleEvent.SelectStateToPlayerTrun);
                     ActorStateEnd();
                     return;
                 }
