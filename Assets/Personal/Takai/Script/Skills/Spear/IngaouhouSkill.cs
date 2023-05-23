@@ -6,7 +6,8 @@ using UnityEngine.Serialization;
 
 public class IngaouhouSkill : SkillBase
 {
-    [SerializeField] private PlayableDirector _playerAnim;
+    [SerializeField] private PlayableDirector _playerAnim1;
+    [SerializeField] private PlayableDirector _playerAnim2;
     [SerializeField] private GameObject _playerObj;
     [SerializeField] private PlayableDirector _enemyAnim;
     [SerializeField] private GameObject _enemyObj;
@@ -38,12 +39,12 @@ public class IngaouhouSkill : SkillBase
         {
             _playerObj.SetActive(true);
             _playerStatus.gameObject.SetActive(false);
-            _playerAnim.Play();
-            var dura = _playerAnim.duration * 0.99f;
-            await UniTask.WaitUntil(() => _playerAnim.time >= dura,
+            _playerAnim2.Play();
+            var dura = _playerAnim2.duration * 0.99f;
+            await UniTask.WaitUntil(() => _playerAnim2.time >= dura,
                 cancellationToken: this.GetCancellationTokenOnDestroy());
             SkillEffect();
-            _playerAnim.Stop();
+            _playerAnim2.Stop();
             await UniTask.Delay(TimeSpan.FromSeconds(0.5));
             _playerStatus.gameObject.SetActive(true);
             Debug.Log("Anim End");
@@ -75,16 +76,16 @@ public class IngaouhouSkill : SkillBase
         if (attackType == ActorAttackType.Player)
         {
             _playerObj.SetActive(true);
-            _playerAnim.Play();
+            _playerAnim1.Play();
             _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
-            await UniTask.WaitUntil(() => _playerAnim.time >= _playerAnim.duration - 0.1,
+            await UniTask.WaitUntil(() => _playerAnim1.time >= _playerAnim1.duration - 0.1,
                 cancellationToken: this.GetCancellationTokenOnDestroy());
-            await UniTask.WaitUntil(() => _playerAnim.time >= _playerAnim.duration - 0.1, cancellationToken: this.GetCancellationTokenOnDestroy());
+            await UniTask.WaitUntil(() => _playerAnim1.time >= _playerAnim1.duration - 0.1, cancellationToken: this.GetCancellationTokenOnDestroy());
             _playerObj.SetActive(false);
         }
         else
         {
-            _playerAnim.Play();
+            _playerAnim1.Play();
             // _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
         }
 
