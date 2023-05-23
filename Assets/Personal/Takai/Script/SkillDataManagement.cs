@@ -99,6 +99,7 @@ public class SkillDataManagement : MonoBehaviour
             if (s.SkillName == skillName)
             {
                 await s.InEffectSkill(attackType);
+                _skillUsePool.Remove(s);
                 return true;
             }
         }
@@ -174,6 +175,17 @@ public class SkillDataManagement : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void SkillUseDelete(string skillName) 
+    {
+        foreach (var s in _skills)
+        {
+            if (s.SkillName == skillName)
+            {
+                _skillUsePool.Remove(s);
+            }
+        }
     }
 
     public string DebugSearchSkill() 

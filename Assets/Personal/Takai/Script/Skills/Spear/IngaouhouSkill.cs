@@ -2,7 +2,6 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 using System;
-using UnityEngine.Serialization;
 
 public class IngaouhouSkill : SkillBase
 {
@@ -13,6 +12,7 @@ public class IngaouhouSkill : SkillBase
     [SerializeField] private GameObject _enemyObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
+    private bool _isUse = false;
     private ActorAttackType _actor;
 
     public IngaouhouSkill()
@@ -73,8 +73,9 @@ public class IngaouhouSkill : SkillBase
 
     public override async UniTask<bool> InEffectSkill(ActorAttackType attackType)
     {
-        if (attackType == ActorAttackType.Player)
+        if (!_isUse)
         {
+<<<<<<< HEAD
             _playerObj.SetActive(true);
             _playerAnim1.Play();
             _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
@@ -87,13 +88,40 @@ public class IngaouhouSkill : SkillBase
         {
             _playerAnim1.Play();
             // _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
+=======
+            if (attackType == ActorAttackType.Player)
+            {
+                _isUse = true;
+                _playerObj.SetActive(true);
+                _playerAnim.Play();
+                var dura = _playerAnim.duration * 0.99f;
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.1f));
+                await UniTask.WaitUntil(() => _playerAnim.duration >= dura,
+                    cancellationToken: this.GetCancellationTokenOnDestroy());
+                _playerAnim.Stop();
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+                _playerObj.SetActive(false);
+                Debug.Log("あああああああ");
+            }
+            else
+            {
+                _isUse = true;
+                _playerAnim.Play();
+                _playerAnim.Stop();
+                // _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
+            }
+            return true;
+>>>>>>> d57a78aa8c972fb18544023017ed86dea65af1cb
         }
-
-        return true;
+        return false;
     }
 
     public override bool TurnEnd()
     {
+        if (_isUse) 
+        {
+           return true;
+        }
         return false;
     }
 
