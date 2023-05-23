@@ -34,6 +34,7 @@ public class IngaouhouSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
+        _isUse = false;
         if (_actor == ActorAttackType.Player)
         {
             _playerObj.SetActive(true);
@@ -76,6 +77,7 @@ public class IngaouhouSkill : SkillBase
         {
             if (attackType == ActorAttackType.Player)
             {
+                Debug.Log("因果味方");
                 _isUse = true;
                 _playerObj.SetActive(true);
                 _playerAnim.Play();
@@ -89,6 +91,7 @@ public class IngaouhouSkill : SkillBase
             }
             else
             {
+                Debug.Log("因果敵");
                 _isUse = true;
                 _playerAnim.Play();
                 _playerAnim.Stop();
