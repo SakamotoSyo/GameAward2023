@@ -18,15 +18,16 @@ public class HomeScene : MonoBehaviour
 
     public static HomeScene Instance = default;
 
-    public bool IsChallengablePromotionMatch
-    {
-        get => _isChallengablePromotionMatch;
-        set => _isChallengablePromotionMatch = value;
-    }
+    public bool IsChallengablePromotionMatch => _isChallengablePromotionMatch;
 
     private void Start()
     {
         SettingsCutPanel();
+
+        var point = PlayerExperiencePoint.Instance.ExperiencePoint;
+        var value = PlayerExperiencePoint.Instance.Value;
+
+        _isChallengablePromotionMatch = point / value > 0.8f;
 
         Instance = this;
     }

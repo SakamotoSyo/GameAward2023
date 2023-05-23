@@ -38,7 +38,6 @@ public class Fade : MonoBehaviour
                     {
                         PlayerExperiencePoint.Instance.PointSetting();
                     })
-                    .AppendInterval(6f)
                     .AppendCallback(() =>
                     {
                         _onCompleteFadeIn?.Invoke();
