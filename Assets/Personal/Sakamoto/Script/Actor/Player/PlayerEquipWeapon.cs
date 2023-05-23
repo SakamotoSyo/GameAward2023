@@ -153,6 +153,11 @@ public class PlayerEquipWeapon
     {
         _currentDurable.Value += num;
     }
+
+    public void SetDebugSkill(string skillName) 
+    {
+        _weaponSkill.WeaponSkillArray[0] = skillName;
+    }
 }
 
 public class FluctuationStatusClass
