@@ -9,8 +9,6 @@ public class IngaouhouSkill : SkillBase
     [SerializeField] private PlayableDirector _playerAnim1;
     [SerializeField] private PlayableDirector _playerAnim2;
     [SerializeField] private GameObject _playerObj;
-    [SerializeField] private PlayableDirector _enemyAnim;
-    [SerializeField] private GameObject _enemyObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private bool _isUse = false;
@@ -36,6 +34,8 @@ public class IngaouhouSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
+        _isUse = false;
+
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
         _playerAnim2.Play();
@@ -52,15 +52,14 @@ public class IngaouhouSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        _isUse = true;
     }
 
     public override async UniTask<bool> InEffectSkill(ActorAttackType attackType)
     {
-        if (_isUse)
+        if (!_isUse)
         {
             Debug.Log("因果味方");
-            _isUse = false;
+            _isUse = true;
             _playerStatus.gameObject.SetActive(false);
             _playerObj.SetActive(true);
             _playerAnim1.Play();
@@ -72,7 +71,6 @@ public class IngaouhouSkill : SkillBase
             await UniTask.Delay(TimeSpan.FromSeconds(0.5));
             _playerObj.SetActive(false);
             _playerStatus.gameObject.SetActive(true);
-
             return true;
         }
 
