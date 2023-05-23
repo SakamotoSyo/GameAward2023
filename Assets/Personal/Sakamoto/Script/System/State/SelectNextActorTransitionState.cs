@@ -7,9 +7,9 @@ using State = StateMachine<BattleStateController>.State;
 
 public class SelectNextActorTransitionState : State
 {
-    protected override void OnEnter(State currentState)
+    protected override async void OnEnter(State currentState)
     {
-       Owner.NextActorStateTransition();
+      await Owner.NextActorStateTransition();
     }
 
     protected override void OnUpdate()
