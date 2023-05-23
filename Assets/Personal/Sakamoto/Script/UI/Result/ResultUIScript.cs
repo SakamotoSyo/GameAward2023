@@ -20,7 +20,7 @@ public class ResultUIScript : MonoBehaviour
     [SerializeField] private GameObject _blacksmithSelectPanel;
     [SerializeField] private SkillSelectButtonScript[] _skillSelectButtonCs = new SkillSelectButtonScript[2];
     [SerializeField] private ActorGenerator _actorGenerator;
-    [SerializeField] private SkillDataManagement _playerSkillDataManagement;
+    [SerializeField] private SkillDataManagement _skillDataManagement;
     [SerializeField] private Sprite[] _oreImage = new Sprite[3];
     [SerializeField] private ResultWeaponButton[] _resultUICs = new ResultWeaponButton[4];
     private WeaponData[] _saveWeaponData;
@@ -111,11 +111,11 @@ public class ResultUIScript : MonoBehaviour
         var randomNum = Random.Range(0, 100);
         if (20 < randomNum)
         {
-            randomSkill = _playerSkillDataManagement.OnSkillCall(weaponData.WeaponType, SkillType.Skill);
+            randomSkill = _skillDataManagement.OnSkillCall(weaponData.WeaponType, SkillType.Skill);
         }
         else
         {
-            randomSkill = _playerSkillDataManagement.OnSkillCall(weaponData.WeaponType, SkillType.Special);
+            randomSkill = _skillDataManagement.OnSkillCall(weaponData.WeaponType, SkillType.Special);
         }
 
         Sprite oreImage = _oreImage[(int)rearity];
@@ -194,8 +194,8 @@ public class ResultUIScript : MonoBehaviour
                 //スキルが追加できなかったときPlayerに選択させる
                 _enhanceSelectObj.SetActive(false);
                 _skillSelectPanel.SetActive(true);
-                _skillSelectButtonCs[0].SetCurrentSkill(weaponSkill.WeaponSkillArray[0]);
-                _skillSelectButtonCs[1].SetCurrentSkill(weaponSkill.WeaponSkillArray[1]);
+                _skillSelectButtonCs[0].SetCurrentSkill(_skillDataManagement.SearchSkill(weaponSkill.WeaponSkillArray[0]));
+                _skillSelectButtonCs[1].SetCurrentSkill(_skillDataManagement.SearchSkill(weaponSkill.WeaponSkillArray[1]));
                 _skillSelectButton[0].onClick.AddListener(() =>
                 {
                     ChangeSkill(0, _selectOreData.Skill, _saveWeaponData[_currentSelectWeapon]);
@@ -231,7 +231,7 @@ public class ResultUIScript : MonoBehaviour
         }
         else if (_selectOreData.Skill.Type == SkillType.Special)
         {
-            if (weaponSkill.AddSpecialSkill(_selectOreData.Skill))
+            if (weaponSkill.AddSpecialSkill(_selectOreData.Skill.SkillName))
             {
                 _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
                 //スキルを追加出来たときの処理
@@ -250,7 +250,7 @@ public class ResultUIScript : MonoBehaviour
                 Debug.Log("必殺技");
                 _enhanceSelectObj.SetActive(false);
                 _skillSelectPanel.SetActive(true);
-                _skillSelectButtonCs[0].SetCurrentSkill(weaponSkill.SpecialAttack);
+                _skillSelectButtonCs[0].SetCurrentSkill(_skillDataManagement.SearchSkill(weaponSkill.SpecialAttack));
                 _skillSelectButtonCs[1].SetCurrentSkill(_selectOreData.Skill);
                 _skillSelectButton[0].onClick.AddListener(() =>
                 {
@@ -318,7 +318,7 @@ public class ResultUIScript : MonoBehaviour
 
     public void ChangeSkill(int num, SkillBase skill, WeaponData weaponData)
     {
-        weaponData.WeaponSkill.WeaponSkillArray[num] = skill;
+        weaponData.WeaponSkill.WeaponSkillArray[num] = skill.SkillName;
         Debug.Log($"{skill}に変更しました");
 
         if (_isBlacksmith)
@@ -334,7 +334,7 @@ public class ResultUIScript : MonoBehaviour
 
     public void ChangeSpecialSkill(SkillBase skill, WeaponData weaponData)
     {
-        weaponData.WeaponSkill.ChangeSpecialSkill(skill);
+        weaponData.WeaponSkill.ChangeSpecialSkill(skill.SkillName);
         if (_isBlacksmith)
         {
             BlacksmithJudge();

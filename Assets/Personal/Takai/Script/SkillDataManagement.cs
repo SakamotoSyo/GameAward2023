@@ -15,24 +15,24 @@ public class SkillDataManagement : MonoBehaviour
     [SerializeField] private Transform _playerVec;
 
     private ActorGenerator _actorGenerator;
-    private static List<SkillBase> _skills = new List<SkillBase>();
+    private List<SkillBase> _skills = new List<SkillBase>();
     private List<SkillBase> _skillUsePool = new List<SkillBase>();
-    private static SkillDataManagement _skill;
+    private SkillDataManagement _skill;
     public IReadOnlyList<SkillBase> PlayerSkillList => _skills;
 
     private void Awake()
     {
         // SkillBase[] skillPrefabs = Resources.LoadAll<SkillBase>("Skills");
-        var skillIns = FindObjectOfType<SkillDataManagement>();
-        if (_skill == null) 
-        {
-            DontDestroyOnLoad(this.gameObject);
-            _skill = this;
-        }
-        else if(skillIns != _skill)
-        {
-            Destroy(this);
-        }
+        //var skillIns = FindObjectOfType<SkillDataManagement>();
+        //if (_skill == null) 
+        //{
+        //    DontDestroyOnLoad(this.gameObject);
+        //    _skill = this;
+        //}
+        //else if(skillIns != _skill)
+        //{
+        //    Destroy(this);
+        //}
 
         for (int i = 0; i < _skillPrefab.Count; i++) 
         {
@@ -141,11 +141,11 @@ public class SkillDataManagement : MonoBehaviour
         }
     }
 
-    public SkillBase SearchSkill()
+    public SkillBase SearchSkill(string name)
     {
         foreach (var s in _skills)
         {
-            if (s.SkillName == _skillName)
+            if (s.SkillName == name)
             {
                 return s;
             }
