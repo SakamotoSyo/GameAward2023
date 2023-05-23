@@ -55,15 +55,18 @@ public class RankingBattleScript : MonoBehaviour
             }
             enemyButtonPrefab.GetComponent<Image>().sprite = _rankSprite[index];
 
-            var randomIndex = Random.Range(0, enemyDataHigh.Length);
-
-            if (i == 0)
+            if (enemyDataHigh.Length != 0)
             {
-                _bossImage.sprite = enemyDataHigh[randomIndex].EnemySprite;
-            }
+                var randomIndex = Random.Range(0, enemyDataHigh.Length);
 
-            button.onClick.AddListener(() => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite));
-            button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
+                if (i == 0)
+                {
+                    _bossImage.sprite = enemyDataHigh[randomIndex].EnemySprite;
+                }
+
+                button.onClick.AddListener(() => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite));
+                button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
+            }
         }
     }
 
