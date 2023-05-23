@@ -2,6 +2,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 using System;
+using UnityEngine.Serialization;
 
 public class IngaouhouSkill : SkillBase
 {
@@ -70,64 +71,45 @@ public class IngaouhouSkill : SkillBase
 
     protected override void SkillEffect()
     {
+        _isUse = true;
     }
 
     public override async UniTask<bool> InEffectSkill(ActorAttackType attackType)
     {
-        if (!_isUse)
+        if (_isUse)
         {
-<<<<<<< HEAD
+            Debug.Log("因果味方");
+            _isUse = false;
+            _playerStatus.gameObject.SetActive(false);
             _playerObj.SetActive(true);
             _playerAnim1.Play();
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
-            await UniTask.WaitUntil(() => _playerAnim1.time >= _playerAnim1.duration - 0.1,
+            var dura = _playerAnim1.duration * 0.99f;
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.1f));
+            await UniTask.WaitUntil(() => _playerAnim1.time >= dura,
                 cancellationToken: this.GetCancellationTokenOnDestroy());
-            await UniTask.WaitUntil(() => _playerAnim1.time >= _playerAnim1.duration - 0.1, cancellationToken: this.GetCancellationTokenOnDestroy());
+            _playerAnim1.Stop();
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5));
             _playerObj.SetActive(false);
-        }
-        else
-        {
-            _playerAnim1.Play();
-            // _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
-=======
-            if (attackType == ActorAttackType.Player)
-            {
-                Debug.Log("因果味方");
-                _isUse = true;
-                _playerObj.SetActive(true);
-                _playerAnim.Play();
-                var dura = _playerAnim.duration * 0.99f;
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.1f));
-                await UniTask.WaitUntil(() => _playerAnim.time >= dura,
-                    cancellationToken: this.GetCancellationTokenOnDestroy());
-                _playerAnim.Stop();
-                await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-                _playerObj.SetActive(false);
-            }
-            else
-            {
-                Debug.Log("因果敵");
-                _isUse = true;
-                _playerAnim.Play();
-                _playerAnim.Stop();
-                // _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
-            }
+            _playerStatus.gameObject.SetActive(true);
+
             return true;
->>>>>>> d57a78aa8c972fb18544023017ed86dea65af1cb
         }
+
         return false;
     }
 
     public override bool TurnEnd()
     {
-        if (_isUse) 
+        if (_isUse)
         {
-           return true;
+            return true;
         }
+
         return false;
     }
 
     public override void BattleFinish()
     {
+        _isUse = false;
     }
 }
