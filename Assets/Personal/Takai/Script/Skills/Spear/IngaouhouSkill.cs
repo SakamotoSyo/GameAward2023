@@ -36,37 +36,18 @@ public class IngaouhouSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
-        _isUse = false;
-        if (_actor == ActorAttackType.Player)
-        {
-            _playerObj.SetActive(true);
-            _playerStatus.gameObject.SetActive(false);
-            _playerAnim2.Play();
-            var dura = _playerAnim2.duration * 0.99f;
-            await UniTask.WaitUntil(() => _playerAnim2.time >= dura,
-                cancellationToken: this.GetCancellationTokenOnDestroy());
-            SkillEffect();
-            _playerAnim2.Stop();
-            await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-            _playerStatus.gameObject.SetActive(true);
-            Debug.Log("Anim End");
-            _playerObj.SetActive(false);
-        }
-        else if (_actor == ActorAttackType.Enemy)
-        {
-            _enemyObj.SetActive(true);
-            _enemyStatus.gameObject.SetActive(false);
-            _enemyAnim.Play();
-            var dura = _enemyAnim.duration * 0.99f;
-            await UniTask.WaitUntil(() => _enemyAnim.time >= dura,
-                cancellationToken: this.GetCancellationTokenOnDestroy());
-            SkillEffect();
-            _enemyAnim.Stop();
-            await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-            _enemyStatus.gameObject.SetActive(true);
-            Debug.Log("Anim End");
-            _enemyObj.SetActive(false);
-        }
+        _playerObj.SetActive(true);
+        _playerStatus.gameObject.SetActive(false);
+        _playerAnim2.Play();
+        var dura = _playerAnim2.duration * 0.99f;
+        await UniTask.WaitUntil(() => _playerAnim2.time >= dura,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
+        SkillEffect();
+        _playerAnim2.Stop();
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+        _playerStatus.gameObject.SetActive(true);
+        Debug.Log("Anim End");
+        _playerObj.SetActive(false);
     }
 
     protected override void SkillEffect()
