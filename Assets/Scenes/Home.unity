@@ -684,7 +684,7 @@ MonoBehaviour:
   _waitSecondForRank: 1
   _isRankUp: 0
   _beforeBattlePoint: 50
-  _experiencePoint: 120
+  _experiencePoint: 80
   _rankCMaxValue: 100
   _rankBMaxValue: 200
   _rankAMaxValue: 300
@@ -3104,6 +3104,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: MainBattleScene
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 207666597}
+        m_TargetAssemblyTypeName: PlayerExperiencePoint, Assembly-CSharp
+        m_MethodName: SetExperiencePoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1890961904

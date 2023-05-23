@@ -18,7 +18,11 @@ public class HomeScene : MonoBehaviour
 
     public static HomeScene Instance = default;
 
-    public bool IsChallengablePromotionMatch => _isChallengablePromotionMatch;
+    public bool IsChallengablePromotionMatch
+    {
+        get => _isChallengablePromotionMatch;
+        set => _isChallengablePromotionMatch = value;
+    }
 
     private void Start()
     {
