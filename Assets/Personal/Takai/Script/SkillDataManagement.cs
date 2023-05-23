@@ -151,11 +151,34 @@ public class SkillDataManagement : MonoBehaviour
             }
         }
 
-        if (_skillName != "")
+        if (name != "")
         {
             Debug.LogError("スキル名が一致しません");
         }
         return null;
+    }
+
+    /// <summary>
+    /// Skillが発動できるかチェックする
+    /// </summary>
+    /// <param name="skillName"></param>
+    /// <returns></returns>
+    public bool IsUseCheck(string skillName) 
+    {
+        foreach (var s in _skills)
+        {
+            if (s.SkillName == name)
+            {
+                return s.IsUseCheck(_actorGenerator.PlayerController);
+            }
+        }
+
+        return false;
+    }
+
+    public string DebugSearchSkill() 
+    {
+        return _skillName;
     }
 }
 

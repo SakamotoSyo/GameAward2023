@@ -22,6 +22,7 @@ public class SkillSelectButtonScript : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void SetCurrentSkill(SkillBase skill) 
     {
+        if (!skill) return;
         _skill = skill;
         _skillText.text = skill.SkillName;
     }
