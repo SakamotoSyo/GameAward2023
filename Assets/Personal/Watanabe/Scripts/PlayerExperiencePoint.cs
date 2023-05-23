@@ -23,10 +23,6 @@ public class PlayerExperiencePoint : MonoBehaviour
     private int _index = 0;
     #endregion
 
-    [Tooltip("バトルにいく前の経験値")]
-    [SerializeField] private int _beforeBattlePoint = 0;
-    [Tooltip("Playerの経験値")]
-    [SerializeField] private int _experiencePoint = 0;
     [Tooltip("Cランクの最大値")]
     [SerializeField] private int _rankCMaxValue = 100;
     [Tooltip("Bランクの最大値")]
@@ -37,6 +33,11 @@ public class PlayerExperiencePoint : MonoBehaviour
     [SerializeField] private int _rankSMaxValue = 400;
     [SerializeField] private Image _pointValueImage = default;
 
+    /// <summary> バトルにいく前の経験値 </summary>
+    private int _beforeBattlePoint = 0;
+    /// <summary> Playerの経験値 </summary>
+    private int _experiencePoint = 0;
+
     private const int RANK_C = 0;
     private const int RANK_B = 1;
     private const int RANK_A = 2;
@@ -46,13 +47,13 @@ public class PlayerExperiencePoint : MonoBehaviour
 
     public static PlayerExperiencePoint Instance = default;
 
-    public int BeforeBattlePoint { get => _beforeBattlePoint; set => _beforeBattlePoint = value; }
-    public int ExperiencePoint { get => _experiencePoint; set => _experiencePoint = value; }
-
     private void Start()
     {
         _index = RankSetting();
         ValueSet(_index);
+
+        _experiencePoint = GameManager.PlayerSaveData.PlayerRankPoint;
+
         _pointValueImage.fillAmount = _beforeBattlePoint / _value;
 
         SettingsRankUI();
@@ -155,5 +156,11 @@ public class PlayerExperiencePoint : MonoBehaviour
             RANK_S => _rankCMaxValue + _rankBMaxValue + _rankAMaxValue + _rankSMaxValue,
             _ => 1,
         };
+    }
+
+    /// <summary> バトルに挑む前の経験値を保存しておく </summary>
+    public void SetExperiencePoint()
+    {
+        _beforeBattlePoint = GameManager.PlayerSaveData.PlayerRankPoint;
     }
 }
