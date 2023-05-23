@@ -5,23 +5,18 @@ using UnityEngine;
 [System.Serializable]
 public class WeaponSkill
 {
-    public SkillBase SpecialAttack => _specialAttack;
-    public SkillBase[] WeaponSkillArray => _skillArray;
+    public string SpecialAttack => _specialAttack;
+    public string[] WeaponSkillArray => _skillArray;
     public SkillDataManagement SkillDataManagement => _skillDataManagement;
     [Tooltip("•KŽE‹Z")]
-    private SkillBase _specialAttack;
-    private SkillBase[] _skillArray = new SkillBase[2];
+    private string _specialAttack;
+    private string[] _skillArray = new string[2];
     private SkillDataManagement _skillDataManagement;
     private WeaponType _weaponType;
-    [SerializeField] private bool _isSkillDebug;
 
     public void Init(SkillDataManagement skillManagement) 
     {
         _skillDataManagement = skillManagement;
-        if (_isSkillDebug) 
-        {
-            _skillArray[0] = _skillDataManagement.SearchSkill();
-        }
     }
 
     public void SetWeaponType(WeaponType weaponType) 
@@ -29,9 +24,9 @@ public class WeaponSkill
         _weaponType = weaponType;
     }
 
-    public void ChangeSpecialSkill(SkillBase skill) 
+    public void ChangeSpecialSkill(string skillName) 
     {
-        _specialAttack = skill;
+        _specialAttack = skillName;
     }
 
     public SkillBase CounterCheck() 
@@ -40,11 +35,11 @@ public class WeaponSkill
         return default;
     }
 
-    public bool AddSpecialSkill(SkillBase skill) 
+    public bool AddSpecialSkill(string specialAttack) 
     {
-        if (!_specialAttack) 
+        if (_specialAttack == "") 
         {
-            _specialAttack = skill;
+            _specialAttack = specialAttack;
             return true;
         }
         return false;
@@ -56,7 +51,7 @@ public class WeaponSkill
         {
             if (_skillArray[i] == null && skill.Weapon == _weaponType) 
             {
-                _skillArray[i] = skill;
+                _skillArray[i] = skill.SkillName;
                 return true;
             }
         }
@@ -84,9 +79,10 @@ public class WeaponSkill
     {
         for(int i = 0; i < _skillArray.Length; i++) 
         {
-            if (_skillArray[i].Type == SkillType.Epic) 
+            var skill = _skillDataManagement.SearchSkill(_skillArray[i]);
+            if (skill.Type == SkillType.Epic) 
             {
-                _skillDataManagement.OnSkillUse(ActorAttackType.Player, _skillArray[i].name);
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill.name);
             }
         }
     }

@@ -128,7 +128,7 @@ public class BattleSelectUI : MonoBehaviour
         }
         else if (_actionUi[_index] == _actionUi[1])
         {
-            SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
+            SkillBase skill1 = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0]);
             if (skill1 && skill1.IsUseCheck(_playerController))
             {
                 await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
@@ -137,7 +137,7 @@ public class BattleSelectUI : MonoBehaviour
         }
         else if (_actionUi[_index] == _actionUi[2])
         {
-            SkillBase spcialSkill = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
+            SkillBase spcialSkill = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack);
             if (spcialSkill && spcialSkill.IsUseCheck(_playerController))
             {
                 await _skillDataManagement.OnSkillUse(ActorAttackType.Player, spcialSkill.name);
@@ -146,7 +146,7 @@ public class BattleSelectUI : MonoBehaviour
         }
         else if (_actionUi[_index] == _actionUi[3])
         {
-            SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
+            SkillBase skill2 = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1]);
             if (skill2 && skill2.IsUseCheck(_playerController))
             {
                 await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
@@ -166,7 +166,7 @@ public class BattleSelectUI : MonoBehaviour
         if (_actionUi[currentUi] == _actionUi[1])
         {
             _infoUI.SetActive(true);
-            SkillBase skill1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
+            SkillBase skill1 = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0]);
             if (skill1 != null)
             {
                 _skillText[0].text = skill1.SkillName;
@@ -185,7 +185,7 @@ public class BattleSelectUI : MonoBehaviour
         else if (_actionUi[currentUi] == _actionUi[3])
         {
             _infoUI.SetActive(true);
-            SkillBase skill2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
+            SkillBase skill2 = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1]);
             if (skill2 != null)
             {
                 _skillText[0].text = skill2.SkillName;
@@ -203,7 +203,7 @@ public class BattleSelectUI : MonoBehaviour
         else if (_actionUi[currentUi] == _actionUi[2])
         {
             _infoUI.SetActive(true);
-            SkillBase special = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
+            SkillBase special = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack);
             if (special != null)
             {
                 _skillText[0].text = special.SkillName;

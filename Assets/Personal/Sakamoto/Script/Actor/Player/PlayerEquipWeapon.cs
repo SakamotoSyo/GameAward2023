@@ -119,9 +119,10 @@ public class PlayerEquipWeapon
     {
         for (int i = 0; i < _weaponSkill.WeaponSkillArray.Length; i++)
         {
-            if (_weaponSkill.WeaponSkillArray[i] != null && _weaponSkill.WeaponSkillArray[i].Type == SkillType.Epic)
+            var skill = _skillDataManagement.SearchSkill(_weaponSkill.WeaponSkillArray[i]);
+            if (skill != null && skill.Type == SkillType.Epic)
             {
-                _skillDataManagement.OnSkillUse(ActorAttackType.Player, _weaponSkill.WeaponSkillArray[i].name).Forget();
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill.name).Forget();
                 Debug.Log("Epic”­“®");
             }
         }
@@ -134,11 +135,6 @@ public class PlayerEquipWeapon
         _criticalRate.Value += fluctuation.CriticalRate;
         _maxDurable.Value += fluctuation.MaxDurable;
         ChangeCurrentDurable(fluctuation.CurrentDurable);
-    }
-
-    public void SetDebugSkill(SkillBase skill)
-    {
-        WeaponSkill.WeaponSkillArray[0] = skill;
     }
 
     public void EpicSkill1()
