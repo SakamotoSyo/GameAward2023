@@ -100,16 +100,20 @@ public class BattleStateController : MonoBehaviour
             }
             else if (_actionSequentialList[i].EnemyController && !_actionSequentialList[i].alreadyActedOn)
             {
-                var result = await _skillManagement.InEffectCheck("àˆâ âûïÒ", ActorAttackType.Player);
+                bool result = false;
+                Debug.Log(_stateMachine.CurrentState);
+                result = await _skillManagement.InEffectCheck("àˆâ âûïÒ", ActorAttackType.Player);
+
+
                 if (result)
                 {
                     //ìGÇÃçsìÆÇèIóπÇ≥ÇπÇÈ
                     ActorStateEnd();
-                    await NextActorStateTransition();
+                    return;
                 }
                 else
                 {
-                   
+
                 }
                 _stateMachine.Dispatch((int)BattleEvent.SelectStateToEnemyTrun);
                 break;
@@ -124,7 +128,7 @@ public class BattleStateController : MonoBehaviour
                 ActionSequentialDetermining();
                 await NextActorStateTransition();
             }
-            else 
+            else
             {
 
             }
@@ -138,11 +142,11 @@ public class BattleStateController : MonoBehaviour
     {
         var check = await ClearCheck();
         if (check) return;
-        
 
-        for (int i = 0; i < _actionSequentialList.Count; i++) 
+
+        for (int i = 0; i < _actionSequentialList.Count; i++)
         {
-            if (!_actionSequentialList[i].alreadyActedOn) 
+            if (!_actionSequentialList[i].alreadyActedOn)
             {
                 _actionSequentialList[i].alreadyActedOn = true;
                 break;
@@ -156,25 +160,25 @@ public class BattleStateController : MonoBehaviour
             {
                 _stateMachine.Dispatch((int)BattleEvent.ReturnPlayer);
             }
-            else 
+            else
             {
                 _stateMachine.Dispatch((int)BattleEvent.PlayerTurnToSelectState);
             }
-            
+
         }
-        else if (_stateMachine.CurrentState == _stateMachine.GetOrAddState<SEnemyAttackState>()) 
+        else if (_stateMachine.CurrentState == _stateMachine.GetOrAddState<SEnemyAttackState>())
         {
             _stateMachine.Dispatch((int)BattleEvent.EnemyToSelectState);
         }
     }
 
-    public async UniTask<bool> ClearCheck() 
+    public async UniTask<bool> ClearCheck()
     {
-        if (_enemyController.EnemyStatus.IsWeaponsAllBrek()) 
+        if (_enemyController.EnemyStatus.IsWeaponsAllBrek())
         {
             _gameClearObj.SetActive(true);
             await UniTask.Delay(TimeSpan.FromSeconds(3));
-            _gameClearObj.SetActive(false); 
+            _gameClearObj.SetActive(false);
             _stateMachine.Dispatch((int)BattleEvent.BattleEnd);
             return true;
         }
@@ -182,7 +186,7 @@ public class BattleStateController : MonoBehaviour
         return false;
     }
 
-    public void GameOver() 
+    public void GameOver()
     {
         _gameOverTextObj.SetActive(true);
         _stateMachine.Dispatch((int)BattleEvent.GameOver);
