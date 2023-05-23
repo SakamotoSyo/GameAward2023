@@ -99,6 +99,7 @@ public class SkillDataManagement : MonoBehaviour
             if (s.SkillName == skillName)
             {
                 await s.InEffectSkill(attackType);
+                _skillUsePool.Remove(s);
                 return true;
             }
         }
@@ -151,11 +152,45 @@ public class SkillDataManagement : MonoBehaviour
             }
         }
 
-        if (_skillName != "")
+        if (name != "")
         {
             Debug.LogError("スキル名が一致しません");
         }
         return null;
+    }
+
+    /// <summary>
+    /// Skillが発動できるかチェックする
+    /// </summary>
+    /// <param name="skillName"></param>
+    /// <returns></returns>
+    public bool IsUseCheck(string skillName) 
+    {
+        foreach (var s in _skills)
+        {
+            if (s.SkillName == name)
+            {
+                return s.IsUseCheck(_actorGenerator.PlayerController);
+            }
+        }
+
+        return false;
+    }
+
+    public void SkillUseDelete(string skillName) 
+    {
+        foreach (var s in _skills)
+        {
+            if (s.SkillName == skillName)
+            {
+                _skillUsePool.Remove(s);
+            }
+        }
+    }
+
+    public string DebugSearchSkill() 
+    {
+        return _skillName;
     }
 }
 
