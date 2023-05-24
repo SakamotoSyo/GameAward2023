@@ -9,7 +9,7 @@ public class OiuchiSkill : SkillBase
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    
+
     public OiuchiSkill()
     {
         SkillName = "追い打ち";
@@ -47,10 +47,12 @@ public class OiuchiSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+            _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         if (_enemyStatus.EnemyStatus.IsDebuff()) //敵にデバフがついているか検知
         {
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+                _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
     }
 
@@ -61,6 +63,5 @@ public class OiuchiSkill : SkillBase
 
     public override void BattleFinish()
     {
-        
     }
 }

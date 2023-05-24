@@ -77,7 +77,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
             case ActorAttackType.Player:
             {
                 // スキルの効果処理を実装する
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
 
                 fluctuation =
                     new FluctuationStatusClass(-_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue,
@@ -89,7 +89,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
                 break;
             case ActorAttackType.Enemy:
             {
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
 
                 fluctuation =
                     new FluctuationStatusClass(-_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * _subtractValue,
