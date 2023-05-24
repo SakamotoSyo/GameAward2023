@@ -28,7 +28,7 @@ public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerC
         {
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
             Debug.Log("attack");
-            _changeWeapon.ChangeWeaponUiOpen();
+            _selectUI.AttackEvent();
         }
     }
 }
