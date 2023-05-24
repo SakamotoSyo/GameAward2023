@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class PlayerExperiencePoint : MonoBehaviour
 {
-    #region ランクアップ関連
-    [Header("ランクアップ関連")]
+    #region ランクアップ演出関連
+    [Header("ランクアップ演出関連")]
     [SerializeField] private Sprite[] _ranks = default;
     [SerializeField] private GameObject _currentRank = default;
     [Tooltip("拡大値")]
@@ -13,16 +13,14 @@ public class PlayerExperiencePoint : MonoBehaviour
     [Tooltip("拡大後、縮小するまで待つ秒数")]
     [SerializeField] private float _waitSecondForRank = 1f;
 
-    [Header("Debug")]
-    [Tooltip("ランクが上がったか")]
-    [SerializeField] private bool _isRankUp = false;
-
     private RectTransform _rankRect = default;
     private Vector3 _pos = Vector3.zero;
     private Image _image = default;
     private int _index = 0;
     #endregion
 
+    #region ランクアップに必要な数値関連
+    [Header("数値関連")]
     [Tooltip("Cランクの最大値")]
     [SerializeField] private int _rankCMaxValue = 100;
     [Tooltip("Bランクの最大値")]
@@ -42,6 +40,7 @@ public class PlayerExperiencePoint : MonoBehaviour
     private const int RANK_B = 1;
     private const int RANK_A = 2;
     private const int RANK_S = 3;
+
     private int _currentRankNum = 0;
     private float _value = 0;
 
@@ -49,8 +48,9 @@ public class PlayerExperiencePoint : MonoBehaviour
 
     public int ExperiencePoint => _experiencePoint;
     public float Value => _value;
+    #endregion
 
-    private void Awake()
+    private void Start()
     {
         _index = RankSetting();
         ValueSet(_index);
@@ -63,9 +63,9 @@ public class PlayerExperiencePoint : MonoBehaviour
         Instance = this;
     }
 
+    /// <summary> RankUI関連の情報を取得 </summary>
     private void SettingsRankUI()
     {
-        //RankUI関連の情報を取得
         _rankRect = _currentRank.GetComponent<RectTransform>();
         _pos = _rankRect.localPosition;
         _image = _currentRank.GetComponent<Image>();
