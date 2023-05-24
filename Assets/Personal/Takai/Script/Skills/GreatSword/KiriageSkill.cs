@@ -26,7 +26,7 @@ public class KiriageSkill : SkillBase
         FlavorText = "2ターンの間攻撃力が5%上昇。(重複あり→5%,10%,15%)";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

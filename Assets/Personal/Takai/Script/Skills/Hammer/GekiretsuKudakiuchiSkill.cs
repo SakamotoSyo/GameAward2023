@@ -26,7 +26,7 @@ public class GekiretsuKudakiuchiSkill : SkillBase
         FlavorText = "敵の攻撃、会心率、素早さを40%下げる　※使用した武器は壊れる";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

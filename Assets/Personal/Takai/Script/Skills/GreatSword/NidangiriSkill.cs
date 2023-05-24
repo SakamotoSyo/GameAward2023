@@ -21,7 +21,7 @@ public class NidangiriSkill : SkillBase
         FlavorText = "重さが大きいほど2撃目のダメージが大きくなる(上限4)";
     }
     
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

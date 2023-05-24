@@ -24,7 +24,7 @@ public class IngaouhouSkill : SkillBase
         FlavorText = "発動したターンに攻撃を受けるとダメージを30%軽減し、反撃する。";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

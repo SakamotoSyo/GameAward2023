@@ -24,7 +24,7 @@ public class RenzokugiriSkill : SkillBase
         FlavorText = "２つの剣による連続攻撃";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

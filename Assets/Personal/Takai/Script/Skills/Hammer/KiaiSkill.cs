@@ -21,7 +21,7 @@ public class KiaiSkill : SkillBase
         FlavorText = "次の攻撃だけ威力が2倍に上昇";
     }
     
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

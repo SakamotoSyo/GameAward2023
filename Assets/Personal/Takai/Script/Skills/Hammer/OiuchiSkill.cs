@@ -20,7 +20,7 @@ public class OiuchiSkill : SkillBase
         FlavorText = "威力が低いが、敵にデバフがついていると威力が倍になる";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

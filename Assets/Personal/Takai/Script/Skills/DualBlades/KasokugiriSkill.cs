@@ -25,7 +25,7 @@ public class KasokugiriSkill : SkillBase
         FlavorText = "重さが軽いほど連撃数が増える(上限4)";
     }
     
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

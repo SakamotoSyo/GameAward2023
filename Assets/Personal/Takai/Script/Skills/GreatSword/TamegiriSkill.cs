@@ -28,7 +28,7 @@ public class TamegiriSkill : SkillBase
         FlavorText = "剣を大きく振りかぶる攻撃";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

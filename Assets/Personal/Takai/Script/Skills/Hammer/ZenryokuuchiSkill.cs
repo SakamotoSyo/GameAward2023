@@ -25,7 +25,7 @@ public class ZenryokuuchiSkill : SkillBase
         FlavorText = "効果なし";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

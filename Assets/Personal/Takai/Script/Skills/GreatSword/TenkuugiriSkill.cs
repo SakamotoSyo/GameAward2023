@@ -31,7 +31,7 @@ public class TenkuugiriSkill : SkillBase
         FlavorText = "重さが100以上の時のときこの技の攻撃力が20%上がる ※使用後武器破壊";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }
