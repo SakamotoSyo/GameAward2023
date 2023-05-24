@@ -12,7 +12,7 @@ public class WeaponData
     public float CurrentDurable;
     public float[] StatusArray;
     public WeaponSkill WeaponSkill = new();
-    public AttributeType Attribute;
+    [System.NonSerialized] public AttributeType Attribute;
     public WeaponType WeaponType;
 
 

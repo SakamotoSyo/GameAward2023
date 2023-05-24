@@ -10,7 +10,7 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
     [SerializeField] private IntialPreparationScript _preparationScript;
     [SerializeField] private GameObject _infoPanel;
     [SerializeField] private Text _infoText;
-    private WeaponData _weaponData;
+    [SerializeField] private WeaponData _weaponData;
     private Button _button;
     private bool _isSet = false;
 
