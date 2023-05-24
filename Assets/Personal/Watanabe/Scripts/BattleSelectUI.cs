@@ -129,7 +129,7 @@ public class BattleSelectUI : MonoBehaviour
         _infoUI.SetActive(false);
         if (_actionUi[_index] == _actionUi[0])
         {
-            _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack));
+            _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack), _playerStatus.EquipWeapon.GetCriticalPram());
             _battleChangeWeaponCs.ChangeWeaponUiOpen();
         }
         else if (_actionUi[_index] == _actionUi[1])
