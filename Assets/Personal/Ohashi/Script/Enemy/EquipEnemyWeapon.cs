@@ -54,6 +54,12 @@ public class EquipEnemyWeapon
     /// <summary>•Ší‚Ìí—Ş</summary>
     private WeaponType _weaponType;
 
+    public WeaponType WeaponType => _weaponType;
+
+    private WeaponSkill _weaponSkill;
+
+    public WeaponSkill WeaponSkill => _weaponSkill;
+
     private int _breakCount = 0;
 
     public int WeaponBreakCount => _breakCount;
@@ -61,9 +67,16 @@ public class EquipEnemyWeapon
     /// <summary>
     /// •Ší‚Ö‚Ìƒ_ƒ[ƒW
     /// </summary>
-    public void AddDamage(int damage)
+    public bool AddDamage(int damage, float criticalRate)
     {
+        int critical = Random.Range(0, 100);
+        if(critical <= criticalRate)
+        {
+            _currentDurable.Value -= damage;
+            return true;
+        }
         _currentDurable.Value -= damage;
+        return false;
     }
 
     public bool IsWeaponBreak()
@@ -87,6 +100,7 @@ public class EquipEnemyWeapon
         _currentWeaponWeight = weaponData.WeaponWeight;
         _currentDurable.Value = weaponData.CurrentDurable;
         _weaponType = weaponData.WeaponType;
+        _weaponSkill = weaponData.WeaponSkill;
 
         _offensivePower = weaponData.OffensivePower;
         _criticalRate = weaponData.CriticalRate;

@@ -53,6 +53,7 @@ public class DamageTextController : MonoBehaviour
     {
         _damageText.text = damage.ToString();
         _damage = damage;
+        _isCritical = isCritical;
     }
 
     /// <summary>
