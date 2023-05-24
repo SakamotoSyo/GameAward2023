@@ -1,85 +1,92 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using System;
-using Random = UnityEngine.Random;
 
 public class EnemyAttack
 {
-    private float _offensivePower;
-
-    private Animator _anim;
-
     private EquipEnemyWeapon _equipWepon;
 
     private SkillDataManagement _skillDataManagement;
 
-    private int[] _skillArray = new int[6] { 0, 0, 0, 0, 1, 1 };
+    private int[] _skillArray = new int[3] {0, 0, 1};
 
-    public void Init(EquipEnemyWeapon equipWepon, Animator anim)
+    public void Init(EquipEnemyWeapon equipWepon)
     {
         _equipWepon = equipWepon;
-        _anim = anim;
         _skillDataManagement = GameObject.Find("SkillDataBase").GetComponent<SkillDataManagement>();
     }
 
     /// <summary>
     /// ãZÇÉâÉìÉ_ÉÄÇ≈ëIë
     /// </summary>
-    public void SelectAttack(PlayerController playerController)
+    public async UniTask SelectAttack()
     {
-        int  index= Random.Range(0, _skillArray.Length);
+        int index = Random.Range(0, _skillArray.Length);
 
         if (_equipWepon.CurrentDurable.Value <= _equipWepon.CurrentDurable.Value / 2)
         {
-            SpecialAttack(playerController);
+            SpecialAttack();
         }
 
         if (_skillArray[index] == 0)
         {
-            NormalAttack(playerController);
+            NormalAttack();
         }
         else
         {
-            SkillAttack(playerController);
+            SkillAttack();
         }
     }
 
     /// <summary>
     /// çUåÇ
     /// </summary>
-    public async UniTask NormalAttack(PlayerController playerController)
+    public async UniTask NormalAttack()
     {
         Debug.Log("normal");
-        playerController.AddDamage(_equipWepon.CurrentOffensivePower);
+        if(_equipWepon.WeaponType == WeaponType.GreatSword)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "ó≠ÇﬂéaÇË");
+        }
+        else if (_equipWepon.WeaponType == WeaponType.DualBlades)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "òAë±éaÇË");
+        }
+        else if (_equipWepon.WeaponType == WeaponType.Hammer)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "ëSóÕë≈Çø");
+
+        }
+        else if (_equipWepon.WeaponType == WeaponType.Spear)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "àÍëM");
+        }
+
     }
 
     /// <summary>
     /// ÉXÉLÉãçUåÇ
     /// </summary>
-    private async UniTask SkillAttack(PlayerController playerController)
+    private async UniTask SkillAttack()
     {
         int r = Random.Range(0, 2);
         if(r == 0)
         {
             Debug.Log("skill1");
             await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, _equipWepon.WeaponSkill.WeaponSkillArray[0]);
-            playerController.AddDamage(_equipWepon.CurrentOffensivePower);
         }
         else
         {
             Debug.Log("skill2");
             await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, _equipWepon.WeaponSkill.WeaponSkillArray[1]);
-            playerController.AddDamage(_equipWepon.CurrentOffensivePower);
         }
     }
 
     /// <summary>
     /// ïKéEãZ
     /// </summary>
-    private async UniTask SpecialAttack(PlayerController playerController)
+    private async UniTask SpecialAttack()
     {
         Debug.Log("special");
         await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, _equipWepon.WeaponSkill.SpecialAttack);
-        playerController.AddDamage(_equipWepon.CurrentOffensivePower);
     }
 }
