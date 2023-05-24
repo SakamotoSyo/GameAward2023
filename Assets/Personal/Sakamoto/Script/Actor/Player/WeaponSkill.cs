@@ -10,7 +10,8 @@ public class WeaponSkill
     public SkillDataManagement SkillDataManagement => _skillDataManagement;
     [Tooltip("必殺技")]
     private string _specialAttack;
-    private string[] _skillArray = new string[2];
+    [Header("スキルの名前を設定")]
+    [SerializeField] private string[] _skillArray = new string[2];
     private SkillDataManagement _skillDataManagement;
     private WeaponType _weaponType;
 
