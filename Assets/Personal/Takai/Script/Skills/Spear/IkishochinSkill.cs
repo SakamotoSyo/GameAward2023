@@ -21,7 +21,7 @@ public class IkishochinSkill : SkillBase
         FlavorText = "敵の攻撃力20%を下げる";
     }
     
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

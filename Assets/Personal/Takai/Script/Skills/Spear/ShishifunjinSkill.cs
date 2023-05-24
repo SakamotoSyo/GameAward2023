@@ -23,7 +23,7 @@ public class ShishifunjinSkill : SkillBase
         FlavorText = "経過ターンが多いほど攻撃回数アップ（上限 7回）";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

@@ -22,7 +22,7 @@ public class KudakiuchiSkill : SkillBase
         FlavorText = "攻撃した武器に継続ダメージを受ける状態を付与";
     }
     
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

@@ -26,10 +26,20 @@ public class ShinsokuranbuSkill : SkillBase
         FlavorText = "重さが30以下のとき発動可能　※使用後元のステータスに戻る";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
-        float weight = player.PlayerStatus.EquipWeapon.WeaponWeight.Value;
-        return (weight >= 100) ? true : false;
+        if (actor.PlayerController)
+        {
+            float weight = actor.PlayerController.PlayerStatus.EquipWeapon.WeaponWeight.Value;
+            return (weight >= 100) ? true : false;
+        }
+        else if (actor.EnemyController)
+        {
+            float weight = actor.EnemyController.EnemyStatus.EquipWeapon.WeaponWeight;
+            return (weight >= 100) ? true : false;
+        }
+
+        return false;
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)

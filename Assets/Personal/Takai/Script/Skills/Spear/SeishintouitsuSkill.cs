@@ -25,7 +25,7 @@ public class SeishintouitsuSkill : SkillBase
         FlavorText = "3ターンの間、会心率%と会心時のダメージが20%上昇(発動ターン含まず）";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

@@ -25,10 +25,19 @@ public class TenkamusoSkill : SkillBase
         FlavorText = "経過ターンが多いほど威力上昇　※HP30％以下で発動可能";
     }
     
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
-        var hp = player.PlayerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
-        return (player.PlayerStatus.EquipWeapon.CurrentDurable.Value >= hp) ? true : false;
+        if (actor.PlayerController)
+        {
+            var hp = actor.PlayerController.PlayerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
+            return (actor.PlayerController.PlayerStatus.EquipWeapon.CurrentDurable.Value >= hp) ? true : false;
+        }
+        else if (actor.EnemyController)
+        {
+            var hp = actor.EnemyController.EnemyStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
+            return (actor.EnemyController.EnemyStatus.EquipWeapon.CurrentDurable.Value >= hp) ? true : false;
+        }
+        return false;
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
