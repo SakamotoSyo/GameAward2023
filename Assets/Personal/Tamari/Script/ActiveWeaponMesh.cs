@@ -25,19 +25,19 @@ public class ActiveWeaponMesh : MonoBehaviour
 
     private GameObject _sImage = default;
 
-    private GameObject _gsPos = default;
+    //private GameObject _gsPos = default;
 
-    [SerializeField, Tooltip("双剣(右)生成ポジション")]
-    private GameObject _dbPosR = default;
+    //[SerializeField, Tooltip("双剣(右)生成ポジション")]
+    //private GameObject _dbPosR = default;
 
-    [SerializeField, Tooltip("双剣(左)生成ポジション")]
-    private GameObject _dbPosL = default;
+    //[SerializeField, Tooltip("双剣(左)生成ポジション")]
+    //private GameObject _dbPosL = default;
 
-    [SerializeField, Tooltip("ハンマー生成ポジション")]
-    private GameObject _hPos = default;
+    //[SerializeField, Tooltip("ハンマー生成ポジション")]
+    //private GameObject _hPos = default;
 
-    [SerializeField, Tooltip("やり生成ポジション")]
-    private GameObject _sPos = default;
+    //[SerializeField, Tooltip("やり生成ポジション")]
+    //private GameObject _sPos = default;
 
     [SerializeField, Tooltip("大剣の回転角度")]
     private float _gsRotateAngle = 0;
