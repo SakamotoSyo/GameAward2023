@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _skillDataManagement = GameObject.Find("SkillDataBase").GetComponent<SkillDataManagement>();
-        //_playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.SearchSkill());
+        _playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.DebugSearchSkill());
         _playerStatus.EquipWeapon.Init(_skillDataManagement);
         _playerAnimation.Init(_playerStatus.EquipWeapon);
     }

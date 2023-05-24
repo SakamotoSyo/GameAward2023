@@ -47,7 +47,10 @@ public class PlayerExperiencePoint : MonoBehaviour
 
     public static PlayerExperiencePoint Instance = default;
 
-    private void Start()
+    public int ExperiencePoint => _experiencePoint;
+    public float Value => _value;
+
+    private void Awake()
     {
         _index = RankSetting();
         ValueSet(_index);

@@ -2,7 +2,6 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Playables;
 using System;
-using UnityEngine.Serialization;
 
 public class IngaouhouSkill : SkillBase
 {
@@ -12,6 +11,7 @@ public class IngaouhouSkill : SkillBase
     [SerializeField] private GameObject _enemyObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
+    private bool _isUse = false;
     private ActorAttackType _actor;
 
     public IngaouhouSkill()
@@ -34,6 +34,7 @@ public class IngaouhouSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
+        _isUse = false;
         if (_actor == ActorAttackType.Player)
         {
             _playerObj.SetActive(true);
@@ -72,27 +73,41 @@ public class IngaouhouSkill : SkillBase
 
     public override async UniTask<bool> InEffectSkill(ActorAttackType attackType)
     {
-        if (attackType == ActorAttackType.Player)
+        if (!_isUse)
         {
-            _playerObj.SetActive(true);
-            _playerAnim.Play();
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
-            await UniTask.WaitUntil(() => _playerAnim.time >= _playerAnim.duration - 0.1,
-                cancellationToken: this.GetCancellationTokenOnDestroy());
-            await UniTask.WaitUntil(() => _playerAnim.time >= _playerAnim.duration - 0.1, cancellationToken: this.GetCancellationTokenOnDestroy());
-            _playerObj.SetActive(false);
+            if (attackType == ActorAttackType.Player)
+            {
+                Debug.Log("因果味方");
+                _isUse = true;
+                _playerObj.SetActive(true);
+                _playerAnim.Play();
+                var dura = _playerAnim.duration * 0.99f;
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.1f));
+                await UniTask.WaitUntil(() => _playerAnim.time >= dura,
+                    cancellationToken: this.GetCancellationTokenOnDestroy());
+                _playerAnim.Stop();
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+                _playerObj.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("因果敵");
+                _isUse = true;
+                _playerAnim.Play();
+                _playerAnim.Stop();
+                // _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
+            }
+            return true;
         }
-        else
-        {
-            _playerAnim.Play();
-            // _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.GetPowerPram() * (Damage * 0.01f));
-        }
-
-        return true;
+        return false;
     }
 
     public override bool TurnEnd()
     {
+        if (_isUse) 
+        {
+           return true;
+        }
         return false;
     }
 
