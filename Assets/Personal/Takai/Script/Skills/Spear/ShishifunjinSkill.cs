@@ -17,7 +17,7 @@ public class ShishifunjinSkill : SkillBase
     {
         SkillName = "獅子奮迅";
         Damage = 20;
-        RequiredPoint = 5;
+        RequiredPoint = 35;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "経過ターンが多いほど攻撃回数アップ（上限 7回）";

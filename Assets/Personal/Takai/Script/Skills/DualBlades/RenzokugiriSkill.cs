@@ -18,7 +18,7 @@ public class RenzokugiriSkill : SkillBase
     {
         SkillName = "連続斬り";
         Damage = 30;
-        RequiredPoint = 5;
+        RequiredPoint = 10;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "２つの剣による連続攻撃";
