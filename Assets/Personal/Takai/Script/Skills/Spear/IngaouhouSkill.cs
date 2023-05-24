@@ -18,7 +18,7 @@ public class IngaouhouSkill : SkillBase
     {
         SkillName = "因果応報";
         Damage = 70;
-        RequiredPoint = 5;
+        RequiredPoint = 20;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "発動したターンに攻撃を受けるとダメージを30%軽減し、反撃する。";

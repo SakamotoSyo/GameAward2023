@@ -16,7 +16,7 @@ public class KyoukaSkill : SkillBase
     {
         SkillName = "狂化";
         Damage = 0;
-        RequiredPoint = 5;
+        RequiredPoint = 0;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText = "次の技の攻撃力が1.5倍になる(重複なし)。攻撃後自ステータスが元に戻り、プレイヤーがひるむ";

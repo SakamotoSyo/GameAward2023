@@ -14,7 +14,7 @@ public class OiuchiSkill : SkillBase
     {
         SkillName = "追い打ち";
         Damage = 45;
-        RequiredPoint = 5;
+        RequiredPoint = 20;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "威力が低いが、敵にデバフがついていると威力が倍になる";
