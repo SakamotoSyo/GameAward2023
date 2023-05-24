@@ -66,7 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAnim: {fileID: 6376996442647865046}
   _playerObj: {fileID: 7878295722943544171}
-  _enemyAnim: {fileID: 3828936030715747310}
+  _enemyAnim: {fileID: 0}
   _enemyObj: {fileID: 4749050541759490080}
 --- !u!1001 &5951822318986158552
 PrefabInstance:
@@ -217,11 +217,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e29d9225b914d744dabc2c92bd2b3c52, type: 3}
---- !u!320 &3828936030715747310 stripped
-PlayableDirector:
-  m_CorrespondingSourceObject: {fileID: 7474290749164026422, guid: e29d9225b914d744dabc2c92bd2b3c52, type: 3}
-  m_PrefabInstance: {fileID: 5951822318986158552}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4749050541759490080 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1400930178029980152, guid: e29d9225b914d744dabc2c92bd2b3c52, type: 3}
@@ -281,6 +276,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 559898916182649742, guid: cd537356aeb67ce46b2555f5331aedcf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 686045463566321340, guid: cd537356aeb67ce46b2555f5331aedcf, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 720352811342641111, guid: cd537356aeb67ce46b2555f5331aedcf, type: 3}
