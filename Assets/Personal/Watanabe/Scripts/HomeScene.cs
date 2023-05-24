@@ -32,16 +32,6 @@ public class HomeScene : MonoBehaviour
         Instance = this;
     }
 
-    private void Update()
-    {
-        //以下test
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            //カットシーン演出
-            Fade.Instance.FadeOut();
-        }
-    }
-
     private void SettingsCutPanel()
     {
         for (int i = 0; i < _cutPanelParent.transform.childCount; i++)
