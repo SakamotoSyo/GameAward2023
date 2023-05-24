@@ -64,21 +64,21 @@ public class ActiveIdleWeapon : MonoBehaviour
             _status = _generator.PlayerController.PlayerStatus;
         }
         _weaponSaveData = new WeaponSaveData();
+        // •Ší•\¦‚ğ‚µ‚½‚¢‚Æ‚«‚ÉŒÄ‚Ô
+    }
+    private void Start()
+    {
         _gsImage = GameObject.Find("WeaponGreatSword");
         _dbImageR = GameObject.Find("WeaponDualBladesR");
         _dbImageL = GameObject.Find("WeaponDualBladesL");
         _hImage = GameObject.Find("WeaponHammer");
         _sImage = GameObject.Find("WeaponSpear");
-        // •Ší•\¦‚ğ‚µ‚½‚¢‚Æ‚«‚ÉŒÄ‚Ô
         ActiveWeapon();
-    }
-    private void Start()
-    {
-
     }
 
     public void ActiveWeapon()
     {
+        Debug.Log(_gsImage);
         BaseActiveWeapon(_gsImage, WeaponSaveData.GSData);
 
         BaseActiveWeapon(_dbImageR, WeaponSaveData.DBData);
