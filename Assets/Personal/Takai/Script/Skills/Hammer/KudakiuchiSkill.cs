@@ -21,7 +21,7 @@ public class KudakiuchiSkill : SkillBase
         Type = (SkillType)0;
         FlavorText = "攻撃した武器に継続ダメージを受ける状態を付与";
     }
-    
+
     public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
@@ -49,7 +49,8 @@ public class KudakiuchiSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+            _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
 
         //敵の防御力を下げる処理
         if (!_isSkill)
@@ -63,7 +64,7 @@ public class KudakiuchiSkill : SkillBase
         if (_isSkill)
         {
             float hp = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value * _subtractValue;
-            _enemyStatus.AddDamage(hp);
+            _enemyStatus.AddDamage(hp,0);
         }
 
         return true;

@@ -169,12 +169,12 @@ public class KasokugiriSkill : SkillBase
                 await UniTask.Delay(TimeSpan.FromSeconds(0),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
                 _enemyStatus.AddDamage(
-                    _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+                    _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 break;
             case ActorAttackType.Enemy:
                 await UniTask.Delay(TimeSpan.FromSeconds(0),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 break;
         }
     }

@@ -126,11 +126,11 @@ public class TenkuugiriSkill : SkillBase
                 if (_playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() >= WeaponWeight)
                 {
                     _enemyStatus.AddDamage(
-                        dmg + Damage + (dmg * AddDamageValue));
+                        dmg + Damage + (dmg * AddDamageValue),_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 }
                 else
                 {
-                    _enemyStatus.AddDamage(dmg + Damage);
+                    _enemyStatus.AddDamage(dmg + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 }
             }
                 break;
@@ -140,11 +140,11 @@ public class TenkuugiriSkill : SkillBase
 
                 if (_enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight >= WeaponWeight)
                 {
-                    _playerStatus.AddDamage(dmg + Damage + (dmg * AddDamageValue));
+                    _playerStatus.AddDamage(dmg + Damage + (dmg * AddDamageValue),_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 }
                 else
                 {
-                    _playerStatus.AddDamage(dmg + Damage);
+                    _playerStatus.AddDamage(dmg + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 }
             }
                 break;

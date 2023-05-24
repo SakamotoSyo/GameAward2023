@@ -64,7 +64,7 @@ public class IngaouhouSkill : SkillBase
             _playerObj.SetActive(true);
             _playerAnim1.Play();
             var dura = _playerAnim1.duration * 0.99f;
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.1f));
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.1f),_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
             await UniTask.WaitUntil(() => _playerAnim1.time >= dura,
                 cancellationToken: this.GetCancellationTokenOnDestroy());
             _playerAnim1.Stop();

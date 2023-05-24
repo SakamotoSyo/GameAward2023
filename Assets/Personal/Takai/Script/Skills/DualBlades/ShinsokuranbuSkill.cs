@@ -89,13 +89,13 @@ public class ShinsokuranbuSkill : SkillBase
             case ActorAttackType.Player:
             {
                 weight = _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram();
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
             }
                 break;
             case ActorAttackType.Enemy:
             {
                 weight = _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight;
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
             }
                 break;
         }
