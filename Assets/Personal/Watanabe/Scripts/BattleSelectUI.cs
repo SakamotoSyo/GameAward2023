@@ -131,15 +131,13 @@ public class BattleSelectUI : MonoBehaviour
         if (_actionUi[_index] == _actionUi[0])
         {
             await NormalAttack();
-            _battleChangeWeaponCs.ChangeWeaponUiOpen();
         }
         else if (_actionUi[_index] == _actionUi[1])
         {
             SkillBase skill1 = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0]);
             if (skill1 && skill1.IsUseCheck(_generator))
             {
-                await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.name);
-                _battleChangeWeaponCs.ChangeWeaponUiOpen();
+                await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.SkillName);
             }
         }
         else if (_actionUi[_index] == _actionUi[2])
@@ -147,8 +145,7 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase spcialSkill = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack);
             if (spcialSkill && spcialSkill.IsUseCheck(_generator))
             {
-                await _skillDataManagement.OnSkillUse(ActorAttackType.Player, spcialSkill.name);
-                _battleChangeWeaponCs.ChangeWeaponUiOpen();
+                await _skillDataManagement.OnSkillUse(ActorAttackType.Player, spcialSkill.SkillName);
             }
         }
         else if (_actionUi[_index] == _actionUi[3])
@@ -156,22 +153,32 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase skill2 = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1]);
             if (skill2 && skill2.IsUseCheck(_generator))
             {
-                await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.name);
-                _battleChangeWeaponCs.ChangeWeaponUiOpen();
+                await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.SkillName);
             }
+        }
+
+        if (_enemyController.EnemyStatus.IsWeaponsAllBrek())
+        {
+            _battleStateController.ActorStateEnd();
+        }
+        else 
+        {
+            _battleChangeWeaponCs.ChangeWeaponUiOpen();
         }
     }
 
     public async UniTask NormalAttack()
     {
         Debug.Log("normal");
+        Debug.Log($"プレイヤーの武器のタイプは{_playerStatus.EquipWeapon.WeaponType}です");
         if (_playerStatus.EquipWeapon.WeaponType == WeaponType.GreatSword)
         {
             await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "溜め斬り");
         }
         else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.DualBlades)
         {
-            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "連続斬り");
+            Debug.Log("総研");
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Player, "連続斬り");
         }
         else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.Hammer)
         {
