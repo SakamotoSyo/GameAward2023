@@ -15,23 +15,16 @@ public class ActiveWeaponMesh : MonoBehaviour
 
     public GameObject SImage => _sImage;
 
-
-    [SerializeField, Tooltip("大剣のイメージ")]
     private GameObject _gsImage = default;
 
-    [SerializeField, Tooltip("双剣(右)のイメージ")]
     private GameObject _dbImageR = default;
 
-    [SerializeField, Tooltip("双剣(左)のイメージ")]
     private GameObject _dbImageL = default;
 
-    [SerializeField, Tooltip("ハンマーのイメージ")]
     private GameObject _hImage = default;
 
-    [SerializeField, Tooltip("やりのイメージ")]
     private GameObject _sImage = default;
 
-    [SerializeField, Tooltip("大剣生成ポジション")]
     private GameObject _gsPos = default;
 
     [SerializeField, Tooltip("双剣(右)生成ポジション")]
@@ -71,16 +64,32 @@ public class ActiveWeaponMesh : MonoBehaviour
 
     private WeaponSaveData _weaponSaveData = default;
 
-    private void Start()
+    private void Awake()
     {
         if (_generator != null)
         {
             _status = _generator.PlayerController.PlayerStatus;
         }
         _weaponSaveData = new WeaponSaveData();
-
+        _gsImage = GameObject.Find("GS");
+        _dbImageR = GameObject.Find("DBR");
+        _dbImageL = GameObject.Find("DBL");
+        _hImage = GameObject.Find("Hammer");
+        _sImage = GameObject.Find("spear");
         // 武器表示をしたいときに呼ぶ
         ActiveWeapon();
+    }
+    private void Start()
+    {
+        var GsPlayer = GameObject.Find("Hero_Sword");
+        var DbPlayer = GameObject.Find("Hero_TwinSword");
+        var HPlayer = GameObject.Find("Hero_Hammer");
+        var SPlayer = GameObject.Find("Hero_Spear");
+        Debug.Log(GsPlayer);
+        GsPlayer.SetActive(false);
+        DbPlayer.SetActive(false);
+        HPlayer.SetActive(false);
+        SPlayer.SetActive(false);
     }
 
     public void ActiveWeapon()
@@ -107,30 +116,15 @@ public class ActiveWeaponMesh : MonoBehaviour
         //        BaseActiveWeapon(_sImage, _sPos, WeaponSaveData.SData);
         //    }
         //}
+        BaseActiveWeapon(_gsImage, WeaponSaveData.GSData);
 
+        BaseActiveWeapon(_dbImageR, WeaponSaveData.DBData);
 
-        //BaseActiveWeapon(_gsImage, WeaponSaveData.GSData);
+        BaseActiveWeapon(_dbImageL, WeaponSaveData.DBData);
 
-        //BaseActiveWeapon(_dbImageR, WeaponSaveData.DBData);
+        BaseActiveWeapon(_hImage, WeaponSaveData.HData);
 
-        //BaseActiveWeapon(_dbImageL, WeaponSaveData.DBData);
-
-        //BaseActiveWeapon(_hImage, WeaponSaveData.HData);
-
-        //BaseActiveWeapon(_sImage, WeaponSaveData.SData);
-
-
-        BaseActiveWeapon(_gsImage, _gsPos, WeaponSaveData.GSData);
-        Debug.Log("B");
-        BaseActiveWeapon(_dbImageR, _dbPosR, WeaponSaveData.DBData);
-        Debug.Log("C");
-        BaseActiveWeapon(_dbImageL, _dbPosL, WeaponSaveData.DBData);
-        Debug.Log("D");
-        BaseActiveWeapon(_hImage, _hPos, WeaponSaveData.HData);
-        BaseActiveWeapon(_sImage, _sPos, WeaponSaveData.SData);
-        Debug.Log("A");
-        Debug.Log("e");
-
+        BaseActiveWeapon(_sImage, WeaponSaveData.SData);
     }
     //TODO:所持している武器に対応した表示をする
     //public void ActiveSelectWeapon()
@@ -180,38 +174,83 @@ public class ActiveWeaponMesh : MonoBehaviour
         mesh.triangles = data.MYTRIANGLES;
         mesh.SetColors(_setColorList);
 
-        // 大剣の時はこれ
-        // TODO:ちゃんと変数にする、武器ごとの確認をする
-        var pos = GameObject.Find("SwordPos");
-        var pos2 = GameObject.Find("Sword");
-        weapon.transform.parent = pos2.transform;
-
-        // weapon.transform.rotation = pos2.transform.rotation;
-
-        if (weapon == _hImage || weapon == _sImage)
+        if (weapon == _hImage)
         {
+            var parentWeapon = GameObject.Find("HWeapon");
+            var pos = GameObject.Find("HPos");
+            if (parentWeapon == null || pos == null)
+            {
+                return;
+            }
             Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _hRotateAngle);
+        }
+
+        else if (weapon == _sImage)
+        {
+            var parentWeapon = GameObject.Find("SWeapon");
+
+            var pos = GameObject.Find("SpearPos");
+
+            if (parentWeapon == null || pos == null)
+            {
+                return;
+            }
+            Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
+
+            weapon.transform.position = vec;
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _sRotateAngle);
+        }
+
+        else if (weapon == _dbImageL)
+        {
+            var parentWeapon = GameObject.Find("DBLWeapon");
+            var pos = GameObject.Find("SwordPosL");
+            if (parentWeapon == null || pos == null)
+            {
+                return;
+            }
+            Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
+                pos.transform.position.y + data.DISY, pos.transform.position.z + 1);
+
+            weapon.transform.position = vec;
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
         }
 
         else if (weapon == _dbImageR)
         {
+            var parentWeapon = GameObject.Find("DBRWeapon");
+            var pos = GameObject.Find("SwordPosR");
+            if (parentWeapon == null || pos == null)
+            {
+                return;
+            }
             Vector3 vec = new Vector3(pos.transform.position.x - data.DISX,
-                pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
+                pos.transform.position.y + data.DISY, pos.transform.position.z + 1);
 
             weapon.transform.position = vec;
 
             weapon.transform.Rotate(0, 180, 0);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
         }
 
-        else
+        else if (weapon == _gsImage)
         {
+            var parentWeapon = GameObject.Find("GSWeapon");
+            var pos = GameObject.Find("SwordPos");
+            if (parentWeapon == null)
+            {
+                return;
+            }
             Vector3 vec = new Vector3(pos.transform.position.x + data.DISX,
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _gsRotateAngle);
         }
         weapon.transform.parent.localScale = new Vector3(_size, _size, _size);
         // weapon.transform.localScale = new Vector3(_size, _size, _size);
@@ -220,10 +259,6 @@ public class ActiveWeaponMesh : MonoBehaviour
 
         MeshRenderer meshRenderer = weapon.AddComponent<MeshRenderer>();
         meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
-
-        // 大剣の時はこれ
-        // TODO:ちゃんと変数にする、武器ごとの確認をする
-        pos2.transform.rotation = Quaternion.Euler(0, 0, -86.588f);
     }
 
     private void BaseActiveWeapon(GameObject weapon, GameObject pos, SaveData data)
@@ -242,7 +277,7 @@ public class ActiveWeaponMesh : MonoBehaviour
         if (weapon == _hImage)
         {
             var parentWeapon = GameObject.Find("HWeapon");
-            if(parentWeapon == null)
+            if (parentWeapon == null)
             {
                 return;
             }

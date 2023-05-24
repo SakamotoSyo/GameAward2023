@@ -23,7 +23,7 @@ public class IatsuSKill : SkillBase
         FlavorText = "2ターンの間敵の攻撃力を10%下げる";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

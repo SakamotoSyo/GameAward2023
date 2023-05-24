@@ -11,7 +11,7 @@ public abstract class SkillBase : MonoBehaviour
     public SkillType Type { get; protected set; }
     public string FlavorText { get; protected set; }
 
-    public abstract bool IsUseCheck(PlayerController player);
+    public abstract bool IsUseCheck(ActorGenerator actor);
     public abstract UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType);
 
     /// <summary>

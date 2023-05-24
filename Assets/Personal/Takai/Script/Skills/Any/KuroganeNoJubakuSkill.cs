@@ -23,7 +23,7 @@ public class KuroganeNoJubakuSkill : SkillBase
     }
 
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

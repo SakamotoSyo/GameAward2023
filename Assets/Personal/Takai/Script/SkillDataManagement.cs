@@ -34,11 +34,11 @@ public class SkillDataManagement : MonoBehaviour
         //    Destroy(this);
         //}
 
-        for (int i = 0; i < _skillPrefab.Count; i++) 
+        for (int i = 0; i < _skillPrefab.Count; i++)
         {
             var skillObj = Instantiate(_skillPrefab[i], this.transform);
             _skills.Add(skillObj.GetComponent<SkillBase>());
-            skillObj.transform.position = new Vector2(_playerVec.position.x + 2.5f,_playerVec.position.y - 1.5f);
+            skillObj.transform.position = new Vector2(_playerVec.position.x + 2.5f, _playerVec.position.y - 1.5f);
         }
 
         //foreach (var skill in skillPrefabs)
@@ -65,17 +65,18 @@ public class SkillDataManagement : MonoBehaviour
         return skills[n];
     }
 
-    public bool OnUseCheck(SkillBase skill)
+    public bool OnUseCheck(SkillBase skill, ActorGenerator actor)
     {
-        return skill.IsUseCheck(_actorGenerator.PlayerController);
+        return skill.IsUseCheck(actor);
     }
 
     public async UniTask OnSkillUse(ActorAttackType actorType, string skillName)
     {
-        if (!_actorGenerator) 
+        if (!_actorGenerator)
         {
             _actorGenerator = GameObject.Find("ActorGenerator").GetComponent<ActorGenerator>();
         }
+
         Debug.Log(skillName);
         SkillBase skill = _skills.Find(skill => skill.name == skillName);
         if (skill != null)
@@ -156,6 +157,7 @@ public class SkillDataManagement : MonoBehaviour
         {
             Debug.LogError("スキル名が一致しません");
         }
+
         return null;
     }
 
@@ -164,20 +166,20 @@ public class SkillDataManagement : MonoBehaviour
     /// </summary>
     /// <param name="skillName"></param>
     /// <returns></returns>
-    public bool IsUseCheck(string skillName) 
+    public bool IsUseCheck(string skillName,ActorGenerator actor)
     {
         foreach (var s in _skills)
         {
             if (s.SkillName == name)
             {
-                return s.IsUseCheck(_actorGenerator.PlayerController);
+                return s.IsUseCheck(actor);
             }
         }
 
         return false;
     }
 
-    public void SkillUseDelete(string skillName) 
+    public void SkillUseDelete(string skillName)
     {
         foreach (var s in _skills)
         {
@@ -188,7 +190,7 @@ public class SkillDataManagement : MonoBehaviour
         }
     }
 
-    public string DebugSearchSkill() 
+    public string DebugSearchSkill()
     {
         return _skillName;
     }

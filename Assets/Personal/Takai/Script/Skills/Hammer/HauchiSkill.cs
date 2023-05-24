@@ -26,7 +26,7 @@ public class HauchiSkill : SkillBase
         FlavorText = "敵の攻撃力と会心率が20%下がる";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }

@@ -22,7 +22,7 @@ public class ShippuSkill : SkillBase
         FlavorText = "2ターンの間敵に継続ダメージを与える";
     }
 
-    public override bool IsUseCheck(PlayerController player)
+    public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
     }
