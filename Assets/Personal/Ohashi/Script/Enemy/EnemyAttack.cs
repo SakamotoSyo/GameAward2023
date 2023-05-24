@@ -9,14 +9,17 @@ public class EnemyAttack
 
     private Animator _anim;
 
-    private EnemyAttackType _attackType = new();
-
     private EquipEnemyWeapon _equipWepon;
+
+    private SkillDataManagement _skillDataManagement;
+
+    private int[] _skillArray = new int[6] { 0, 0, 0, 0, 1, 1 };
 
     public void Init(EquipEnemyWeapon equipWepon, Animator anim)
     {
         _equipWepon = equipWepon;
         _anim = anim;
+        _skillDataManagement = GameObject.Find("SkillDataBase").GetComponent<SkillDataManagement>();
     }
 
     /// <summary>
@@ -24,20 +27,20 @@ public class EnemyAttack
     /// </summary>
     public void SelectAttack(PlayerController playerController)
     {
-        int r = Random.Range(0, Enum.GetNames(typeof(EnemyAttackType)).Length);
-        _attackType = (EnemyAttackType)r;
+        int  index= Random.Range(0, _skillArray.Length);
 
-        if(_attackType == EnemyAttackType.Normal)
+        if (_equipWepon.CurrentDurable.Value <= _equipWepon.CurrentDurable.Value / 2)
+        {
+            SpecialAttack(playerController);
+        }
+
+        if (_skillArray[index] == 0)
         {
             NormalAttack(playerController);
         }
-        else if(_attackType == EnemyAttackType.Skill)
-        {
-            SkillAttack(playerController);
-        }
         else
         {
-            SpecialAttack(playerController);
+            SkillAttack(playerController);
         }
     }
 
@@ -48,7 +51,6 @@ public class EnemyAttack
     {
         Debug.Log("normal");
         playerController.AddDamage(_equipWepon.CurrentOffensivePower);
-       // await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
     }
 
     /// <summary>
@@ -60,14 +62,14 @@ public class EnemyAttack
         if(r == 0)
         {
             Debug.Log("skill1");
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, _equipWepon.WeaponSkill.WeaponSkillArray[0]);
             playerController.AddDamage(_equipWepon.CurrentOffensivePower);
-            //await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         }
         else
         {
             Debug.Log("skill2");
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, _equipWepon.WeaponSkill.WeaponSkillArray[1]);
             playerController.AddDamage(_equipWepon.CurrentOffensivePower);
-            //await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         }
     }
 
@@ -77,14 +79,7 @@ public class EnemyAttack
     private async UniTask SpecialAttack(PlayerController playerController)
     {
         Debug.Log("special");
+        await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, _equipWepon.WeaponSkill.SpecialAttack);
         playerController.AddDamage(_equipWepon.CurrentOffensivePower);
-        //await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
     }
-}
-
-public enum EnemyAttackType
-{
-    Normal,
-    Skill,
-    Special,
 }

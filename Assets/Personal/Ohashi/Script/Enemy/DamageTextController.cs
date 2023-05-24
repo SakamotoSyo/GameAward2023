@@ -27,10 +27,12 @@ public class DamageTextController : MonoBehaviour
 
     private int _damage;
 
+    private bool _isCritical = false;
+
     private void Start()
     {
         //仮の条件
-        if (_damage >= 100)
+        if (_isCritical == true)
         {
             _damageText.color = Color.yellow;
             _image.sprite = _critical;
@@ -47,7 +49,7 @@ public class DamageTextController : MonoBehaviour
     /// <summary>
     /// テキストにダメージを表示する
     /// </summary>
-    public void TextInit(int damage)
+    public void TextInit(int damage, bool isCritical)
     {
         _damageText.text = damage.ToString();
         _damage = damage;
