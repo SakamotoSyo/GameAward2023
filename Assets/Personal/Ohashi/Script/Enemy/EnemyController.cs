@@ -50,13 +50,12 @@ public class EnemyController : MonoBehaviour, IAddDamage
         }
     }
 
-    public void AddDamage(float damage)
+    public void AddDamage(float damage, float criticalRate)
     {
         var damageController = Instantiate(_damegeController,
             _damagePos.position,
             Quaternion.identity);
-        damageController.TextInit((int)damage);
-        _enemyStatus.EquipWeapon.AddDamage((int)damage);
+        damageController.TextInit((int)damage, _enemyStatus.EquipWeapon.AddDamage((int)damage, criticalRate));
 
         if(_enemyStatus.EquipWeapon.IsWeaponBreak())
         {
