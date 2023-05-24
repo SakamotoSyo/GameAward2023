@@ -247,22 +247,8 @@ public class ResultUIScript : MonoBehaviour
             }
             else
             {
-                Debug.Log("•KŽE‹Z");
-                _enhanceSelectObj.SetActive(false);
-                _skillSelectPanel.SetActive(true);
-                _skillSelectButtonCs[0].SetCurrentSkill(_skillDataManagement.SearchSkill(weaponSkill.SpecialAttack));
-                _skillSelectButtonCs[1].SetCurrentSkill(_selectOreData.Skill);
-                _skillSelectButton[0].onClick.AddListener(() =>
-                {
-                    ChangeSpecialSkill(_selectOreData.Skill, _saveWeaponData[_currentSelectWeapon]);
-                    _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
-
-                });
-                _skillSelectButton[1].onClick.AddListener(() =>
-                {
-                    _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
-                    SceneLoader.LoadScene(_homeScene);
-                });
+                ChangeSpecialSkill(_selectOreData.Skill, _saveWeaponData[_currentSelectWeapon]);
+                _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
             }
         }
         // SceneLoader.LoadScene(_homeScene);
