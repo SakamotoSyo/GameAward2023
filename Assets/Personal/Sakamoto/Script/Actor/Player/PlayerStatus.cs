@@ -15,7 +15,6 @@ public class PlayerStatus
     private PlayerEquipWeapon _equipWeapon = new();
     private int _playerRankPoint = 0;
     private StateAnomaly _currentAnomaly = StateAnomaly.None;
-
     private WeaponSaveData _weaponSaveData = default;
     private PlayerStatus()
     {

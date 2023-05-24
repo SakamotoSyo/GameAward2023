@@ -29,6 +29,7 @@ public class PlayerPresenter :IStartable, IDisposable
     {
         _playerStatus.EquipWeapon.MaxDurable.Subscribe(_playerView.SetMaxHp).AddTo(_compositeDisposable);
         _playerStatus.EquipWeapon.CurrentDurable.Subscribe(_playerView.SetCurrentHp).AddTo(_compositeDisposable);
+        _playerStatus.EquipWeapon.WeaponTypeOb.Subscribe(_playerView.ChangeWeaponIcon).AddTo(_compositeDisposable);
     }
 
     public void Dispose()

@@ -16,6 +16,7 @@ public class PlayerView : MonoBehaviour
         _currentHpText.text = num.ToString();
         _currentHp = num;
         AdjustmentHpBar();
+        Debug.Log($"åªç›ÇÃHpÇÕ{num}");
     }
 
     public void SetMaxHp(float num) 
@@ -28,5 +29,10 @@ public class PlayerView : MonoBehaviour
     private void AdjustmentHpBar() 
     {
         _currentHpImage.fillAmount = _currentHp / _maxHp;
+    }
+
+    public void ChangeWeaponIcon(WeaponType weaponType) 
+    {
+
     }
 }

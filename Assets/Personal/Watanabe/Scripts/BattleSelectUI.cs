@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class BattleSelectUI : MonoBehaviour
 {
@@ -129,7 +130,7 @@ public class BattleSelectUI : MonoBehaviour
         _infoUI.SetActive(false);
         if (_actionUi[_index] == _actionUi[0])
         {
-            _enemyController.AddDamage((int)_playerController.Attack(PlayerAttackType.ConventionalAttack), _playerStatus.EquipWeapon.GetCriticalPram());
+            await NormalAttack();
             _battleChangeWeaponCs.ChangeWeaponUiOpen();
         }
         else if (_actionUi[_index] == _actionUi[1])
@@ -159,6 +160,29 @@ public class BattleSelectUI : MonoBehaviour
                 _battleChangeWeaponCs.ChangeWeaponUiOpen();
             }
         }
+    }
+
+    public async UniTask NormalAttack()
+    {
+        Debug.Log("normal");
+        if (_playerStatus.EquipWeapon.WeaponType == WeaponType.GreatSword)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "溜め斬り");
+        }
+        else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.DualBlades)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "連続斬り");
+        }
+        else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.Hammer)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "全力打ち");
+
+        }
+        else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.Spear)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "一閃");
+        }
+
     }
 
     private void SkillInfo()
