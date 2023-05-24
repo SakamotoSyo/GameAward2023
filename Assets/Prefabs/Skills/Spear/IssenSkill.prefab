@@ -66,7 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAnim: {fileID: 8857228254203785334}
   _playerObj: {fileID: 5747088356436438475}
-  _enemyAnim: {fileID: 7274127202672078368}
+  _enemyAnim: {fileID: 0}
   _enemyObj: {fileID: 2676037600021972364}
 --- !u!1001 &1860634277673841393
 PrefabInstance:
@@ -86,6 +86,10 @@ PrefabInstance:
     - target: {fileID: 1640620033651938401, guid: bb27bb48efbb57a459384b9497b6903d, type: 3}
       propertyPath: m_Bounds.m_Extent.y
       value: 0.49414548
+      objectReference: {fileID: 0}
+    - target: {fileID: 2379483894371738271, guid: bb27bb48efbb57a459384b9497b6903d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3186691274069995294, guid: bb27bb48efbb57a459384b9497b6903d, type: 3}
       propertyPath: m_RootOrder
@@ -221,11 +225,6 @@ GameObject:
 --- !u!4 &3885247276132425199 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3186691274069995294, guid: bb27bb48efbb57a459384b9497b6903d, type: 3}
-  m_PrefabInstance: {fileID: 1860634277673841393}
-  m_PrefabAsset: {fileID: 0}
---- !u!320 &7274127202672078368 stripped
-PlayableDirector:
-  m_CorrespondingSourceObject: {fileID: 9016392421380742353, guid: bb27bb48efbb57a459384b9497b6903d, type: 3}
   m_PrefabInstance: {fileID: 1860634277673841393}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6398755960929082918
