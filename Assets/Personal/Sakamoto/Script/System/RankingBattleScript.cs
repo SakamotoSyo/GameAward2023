@@ -70,7 +70,6 @@ public class RankingBattleScript : MonoBehaviour
         }
     }
 
-
     public void BossChallengeJudge()
     {
         var enemyData = EnemyDataBase.BossSelect();
@@ -119,5 +118,4 @@ public class RankingBattleScript : MonoBehaviour
         playerData.PlayerRankPoint = 0;
         GameManager.SetPlayerData(playerData);
     }
-
 }
