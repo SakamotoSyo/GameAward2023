@@ -72,6 +72,7 @@ public class EquipEnemyWeapon
         int critical = Random.Range(0, 100);
         if(critical <= criticalRate)
         {
+            Debug.Log("クリティカル");
             _currentDurable.Value -= damage;
             return true;
         }

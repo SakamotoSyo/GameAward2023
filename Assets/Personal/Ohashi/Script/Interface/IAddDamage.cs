@@ -3,5 +3,5 @@
     /// <summary>
     /// ダメージを受けた時の処理を書くメソッド
     /// </summary>
-    public void AddDamage(float damage);
+    public void AddDamage(float damage, float criticalRate);
 }
