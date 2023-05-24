@@ -162,7 +162,7 @@ public class WeaponStatus : MonoBehaviour
         var enemyObj = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemyObj[0].TryGetComponent<IAddDamage>(out IAddDamage enemy))
         {
-            enemy.AddDamage(_values[0]);
+            //enemy.AddDamage(_values[0]);
         }
     }
 
