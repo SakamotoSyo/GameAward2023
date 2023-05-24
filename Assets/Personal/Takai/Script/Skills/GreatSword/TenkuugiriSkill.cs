@@ -25,7 +25,7 @@ public class TenkuugiriSkill : SkillBase
     {
         SkillName = "天空斬り";
         Damage = 180;
-        RequiredPoint = 5;
+        RequiredPoint = 0;
         Weapon = (WeaponType)0;
         Type = (SkillType)1;
         FlavorText = "重さが100以上の時のときこの技の攻撃力が20%上がる ※使用後武器破壊";

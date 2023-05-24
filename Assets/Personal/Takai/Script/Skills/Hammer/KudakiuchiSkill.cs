@@ -16,7 +16,7 @@ public class KudakiuchiSkill : SkillBase
     {
         SkillName = "砕き打ち";
         Damage = 50;
-        RequiredPoint = 5;
+        RequiredPoint = 15;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
         FlavorText = "攻撃した武器に継続ダメージを受ける状態を付与";

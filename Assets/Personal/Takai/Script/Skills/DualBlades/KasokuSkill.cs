@@ -18,7 +18,7 @@ public class KasokuSkill : SkillBase
     {
         SkillName = "加速";
         Damage = 0;
-        RequiredPoint = 5;
+        RequiredPoint = 0;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "3ターンの間重さが5%下降(重複あり→5%,10%,15%)";

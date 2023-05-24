@@ -20,7 +20,7 @@ public class KiriageSkill : SkillBase
     {
         SkillName = "斬り上げ";
         Damage = 70;
-        RequiredPoint = 5;
+        RequiredPoint = 15;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText = "2ターンの間攻撃力が5%上昇。(重複あり→5%,10%,15%)";
