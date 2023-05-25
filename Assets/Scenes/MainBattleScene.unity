@@ -2860,6 +2860,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea26f927291612147848b773bf2acd5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &713063275
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775764, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775765, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: _generator
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743491930091775770, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
+      propertyPath: m_Name
+      value: IdleActiveWeapon
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5bf65279e3b2b6c4eb709afcb3c12031, type: 3}
 --- !u!1 &749394330
 GameObject:
   m_ObjectHideFlags: 0
@@ -6385,7 +6446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27facc5565298074cbf7b55c17ead9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillName: "\u65AC\u308A\u4E0A\u3052"
+  _skillName: "\u52A0\u901F\u65AC\u308A"
   _transform: {fileID: 1792050434}
   _pStatus: {fileID: 0}
   _eStatus: {fileID: 0}
