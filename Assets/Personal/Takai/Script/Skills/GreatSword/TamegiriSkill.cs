@@ -21,7 +21,7 @@ public class TamegiriSkill : SkillBase
     public TamegiriSkill()
     {
         SkillName = "溜め斬り";
-        Damage = 60;
+        Damage = 1;
         RequiredPoint = 10;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
@@ -116,11 +116,11 @@ public class TamegiriSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,
                     _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 break;
             case ActorAttackType.Enemy:
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower *  Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 break;
         }
     }
