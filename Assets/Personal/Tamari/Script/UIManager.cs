@@ -119,7 +119,7 @@ public class UIManager : MonoBehaviour
         else if (_indexNum == 3)
         {
             _meshManager._weaponType = WeaponType.Spear;
-            _weaponTypeText.text = "やり";
+            _weaponTypeText.text = "槍";
         }
         _firstPanel.SetActive(false);
         _meshManager.CreateMesh();
