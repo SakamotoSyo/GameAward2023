@@ -1,20 +1,10 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActiveWeaponMesh : MonoBehaviour
+public class ActiveIdleWeapon : MonoBehaviour
 {
-    public GameObject GSImage => _gsImage;
-
-    public GameObject DBImageR => _dbImageR;
-
-    public GameObject DBImageL => _dbImageL;
-
-    public GameObject HImage => _hImage;
-
-    public GameObject SImage => _sImage;
-
     private GameObject _gsImage = default;
 
     private GameObject _dbImageR = default;
@@ -25,34 +15,34 @@ public class ActiveWeaponMesh : MonoBehaviour
 
     private GameObject _sImage = default;
 
-    [SerializeField]
-    private GameObject _insPos = default;
-
     //private GameObject _gsPos = default;
 
-    //[SerializeField, Tooltip("åŒå‰£(å³)ç”Ÿæˆãƒã‚¸ã‚·ãƒ§ãƒ³")]
+    //[SerializeField, Tooltip("‘oŒ•(‰E)¶¬ƒ|ƒWƒVƒ‡ƒ“")]
     //private GameObject _dbPosR = default;
 
-    //[SerializeField, Tooltip("åŒå‰£(å·¦)ç”Ÿæˆãƒã‚¸ã‚·ãƒ§ãƒ³")]
+    //[SerializeField, Tooltip("‘oŒ•(¶)¶¬ƒ|ƒWƒVƒ‡ƒ“")]
     //private GameObject _dbPosL = default;
 
-    //[SerializeField, Tooltip("ãƒãƒ³ãƒãƒ¼ç”Ÿæˆãƒã‚¸ã‚·ãƒ§ãƒ³")]
+    //[SerializeField, Tooltip("ƒnƒ“ƒ}[¶¬ƒ|ƒWƒVƒ‡ƒ“")]
     //private GameObject _hPos = default;
 
-    //[SerializeField, Tooltip("ã‚„ã‚Šç”Ÿæˆãƒã‚¸ã‚·ãƒ§ãƒ³")]
+    //[SerializeField, Tooltip("‚â‚è¶¬ƒ|ƒWƒVƒ‡ƒ“")]
     //private GameObject _sPos = default;
 
-    [SerializeField, Tooltip("å¤§å‰£ã®å›è»¢è§’åº¦")]
-    private float _gsRotateAngle = 0;
+    [SerializeField, Tooltip("‘åŒ•‚Ì‰ñ“]Šp“x")]
+    private float _gsIdleRotateAngle = 0;
 
-    [SerializeField, Tooltip("åŒå‰£ã®å›è»¢è§’åº¦")]
-    private float _dbRotateAngle = 0;
+    [SerializeField, Tooltip("‘oŒ•‰E‚Ì‰ñ“]Šp“x")]
+    private float _dbRIdleRotateAngle = 0;
 
-    [SerializeField, Tooltip("ãƒãƒ³ãƒãƒ¼ã®å›è»¢è§’åº¦")]
-    private float _hRotateAngle = 0;
+    [SerializeField, Tooltip("‘oŒ•¶‚Ì‰ñ“]Šp“x")]
+    private float _dbLIdleRotateAngle = 0;
 
-    [SerializeField, Tooltip("ã‚„ã‚Šã®å›è»¢è§’åº¦")]
-    private float _sRotateAngle = 0;
+    [SerializeField, Tooltip("ƒnƒ“ƒ}[‚Ì‰ñ“]Šp“x")]
+    private float _hIdleRotateAngle = 0;
+
+    [SerializeField, Tooltip("‚â‚è‚Ì‰ñ“]Šp“x")]
+    private float _sIdleRotateAngle = 0;
 
     [SerializeField]
     private List<Color> _setColorList = new List<Color>();
@@ -74,30 +64,21 @@ public class ActiveWeaponMesh : MonoBehaviour
             _status = _generator.PlayerController.PlayerStatus;
         }
         _weaponSaveData = new WeaponSaveData();
-        _gsImage = GameObject.Find("GS");
-        _dbImageR = GameObject.Find("DBR");
-        _dbImageL = GameObject.Find("DBL");
-        _hImage = GameObject.Find("Hammer");
-        _sImage = GameObject.Find("spear");
-        // æ­¦å™¨è¡¨ç¤ºã‚’ã—ãŸã„ã¨ãã«å‘¼ã¶
-        ActiveWeapon();
+        // •Ší•\¦‚ğ‚µ‚½‚¢‚Æ‚«‚ÉŒÄ‚Ô
     }
     private void Start()
     {
-        var GsPlayer = GameObject.FindGameObjectWithTag("Sword");
-        var DbPlayer = GameObject.FindGameObjectWithTag("TwinSword");
-        var HPlayer = GameObject.FindGameObjectWithTag("Hammer");
-        var SPlayer = GameObject.FindGameObjectWithTag("Spear");
-        Debug.Log(DbPlayer);
-
-        GsPlayer.gameObject.SetActive(false);
-        DbPlayer.gameObject.SetActive(false);
-        HPlayer.gameObject.SetActive(false);
-        SPlayer.gameObject.SetActive(false);
+        _gsImage = GameObject.Find("WeaponGreatSword");
+        _dbImageR = GameObject.Find("WeaponDualBladesR");
+        _dbImageL = GameObject.Find("WeaponDualBladesL");
+        _hImage = GameObject.Find("WeaponHammer");
+        _sImage = GameObject.Find("WeaponSpear");
+        ActiveWeapon();
     }
 
     public void ActiveWeapon()
     {
+        Debug.Log(_gsImage);
         BaseActiveWeapon(_gsImage, WeaponSaveData.GSData);
 
         BaseActiveWeapon(_dbImageR, WeaponSaveData.DBData);
@@ -108,46 +89,11 @@ public class ActiveWeaponMesh : MonoBehaviour
 
         BaseActiveWeapon(_sImage, WeaponSaveData.SData);
     }
-    //TODO:æ‰€æŒã—ã¦ã„ã‚‹æ­¦å™¨ã«å¯¾å¿œã—ãŸè¡¨ç¤ºã‚’ã™ã‚‹
-    //public void ActiveSelectWeapon()
-    //{
-    //    switch(_meshManager._weaponType)
-    //    {
-    //        case WeaponType.GreatSword:
-    //            {
-    //                BaseActiveWeapon(_gsImage, _gsPos, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
-    //            }
-    //            break;
-    //        case WeaponType.DualBlades:
-    //            {
-    //                BaseActiveWeapon(_dbImageR, _dbPosR, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
-
-    //                BaseActiveWeapon(_dbImageL, _dbPosL, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
-    //            }
-    //            break;
-    //        case WeaponType.Hammer:
-    //            {
-    //                BaseActiveWeapon(_hImage, _hPos, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
-    //            }
-    //            break;
-    //        case WeaponType.Spear:
-    //            {
-    //                BaseActiveWeapon(_sImage, _sPos, _meshManager.MyVertices, _meshManager.MyTriangles, _meshManager.DeltaX, _meshManager.DeltaY);
-    //            }
-    //            break;
-    //        default:
-    //            {
-    //                Debug.Log("æŒ‡å®šã•ã‚ŒãŸæ­¦å™¨ã®åå‰ : " + GameManager.BlacksmithType + " ã¯å­˜åœ¨ã—ã¾ã›ã‚“");
-    //            }
-    //            return;
-    //    }
-    //}
-
     private void BaseActiveWeapon(GameObject weapon, SaveData data)
     {
         if (data.MYVERTICES == null)
         {
-            Debug.Log("é¸ã‚“ã æ­¦å™¨ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã¯ã‚ã‚Šã¾ã›ã‚“");
+            Debug.Log("‘I‚ñ‚¾•Ší‚ÌƒZ[ƒuƒf[ƒ^‚Í‚ ‚è‚Ü‚¹‚ñ");
             return;
         }
 
@@ -158,8 +104,9 @@ public class ActiveWeaponMesh : MonoBehaviour
 
         if (weapon == _hImage)
         {
-            var parentWeapon = GameObject.Find("HWeapon");
-            var pos = GameObject.Find("HPos");
+            var parentWeapon = GameObject.Find("HammerHandleIdle");
+
+            var pos = GameObject.Find("IdleHammerPos");
             if (parentWeapon == null || pos == null)
             {
                 return;
@@ -168,14 +115,14 @@ public class ActiveWeaponMesh : MonoBehaviour
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _hRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _hIdleRotateAngle);
         }
 
         else if (weapon == _sImage)
         {
-            var parentWeapon = GameObject.Find("SWeapon");
+            var parentWeapon = GameObject.Find("SpearHandleIdle");
 
-            var pos = GameObject.Find("SpearPos");
+            var pos = GameObject.Find("IdleSpearPos");
 
             if (parentWeapon == null || pos == null)
             {
@@ -185,13 +132,13 @@ public class ActiveWeaponMesh : MonoBehaviour
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _sRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _sIdleRotateAngle);
         }
 
         else if (weapon == _dbImageL)
         {
-            var parentWeapon = GameObject.Find("DBLWeapon");
-            var pos = GameObject.Find("SwordPosL");
+            var parentWeapon = GameObject.Find("DBHandleIdleL");
+            var pos = GameObject.Find("IdleDualBladesPosL");
             if (parentWeapon == null || pos == null)
             {
                 return;
@@ -200,13 +147,13 @@ public class ActiveWeaponMesh : MonoBehaviour
                 pos.transform.position.y + data.DISY, pos.transform.position.z + 1);
 
             weapon.transform.position = vec;
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbLIdleRotateAngle);
         }
 
         else if (weapon == _dbImageR)
         {
-            var parentWeapon = GameObject.Find("DBRWeapon");
-            var pos = GameObject.Find("SwordPosR");
+            var parentWeapon = GameObject.Find("DBHandleIdleR");
+            var pos = GameObject.Find("IdleDualBladesPosR");
             if (parentWeapon == null || pos == null)
             {
                 return;
@@ -217,13 +164,13 @@ public class ActiveWeaponMesh : MonoBehaviour
             weapon.transform.position = vec;
 
             weapon.transform.Rotate(0, 180, 0);
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRIdleRotateAngle);
         }
 
         else if (weapon == _gsImage)
         {
-            var parentWeapon = GameObject.Find("GSWeapon");
-            var pos = GameObject.Find("SwordPos");
+            var parentWeapon = GameObject.Find("GreatSwordHandleIdle");
+            var pos = GameObject.Find("IdleGreatSwordPos");
             if (parentWeapon == null)
             {
                 return;
@@ -232,7 +179,7 @@ public class ActiveWeaponMesh : MonoBehaviour
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _gsRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _gsIdleRotateAngle);
         }
         weapon.transform.parent.localScale = new Vector3(_size, _size, _size);
         // weapon.transform.localScale = new Vector3(_size, _size, _size);
@@ -247,7 +194,7 @@ public class ActiveWeaponMesh : MonoBehaviour
     {
         //if (data.MYVERTICES == null)
         //{
-        //    Debug.Log("é¸ã‚“ã æ­¦å™¨ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã¯ã‚ã‚Šã¾ã›ã‚“");
+        //    Debug.Log("‘I‚ñ‚¾•Ší‚ÌƒZ[ƒuƒf[ƒ^‚Í‚ ‚è‚Ü‚¹‚ñ");
         //    return;
         //}
 
@@ -267,7 +214,7 @@ public class ActiveWeaponMesh : MonoBehaviour
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _hRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _hIdleRotateAngle);
         }
 
         else if (weapon == _sImage)
@@ -282,9 +229,9 @@ public class ActiveWeaponMesh : MonoBehaviour
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _sRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _sIdleRotateAngle);
             parentWeapon2.transform.rotation = Quaternion.Euler(0, 0, 29.92f);
-            Debug.Log(_sRotateAngle);
+            Debug.Log(_sIdleRotateAngle);
         }
 
         else if (weapon == _dbImageL)
@@ -298,7 +245,7 @@ public class ActiveWeaponMesh : MonoBehaviour
                 pos.transform.position.y + data.DISY, pos.transform.position.z + 1);
 
             weapon.transform.position = vec;
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbLIdleRotateAngle);
         }
 
         else if (weapon == _dbImageR)
@@ -314,7 +261,7 @@ public class ActiveWeaponMesh : MonoBehaviour
             weapon.transform.position = vec;
 
             weapon.transform.Rotate(0, 180, 0);
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRIdleRotateAngle);
         }
 
         else if (weapon == _gsImage)
@@ -328,7 +275,7 @@ public class ActiveWeaponMesh : MonoBehaviour
                 pos.transform.position.y + data.DISY, pos.transform.position.z - 1);
 
             weapon.transform.position = vec;
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _gsRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _gsIdleRotateAngle);
         }
         weapon.transform.parent.localScale = new Vector3(_size, _size, _size);
         // weapon.transform.localScale = new Vector3(_size, _size, _size);
@@ -339,31 +286,3 @@ public class ActiveWeaponMesh : MonoBehaviour
         meshRenderer.material = new Material(Shader.Find("Unlit/VertexColorShader"));
     }
 }
-//switch (GameManager.BlacksmithType)
-//{
-//    case WeaponType.GreatSword:
-//        {
-//            data._myVertices[data._lowestPosIndex] = pos.transform.position;
-//        }
-//        break;
-//    case WeaponType.DualBlades:
-//        {
-//            data._myVertices[data._lowestPosIndex] = pos.transform.position;
-//        }
-//        break;
-//    case WeaponType.Hammer:
-//        {
-//            data._myVertices[data._lowestPosIndex] = pos.transform.position;
-//        }
-//        break;
-//    case WeaponType.Spear:
-//        {
-//            data._myVertices[data._lowestPosIndex] = pos.transform.position;
-//        }
-//        break;
-//    default:
-//        {
-//            Debug.Log("æŒ‡å®šã•ã‚ŒãŸæ­¦å™¨ã®åå‰ : " + GameManager.BlacksmithType + " ã¯å­˜åœ¨ã—ã¾ã›ã‚“");
-//        }
-//        return;
-//}

@@ -66,6 +66,9 @@ public class RankingBattleScript : MonoBehaviour
 
                 button.onClick.AddListener(() => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite));
                 button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
+
+                //TODOFFlavorText‚Ìİ’è
+                //“GĞ‰îF‚Ç‚±‚Ì‘`‚Æ‚©
             }
         }
     }

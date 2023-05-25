@@ -22,7 +22,7 @@ public class TamegiriSkill : SkillBase
     {
         SkillName = "溜め斬り";
         Damage = 60;
-        RequiredPoint = 5;
+        RequiredPoint = 10;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
         FlavorText = "剣を大きく振りかぶる攻撃";
@@ -116,10 +116,11 @@ public class TamegiriSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+                    _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 break;
             case ActorAttackType.Enemy:
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 break;
         }
     }

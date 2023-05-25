@@ -10,13 +10,13 @@ public class ShippuSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     const float _subtractHpValue = 0.02f;
-     int _count = 3;
+    int _count = 3;
 
     public ShippuSkill()
     {
         SkillName = "疾風";
         Damage = 30;
-        RequiredPoint = 5;
+        RequiredPoint = 20;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "2ターンの間敵に継続ダメージを与える";
@@ -49,8 +49,10 @@ public class ShippuSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+            _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+            _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         _count += 2;
     }
 
@@ -59,8 +61,8 @@ public class ShippuSkill : SkillBase
         if (_count <= 0)
         {
             _count--;
-            float durable = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value* _subtractHpValue;
-            _enemyStatus.AddDamage(durable);
+            float durable = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value * _subtractHpValue;
+            _enemyStatus.AddDamage(durable,0);
         }
 
         return true;

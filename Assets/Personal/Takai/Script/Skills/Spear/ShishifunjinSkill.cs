@@ -17,7 +17,7 @@ public class ShishifunjinSkill : SkillBase
     {
         SkillName = "獅子奮迅";
         Damage = 20;
-        RequiredPoint = 5;
+        RequiredPoint = 35;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "経過ターンが多いほど攻撃回数アップ（上限 7回）";
@@ -51,7 +51,7 @@ public class ShishifunjinSkill : SkillBase
     {
         var token = this.GetCancellationTokenOnDestroy();
         // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         //経過ターンが多いほど攻撃回数アップ（上限 7回） 1 + 2×(ターン数-1) 
         int num = 1 + 2 * (_count - 1);
         if (7 < num) num = 7;
@@ -59,7 +59,7 @@ public class ShishifunjinSkill : SkillBase
         for (int i = 0; i < num; i++)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(_attackWaitTime), cancellationToken: token);
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram());
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram(),_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
     }
 

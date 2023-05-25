@@ -15,12 +15,12 @@ public class IkishochinSkill : SkillBase
     {
         SkillName = "意気消沈";
         Damage = 60;
-        RequiredPoint = 5;
+        RequiredPoint = 20;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
         FlavorText = "敵の攻撃力20%を下げる";
     }
-    
+
     public override bool IsUseCheck(ActorGenerator actor)
     {
         return true;
@@ -48,7 +48,8 @@ public class IkishochinSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+            _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         FluctuationStatusClass fluctuation =
             new FluctuationStatusClass(-_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + _subtractValue, 0, 0, 0,
                 0);

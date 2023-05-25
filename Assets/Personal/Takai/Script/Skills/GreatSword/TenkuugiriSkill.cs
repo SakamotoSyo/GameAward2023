@@ -25,7 +25,7 @@ public class TenkuugiriSkill : SkillBase
     {
         SkillName = "天空斬り";
         Damage = 180;
-        RequiredPoint = 5;
+        RequiredPoint = 0;
         Weapon = (WeaponType)0;
         Type = (SkillType)1;
         FlavorText = "重さが100以上の時のときこの技の攻撃力が20%上がる ※使用後武器破壊";
@@ -126,11 +126,11 @@ public class TenkuugiriSkill : SkillBase
                 if (_playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() >= WeaponWeight)
                 {
                     _enemyStatus.AddDamage(
-                        dmg + Damage + (dmg * AddDamageValue));
+                        dmg + Damage + (dmg * AddDamageValue),_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 }
                 else
                 {
-                    _enemyStatus.AddDamage(dmg + Damage);
+                    _enemyStatus.AddDamage(dmg + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 }
             }
                 break;
@@ -140,11 +140,11 @@ public class TenkuugiriSkill : SkillBase
 
                 if (_enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight >= WeaponWeight)
                 {
-                    _playerStatus.AddDamage(dmg + Damage + (dmg * AddDamageValue));
+                    _playerStatus.AddDamage(dmg + Damage + (dmg * AddDamageValue),_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 }
                 else
                 {
-                    _playerStatus.AddDamage(dmg + Damage);
+                    _playerStatus.AddDamage(dmg + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 }
             }
                 break;

@@ -19,7 +19,7 @@ public class TenkamusoSkill : SkillBase
     {
         SkillName = "天下無双";
         Damage = 120;
-        RequiredPoint = 5;
+        RequiredPoint = 45;
         Weapon = (WeaponType)3;
         Type = (SkillType)1;
         FlavorText = "経過ターンが多いほど威力上昇　※HP30％以下で発動可能";
@@ -85,13 +85,13 @@ public class TenkamusoSkill : SkillBase
             case ActorAttackType.Player:
             {
                 _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage +
-                                       (_count * 10));
+                                       (_count * 10),_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
             }
                 break;
             case ActorAttackType.Enemy:
             {
                 _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage +
-                                        (_count * 10));
+                                        (_count * 10),_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
             }
                 break;
         }

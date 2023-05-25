@@ -11,6 +11,7 @@ public class BattleChangeWeapon : MonoBehaviour
     [SerializeField] private Button[] _weaponButton = new Button[4];
     [SerializeField] private Text[] _weaponTypeText = new Text[4];
     [SerializeField] private GameObject _selectUi;
+    [SerializeField] private BattleStateController _battleStateController;
     private GameObject _buttonInsPos;
     private PlayerStatus _playerStatus;
 
@@ -59,10 +60,12 @@ public class BattleChangeWeapon : MonoBehaviour
     {
         _playerStatus.EquipWeponChange(weaponData, arrayNum);
         _weaponUiPanel.SetActive(false);
+        _battleStateController.ActorStateEnd();
     }
 
     public void CancelButton() 
     {
         _weaponUiPanel.SetActive(false);
+        _battleStateController.ActorStateEnd();
     }
 }

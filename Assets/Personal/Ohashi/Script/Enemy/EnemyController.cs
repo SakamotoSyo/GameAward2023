@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     private void Start()
     {
-        _enemyAttack.Init(_enemyStatus.EquipWeapon, _animator);
+        _enemyAttack.Init(_enemyStatus.EquipWeapon);
     }
 
     private void Update()
@@ -41,22 +41,21 @@ public class EnemyController : MonoBehaviour, IAddDamage
     /// <summary>
     /// 攻撃のメソッドを呼ぶ
     /// </summary>
-    public async UniTask Attack(PlayerController playerController)
+    public async UniTask Attack()
     {
         if(!_enemyStatus.IsStan)
         {
-            _enemyAttack.SelectAttack(playerController);
+            _enemyAttack.SelectAttack();
             await UniTask.Delay(1);
         }
     }
 
-    public void AddDamage(float damage)
+    public void AddDamage(float damage, float criticalRate)
     {
         var damageController = Instantiate(_damegeController,
             _damagePos.position,
             Quaternion.identity);
-        damageController.TextInit((int)damage);
-        _enemyStatus.EquipWeapon.AddDamage((int)damage);
+        damageController.TextInit((int)damage, _enemyStatus.EquipWeapon.AddDamage((int)damage, criticalRate));
 
         if(_enemyStatus.EquipWeapon.IsWeaponBreak())
         {

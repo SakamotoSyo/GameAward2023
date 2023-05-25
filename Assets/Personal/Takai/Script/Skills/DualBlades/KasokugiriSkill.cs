@@ -19,7 +19,7 @@ public class KasokugiriSkill : SkillBase
     {
         SkillName = "加速斬り";
         Damage = 20;
-        RequiredPoint = 5;
+        RequiredPoint = 30;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "重さが軽いほど連撃数が増える(上限4)";
@@ -169,12 +169,12 @@ public class KasokugiriSkill : SkillBase
                 await UniTask.Delay(TimeSpan.FromSeconds(0),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
                 _enemyStatus.AddDamage(
-                    _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+                    _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 break;
             case ActorAttackType.Enemy:
                 await UniTask.Delay(TimeSpan.FromSeconds(0),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 break;
         }
     }

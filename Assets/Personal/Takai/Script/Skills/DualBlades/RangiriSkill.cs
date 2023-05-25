@@ -19,7 +19,7 @@ public class RangiriSkill : SkillBase
     {
         SkillName = "乱切り";
         Damage = 60;
-        RequiredPoint = 5;
+        RequiredPoint = 15;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
         FlavorText = "2ターンの間攻撃力が5%上昇(重複あり→5%,10%,15%)";
@@ -52,7 +52,7 @@ public class RangiriSkill : SkillBase
     protected override void SkillEffect()
     {
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
-        _enemyStatus.AddDamage(dmg + Damage);
+        _enemyStatus.AddDamage(dmg + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
 
         if (++_count <= Turn)
         {

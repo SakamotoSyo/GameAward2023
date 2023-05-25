@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Random = UnityEngine.Random; 
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,17 +35,24 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// ダメージを受ける流れ
     /// </summary>
-    public void AddDamage(float damage) 
+    public void AddDamage(float damage, float criticalNum) 
     {
+        bool isCritical = CriticalCheck(criticalNum);
+        if (isCritical)
+        {
+            //会心率
+            damage *= 1.3f;
+        }
+
         if (_playerStatus.EquipWeapon.IsEpicSkill1)
         {
             damage = 0;
         }
 
         var damageController = Instantiate(_damegeController,
-          _damagePos.position,
-           Quaternion.identity);
-        damageController.TextInit((int)damage);
+           _damagePos.position,
+            Quaternion.identity);
+        damageController.TextInit((int)damage, isCritical);
 
         if (_playerStatus.EquipWeapon.DownJudge(damage))
         {
@@ -69,35 +77,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// スキルを使用する場合に呼ぶ関数
-    /// </summary>
-    /// <param name="damage"></param>
-    /// <returns></returns>
-    public bool UseSkillDamage(float damage)
-    {
-        if (_playerStatus.EquipWeapon.IsEpicSkill1)
-        {
-            damage = 1;
-        }
-
-        var damageController = Instantiate(_damegeController,
-          _damagePos.position,
-           Quaternion.identity);
-        damageController.TextInit((int)damage);
-
-        if (_playerStatus.EquipWeapon.DownJudge(damage))
-        {
-            //アニメーションがあったらここでダメージを受ける処理を呼ぶ
-            _playerStatus.EquipWeapon.AddDamage(damage);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    /// <summary>
     /// 通常攻撃
     /// </summary>
     public float Attack(PlayerAttackType attackType) 
@@ -111,6 +90,21 @@ public class PlayerController : MonoBehaviour
              //   return
         }
         return 0;
+    }
+
+    /// <summary>
+    /// 会心が出たかどうか
+    /// </summary>
+    /// <param name="criticalNum"></param>
+    /// <returns></returns>
+    private bool CriticalCheck(float criticalNum) 
+    {
+        int r = Random.Range(0, 100);
+        if (r > criticalNum)
+        {
+            return true;
+        }
+        return false;
     }
 
     public void EquipWeaponChange(WeaponData weaponData, int arrayNum) 

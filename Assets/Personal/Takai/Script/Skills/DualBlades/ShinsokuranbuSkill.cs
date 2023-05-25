@@ -20,7 +20,7 @@ public class ShinsokuranbuSkill : SkillBase
     {
         SkillName = "神速乱舞";
         Damage = 150;
-        RequiredPoint = 5;
+        RequiredPoint = 50;
         Weapon = (WeaponType)1;
         Type = (SkillType)1;
         FlavorText = "重さが30以下のとき発動可能　※使用後元のステータスに戻る";
@@ -89,13 +89,13 @@ public class ShinsokuranbuSkill : SkillBase
             case ActorAttackType.Player:
             {
                 weight = _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram();
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage);
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
             }
                 break;
             case ActorAttackType.Enemy:
             {
                 weight = _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight;
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
             }
                 break;
         }

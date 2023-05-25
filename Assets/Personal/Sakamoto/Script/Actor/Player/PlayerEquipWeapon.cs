@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using System;
 
 public class PlayerEquipWeapon
 {
@@ -12,7 +13,8 @@ public class PlayerEquipWeapon
     public IReactiveProperty<float> MaxDurable => _maxDurable;
     public IReactiveProperty<float> CurrentDurable => _currentDurable;
     public WeaponData.AttributeType Attribute => _attribute;
-    public WeaponType WeaponType => _weponType;
+    public WeaponType WeaponType => _weponType.Value;
+    public IObservable<WeaponType> WeaponTypeOb => _weponType;
     public WeaponSkill WeaponSkill => _weaponSkill;
     public int WeaponNum => _weaponNum;
     public bool IsEpicSkill1 => _isEpicSkill1;
@@ -27,7 +29,7 @@ public class PlayerEquipWeapon
     private bool _isEpicSkill1 = false, _isEpicSkill2 = false, _isEpicSkill3 = false;
     private WeaponSkill _weaponSkill;
     private WeaponData.AttributeType _attribute;
-    private WeaponType _weponType;
+    private ReactiveProperty<WeaponType> _weponType = new();
     [Tooltip("âΩî‘ñ⁄Ç…éùÇ¡ÇƒÇ¢ÇÈïêäÌÇ©")]
     private int _weaponNum;
     private SkillDataManagement _skillDataManagement;
@@ -103,7 +105,7 @@ public class PlayerEquipWeapon
         _maxDurable.Value = weaponData.MaxDurable;
         ChangeCurrentDurable(weaponData.CurrentDurable);
         _attribute = weaponData.Attribute;
-        _weponType = weaponData.WeaponType;
+        _weponType.Value = weaponData.WeaponType;
         _weaponNum = arrayNum;
         _weaponSkill = weaponData.WeaponSkill;
         if (_skillDataManagement)

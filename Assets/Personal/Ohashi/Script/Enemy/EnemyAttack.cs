@@ -1,90 +1,92 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using System;
-using Random = UnityEngine.Random;
 
 public class EnemyAttack
 {
-    private float _offensivePower;
-
-    private Animator _anim;
-
-    private EnemyAttackType _attackType = new();
-
     private EquipEnemyWeapon _equipWepon;
 
-    public void Init(EquipEnemyWeapon equipWepon, Animator anim)
+    private SkillDataManagement _skillDataManagement;
+
+    private int[] _skillArray = new int[3] {0, 0, 1};
+
+    public void Init(EquipEnemyWeapon equipWepon)
     {
         _equipWepon = equipWepon;
-        _anim = anim;
+        _skillDataManagement = GameObject.Find("SkillDataBase").GetComponent<SkillDataManagement>();
     }
 
     /// <summary>
     /// ‹Z‚ğƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ
     /// </summary>
-    public void SelectAttack(PlayerController playerController)
+    public async UniTask SelectAttack()
     {
-        int r = Random.Range(0, Enum.GetNames(typeof(EnemyAttackType)).Length);
-        _attackType = (EnemyAttackType)r;
+        int index = Random.Range(0, _skillArray.Length);
 
-        if(_attackType == EnemyAttackType.Normal)
+        if (_equipWepon.CurrentDurable.Value <= _equipWepon.CurrentDurable.Value / 2)
         {
-            NormalAttack(playerController);
+            SpecialAttack();
         }
-        else if(_attackType == EnemyAttackType.Skill)
+
+        if (_skillArray[index] == 0)
         {
-            SkillAttack(playerController);
+            NormalAttack();
         }
         else
         {
-            SpecialAttack(playerController);
+            SkillAttack();
         }
     }
 
     /// <summary>
     /// UŒ‚
     /// </summary>
-    public async UniTask NormalAttack(PlayerController playerController)
+    public async UniTask NormalAttack()
     {
         Debug.Log("normal");
-        playerController.AddDamage(_equipWepon.CurrentOffensivePower);
-       // await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        if(_equipWepon.WeaponType == WeaponType.GreatSword)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "—­‚ßa‚è");
+        }
+        else if (_equipWepon.WeaponType == WeaponType.DualBlades)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "˜A‘±a‚è");
+        }
+        else if (_equipWepon.WeaponType == WeaponType.Hammer)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "‘S—Í‘Å‚¿");
+
+        }
+        else if (_equipWepon.WeaponType == WeaponType.Spear)
+        {
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "ˆê‘M");
+        }
+
     }
 
     /// <summary>
     /// ƒXƒLƒ‹UŒ‚
     /// </summary>
-    private async UniTask SkillAttack(PlayerController playerController)
+    private async UniTask SkillAttack()
     {
         int r = Random.Range(0, 2);
         if(r == 0)
         {
             Debug.Log("skill1");
-            playerController.AddDamage(_equipWepon.CurrentOffensivePower);
-            //await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, _equipWepon.WeaponSkill.WeaponSkillArray[0]);
         }
         else
         {
             Debug.Log("skill2");
-            playerController.AddDamage(_equipWepon.CurrentOffensivePower);
-            //await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, _equipWepon.WeaponSkill.WeaponSkillArray[1]);
         }
     }
 
     /// <summary>
     /// •KE‹Z
     /// </summary>
-    private async UniTask SpecialAttack(PlayerController playerController)
+    private async UniTask SpecialAttack()
     {
         Debug.Log("special");
-        playerController.AddDamage(_equipWepon.CurrentOffensivePower);
-        //await UniTask.WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, _equipWepon.WeaponSkill.SpecialAttack);
     }
-}
-
-public enum EnemyAttackType
-{
-    Normal,
-    Skill,
-    Special,
 }
