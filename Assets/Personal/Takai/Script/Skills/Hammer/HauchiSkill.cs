@@ -14,16 +14,16 @@ public class HauchiSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    const float _subtractValue = 0.4f;
+    const float _subtractValue = 0.3f;
 
     public HauchiSkill()
     {
         SkillName = "刃打ち";
-        Damage = 50;
+        Damage = 1.5f;
         RequiredPoint = 25;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
-        FlavorText = "敵の攻撃力と会心率が20%下がる";
+        FlavorText = "敵の攻撃力と会心率を下げる攻撃。（30%・永続・重複なし）";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)
@@ -75,7 +75,7 @@ public class HauchiSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,
                     _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 fluctuation = new FluctuationStatusClass(
                     -_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue, 0,
@@ -83,7 +83,7 @@ public class HauchiSkill : SkillBase
                 _enemyStatus.EnemyStatus.EquipWeapon.FluctuationStatus(fluctuation);
                 break;
             case ActorAttackType.Enemy:
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 fluctuation = new FluctuationStatusClass(
                     -_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * _subtractValue, 0,
                     -_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram() * _subtractValue, 0, 0);
