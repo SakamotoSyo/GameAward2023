@@ -14,6 +14,8 @@ public class EnemyPresenter : IStartable, IDisposable
 
     private CompositeDisposable _compositeDisposable = new();
 
+
+
     [Inject]
     private EnemyPresenter(EnemyStatus enemyStatus, EnemyView enemyView, EnemyController enemyController)
     {
@@ -29,13 +31,14 @@ public class EnemyPresenter : IStartable, IDisposable
     private void EnemyHealthObserver()
     {
         _enemyStatus.EquipWeapon.CurrentDurable
-            .Subscribe(durable => _enemyView.HealthText(durable))
+            .Subscribe(durable => _enemyView.HealthText(durable, _enemyStatus.EquipWeapon.MaxDurable))
             .AddTo(_compositeDisposable);
     }
 
     public void Start()
     {
         EnemyHealthObserver();
+        _enemyView.MaxHealthText(_enemyStatus.EquipWeapon.MaxDurable);
     }
 
     public void Dispose()
