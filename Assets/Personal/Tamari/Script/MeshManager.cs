@@ -96,6 +96,8 @@ public class MeshManager : MonoBehaviour
 
     public static bool _isFinished;
 
+    public bool _isStarted;
+
     private SaveData _saveData = default;
     public SaveData SaveData => _saveData;
 
@@ -114,39 +116,14 @@ public class MeshManager : MonoBehaviour
     int _countNum = 0;
 
     [SerializeField]
-    GameObject _particle = default; 
+    GameObject _particle = default;
 
-#if UNITY_EDITOR
     public WeaponType _weaponType;
-    public bool _isGS;
-    public bool _isDB;
-    public bool _isH;
-    public bool _isS;
-#endif
 
     private void Awake()
     {
         _myMesh = new Mesh();
         _saveData = new SaveData();
-        SaveManager.Initialize();
-#if UNITY_EDITOR
-        if (_isGS)
-        {
-            _weaponType = WeaponType.GreatSword;
-        }
-        if (_isDB)
-        {
-            _weaponType = WeaponType.DualBlades;
-        }
-        if (_isH)
-        {
-            _weaponType = WeaponType.Hammer;
-        }
-        if (_isS)
-        {
-            _weaponType = WeaponType.Spear;
-        }
-#endif
     }
 
     void Start()
@@ -161,12 +138,11 @@ public class MeshManager : MonoBehaviour
 
         _weaponSaveData = new WeaponSaveData();
 
-        CreateMesh();
+        // CreateMesh();
     }
     void Update()
     {
-        _jyusin.transform.position = _centerPos;
-        if (_isFinished)
+        if (_isFinished || !_isStarted)
         {
             return;
         }
@@ -238,7 +214,7 @@ public class MeshManager : MonoBehaviour
             return;
         }
 
-        if(_sizeUpperHalf >= _heightLimit && ioDis >= toDis && _indexNum == _higestPosIndex
+        if (_sizeUpperHalf >= _heightLimit && ioDis >= toDis && _indexNum == _higestPosIndex
             || _sizeLowerHalf >= _lowLimit && ioDis >= toDis && _indexNum == _lowestPosIndex)
         {
             Debug.Log("これ以上縦に伸びません");
@@ -268,7 +244,7 @@ public class MeshManager : MonoBehaviour
             Debug.Log($"叩いた場所が一番近い頂点{_indexNum}から離れすぎてます");
         }
 
-        
+
         _myMesh.SetVertices(_myVertices);
 
     }
@@ -279,56 +255,35 @@ public class MeshManager : MonoBehaviour
     /// <param name="weapon"></param>
     public void SaveMesh()
     {
-#if UNITY_EDITOR
-        if (_isGS)
+        switch (_weaponType)
         {
-            BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
-        }
-        else if (_isDB)
-        {
-            BaseSaveMesh(SaveManager.DUALBLADESFILEPATH, WeaponSaveData.DBData);
-        }
-        else if (_isH)
-        {
-            BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
-        }
-        else if (_isS)
-        {
-            BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
+            case WeaponType.GreatSword:
+                {
+                    BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
+                }
+                break;
+            case WeaponType.DualBlades:
+                {
+                    BaseSaveMesh(SaveManager.DUALBLADESFILEPATH, WeaponSaveData.DBData);
+                }
+                break;
+            case WeaponType.Hammer:
+                {
+                    BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
+                }
+                break;
+            case WeaponType.Spear:
+                {
+                    BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
+                }
+                break;
+            default:
+                {
+                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
+                }
+                return;
         }
 
-        else
-#endif
-        {
-            switch (GameManager.BlacksmithType)
-            {
-                case WeaponType.GreatSword:
-                    {
-                        BaseSaveMesh(SaveManager.GREATSWORDFILEPATH, WeaponSaveData.GSData);
-                    }
-                    break;
-                case WeaponType.DualBlades:
-                    {
-                        BaseSaveMesh(SaveManager.DUALBLADESFILEPATH, WeaponSaveData.DBData);
-                    }
-                    break;
-                case WeaponType.Hammer:
-                    {
-                        BaseSaveMesh(SaveManager.HAMMERFILEPATH, WeaponSaveData.HData);
-                    }
-                    break;
-                case WeaponType.Spear:
-                    {
-                        BaseSaveMesh(SaveManager.SPEARFILEPATH, WeaponSaveData.SData);
-                    }
-                    break;
-                default:
-                    {
-                        Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
-                    }
-                    return;
-            }
-        }
 
     }
 
@@ -357,6 +312,7 @@ public class MeshManager : MonoBehaviour
 
     public void CreateMesh()
     {
+        _isStarted = true;
         _go = new GameObject("WeaponBase");
 
         _meshFilter = _go.AddComponent<MeshFilter>();
@@ -543,19 +499,19 @@ public class MeshManager : MonoBehaviour
         return new Vector2(Mathf.Abs(disUpperHalf), Mathf.Abs(disLowerHalf));
     }
 
-    
 
-//    [ContextMenu("Make mesh from model")]
-//    public void MakeMesh()
-//    {
-//#if UNITY_EDITOR
-//        // var mesh = _go.GetComponent<MeshFilter>();
-//        var meshRenderer = _go.GetComponent<MeshRenderer>();
-//        AssetDatabase.CreateAsset(_myMesh, "Assets/Personal/Tamari/MeshPrefab/Weapon" + _weaponType + ".asset");
-//        AssetDatabase.SaveAssets();
-//        _countNum++;
-//#endif
-//    }
+
+    //    [ContextMenu("Make mesh from model")]
+    //    public void MakeMesh()
+    //    {
+    //#if UNITY_EDITOR
+    //        // var mesh = _go.GetComponent<MeshFilter>();
+    //        var meshRenderer = _go.GetComponent<MeshRenderer>();
+    //        AssetDatabase.CreateAsset(_myMesh, "Assets/Personal/Tamari/MeshPrefab/Weapon" + _weaponType + ".asset");
+    //        AssetDatabase.SaveAssets();
+    //        _countNum++;
+    //#endif
+    //    }
 
 }
 
