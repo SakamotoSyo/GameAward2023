@@ -12,8 +12,8 @@ using UnityEditor;
 /// </summary>
 public class MeshManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _jyusin = default;
+    //[SerializeField]
+    //private GameObject _jyusin = default;
 
     private int _higestPosIndex = default;
 
