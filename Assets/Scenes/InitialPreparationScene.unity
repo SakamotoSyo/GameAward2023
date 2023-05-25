@@ -182,11 +182,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 44
+    m_Font: {fileID: 12800000, guid: cdb89d47fe90fad499e79a99693cdffd, type: 3}
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 5
     m_MaxSize: 79
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -314,7 +314,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillName: 
-  _actorGenerator: {fileID: 0}
   _transform: {fileID: 0}
   _pStatus: {fileID: 0}
   _eStatus: {fileID: 0}
@@ -750,6 +749,18 @@ MonoBehaviour:
   _preparationScript: {fileID: 1074670496}
   _infoPanel: {fileID: 304716137}
   _infoText: {fileID: 28343340}
+  _weaponData:
+    OffensivePower: 0
+    WeaponWeight: 0
+    CriticalRate: 0
+    MaxDurable: 0
+    CurrentDurable: 0
+    StatusArray: []
+    WeaponSkill:
+      _skillArray:
+      - 
+      - 
+    WeaponType: 0
 --- !u!114 &627633409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,11 +1139,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 44
+    m_Font: {fileID: 12800000, guid: cdb89d47fe90fad499e79a99693cdffd, type: 3}
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 5
     m_MaxSize: 79
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1931,11 +1942,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 44
+    m_Font: {fileID: 12800000, guid: cdb89d47fe90fad499e79a99693cdffd, type: 3}
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 5
     m_MaxSize: 79
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2011,11 +2022,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 44
+    m_Font: {fileID: 12800000, guid: cdb89d47fe90fad499e79a99693cdffd, type: 3}
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 5
     m_MaxSize: 79
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2174,6 +2185,18 @@ MonoBehaviour:
   _preparationScript: {fileID: 1074670496}
   _infoPanel: {fileID: 304716137}
   _infoText: {fileID: 28343340}
+  _weaponData:
+    OffensivePower: 0
+    WeaponWeight: 0
+    CriticalRate: 0
+    MaxDurable: 0
+    CurrentDurable: 0
+    StatusArray: []
+    WeaponSkill:
+      _skillArray:
+      - 
+      - 
+    WeaponType: 0
 --- !u!114 &1307090942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2479,6 +2502,18 @@ MonoBehaviour:
   _preparationScript: {fileID: 1074670496}
   _infoPanel: {fileID: 304716137}
   _infoText: {fileID: 28343340}
+  _weaponData:
+    OffensivePower: 0
+    WeaponWeight: 0
+    CriticalRate: 0
+    MaxDurable: 0
+    CurrentDurable: 0
+    StatusArray: []
+    WeaponSkill:
+      _skillArray:
+      - 
+      - 
+    WeaponType: 0
 --- !u!114 &1854168166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2855,6 +2890,18 @@ MonoBehaviour:
   _preparationScript: {fileID: 1074670496}
   _infoPanel: {fileID: 304716137}
   _infoText: {fileID: 28343340}
+  _weaponData:
+    OffensivePower: 0
+    WeaponWeight: 0
+    CriticalRate: 0
+    MaxDurable: 0
+    CurrentDurable: 0
+    StatusArray: []
+    WeaponSkill:
+      _skillArray:
+      - 
+      - 
+    WeaponType: 0
 --- !u!114 &2027089524
 MonoBehaviour:
   m_ObjectHideFlags: 0
