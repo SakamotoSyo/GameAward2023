@@ -13,6 +13,7 @@ public class SkillDataManagement : MonoBehaviour
     [SerializeField] private EnemyController _eStatus;
     [SerializeField] private List<GameObject> _skillPrefab = new();
     [SerializeField] private Transform _playerVec;
+    [SerializeField] private Transform _enemyVec;
 
     private ActorGenerator _actorGenerator;
     private List<SkillBase> _skills = new List<SkillBase>();
@@ -38,7 +39,7 @@ public class SkillDataManagement : MonoBehaviour
         {
             var skillObj = Instantiate(_skillPrefab[i], this.transform);
             _skills.Add(skillObj.GetComponent<SkillBase>());
-            skillObj.transform.position = new Vector2(_playerVec.position.x + 2.5f, _playerVec.position.y - 1.5f);
+            //skillObj.transform.position = new Vector2(_playerVec.position.x + 2.5f, _playerVec.position.y - 1.5f);
         }
 
         //foreach (var skill in skillPrefabs)
@@ -84,7 +85,17 @@ public class SkillDataManagement : MonoBehaviour
             _pStatus = _actorGenerator.PlayerController;
             _eStatus = _actorGenerator.EnemyController;
             Debug.Log(skill.name);
-            await skill.UseSkill(_pStatus, _eStatus, actorType);
+            if (actorType == ActorAttackType.Player)
+            {
+                skill.transform.position = new Vector2(_playerVec.position.x + 2.5f, _playerVec.position.y - 1.5f);
+                await skill.UseSkill(_pStatus, _eStatus, actorType);
+            }
+            else if (actorType == ActorAttackType.Enemy)
+            {
+                skill.transform.position =new Vector2(_enemyVec.position.x - 2, _playerVec.position.y - 1);
+                await skill.UseSkill(_pStatus, _eStatus, actorType);
+            }
+
             _skillUsePool.Add(skill);
         }
         else
@@ -166,7 +177,7 @@ public class SkillDataManagement : MonoBehaviour
     /// </summary>
     /// <param name="skillName"></param>
     /// <returns></returns>
-    public bool IsUseCheck(string skillName,ActorGenerator actor)
+    public bool IsUseCheck(string skillName, ActorGenerator actor)
     {
         foreach (var s in _skills)
         {
