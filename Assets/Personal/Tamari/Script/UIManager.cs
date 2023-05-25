@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
 
     GameObject _weaponBase = default;
 
+    private int _indexNum = 0;
+
     [SerializeField, Tooltip("完成後のフェードイン用Image")]
     Image _finishImage = default;
 
@@ -77,24 +79,44 @@ public class UIManager : MonoBehaviour
         _panelForSample.SetActive(false);
         _weaponBase = GameObject.Find("MeshManager");
     }
-    public void SelectWeapon(string weapon)
+
+    public void OnSelect(int num)
     {
-        if(weapon == WeaponType.GreatSword.ToString())
+        if(num == 0)
+        {
+            _indexNum = num;
+        }
+        else if(num == 1)
+        {
+            _indexNum = num;
+        }
+        else if (num == 2)
+        {
+            _indexNum = num;
+        }
+        else if (num == 3)
+        {
+            _indexNum = num;
+        }
+    }
+    public void SelectWeapon()
+    {
+        if (_indexNum == 0)
         {
             _meshManager._weaponType = WeaponType.GreatSword;
             _weaponTypeText.text = "大剣";
         }
-        else if(weapon == WeaponType.DualBlades.ToString())
+        else if (_indexNum == 1)
         {
             _meshManager._weaponType = WeaponType.DualBlades;
             _weaponTypeText.text = "双剣";
         }
-        else if(weapon == WeaponType.Hammer.ToString())
+        else if (_indexNum == 2)
         {
             _meshManager._weaponType = WeaponType.Hammer;
             _weaponTypeText.text = "ハンマー";
         }
-        else if (weapon == WeaponType.Spear.ToString())
+        else if (_indexNum == 3)
         {
             _meshManager._weaponType = WeaponType.Spear;
             _weaponTypeText.text = "やり";
@@ -102,6 +124,31 @@ public class UIManager : MonoBehaviour
         _firstPanel.SetActive(false);
         _meshManager.CreateMesh();
     }
+    //public void SelectWeapon(string weapon)
+    //{
+    //    if(weapon == WeaponType.GreatSword.ToString())
+    //    {
+    //        _meshManager._weaponType = WeaponType.GreatSword;
+    //        _weaponTypeText.text = "大剣";
+    //    }
+    //    else if(weapon == WeaponType.DualBlades.ToString())
+    //    {
+    //        _meshManager._weaponType = WeaponType.DualBlades;
+    //        _weaponTypeText.text = "双剣";
+    //    }
+    //    else if(weapon == WeaponType.Hammer.ToString())
+    //    {
+    //        _meshManager._weaponType = WeaponType.Hammer;
+    //        _weaponTypeText.text = "ハンマー";
+    //    }
+    //    else if (weapon == WeaponType.Spear.ToString())
+    //    {
+    //        _meshManager._weaponType = WeaponType.Spear;
+    //        _weaponTypeText.text = "やり";
+    //    }
+    //    _firstPanel.SetActive(false);
+    //    _meshManager.CreateMesh();
+    //}
 
     public void SwitchCheckForReset(bool flag)
     {
