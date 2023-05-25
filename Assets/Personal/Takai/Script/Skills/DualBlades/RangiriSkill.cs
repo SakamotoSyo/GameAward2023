@@ -9,7 +9,7 @@ public class RangiriSkill : SkillBase
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    const float AddDamageValue = 0.05f;
+    const float AddDamageValue = 0.15f;
     private const int Turn = 3;
     private int _count;
     private int _turnCount;
@@ -18,11 +18,11 @@ public class RangiriSkill : SkillBase
     public RangiriSkill()
     {
         SkillName = "乱切り";
-        Damage = 60;
+        Damage = 1.4f;
         RequiredPoint = 15;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
-        FlavorText = "2ターンの間攻撃力が5%上昇(重複あり→5%,10%,15%)";
+        FlavorText = "2ターンの間、攻撃力が15%上昇。(重複あり→15%,30%,45%)";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)
@@ -52,7 +52,7 @@ public class RangiriSkill : SkillBase
     protected override void SkillEffect()
     {
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
-        _enemyStatus.AddDamage(dmg + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+        _enemyStatus.AddDamage(dmg * Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
 
         if (++_count <= Turn)
         {

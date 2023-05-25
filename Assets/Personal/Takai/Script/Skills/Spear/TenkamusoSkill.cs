@@ -18,25 +18,26 @@ public class TenkamusoSkill : SkillBase
     public TenkamusoSkill()
     {
         SkillName = "天下無双";
-        Damage = 120;
+        Damage = 16;
         RequiredPoint = 45;
         Weapon = (WeaponType)3;
         Type = (SkillType)1;
         FlavorText = "経過ターンが多いほど威力上昇　※HP30％以下で発動可能";
     }
-    
+
     public override bool IsUseCheck(ActorGenerator actor)
     {
         if (actor.PlayerController)
         {
             var hp = actor.PlayerController.PlayerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
-            return (actor.PlayerController.PlayerStatus.EquipWeapon.CurrentDurable.Value >= hp) ? true : false;
+            return (actor.PlayerController.PlayerStatus.EquipWeapon.CurrentDurable.Value <= hp) ? true : false;
         }
         else if (actor.EnemyController)
         {
             var hp = actor.EnemyController.EnemyStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
-            return (actor.EnemyController.EnemyStatus.EquipWeapon.CurrentDurable.Value >= hp) ? true : false;
+            return (actor.EnemyController.EnemyStatus.EquipWeapon.CurrentDurable.Value <= hp) ? true : false;
         }
+
         return false;
     }
 
@@ -84,14 +85,14 @@ public class TenkamusoSkill : SkillBase
         {
             case ActorAttackType.Player:
             {
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage +
-                                       (_count * 10),_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage +
+                                       (_count * 100), _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
             }
                 break;
             case ActorAttackType.Enemy:
             {
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage +
-                                        (_count * 10),_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower * Damage +
+                                        (_count * 100), _enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
             }
                 break;
         }

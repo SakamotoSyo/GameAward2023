@@ -15,7 +15,7 @@ public class KudakiuchiSkill : SkillBase
     public KudakiuchiSkill()
     {
         SkillName = "砕き打ち";
-        Damage = 50;
+        Damage = 1.5f;
         RequiredPoint = 15;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
@@ -49,7 +49,7 @@ public class KudakiuchiSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,
             _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
 
         //敵の防御力を下げる処理

@@ -9,17 +9,17 @@ public class ShippuSkill : SkillBase
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    const float _subtractHpValue = 0.02f;
+    const float _subtractHpValue = 0.5f;
     int _count = 3;
 
     public ShippuSkill()
     {
         SkillName = "疾風";
-        Damage = 30;
+        Damage = 0.8f;
         RequiredPoint = 20;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
-        FlavorText = "2ターンの間敵に継続ダメージを与える";
+        FlavorText = "2ターンの間、敵に継続ダメージを与える。";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)
@@ -49,9 +49,9 @@ public class ShippuSkill : SkillBase
     protected override void SkillEffect()
     {
         // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,
             _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,
             _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         _count += 2;
     }

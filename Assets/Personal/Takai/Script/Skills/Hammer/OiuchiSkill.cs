@@ -13,11 +13,11 @@ public class OiuchiSkill : SkillBase
     public OiuchiSkill()
     {
         SkillName = "追い打ち";
-        Damage = 45;
+        Damage = 1.45f;
         RequiredPoint = 20;
         Weapon = (WeaponType)2;
         Type = (SkillType)0;
-        FlavorText = "威力が低いが、敵にデバフがついていると威力が倍になる";
+        FlavorText = "敵に弱体効果がついていると威力が上がる。";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)
@@ -46,13 +46,15 @@ public class OiuchiSkill : SkillBase
 
     protected override void SkillEffect()
     {
-        // スキルの効果処理を実装する
-        _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
-            _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         if (_enemyStatus.EnemyStatus.IsDebuff()) //敵にデバフがついているか検知
         {
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * 2.2f,
                 _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+        }
+        else
+        {
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,
+            _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
     }
 

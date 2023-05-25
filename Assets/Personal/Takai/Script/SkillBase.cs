@@ -5,11 +5,12 @@ using UnityEngine.Playables;
 public abstract class SkillBase : MonoBehaviour
 {
     public string SkillName { get; protected set; }
-    public int Damage { get; protected set; }
+    public float Damage { get; protected set; }
     public int RequiredPoint { get; protected set; }
     public WeaponType Weapon { get; protected set; }
     public SkillType Type { get; protected set; }
     public string FlavorText { get; protected set; }
+    
 
     public abstract bool IsUseCheck(ActorGenerator actor);
     public abstract UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType);

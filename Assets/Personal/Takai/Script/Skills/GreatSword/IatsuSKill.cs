@@ -9,7 +9,7 @@ public class IatsuSKill : SkillBase
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    private const float PowerDown = 0.1f;
+    private const float PowerDown = 0.5f;
     private int _turn;
     private float _deBuffValue = 0;
 
@@ -20,7 +20,7 @@ public class IatsuSKill : SkillBase
         RequiredPoint = 0;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
-        FlavorText = "2ターンの間敵の攻撃力を10%下げる";
+        FlavorText = "2ターンの間、敵の攻撃力を50%下げる。";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)

@@ -10,7 +10,6 @@ public class TenkuugiriSkill : SkillBase
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    private ActorAttackType _actor;
     private const float WeaponWeight = 100;
     private const float AddDamageValue = 0.2f;
     private bool _isUse = false;
@@ -18,11 +17,11 @@ public class TenkuugiriSkill : SkillBase
     public TenkuugiriSkill()
     {
         SkillName = "天空斬り";
-        Damage = 180;
+        Damage = 20;
         RequiredPoint = 0;
         Weapon = (WeaponType)0;
         Type = (SkillType)1;
-        FlavorText = "重さが100以上の時のときこの技の攻撃力が20%上がる ※使用後武器破壊";
+        FlavorText = "素早さが相手より低いとき、この技の攻撃力が20%上がる。使用後武器破壊。";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)
@@ -35,7 +34,6 @@ public class TenkuugiriSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
-        _actor = actorType;
 
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
@@ -55,18 +53,15 @@ public class TenkuugiriSkill : SkillBase
     {
         _isUse = true;
 
-
         var dmg = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
 
-        if (_playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() >= WeaponWeight)
+        if (_playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() <= _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight)
         {
-            _enemyStatus.AddDamage(
-                dmg + Damage + (dmg * AddDamageValue),
-                _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+            _enemyStatus.AddDamage(dmg * (Damage + 0.2f), _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
         else
         {
-            _enemyStatus.AddDamage(dmg + Damage, _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+            _enemyStatus.AddDamage(dmg * Damage, _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
     }
 
@@ -76,9 +71,10 @@ public class TenkuugiriSkill : SkillBase
         {
             return false;
         }
+
         _isUse = false;
         _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value = 0;
-        
+
         return false;
     }
 
