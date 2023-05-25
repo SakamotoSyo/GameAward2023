@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class EnemyView : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class EnemyView : MonoBehaviour
     public void HealthText(float health, float max)
     {
         _healthText.text = health.ToString("00");
-        _currentHealthImage.fillAmount = health / max;
+        _currentHealthImage.DOFillAmount(health / max, 0.5f);
     }
 
     public void MaxHealthText(float max)
