@@ -14,11 +14,11 @@ public class NidangiriSkill : SkillBase
     public NidangiriSkill()
     {
         SkillName = "2段斬り";
-        Damage = 80;
+        Damage = 1.2f;
         RequiredPoint = 30;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
-        FlavorText = "重さが大きいほど2撃目のダメージが大きくなる(上限4)";
+        FlavorText = "素早さが低いほど2撃目のダメージが大きくなる。(上限4)";
     }
     
     public override bool IsUseCheck(ActorGenerator actor)
@@ -50,28 +50,25 @@ public class NidangiriSkill : SkillBase
         float dmg = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
         float weight = _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() / 10;
         
-        _enemyStatus.AddDamage(dmg + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+        _enemyStatus.AddDamage(dmg * Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
 
-        if (weight >= 6)
+        if (weight >= 5)
         {
-            _enemyStatus.AddDamage(dmg + 20+ Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+            _enemyStatus.AddDamage(dmg * (Damage + 0.1f + 0.05f),_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
-        else if(weight >= 5)
+        else if(weight >= 4)
         {
-            _enemyStatus.AddDamage(dmg + 15+ Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
-        }
-        else if (weight >= 4)
-        {
-            _enemyStatus.AddDamage(dmg + 10+ Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+            _enemyStatus.AddDamage(dmg * (Damage + 0.1f + 0.1f)+ Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
         else if (weight >= 3)
         {
-            _enemyStatus.AddDamage(dmg + 5+ Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+            _enemyStatus.AddDamage(dmg * (Damage + 0.1f + 0.15f)+ Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
-        else
+        else 
         {
-            _enemyStatus.AddDamage(dmg + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+            _enemyStatus.AddDamage(dmg * (Damage + 0.1f + 0.2f)+ Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
+        
     }
 
     public override bool TurnEnd()
