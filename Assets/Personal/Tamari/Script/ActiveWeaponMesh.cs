@@ -25,6 +25,9 @@ public class ActiveWeaponMesh : MonoBehaviour
 
     private GameObject _sImage = default;
 
+    [SerializeField]
+    private GameObject _insPos = default;
+
     //private GameObject _gsPos = default;
 
     //[SerializeField, Tooltip("双剣(右)生成ポジション")]
@@ -81,41 +84,20 @@ public class ActiveWeaponMesh : MonoBehaviour
     }
     private void Start()
     {
-        var GsPlayer = GameObject.Find("Hero_Sword");
-        var DbPlayer = GameObject.Find("Hero_TwinSword");
-        var HPlayer = GameObject.Find("Hero_Hammer");
-        var SPlayer = GameObject.Find("Hero_Spear");
-        Debug.Log(GsPlayer);
-        GsPlayer.SetActive(false);
-        DbPlayer.SetActive(false);
-        HPlayer.SetActive(false);
-        SPlayer.SetActive(false);
+        var GsPlayer = GameObject.FindGameObjectWithTag("Sword");
+        var DbPlayer = GameObject.FindGameObjectWithTag("TwinSword");
+        var HPlayer = GameObject.FindGameObjectWithTag("Hammer");
+        var SPlayer = GameObject.FindGameObjectWithTag("Spear");
+        Debug.Log(DbPlayer);
+
+        GsPlayer.gameObject.SetActive(false);
+        DbPlayer.gameObject.SetActive(false);
+        HPlayer.gameObject.SetActive(false);
+        SPlayer.gameObject.SetActive(false);
     }
 
     public void ActiveWeapon()
     {
-        //for (int i = 0; i < _status.WeaponDatas.Length; i++)
-        //{
-        //    if (_status.WeaponDatas[i].WeaponType == WeaponType.GreatSword)
-        //    {
-        //        BaseActiveWeapon(_gsImage, _gsPos, WeaponSaveData.GSData);
-        //    }
-        //    else if (_status.WeaponDatas[i].WeaponType == WeaponType.DualBlades)
-        //    {
-        //        BaseActiveWeapon(_dbImageL, _dbPosL, WeaponSaveData.DBData);
-
-        //        BaseActiveWeapon(_dbImageR, _dbPosR, WeaponSaveData.DBData);
-
-        //    }
-        //    else if (_status.WeaponDatas[i].WeaponType == WeaponType.Hammer)
-        //    {
-        //        BaseActiveWeapon(_hImage, _hPos, WeaponSaveData.HData);
-        //    }
-        //    else
-        //    {
-        //        BaseActiveWeapon(_sImage, _sPos, WeaponSaveData.SData);
-        //    }
-        //}
         BaseActiveWeapon(_gsImage, WeaponSaveData.GSData);
 
         BaseActiveWeapon(_dbImageR, WeaponSaveData.DBData);
