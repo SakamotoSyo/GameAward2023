@@ -34,7 +34,7 @@ public class PlayerExperiencePoint : MonoBehaviour
     /// <summary> バトルにいく前の経験値 </summary>
     private int _beforeBattlePoint = 0;
     /// <summary> Playerの経験値 </summary>
-    private int _experiencePoint = 0;
+    private static int _experiencePoint = 0;
 
     private const int RANK_C = 0;
     private const int RANK_B = 1;
@@ -42,12 +42,11 @@ public class PlayerExperiencePoint : MonoBehaviour
     private const int RANK_S = 3;
 
     private int _currentRankNum = 0;
-    private float _value = 0;
 
-    public static PlayerExperiencePoint Instance = default;
+    private static float _value = 0;
 
-    public int ExperiencePoint => _experiencePoint;
-    public float Value => _value;
+    public static int ExperiencePoint => _experiencePoint;
+    public static float Value => _value;
     #endregion
 
     private void Start()
@@ -60,7 +59,6 @@ public class PlayerExperiencePoint : MonoBehaviour
         _pointValueImage.fillAmount = _beforeBattlePoint / _value;
 
         SettingsRankUI();
-        Instance = this;
     }
 
     /// <summary> RankUI関連の情報を取得 </summary>
