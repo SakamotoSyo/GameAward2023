@@ -24,8 +24,8 @@ public class HomeScene : MonoBehaviour
     {
         SettingsCutPanel();
 
-        var point = PlayerExperiencePoint.Instance.ExperiencePoint;
-        var value = PlayerExperiencePoint.Instance.Value;
+        var point = PlayerExperiencePoint.ExperiencePoint;
+        var value = PlayerExperiencePoint.Value;
 
         _isChallengablePromotionMatch = point / value > 0.8f;
 

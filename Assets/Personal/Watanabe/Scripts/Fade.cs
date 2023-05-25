@@ -12,6 +12,8 @@ public class Fade : MonoBehaviour
     [SerializeField] private Image _fadeImage = default;
     [SerializeField] private float _fadeSpeed = 1f;
 
+    [SerializeField] private PlayerExperiencePoint _point = default;
+
     [SerializeField] private bool _isPointSet = true;
 
     private EventSystem _system = default;
@@ -36,7 +38,10 @@ public class Fade : MonoBehaviour
             sequence.Append(_fadeImage.DOFade(0f, _fadeSpeed))
                     .AppendCallback(() =>
                     {
-                        PlayerExperiencePoint.Instance.PointSetting();
+                        if (_point)
+                        {
+                            _point.PointSetting();
+                        }
                     })
                     .AppendCallback(() =>
                     {
