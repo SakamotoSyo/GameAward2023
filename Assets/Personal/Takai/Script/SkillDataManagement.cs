@@ -78,7 +78,7 @@ public class SkillDataManagement : MonoBehaviour
         }
 
         Debug.Log(skillName);
-        SkillBase skill = _skills.Find(skill => skill.name == skillName);
+        SkillBase skill = _skills.Find(skill => skill.SkillName == skillName);
         if (skill != null)
         {
             _pStatus = _actorGenerator.PlayerController;
