@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     GameObject _weaponBase = default;
 
-    private int _indexNum = 0;
+    private int? _indexNum = null;
 
     [SerializeField, Tooltip("完成後のフェードイン用Image")]
     Image _finishImage = default;
@@ -67,6 +68,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button _cancelButtonForSample = default;
 
+    [Header("完成時に確認用に出すパネルに必要な情報")]
+
+    [SerializeField, Tooltip("完成時に確認用に出すパネル")]
+    private GameObject _panelForFinish = default;
+
     [Header("武器を選ぶ時に表示するパネル")]
 
     [SerializeField, Tooltip("選択するパネル")]
@@ -77,16 +83,17 @@ public class UIManager : MonoBehaviour
         _allPanel.SetActive(false);
         _panelForReset.SetActive(false);
         _panelForSample.SetActive(false);
+        _panelForFinish.SetActive(false);
         _weaponBase = GameObject.Find("MeshManager");
     }
 
     public void OnSelect(int num)
     {
-        if(num == 0)
+        if (num == 0)
         {
             _indexNum = num;
         }
-        else if(num == 1)
+        else if (num == 1)
         {
             _indexNum = num;
         }
@@ -101,6 +108,11 @@ public class UIManager : MonoBehaviour
     }
     public void SelectWeapon()
     {
+        if (_indexNum == null)
+        {
+            Debug.Log("武器を選んでください");
+            return;
+        }
         if (_indexNum == 0)
         {
             _meshManager._weaponType = WeaponType.GreatSword;
@@ -152,7 +164,6 @@ public class UIManager : MonoBehaviour
 
     public void SwitchCheckForReset(bool flag)
     {
-        Debug.Log("リセット確認のパネル表示");
         _allPanel.SetActive(flag);
         _panelForReset.SetActive(flag);
         _weaponBase.gameObject.SetActive(!flag);
@@ -160,11 +171,17 @@ public class UIManager : MonoBehaviour
 
     public void SwitchCheckForSample(bool flag)
     {
-        Debug.Log("サンプル生成確認のパネル表示");
         _allPanel.SetActive(flag);
         _panelForSample.SetActive(flag);
         _weaponBase.gameObject.SetActive(!flag);
     }
+    public void SwitchCheckForFinish(bool flag)
+    {
+        _allPanel.SetActive(flag);
+        _panelForFinish.SetActive(flag);
+        _weaponBase.gameObject.SetActive(!flag);
+    }
+
 
     public async void ChangeScene()
     {
@@ -196,4 +213,5 @@ public class UIManager : MonoBehaviour
         _meshManager.CentorPos = _meshManager.FirstCenterPos;
         _meshManager.CreateMesh();
     }
+
 }
