@@ -19,24 +19,24 @@ public class ShinsokuranbuSkill : SkillBase
     public ShinsokuranbuSkill()
     {
         SkillName = "神速乱舞";
-        Damage = 150;
+        Damage = 18;
         RequiredPoint = 50;
         Weapon = (WeaponType)1;
         Type = (SkillType)1;
-        FlavorText = "重さが30以下のとき発動可能　※使用後元のステータスに戻る";
+        FlavorText = "素早さが相手より高いとき発動可能。使用後元のステータスに戻る。";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)
     {
         if (actor.PlayerController)
         {
-            float weight = actor.PlayerController.PlayerStatus.EquipWeapon.WeaponWeight.Value;
-            return (weight >= 100) ? true : false;
+            float weight = actor.PlayerController.PlayerStatus.EquipWeapon.GetWeightPram();
+            return (weight >= _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight) ? true : false;
         }
         else if (actor.EnemyController)
         {
             float weight = actor.EnemyController.EnemyStatus.EquipWeapon.WeaponWeight;
-            return (weight >= 100) ? true : false;
+            return (weight >= _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram()) ? true : false;
         }
 
         return false;
@@ -89,13 +89,13 @@ public class ShinsokuranbuSkill : SkillBase
             case ActorAttackType.Player:
             {
                 weight = _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram();
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
             }
                 break;
             case ActorAttackType.Enemy:
             {
                 weight = _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight;
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower * Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
             }
                 break;
         }

@@ -18,7 +18,7 @@ public class KasokugiriSkill : SkillBase
     public KasokugiriSkill()
     {
         SkillName = "加速斬り";
-        Damage = 20;
+        Damage = 0.5f;
         RequiredPoint = 30;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
@@ -78,28 +78,28 @@ public class KasokugiriSkill : SkillBase
             {
                 float weight = _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram();
 
-                if (weight >= 41)
+                if (weight >= 400)
                 {
                     // 41以上の処理
-                    num = 5;
+                    num = 8;
                     for (int i = 0; i < num; i++)
                     {
                         AddDamage();
                     }
                 }
-                else if (weight >= 31)
+                else if (weight >= 300)
                 {
                     // 31~40の処理
-                    num = 6;
+                    num = 7;
                     for (int i = 0; i < num; i++)
                     {
                         AddDamage();
                     }
                 }
-                else if (weight >= 21)
+                else if (weight >= 200)
                 {
                     // 21~30の処理
-                    num = 7;
+                    num = 6;
                     for (int i = 0; i < num; i++)
                     {
                         AddDamage();
@@ -108,7 +108,7 @@ public class KasokugiriSkill : SkillBase
                 else
                 {
                     // 20以下の処理
-                    num = 8;
+                    num = 5;
                     for (int i = 0; i < num; i++)
                     {
                         AddDamage();
@@ -120,28 +120,28 @@ public class KasokugiriSkill : SkillBase
             case ActorAttackType.Enemy:
             {
                 float weight = _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight;
-                if (weight >= 41)
+                if (weight >= 400)
                 {
                     // 41以上の処理
-                    num = 5;
+                    num = 8;
                     for (int i = 0; i < num; i++)
                     {
                         AddDamage();
                     }
                 }
-                else if (weight >= 31)
+                else if (weight >= 300)
                 {
                     // 31~40の処理
-                    num = 6;
+                    num = 7;
                     for (int i = 0; i < num; i++)
                     {
                         AddDamage();
                     }
                 }
-                else if (weight >= 21)
+                else if (weight >= 200)
                 {
                     // 21~30の処理
-                    num = 7;
+                    num = 6;
                     for (int i = 0; i < num; i++)
                     {
                         AddDamage();
@@ -150,7 +150,7 @@ public class KasokugiriSkill : SkillBase
                 else
                 {
                     // 20以下の処理
-                    num = 8;
+                    num = 5;
                     for (int i = 0; i < num; i++)
                     {
                         AddDamage();
@@ -169,12 +169,12 @@ public class KasokugiriSkill : SkillBase
                 await UniTask.Delay(TimeSpan.FromSeconds(0),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
                 _enemyStatus.AddDamage(
-                    _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+                    _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 break;
             case ActorAttackType.Enemy:
                 await UniTask.Delay(TimeSpan.FromSeconds(0),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 break;
         }
     }

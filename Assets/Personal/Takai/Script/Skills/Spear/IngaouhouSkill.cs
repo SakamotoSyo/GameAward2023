@@ -17,7 +17,7 @@ public class IngaouhouSkill : SkillBase
     public IngaouhouSkill()
     {
         SkillName = "因果応報";
-        Damage = 70;
+        Damage = 1.2f;
         RequiredPoint = 20;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
@@ -64,7 +64,8 @@ public class IngaouhouSkill : SkillBase
             _playerObj.SetActive(true);
             _playerAnim1.Play();
             var dura = _playerAnim1.duration * 0.99f;
-            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * (Damage * 0.1f),_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+            _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,
+                _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
             await UniTask.WaitUntil(() => _playerAnim1.time >= dura,
                 cancellationToken: this.GetCancellationTokenOnDestroy());
             _playerAnim1.Stop();

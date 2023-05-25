@@ -8,7 +8,7 @@ public class KyoukaSkill : SkillBase
     [SerializeField] private PlayableDirector _anim;
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
-    private const float ADDVALUE = 0.5f;
+    private const float ADDVALUE = 3;
     private int _turn = 0;
     private float _buffValue;
 
@@ -19,7 +19,7 @@ public class KyoukaSkill : SkillBase
         RequiredPoint = 0;
         Weapon = (WeaponType)0;
         Type = (SkillType)0;
-        FlavorText = "次の技の攻撃力が1.5倍になる(重複なし)。攻撃後自ステータスが元に戻り、プレイヤーがひるむ";
+        FlavorText = "次の技の攻撃力が3倍になる(重複なし)。攻撃後自ステータスが元に戻り、プレイヤーがひるむ。";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)

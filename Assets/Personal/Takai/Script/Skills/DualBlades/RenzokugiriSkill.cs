@@ -17,7 +17,7 @@ public class RenzokugiriSkill : SkillBase
     public RenzokugiriSkill()
     {
         SkillName = "連続斬り";
-        Damage = 30;
+        Damage = 0.5f;
         RequiredPoint = 10;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
@@ -74,13 +74,13 @@ public class RenzokugiriSkill : SkillBase
         switch (_actor)
         {
             case ActorAttackType.Player:
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
                 Debug.Log($"ダメージ{_playerStatus.PlayerStatus.EquipWeapon.OffensivePower.Value + Damage}");
                 break;
             case ActorAttackType.Enemy:
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower * Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower * Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
                 break;
         }
     }

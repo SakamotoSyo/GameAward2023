@@ -8,7 +8,7 @@ public class KasokuSkill : SkillBase
     [SerializeField] private PlayableDirector _anim;
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
-    private const float ADD_VALUE = 0.05f;
+    private const float ADD_VALUE = 0.25f;
     private const int Turn = 4;
     private int _count;
     private int _turnCount;
@@ -21,7 +21,7 @@ public class KasokuSkill : SkillBase
         RequiredPoint = 0;
         Weapon = (WeaponType)1;
         Type = (SkillType)0;
-        FlavorText = "3ターンの間重さが5%下降(重複あり→5%,10%,15%)";
+        FlavorText = "3ターンの間、素早さが25%上昇。(重複あり→25%,50%,75%)";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)

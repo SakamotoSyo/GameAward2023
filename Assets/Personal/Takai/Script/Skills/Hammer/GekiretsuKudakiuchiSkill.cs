@@ -14,16 +14,16 @@ public class GekiretsuKudakiuchiSkill : SkillBase
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
-    const float _subtractValue = 0.4f;
+    const float _subtractValue = 0.5f;
 
     public GekiretsuKudakiuchiSkill()
     {
         SkillName = "激烈・砕き打ち";
-        Damage = 170;
+        Damage = 17;
         RequiredPoint = 0;
         Weapon = (WeaponType)2;
         Type = (SkillType)1;
-        FlavorText = "敵の攻撃、会心率、素早さを40%下げる　※使用した武器は壊れる";
+        FlavorText = "敵の攻撃、会心率、素早さを大幅に下げる。使用した武器は壊れる。（50%・永続・重複なし）";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)
@@ -77,7 +77,8 @@ public class GekiretsuKudakiuchiSkill : SkillBase
             case ActorAttackType.Player:
             {
                 // スキルの効果処理を実装する
-                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+                _enemyStatus.AddDamage(_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * Damage,
+                    _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
 
                 fluctuation =
                     new FluctuationStatusClass(-_enemyStatus.EnemyStatus.EquipWeapon.OffensivePower * _subtractValue,
@@ -89,12 +90,14 @@ public class GekiretsuKudakiuchiSkill : SkillBase
                 break;
             case ActorAttackType.Enemy:
             {
-                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
+                _playerStatus.AddDamage(_enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower * Damage,
+                    _enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
 
                 fluctuation =
                     new FluctuationStatusClass(-_playerStatus.PlayerStatus.EquipWeapon.GetPowerPram() * _subtractValue,
                         -_playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() * _subtractValue,
-                        -_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram() * _subtractValue * _subtractValue, 0, 0);
+                        -_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram() * _subtractValue * _subtractValue, 0,
+                        0);
                 _playerStatus.PlayerStatus.EquipWeapon.FluctuationStatus(fluctuation);
                 _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value = 0;
             }

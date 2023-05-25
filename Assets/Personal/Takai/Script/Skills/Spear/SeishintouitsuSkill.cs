@@ -9,7 +9,7 @@ public class SeishintouitsuSkill : SkillBase
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    private const float ADD_VALUE = 0.2f;
+    private const float ADD_VALUE = 0.3f;
     private const int TURN = 4;
     private int _count;
     private int _turnCount;
@@ -22,7 +22,7 @@ public class SeishintouitsuSkill : SkillBase
         RequiredPoint = 0;
         Weapon = (WeaponType)3;
         Type = (SkillType)0;
-        FlavorText = "3ターンの間、会心率%と会心時のダメージが20%上昇(発動ターン含まず）";
+        FlavorText = "3ターンの間、会心率%と会心時のダメージが上昇。（どちらも30%、効果ターンは発動したターンを含めず）";
     }
 
     public override bool IsUseCheck(ActorGenerator actor)

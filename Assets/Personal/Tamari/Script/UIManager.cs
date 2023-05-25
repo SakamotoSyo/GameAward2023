@@ -8,6 +8,10 @@ public class UIManager : MonoBehaviour
 {
     WeaponType _weaponType;
 
+    GameObject _weaponBase = default;
+
+    private int _indexNum = 0;
+
     [SerializeField, Tooltip("完成後のフェードイン用Image")]
     Image _finishImage = default;
 
@@ -16,7 +20,6 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private string _nextSceneName = default;
-
 
     [Header("常に置いてあるUI")]
 
@@ -64,46 +67,95 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button _cancelButtonForSample = default;
 
+    [Header("武器を選ぶ時に表示するパネル")]
+
+    [SerializeField, Tooltip("選択するパネル")]
+    private GameObject _firstPanel = default;
+
     private void Start()
     {
         _allPanel.SetActive(false);
         _panelForReset.SetActive(false);
         _panelForSample.SetActive(false);
-        switch (GameManager.BlacksmithType)
+        _weaponBase = GameObject.Find("MeshManager");
+    }
+
+    public void OnSelect(int num)
+    {
+        if(num == 0)
         {
-            case WeaponType.GreatSword:
-                {
-                    _weaponTypeText.text = "大剣";
-                }
-                break;
-            case WeaponType.DualBlades:
-                {
-                    _weaponTypeText.text = "双剣";
-                }
-                break;
-            case WeaponType.Hammer:
-                {
-                    _weaponTypeText.text = "ハンマー";
-                }
-                break;
-            case WeaponType.Spear:
-                {
-                    _weaponTypeText.text = "やり";
-                }
-                break;
-            default:
-                {
-                    Debug.Log("指定された武器の名前 : " + GameManager.BlacksmithType + " は存在しません");
-                }
-                return;
+            _indexNum = num;
+        }
+        else if(num == 1)
+        {
+            _indexNum = num;
+        }
+        else if (num == 2)
+        {
+            _indexNum = num;
+        }
+        else if (num == 3)
+        {
+            _indexNum = num;
         }
     }
+    public void SelectWeapon()
+    {
+        if (_indexNum == 0)
+        {
+            _meshManager._weaponType = WeaponType.GreatSword;
+            _weaponTypeText.text = "大剣";
+        }
+        else if (_indexNum == 1)
+        {
+            _meshManager._weaponType = WeaponType.DualBlades;
+            _weaponTypeText.text = "双剣";
+        }
+        else if (_indexNum == 2)
+        {
+            _meshManager._weaponType = WeaponType.Hammer;
+            _weaponTypeText.text = "ハンマー";
+        }
+        else if (_indexNum == 3)
+        {
+            _meshManager._weaponType = WeaponType.Spear;
+            _weaponTypeText.text = "やり";
+        }
+        _firstPanel.SetActive(false);
+        _meshManager.CreateMesh();
+    }
+    //public void SelectWeapon(string weapon)
+    //{
+    //    if(weapon == WeaponType.GreatSword.ToString())
+    //    {
+    //        _meshManager._weaponType = WeaponType.GreatSword;
+    //        _weaponTypeText.text = "大剣";
+    //    }
+    //    else if(weapon == WeaponType.DualBlades.ToString())
+    //    {
+    //        _meshManager._weaponType = WeaponType.DualBlades;
+    //        _weaponTypeText.text = "双剣";
+    //    }
+    //    else if(weapon == WeaponType.Hammer.ToString())
+    //    {
+    //        _meshManager._weaponType = WeaponType.Hammer;
+    //        _weaponTypeText.text = "ハンマー";
+    //    }
+    //    else if (weapon == WeaponType.Spear.ToString())
+    //    {
+    //        _meshManager._weaponType = WeaponType.Spear;
+    //        _weaponTypeText.text = "やり";
+    //    }
+    //    _firstPanel.SetActive(false);
+    //    _meshManager.CreateMesh();
+    //}
 
     public void SwitchCheckForReset(bool flag)
     {
         Debug.Log("リセット確認のパネル表示");
         _allPanel.SetActive(flag);
         _panelForReset.SetActive(flag);
+        _weaponBase.gameObject.SetActive(!flag);
     }
 
     public void SwitchCheckForSample(bool flag)
@@ -111,6 +163,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("サンプル生成確認のパネル表示");
         _allPanel.SetActive(flag);
         _panelForSample.SetActive(flag);
+        _weaponBase.gameObject.SetActive(!flag);
     }
 
     public async void ChangeScene()
