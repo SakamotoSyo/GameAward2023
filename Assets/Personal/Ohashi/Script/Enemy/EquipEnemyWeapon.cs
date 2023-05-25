@@ -33,6 +33,8 @@ public class EquipEnemyWeapon
     /// <summary>•Ší‚ÌÅ‘å‘Ï‹v’l</summary>
     private float _maxDurable;
 
+    public float MaxDurable => _maxDurable;
+
     /// <summary>Œ»İ‚Ì•Ší‚Ì‘Ï‹v’l</summary>
     private ReactiveProperty<float> _currentDurable = new();
 
