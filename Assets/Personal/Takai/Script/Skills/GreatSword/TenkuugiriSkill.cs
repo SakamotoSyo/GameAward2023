@@ -8,12 +8,6 @@ public class TenkuugiriSkill : SkillBase
 {
     [SerializeField] private PlayableDirector _playerAnim;
     [SerializeField] private GameObject _playerObj;
-    [SerializeField] private PlayableDirector _enemyRedAnim;
-    [SerializeField] private GameObject _enemyRedObj;
-    [SerializeField] private PlayableDirector _enemyBlueAnim;
-    [SerializeField] private GameObject _enemyBlueObj;
-    [SerializeField] private PlayableDirector _enemyGreenAnim;
-    [SerializeField] private GameObject _enemyGreenObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
     private ActorAttackType _actor;
@@ -42,114 +36,37 @@ public class TenkuugiriSkill : SkillBase
         _playerStatus = player;
         _enemyStatus = enemy;
         _actor = actorType;
-        if (_actor == ActorAttackType.Player)
-        {
-            _playerObj.SetActive(true);
-            _playerStatus.gameObject.SetActive(false);
-            _playerAnim.Play();
-            var dura = _playerAnim.duration * 0.99f;
-            await UniTask.WaitUntil(() => _playerAnim.time >= dura,
-                cancellationToken: this.GetCancellationTokenOnDestroy());
-            SkillEffect();
-            _playerAnim.Stop();
-            await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-            _playerStatus.gameObject.SetActive(true);
-            Debug.Log("Anim End");
-            _playerObj.SetActive(false);
-        }
-        else if (_actor == ActorAttackType.Enemy)
-        {
-            switch (_enemyStatus.EnemyColor)
-            {
-                case EnemyColor.Red:
-                {
-                    _enemyRedObj.SetActive(true);
-                    _enemyStatus.gameObject.SetActive(false);
-                    _enemyRedAnim.Play();
-                    var dura = _enemyRedAnim.duration * 0.99f;
-                    await UniTask.WaitUntil(() => _enemyRedAnim.time >= dura,
-                        cancellationToken: this.GetCancellationTokenOnDestroy());
-                    SkillEffect();
-                    _enemyRedAnim.Stop();
-                    await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-                    _enemyStatus.gameObject.SetActive(true);
-                    Debug.Log("Anim End");
-                    _enemyRedObj.SetActive(false);
-                }
-                    break;
-                case EnemyColor.Blue:
-                {
-                    _enemyBlueObj.SetActive(true);
-                    _enemyStatus.gameObject.SetActive(false);
-                    _enemyBlueAnim.Play();
-                    var dura = _enemyBlueAnim.duration * 0.99f;
-                    await UniTask.WaitUntil(() => _enemyBlueAnim.time >= dura,
-                        cancellationToken: this.GetCancellationTokenOnDestroy());
-                    SkillEffect();
-                    _enemyBlueAnim.Stop();
-                    await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-                    _enemyStatus.gameObject.SetActive(true);
-                    Debug.Log("Anim End");
-                    _enemyBlueObj.SetActive(false);
-                }
-                    break;
-                case EnemyColor.Green:
-                {
-                    _enemyGreenObj.SetActive(true);
-                    _enemyStatus.gameObject.SetActive(false);
-                    _enemyGreenAnim.Play();
-                    var dura = _enemyGreenAnim.duration * 0.99f;
-                    await UniTask.WaitUntil(() => _enemyGreenAnim.time >= dura,
-                        cancellationToken: this.GetCancellationTokenOnDestroy());
-                    SkillEffect();
-                    _enemyGreenAnim.Stop();
-                    await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-                    _enemyStatus.gameObject.SetActive(true);
-                    Debug.Log("Anim End");
-                    _enemyGreenObj.SetActive(false);
-                }
-                    break;
-            }
-        }
+
+        _playerObj.SetActive(true);
+        _playerStatus.gameObject.SetActive(false);
+        _playerAnim.Play();
+        var dura = _playerAnim.duration * 0.99f;
+        await UniTask.WaitUntil(() => _playerAnim.time >= dura,
+            cancellationToken: this.GetCancellationTokenOnDestroy());
+        SkillEffect();
+        _playerAnim.Stop();
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+        _playerStatus.gameObject.SetActive(true);
+        Debug.Log("Anim End");
+        _playerObj.SetActive(false);
     }
 
     protected override void SkillEffect()
     {
         _isUse = true;
 
-        switch (_actor)
+
+        var dmg = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
+
+        if (_playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() >= WeaponWeight)
         {
-            case ActorAttackType.Player:
-            {
-                var dmg = _playerStatus.PlayerStatus.EquipWeapon.GetPowerPram();
-
-                if (_playerStatus.PlayerStatus.EquipWeapon.GetWeightPram() >= WeaponWeight)
-                {
-                    _enemyStatus.AddDamage(
-                        dmg + Damage + (dmg * AddDamageValue),_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
-                }
-                else
-                {
-                    _enemyStatus.AddDamage(dmg + Damage,_playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
-                }
-            }
-                break;
-            case ActorAttackType.Enemy:
-            {
-                var dmg = _enemyStatus.EnemyStatus.EquipWeapon.CurrentOffensivePower;
-
-                if (_enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight >= WeaponWeight)
-                {
-                    _playerStatus.AddDamage(dmg + Damage + (dmg * AddDamageValue),_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
-                }
-                else
-                {
-                    _playerStatus.AddDamage(dmg + Damage,_enemyStatus.EnemyStatus.EquipWeapon.CriticalRate);
-                }
-            }
-                break;
-            default:
-                break;
+            _enemyStatus.AddDamage(
+                dmg + Damage + (dmg * AddDamageValue),
+                _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
+        }
+        else
+        {
+            _enemyStatus.AddDamage(dmg + Damage, _playerStatus.PlayerStatus.EquipWeapon.GetCriticalPram());
         }
     }
 
@@ -159,23 +76,9 @@ public class TenkuugiriSkill : SkillBase
         {
             return false;
         }
-
         _isUse = false;
-
-        switch (_actor)
-        {
-            case ActorAttackType.Player:
-            {
-                _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value = 0;
-            }
-                break;
-            case ActorAttackType.Enemy:
-            {
-                _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value = 0;
-            }
-                break;
-        }
-
+        _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value = 0;
+        
         return false;
     }
 
