@@ -67,7 +67,8 @@ public class ResultUIScript : MonoBehaviour
             var oreInfo = RarityLottery(i);
             OreData Ore = new OreData(SetEnhanceData(oreInfo.rearity), oreInfo.rearity, oreInfo.randomSkill, oreInfo.oreImage);
             _oreUiCs[i].SetData(Ore);
-            _oreButton[i].onClick.AddListener(() => EnhanceWeaponEvent(Ore));
+            _oreButton[i].onClick.AddListener(() => EnhanceWeaponEvent(Ore)); 
+            _oreButton[i].onClick.AddListener(() => SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Ingame"));
         }
     }
 
@@ -155,6 +156,7 @@ public class ResultUIScript : MonoBehaviour
                 _resultUICs[i].SetUpInfo(weaponDatas[i], selectOreData);
                 var num = i;
                 _weaponButton[i].onClick.AddListener(() => SetSaveEnhanceData(weaponDatas, selectOreData, num));
+                _weaponButton[i].onClick.AddListener(() => SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Ingame"));
             }
             else
             {
@@ -178,8 +180,9 @@ public class ResultUIScript : MonoBehaviour
     /// <summary>
     /// ïêäÌÇÃã≠âªÇµÇΩÇ∆Ç´ÇÃButtonEvent
     /// </summary>
-    public void WeaponEnhanceEvent()
+    public async void WeaponEnhanceEvent()
     {
+        
         var weaponSkill = _saveWeaponData[_currentSelectWeapon].WeaponSkill;
         if (!_selectOreData.Skill) 
         {
@@ -254,6 +257,10 @@ public class ResultUIScript : MonoBehaviour
         // SceneLoader.LoadScene(_homeScene);
     }
 
+    public void EnterSound() 
+    {
+                SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
+    }
     public void CancelSelectSkill()
     {
         _enhanceSelectObj.SetActive(true);
