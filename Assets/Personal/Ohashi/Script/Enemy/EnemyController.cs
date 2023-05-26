@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     [SerializeField]
     private SpriteRenderer _renderer;
 
-    [SerializeField] 
+    [SerializeField]
     private GameObject _canvasObj;
 
     private Animator _animator;
@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     /// </summary>
     public async UniTask Attack()
     {
-        if(!_enemyStatus.IsStan)
+        if (!_enemyStatus.IsStan)
         {
             await _enemyAttack.SelectAttack();
             await UniTask.Delay(1);
@@ -62,13 +62,8 @@ public class EnemyController : MonoBehaviour, IAddDamage
             Quaternion.identity);
         damageController.TextInit((int)damage, _enemyStatus.EquipWeapon.AddDamage((int)damage, criticalRate));
 
-        if(_enemyStatus.EquipWeapon.IsWeaponBreak())
+        if (_enemyStatus.EquipWeapon.IsWeaponBreak())
         {
-            if(_enemyStatus.IsWeaponsAllBrek())
-            {
-                Debug.Log("敵の武器が全部壊れた");
-            }
-
             _enemyStatus.EquipChangeWeapon();
         }
     }

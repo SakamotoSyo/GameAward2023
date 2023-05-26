@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 783099174}
   m_Layer: 0
   m_Name: GS
-  m_TagString: Untagged
+  m_TagString: GSWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -918,7 +918,7 @@ GameObject:
   - component: {fileID: 5906215538994758471}
   m_Layer: 0
   m_Name: GSWeapon
-  m_TagString: Untagged
+  m_TagString: GSParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2961,6 +2961,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordPos
       objectReference: {fileID: 0}
+    - target: {fileID: 2796339921115632862, guid: 7f1ab297026a280449c9f7f3ea4d00d9, type: 3}
+      propertyPath: m_TagString
+      value: SwordPos
+      objectReference: {fileID: 0}
     - target: {fileID: 4972643601046322392, guid: 7f1ab297026a280449c9f7f3ea4d00d9, type: 3}
       propertyPath: m_SortingOrder
       value: 7
@@ -3024,6 +3028,10 @@ PrefabInstance:
     - target: {fileID: 7222633454428890067, guid: 7f1ab297026a280449c9f7f3ea4d00d9, type: 3}
       propertyPath: m_Name
       value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 7222633454428890067, guid: 7f1ab297026a280449c9f7f3ea4d00d9, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7506591777462456064, guid: 7f1ab297026a280449c9f7f3ea4d00d9, type: 3}
       propertyPath: m_SortingOrder

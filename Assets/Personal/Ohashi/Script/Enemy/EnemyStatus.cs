@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
 public class EnemyStatus
 {
@@ -34,8 +35,9 @@ public class EnemyStatus
         _epicWeapon.ChangeWeapon(_weaponDatas[0]);
     }
 
-    public bool IsWeaponsAllBrek()
+    public async UniTask<bool> IsWeaponsAllBrek()
     {
+        await UniTask.Delay(1);
         if(_epicWeapon.WeaponBreakCount >= _weaponDatas.Length)
         {
             return true;
@@ -47,12 +49,13 @@ public class EnemyStatus
     /// <summary>
     /// ‚Ç‚Ì•Ší‚É•ÏX‚·‚é‚©‚ğw’è‚·‚é
     /// </summary>
-    public void EquipChangeWeapon()
+    public async UniTask EquipChangeWeapon()
     {
         foreach(WeaponData weapon in _weaponDatas)
         {
             if(weapon.CurrentDurable > 0)
             {
+                await UniTask.Delay(1);
                 _epicWeapon.ChangeWeapon(weapon);
                 return;
             }
