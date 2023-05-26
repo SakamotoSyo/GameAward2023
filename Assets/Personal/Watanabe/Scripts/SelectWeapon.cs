@@ -32,6 +32,6 @@ public class SelectWeapon : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select");
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
     }
 }
