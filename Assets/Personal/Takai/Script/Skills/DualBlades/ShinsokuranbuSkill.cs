@@ -31,12 +31,12 @@ public class ShinsokuranbuSkill : SkillBase
         if (actor.PlayerController)
         {
             float weight = actor.PlayerController.PlayerStatus.EquipWeapon.GetWeightPram();
-            return (weight >= _enemyStatus.EnemyStatus.EquipWeapon.WeaponWeight) ? true : false;
+            return (weight >= actor.EnemyController.EnemyStatus.EquipWeapon.WeaponWeight) ? true : false;
         }
         else if (actor.EnemyController)
         {
             float weight = actor.EnemyController.EnemyStatus.EquipWeapon.WeaponWeight;
-            return (weight >= _playerStatus.PlayerStatus.EquipWeapon.GetWeightPram()) ? true : false;
+            return (weight >= actor.PlayerController.PlayerStatus.EquipWeapon.GetWeightPram()) ? true : false;
         }
 
         return false;
