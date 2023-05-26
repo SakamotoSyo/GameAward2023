@@ -35,8 +35,9 @@ public class EnemyStatus
         _epicWeapon.ChangeWeapon(_weaponDatas[0]);
     }
 
-    public bool IsWeaponsAllBrek()
+    public async UniTask<bool> IsWeaponsAllBrek()
     {
+        await UniTask.Delay(1);
         if(_epicWeapon.WeaponBreakCount >= _weaponDatas.Length)
         {
             return true;
