@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class SelectWeapon : MonoBehaviour
+public class SelectWeapon : MonoBehaviour, IPointerEnterHandler
 {
     [SerializeField] private Image[] _outLineImage = new Image[4];
 
@@ -27,5 +28,10 @@ public class SelectWeapon : MonoBehaviour
         _outLineImage[index].gameObject.SetActive(!_isActive[index]);
 
         _isActive[index] = _outLineImage[index].gameObject.activeSelf;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select");
     }
 }
