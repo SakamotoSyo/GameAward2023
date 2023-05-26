@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     private void Update()
     {
-        _animator.SetBool(_enemyStatus.EquipWeapon.WeaponType.ToString(), true);
+
     }
 
     /// <summary>
@@ -83,6 +83,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public void StatusActive()
     {
+        Debug.Log("Canvas");
         _canvasObj.SetActive(true);
     }
 
