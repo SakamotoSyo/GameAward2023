@@ -175,7 +175,8 @@ public class BattleStateController : MonoBehaviour
 
     public async UniTask<bool> ClearCheck()
     {
-        if (_enemyController.EnemyStatus.IsWeaponsAllBrek())
+        var result = await _enemyController.EnemyStatus.IsWeaponsAllBrek();
+        if (result)
         {
             _gameClearObj.SetActive(true);
             SoundManager.Instance.CriAtomPlay(CueSheet.ME, "ME_Win");

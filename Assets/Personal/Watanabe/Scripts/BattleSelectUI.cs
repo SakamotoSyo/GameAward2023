@@ -157,7 +157,8 @@ public class BattleSelectUI : MonoBehaviour
             }
         }
 
-        if (_enemyController.EnemyStatus.IsWeaponsAllBrek())
+        bool result = await _enemyController.EnemyStatus.IsWeaponsAllBrek();
+        if (result)
         {
             _battleStateController.ActorStateEnd();
         }
