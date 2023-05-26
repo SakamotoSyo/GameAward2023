@@ -27,13 +27,18 @@ public class EnemyAttack
             SpecialAttack();
         }
 
-        if (_skillArray[index] == 0)
+        if (_skillArray[index] == 1)
+        {
+            if(_equipWepon.WeaponSkill.WeaponSkillArray[1] != null ||
+                _equipWepon.WeaponSkill.WeaponSkillArray[0] != null)
+            {
+                SkillAttack();
+                return;
+            }
+        }
+        if(_skillArray[index] == 0)
         {
             NormalAttack();
-        }
-        else
-        {
-            SkillAttack();
         }
     }
 
