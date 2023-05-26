@@ -173,7 +173,7 @@ public class BattleSelectUI : MonoBehaviour
         Debug.Log($"プレイヤーの武器のタイプは{_playerStatus.EquipWeapon.WeaponType}です");
         if (_playerStatus.EquipWeapon.WeaponType == WeaponType.GreatSword)
         {
-            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "溜め斬り");
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Player, "溜め斬り");
         }
         else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.DualBlades)
         {
@@ -182,12 +182,12 @@ public class BattleSelectUI : MonoBehaviour
         }
         else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.Hammer)
         {
-            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "全力打ち");
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Player, "全力打ち");
 
         }
         else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.Spear)
         {
-            await _skillDataManagement.OnSkillUse(ActorAttackType.Enemy, "一閃");
+            await _skillDataManagement.OnSkillUse(ActorAttackType.Player, "一閃");
         }
 
     }

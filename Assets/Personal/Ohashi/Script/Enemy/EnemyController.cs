@@ -14,6 +14,9 @@ public class EnemyController : MonoBehaviour, IAddDamage
     [SerializeField]
     private SpriteRenderer _renderer;
 
+    [SerializeField] 
+    private GameObject _canvasObj;
+
     private Animator _animator;
 
     private EnemyAttack _enemyAttack = new();
@@ -31,11 +34,13 @@ public class EnemyController : MonoBehaviour, IAddDamage
     private void Start()
     {
         _enemyAttack.Init(_enemyStatus.EquipWeapon);
+        _animator = GetComponent<Animator>();
+        Debug.Log($"武器タイプは{_enemyStatus.EquipWeapon.WeaponType}");
     }
 
     private void Update()
     {
-        
+        _animator.SetBool(_enemyStatus.EquipWeapon.WeaponType.ToString(), true);
     }
 
     /// <summary>
@@ -45,7 +50,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     {
         if(!_enemyStatus.IsStan)
         {
-            _enemyAttack.SelectAttack();
+            await _enemyAttack.SelectAttack();
             await UniTask.Delay(1);
         }
     }
@@ -76,14 +81,19 @@ public class EnemyController : MonoBehaviour, IAddDamage
         _enemyStatus = enemyStatus;
     }
 
+    public void StatusActive()
+    {
+        _canvasObj.SetActive(true);
+    }
+
     /// <summary>
     /// EnemyDateから参照してくる
     /// </summary>
     public void SetEnemyData(EnemyData enemyData)
     {
         _enemyStatus.SetWeaponDates(enemyData);
-        _animator = enemyData.EnemyAnim;
-        _renderer.sprite = enemyData.EnemySprite;
+        //_animator = enemyData.EnemyAnim;
+        //_renderer.sprite = enemyData.EnemySprite;
         _enemyColor = enemyData.EnemyColor;
     }
 }

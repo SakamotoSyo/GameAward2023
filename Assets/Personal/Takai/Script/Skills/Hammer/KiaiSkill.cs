@@ -23,6 +23,8 @@ public class KiaiSkill : SkillBase
     
     public override bool IsUseCheck(ActorGenerator actor)
     {
+        _playerStatus = actor.PlayerController;
+        
         return true;
     }
 

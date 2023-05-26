@@ -21,7 +21,7 @@ public class SoundManager// : Singleton<SoundManager>
     /// <summary>
     /// BGMが切り替わるまでの時間
     /// </summary>
-    float _changeSpeed = 1;
+    float _changeSpeed = 0.5f;
 
     const string BGMCueSheet = "BGM";
 
@@ -46,6 +46,7 @@ public class SoundManager// : Singleton<SoundManager>
     /// <param name="cueName"></param>
     void ChangeBGM(string cueName)
     {
+        _criAtomBGMSource.Stop();
         //Volumeのフェードアウト
         DOVirtual.Float(_criAtomBGMSource.volume, 0, 1, value => _criAtomBGMSource.volume = value)
             .OnComplete(() =>
@@ -55,7 +56,7 @@ public class SoundManager// : Singleton<SoundManager>
                 _criAtomBGMSource.Play();
 
                 //Volumeのフェードイン
-                DOVirtual.Float(_criAtomBGMSource.volume, 0.25f, _changeSpeed / 2, value => _criAtomBGMSource.volume = value);
+                DOVirtual.Float(_criAtomBGMSource.volume, 1f, _changeSpeed / 2, value => _criAtomBGMSource.volume = value);
             });
     }
 
