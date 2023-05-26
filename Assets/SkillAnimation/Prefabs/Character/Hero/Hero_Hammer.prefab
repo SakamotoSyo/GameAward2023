@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 3418975738116660800}
   m_Layer: 0
   m_Name: HPos
-  m_TagString: Untagged
+  m_TagString: HammerPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -652,7 +652,7 @@ GameObject:
   - component: {fileID: 3934401043554332021}
   m_Layer: 0
   m_Name: HWeapon
-  m_TagString: Untagged
+  m_TagString: HammerParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2274,6 +2274,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5230040036909230885, guid: 3a22a1e8a56ac8e4e83a66adee67fdf2, type: 3}
       propertyPath: m_Name
+      value: Hammer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5230040036909230885, guid: 3a22a1e8a56ac8e4e83a66adee67fdf2, type: 3}
+      propertyPath: m_TagString
       value: Hammer
       objectReference: {fileID: 0}
     - target: {fileID: 7729991548135849621, guid: 3a22a1e8a56ac8e4e83a66adee67fdf2, type: 3}
