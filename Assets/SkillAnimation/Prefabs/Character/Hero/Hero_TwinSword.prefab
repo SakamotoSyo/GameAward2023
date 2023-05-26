@@ -624,7 +624,7 @@ GameObject:
   - component: {fileID: 8989514593114980937}
   m_Layer: 0
   m_Name: DBRWeapon
-  m_TagString: Untagged
+  m_TagString: DBRParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -863,7 +863,7 @@ GameObject:
   - component: {fileID: 4075076472441491722}
   m_Layer: 0
   m_Name: DBLWeapon
-  m_TagString: Untagged
+  m_TagString: DBLParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2008,7 +2008,7 @@ GameObject:
   - component: {fileID: 8991427398287276809}
   m_Layer: 0
   m_Name: DBR
-  m_TagString: Untagged
+  m_TagString: DBRWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2039,7 +2039,7 @@ GameObject:
   - component: {fileID: 8991427398497133662}
   m_Layer: 0
   m_Name: DBL
-  m_TagString: Untagged
+  m_TagString: DBLWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2816,6 +2816,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordPosL
       objectReference: {fileID: 0}
+    - target: {fileID: 5860144862413314270, guid: 4176109f6eba19e4895d2e2fea5b086e, type: 3}
+      propertyPath: m_TagString
+      value: DBLPos
+      objectReference: {fileID: 0}
     - target: {fileID: 6632813730743054469, guid: 4176109f6eba19e4895d2e2fea5b086e, type: 3}
       propertyPath: m_SortingOrder
       value: 3
@@ -2838,6 +2842,10 @@ PrefabInstance:
     - target: {fileID: 5525028106119228874, guid: 56d993c03f1b51547959f410000078ad, type: 3}
       propertyPath: m_Name
       value: SwordPosR
+      objectReference: {fileID: 0}
+    - target: {fileID: 5525028106119228874, guid: 56d993c03f1b51547959f410000078ad, type: 3}
+      propertyPath: m_TagString
+      value: DBRPos
       objectReference: {fileID: 0}
     - target: {fileID: 6592807867195604352, guid: 56d993c03f1b51547959f410000078ad, type: 3}
       propertyPath: m_RootOrder
