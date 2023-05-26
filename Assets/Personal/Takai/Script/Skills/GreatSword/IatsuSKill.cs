@@ -25,6 +25,9 @@ public class IatsuSKill : SkillBase
 
     public override bool IsUseCheck(ActorGenerator actor)
     {
+        _playerStatus = actor.PlayerController;
+        _enemyStatus = actor.EnemyController;
+        
         return true;
     }
 
