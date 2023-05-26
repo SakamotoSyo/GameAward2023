@@ -17,7 +17,7 @@ public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerC
     {
         if ((_index != 0 && _selectUI.IsAttackable[_index - 1]) || _index == 0)
         {
-            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select");
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Ingame");
             _selectUI.BattleSelect(_index);
         }
     }

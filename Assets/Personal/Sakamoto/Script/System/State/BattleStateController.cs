@@ -178,6 +178,7 @@ public class BattleStateController : MonoBehaviour
         if (_enemyController.EnemyStatus.IsWeaponsAllBrek())
         {
             _gameClearObj.SetActive(true);
+            SoundManager.Instance.CriAtomPlay(CueSheet.ME, "ME_Win");
             await UniTask.Delay(TimeSpan.FromSeconds(3));
             _gameClearObj.SetActive(false);
             _stateMachine.Dispatch((int)BattleEvent.BattleEnd);

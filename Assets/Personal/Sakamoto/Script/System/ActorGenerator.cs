@@ -35,29 +35,36 @@ public class ActorGenerator : MonoBehaviour
 
     public EnemyController EnemyGenetation(GameObject enemyPrefab)
     {
-        var enemyObj = Instantiate(enemyPrefab);
-        enemyObj.transform.SetParent(_enemyInsPos.transform);
-        _enemyController = enemyObj.GetComponent<EnemyController>();
+        if (GameManager.EnemyData)
+        {
+            var enemyData = GameManager.EnemyData;  
+            var enemyObj = Instantiate(enemyData.EnemyPrefab, _enemyInsPos.transform.position, enemyData.EnemyPrefab.transform.rotation);
+            enemyObj.transform.SetParent(_enemyInsPos.transform);
+            _enemyController = enemyObj.GetComponent<EnemyController>();
+            _enemyController.SetEnemyData(_testEnemyData);
+            SoundManager.Instance.CriAtomBGMPlay("BGM_Battle");
+        }
+        else 
+        {
+            var enemyObj = Instantiate(enemyPrefab, _enemyInsPos.transform.position, enemyPrefab.transform.rotation);
+            enemyObj.transform.SetParent(_enemyInsPos.transform);
+            _enemyController = enemyObj.GetComponent<EnemyController>();
+            _enemyController.SetEnemyData(_testEnemyData);
+            SoundManager.Instance.CriAtomBGMPlay("BGM_Battle");
+        }
+
         if (_isBossDebug) 
         {
             _enemyController.EnemyStatus.IsBoss = true;
         }
 
-        if (GameManager.EnemyData && GameManager.EnemyData.IsBoss) 
+        if (GameManager.EnemyData && GameManager.EnemyData.IsBoss)
         {
+            SoundManager.Instance.CriAtomBGMPlay("BGM_BossBattle");
             _enemyController.EnemyStatus.IsBoss = true;
-            _enemyController.SetEnemyData(GameManager.EnemyData);
         }
-        else if (GameManager.EnemyData)
-        {
-            Debug.Log(GameManager.EnemyData.WeaponDatas[0].WeaponType);
-            _enemyController.SetEnemyData(GameManager.EnemyData);
-        }
-        else 
-        {
-            _enemyController.SetEnemyData(_testEnemyData);
-        }
-        
+
+        _enemyController.StatusActive();
         return _enemyController;
     }
 }

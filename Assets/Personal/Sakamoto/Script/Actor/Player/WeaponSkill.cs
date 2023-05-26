@@ -8,6 +8,7 @@ public class WeaponSkill
     public string SpecialAttack => _specialAttack;
     public string[] WeaponSkillArray => _skillArray;
     public SkillDataManagement SkillDataManagement => _skillDataManagement;
+
     [Tooltip("必殺技")]
     private string _specialAttack;
     [Header("スキルの名前を設定")]
@@ -83,7 +84,7 @@ public class WeaponSkill
             var skill = _skillDataManagement.SearchSkill(_skillArray[i]);
             if (skill.Type == SkillType.Epic) 
             {
-                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill.name);
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill.SkillName);
             }
         }
     }
