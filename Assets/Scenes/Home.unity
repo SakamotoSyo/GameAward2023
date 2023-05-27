@@ -484,10 +484,10 @@ MonoBehaviour:
   _currentRank: {fileID: 1362919968}
   _scaleValue: 3
   _waitSecondForRank: 1
-  _rankCMaxValue: 100
-  _rankBMaxValue: 200
-  _rankAMaxValue: 300
-  _rankSMaxValue: 400
+  _rankCMaxValue: 2500
+  _rankBMaxValue: 6000
+  _rankAMaxValue: 9999
+  _rankSMaxValue: 15000
   _pointValueImage: {fileID: 135066247}
 --- !u!1 &321748994
 GameObject:
@@ -2392,14 +2392,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414793176}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 2.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1326843538}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 625, y: -220}
