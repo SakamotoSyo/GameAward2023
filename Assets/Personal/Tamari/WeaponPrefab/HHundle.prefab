@@ -24,15 +24,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3200374023221033172}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 4.52, y: -2.41, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1245108376482875316}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!212 &6421493637299995935
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -98,11 +98,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7484310571204863252, guid: 47b2ee85d8608c74b9e1d4ed3b242fa8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.6
+      value: -0.81
       objectReference: {fileID: 0}
     - target: {fileID: 7484310571204863252, guid: 47b2ee85d8608c74b9e1d4ed3b242fa8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.19
+      value: 5.06
       objectReference: {fileID: 0}
     - target: {fileID: 7484310571204863252, guid: 47b2ee85d8608c74b9e1d4ed3b242fa8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -136,6 +136,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7484310571204863254, guid: 47b2ee85d8608c74b9e1d4ed3b242fa8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5aa4438720edd1f4ead8b61a080092c1, type: 2}
     - target: {fileID: 7484310571204863255, guid: 47b2ee85d8608c74b9e1d4ed3b242fa8, type: 3}
       propertyPath: m_Name
       value: WeaponHammer
