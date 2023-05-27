@@ -17,8 +17,10 @@ public class SelectEnemy : MonoBehaviour
         
     }
 
-    public static void SetImage(Sprite sprite)
+    public static void SetImage(Sprite sprite, bool isBoss)
     {
+        _selectedEnemy.color = isBoss ? Color.black : Color.white;
+
         _selectedEnemy.sprite = sprite;
     }
 }

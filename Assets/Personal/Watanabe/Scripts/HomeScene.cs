@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class HomeScene : MonoBehaviour
 {
+    [SerializeField] private bool _isRankUp = false;
+
     #region カット演出系
     [SerializeField] private GameObject _battleSelectPanel = default;
     [SerializeField] private GameObject _cutPanelParent = default;
@@ -18,6 +20,7 @@ public class HomeScene : MonoBehaviour
 
     public static HomeScene Instance = default;
 
+    public bool IsRankUp { get => _isRankUp; set => _isRankUp = value; }
     public bool IsChallengablePromotionMatch => _isChallengablePromotionMatch;
 
     private void Start()
@@ -27,7 +30,8 @@ public class HomeScene : MonoBehaviour
         var point = PlayerExperiencePoint.ExperiencePoint;
         var value = PlayerExperiencePoint.Value;
 
-        _isChallengablePromotionMatch = point / value > 0.8f;
+        //経験値がある程度まで上がったらステージボスに挑戦できる
+        //_isChallengablePromotionMatch = point / value > _promotionMatchValue / 10f;
 
         Instance = this;
     }
@@ -36,17 +40,14 @@ public class HomeScene : MonoBehaviour
     {
         for (int i = 0; i < _cutPanelParent.transform.childCount; i++)
         {
-            if (i == 0 || i == _cutPanelParent.transform.childCount - 1)
+            if (i == 0)
             {
-                if (i == 0)
-                {
-                    _cutPanels[i] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
-                    _cutPanels[i + 1] = _cutPanels[i].transform.GetChild(i).GetComponent<Image>();
-                }
-                else
-                {
-                    _cutPanels[i - 1] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
-                }
+                _cutPanels[i] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
+                _cutPanels[i + 1] = _cutPanels[i].transform.GetChild(i).GetComponent<Image>();
+            }
+            else if (i == _cutPanelParent.transform.childCount - 1)
+            {
+                _cutPanels[i - 1] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
             }
             else
             {
@@ -77,7 +78,6 @@ public class HomeScene : MonoBehaviour
 
         var sequence = DOTween.Sequence();
 
-        //1, Panel表示
         sequence.Append(_cutPanels[0].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .Join(_cutPanels[1].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .AppendCallback(() =>
@@ -87,7 +87,6 @@ public class HomeScene : MonoBehaviour
                 })
                 .AppendInterval(_waitSecondCutStaging)
 
-                //2, BossImage表示
                 .Append(_cutPanels[2].transform.DOScale(new Vector3(2.2f, 2.2f, 2.2f), 0.2f))
                 .AppendCallback(() =>
                 {
@@ -95,7 +94,6 @@ public class HomeScene : MonoBehaviour
                 })
                 .AppendInterval(_waitSecondCutStaging)
 
-                //3, Text表示
                 .Append(_cutTexts[0].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .Join(_cutTexts[1].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .AppendCallback(() =>
@@ -104,7 +102,6 @@ public class HomeScene : MonoBehaviour
                 })
                 .AppendInterval(_waitSecondCutStaging)
 
-                //4, フェードで消す
                 .AppendCallback(() =>
                 {
                     foreach (var panel in _cutPanels)
