@@ -49,7 +49,7 @@ public class PlayerExperiencePoint : MonoBehaviour
     public static float Value => _value;
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         _index = RankSetting();
         ValueSet(_index);
@@ -128,6 +128,7 @@ public class PlayerExperiencePoint : MonoBehaviour
         {
             var sequence = DOTween.Sequence();
 
+            //演出実行
             sequence.Append(_rankRect.DOAnchorPos(new Vector3(0f, 0f, 0f), 0.6f))
                     .AppendInterval(_waitSecondForRank)
                     .AppendCallback(() =>
@@ -139,6 +140,8 @@ public class PlayerExperiencePoint : MonoBehaviour
                     {
                         ValueSet(_index);
                         _pointValueImage.fillAmount = _experiencePoint / _value;
+                        //ここで音流す↓(ランク上がったぽいの)
+                        //SoundManager.Instance.CriAtomPlay(CueSheet.SE, "");
                     })
                     .Join(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f) * _scaleValue, 0.2f))
                     .AppendInterval(_waitSecondForRank)
@@ -147,6 +150,7 @@ public class PlayerExperiencePoint : MonoBehaviour
         }
     }
 
+    /// <summary> 自分のランクから、上限値を設定する </summary>
     private void ValueSet(int num)
     {
         _value = num switch
