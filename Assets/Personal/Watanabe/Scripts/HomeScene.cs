@@ -4,10 +4,7 @@ using UnityEngine.UI;
 
 public class HomeScene : MonoBehaviour
 {
-    [Min(0f)]
-    [Range(0f, 100f)]
-    [Tooltip("経験値がどれくらい溜まったら昇格戦に挑戦できるか（％）")]
-    [SerializeField] private float _promotionMatchValue = 80f;
+    [SerializeField] private bool _isRankUp = false;
 
     #region カット演出系
     [SerializeField] private GameObject _battleSelectPanel = default;
@@ -23,6 +20,7 @@ public class HomeScene : MonoBehaviour
 
     public static HomeScene Instance = default;
 
+    public bool IsRankUp { get => _isRankUp; set => _isRankUp = value; }
     public bool IsChallengablePromotionMatch => _isChallengablePromotionMatch;
 
     private void Start()
@@ -33,7 +31,7 @@ public class HomeScene : MonoBehaviour
         var value = PlayerExperiencePoint.Value;
 
         //経験値がある程度まで上がったらステージボスに挑戦できる
-        _isChallengablePromotionMatch = point / value > _promotionMatchValue / 10f;
+        //_isChallengablePromotionMatch = point / value > _promotionMatchValue / 10f;
 
         Instance = this;
     }
