@@ -49,11 +49,44 @@ public class RankingBattleScript : MonoBehaviour
             if (i == 0)
             {
                 //è∏äiêÌÇÃspriteÇàÍî‘è„Ç…äÑÇËìñÇƒÇÈ
-                index = HomeScene.Instance.IsChallengablePromotionMatch ? 4 : Random.Range(0, _rankSprite.Length - 1);
+                if (HomeScene.Instance.IsChallengablePromotionMatch)
+                {
+                    index = 4;
+                }
+                else
+                {
+                    index = PlayerExperiencePoint.CurrentRankNum switch
+                    {
+                        0 => 1,
+                        1 => 2,
+                        2 => 3,
+                        3 => 3,
+                        _ => 0,
+                    };
+                }
             }
             else
             {
-                index = Random.Range(0, _rankSprite.Length - 1);
+                //Ç±Ç±íºÇ∑
+                switch (PlayerExperiencePoint.CurrentRankNum)
+                {
+                    case 0:
+                        index =
+                            i == 1 ? 1 : 0;
+                        break;
+                    case 1:
+                        index =
+                            i == 4 ? 0 : 1;
+                        break;
+                    case 2:
+                        index =
+                            i == 4 ? 2 : 1;
+                        break;
+                    case 3:
+                        index =
+                            i == 1 ? 3 : 2;
+                        break;
+                }
             }
             enemyButtonPrefab.GetComponent<Image>().sprite = _rankSprite[index];
 
@@ -68,17 +101,34 @@ public class RankingBattleScript : MonoBehaviour
                         0 => EnemyDataBase.BossDataList[0].EnemyData.EnemySprite,
                         1 => EnemyDataBase.BossDataList[1].EnemyData.EnemySprite,
                         2 => EnemyDataBase.BossDataList[2].EnemyData.EnemySprite,
+                        _ => default
                     };
 
-                    //_bossImage.sprite = enemyDataHigh[randomIndex].EnemySprite;
+                    if (HomeScene.Instance.IsChallengablePromotionMatch)
+                    {
+                        button.onClick.AddListener(
+                            () => SelectEnemy.SetImage(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum].EnemySprite, true));
+                        button.onClick.AddListener(
+                            () => GameManager.SetEnemyData(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum]));
+                        button.onClick.AddListener(
+                            () => SetFlavorText(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum].FlavorText));
+
+                        continue;
+                    }
+                    else
+                    {
+                        button.onClick.AddListener(
+                            () => SelectEnemy.SetImage(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum].EnemySprite, false));
+                        button.onClick.AddListener(
+                            () => GameManager.SetEnemyData(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum]));
+                        button.onClick.AddListener(
+                            () => SetFlavorText(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum].FlavorText));
+                    }
                 }
 
-                button.onClick.AddListener(() => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite));
+                button.onClick.AddListener(() => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite, false));
                 button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
                 button.onClick.AddListener(() => SetFlavorText(enemyDataHigh[randomIndex].FlavorText));
-
-                //TODOÅFFlavorTextÇÃê›íË
-                //ìGè–âÓÅFÇ«Ç±ÇÃçëÅ`Ç∆Ç©
             }
         }
     }
