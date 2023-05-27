@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 188034062471495240}
   - component: {fileID: 4321650921857801047}
   - component: {fileID: 3049990697192533597}
+  - component: {fileID: 5204275733566962378}
   m_Layer: 0
   m_Name: KasokuSkill
   m_TagString: Untagged
@@ -66,6 +67,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 5172830643418309184}
   _playerObj: {fileID: 4875603664540293305}
+--- !u!114 &5204275733566962378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3929629327637604967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 5807982924522000149}
 --- !u!1001 &6926112137477219053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -490,6 +504,17 @@ PlayableDirector:
   m_CorrespondingSourceObject: {fileID: 2479435943086045028, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
   m_PrefabInstance: {fileID: 7323187016912246052}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5807982924522000149 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3835719397119728177, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
+  m_PrefabInstance: {fileID: 7323187016912246052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6008231158017360090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3945339834083677694, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}

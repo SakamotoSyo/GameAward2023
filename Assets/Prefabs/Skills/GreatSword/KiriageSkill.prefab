@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7891380069173094478}
   - component: {fileID: 5419026124691110068}
   - component: {fileID: 7328582551089132896}
+  - component: {fileID: 4249009632163777412}
   m_Layer: 0
   m_Name: KiriageSkill
   m_TagString: Untagged
@@ -75,6 +76,19 @@ MonoBehaviour:
   _enemyBlueObj: {fileID: 130809134799288669}
   _enemyGreenAnim: {fileID: 6299966981076113635}
   _enemyGreenObj: {fileID: 3791674522493156724}
+--- !u!114 &4249009632163777412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289269274145622447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 1519779279963334596}
 --- !u!1001 &552715805564342626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -505,6 +519,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1383596852801953648, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
   m_PrefabInstance: {fileID: 1519779279901175576}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1519779279963334596 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 78940380, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+  m_PrefabInstance: {fileID: 1519779279901175576}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1651916057475196939 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 286998738966185747, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
