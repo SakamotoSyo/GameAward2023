@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 public class BattleSelectUI : MonoBehaviour
 {
     [SerializeField] private Transform[] _actionUi = new Transform[4];
-    [SerializeField] private Text[] _skillText = new Text[3];
+    [SerializeField] private Text[] _skillText = new Text[4];
 
     [SerializeField] private GameObject _commandUI = default;
     [SerializeField] private GameObject _infoUI = default;
@@ -137,6 +137,7 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase skill1 = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0]);
             if (skill1 && skill1.IsUseCheck(_generator))
             {
+                _playerController.AddDamage(skill1.RequiredPoint, 0, true);
                 await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill1.SkillName);
             }
         }
@@ -145,6 +146,7 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase spcialSkill = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack);
             if (spcialSkill && spcialSkill.IsUseCheck(_generator))
             {
+                _playerController.AddDamage(spcialSkill.RequiredPoint, 0, true);
                 await _skillDataManagement.OnSkillUse(ActorAttackType.Player, spcialSkill.SkillName);
             }
         }
@@ -153,6 +155,7 @@ public class BattleSelectUI : MonoBehaviour
             SkillBase skill2 = _skillDataManagement.SearchSkill(_playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1]);
             if (skill2 && skill2.IsUseCheck(_generator))
             {
+                _playerController.AddDamage(skill2.RequiredPoint, 0, true);
                 await _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill2.SkillName);
             }
         }
@@ -182,20 +185,28 @@ public class BattleSelectUI : MonoBehaviour
         Debug.Log($"プレイヤーの武器のタイプは{_playerStatus.EquipWeapon.WeaponType}です");
         if (_playerStatus.EquipWeapon.WeaponType == WeaponType.GreatSword)
         {
+            var skill = _skillDataManagement.SearchSkill("溜め斬り");
+            _playerController.AddDamage(skill.RequiredPoint, 0, true);
             await _skillDataManagement.OnSkillUse(ActorAttackType.Player, "溜め斬り");
         }
         else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.DualBlades)
         {
             Debug.Log("総研");
+            var skill = _skillDataManagement.SearchSkill("連続斬り");
+            _playerController.AddDamage(skill.RequiredPoint, 0, true);
             await _skillDataManagement.OnSkillUse(ActorAttackType.Player, "連続斬り");
         }
         else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.Hammer)
         {
+            var skill = _skillDataManagement.SearchSkill("全力打ち");
+            _playerController.AddDamage(skill.RequiredPoint, 0, true);
             await _skillDataManagement.OnSkillUse(ActorAttackType.Player, "全力打ち");
 
         }
         else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.Spear)
         {
+            var skill = _skillDataManagement.SearchSkill("一閃");
+            _playerController.AddDamage(skill.RequiredPoint, 0, true);
             await _skillDataManagement.OnSkillUse(ActorAttackType.Player, "一閃");
         }
 
@@ -218,6 +229,7 @@ public class BattleSelectUI : MonoBehaviour
                 _skillText[0].text = skill1.SkillName;
                 _skillText[1].text = skill1.Damage.ToString();
                 _skillText[2].text = skill1.FlavorText;
+                _skillText[3].text = skill1.RequiredPoint.ToString();
                 Debug.Log("テキストです");
             }
             else
@@ -225,6 +237,8 @@ public class BattleSelectUI : MonoBehaviour
                 _skillText[0].text = "NoSkill";
                 _skillText[1].text = "";
                 _skillText[2].text = "";
+                _skillText[3].text = "";
+
             }
 
         }
@@ -237,12 +251,14 @@ public class BattleSelectUI : MonoBehaviour
                 _skillText[0].text = skill2.SkillName;
                 _skillText[1].text = skill2.Damage.ToString();
                 _skillText[2].text = skill2.FlavorText;
+                _skillText[3].text = skill2.RequiredPoint.ToString();
             }
             else
             {
                 _skillText[0].text = "NoSkill";
                 _skillText[1].text = "";
                 _skillText[2].text = "";
+                _skillText[3].text = "";
             }
 
         }
@@ -255,12 +271,14 @@ public class BattleSelectUI : MonoBehaviour
                 _skillText[0].text = special.SkillName;
                 _skillText[1].text = special.Damage.ToString();
                 _skillText[2].text = special.FlavorText;
+                _skillText[3].text = special.RequiredPoint.ToString();
             }
             else
             {
                 _skillText[0].text = "NoSkill";
                 _skillText[1].text = "";
                 _skillText[2].text = "";
+                _skillText[3].text = "";  
             }
         }
         else

@@ -82,6 +82,7 @@ public class PlayerEquipWeapon
     /// <summary>
     /// UŒ‚‚Åƒ_ƒEƒ“‚·‚é‚©”»’è‚·‚é
     /// –hŒä—Í‚Æ‚©‚ª‘‚¦‚½ê‡‚±‚ñ‚ÈŠÖ”‚ª‚ ‚é‚ÆŠy
+    /// €‚È‚È‚¢‚Æ‚«‚Étrue‚ğ•Ô‚·
     /// </summary>
     /// <param name="damage"></param>
     /// <returns></returns>
@@ -103,7 +104,7 @@ public class PlayerEquipWeapon
         _weaponWeight.Value = weaponData.WeaponWeight;
         _criticalRate.Value = weaponData.CriticalRate;
         _maxDurable.Value = weaponData.MaxDurable;
-        ChangeCurrentDurable(weaponData.CurrentDurable);
+        _currentDurable.Value = weaponData.CurrentDurable;
         _attribute = weaponData.Attribute;
         _weponType.Value = weaponData.WeaponType;
         _weaponNum = arrayNum;
@@ -154,7 +155,8 @@ public class PlayerEquipWeapon
 
     private void ChangeCurrentDurable(float num)
     {
-        _currentDurable.Value += num;
+        Debug.Log($"Œ»İ‚ÌHp‚Í{num}");
+        _currentDurable.Value += (int)num;
     }
 
     public void SetDebugSkill(string skillName) 
