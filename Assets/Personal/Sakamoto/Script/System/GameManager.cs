@@ -12,6 +12,7 @@ public static class GameManager
     private static PlayerSaveData _saveData;
     private static EnemyData _enemyData;
     private static WeaponType _blacksmithType;
+    private static bool _isBossClear;
 
     public static void SetEnemyData(EnemyData enemyData) 
     {
@@ -26,5 +27,10 @@ public static class GameManager
     public static void SetBlacksmithType(WeaponType weaponType) 
     {
         _blacksmithType = weaponType;
+    }
+
+    public static void BossClear() 
+    {
+        _isBossClear = true;
     }
 }
