@@ -182,6 +182,8 @@ public class BattleStateController : MonoBehaviour
         var result = await _enemyController.EnemyStatus.IsWeaponsAllBrek();
         if (result)
         {
+            _playerController.PlayerAnimation.Victory();
+            _enemyController.Lose();
             _gameClearObj.SetActive(true);
             SoundManager.Instance.CriAtomPlay(CueSheet.ME, "ME_Win");
             await UniTask.Delay(TimeSpan.FromSeconds(3));
@@ -193,8 +195,9 @@ public class BattleStateController : MonoBehaviour
         return false;
     }
 
-    public void GameOver()
+    public async void GameOver()
     {
+        await _playerController.PlayerAnimation.Lose();
         _gameOverTextObj.SetActive(true);
         _stateMachine.Dispatch((int)BattleEvent.GameOver);
     }

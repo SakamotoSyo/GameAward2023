@@ -28,6 +28,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
     public EnemyStatus EnemyStatus => _enemyStatus;
 
     private EnemyColor _enemyColor;
+    private bool _isClear = false;
 
     public EnemyColor EnemyColor => _enemyColor;
 
@@ -40,6 +41,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     private void Update()
     {
+        if (_isClear) return;
         _animator.SetBool(_enemyStatus.EquipWeapon.WeaponType.ToString(), true);
     }
 
@@ -61,9 +63,11 @@ public class EnemyController : MonoBehaviour, IAddDamage
             _damagePos.position,
             Quaternion.identity);
         damageController.TextInit((int)damage, _enemyStatus.EquipWeapon.AddDamage((int)damage, criticalRate));
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
 
         if (_enemyStatus.EquipWeapon.IsWeaponBreak())
         {
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Crash");
             _enemyStatus.EquipChangeWeapon();
         }
     }
@@ -91,5 +95,13 @@ public class EnemyController : MonoBehaviour, IAddDamage
         //_animator = enemyData.EnemyAnim;
         //_renderer.sprite = enemyData.EnemySprite;
         _enemyColor = enemyData.EnemyColor;
+    }
+
+    public void Lose() 
+    {
+        Debug.Log("負け");
+        _isClear = true;
+        _animator.SetBool(_enemyStatus.EquipWeapon.WeaponType.ToString(), false);
+        _animator.SetBool("Lose", true);
     }
 }
