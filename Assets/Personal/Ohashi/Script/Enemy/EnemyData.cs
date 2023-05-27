@@ -19,4 +19,6 @@ public class EnemyData : ScriptableObject
 
     public bool IsBoss;
 
+    [Multiline(5)]
+    public string FlavorText;
 }

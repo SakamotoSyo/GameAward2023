@@ -6,6 +6,7 @@ public class RankingBattleScript : MonoBehaviour
 {
     [SerializeField] private Image _bossImage = default;
     [SerializeField] private Sprite[] _rankSprite = new Sprite[5];
+    [SerializeField] private Text _flavorText = default;
 
     [SerializeField] private EnemyDataBase _enemyDataBase;
     [SerializeField] private GameObject _buttonInsPos;
@@ -14,6 +15,7 @@ public class RankingBattleScript : MonoBehaviour
     [SerializeField] private int _rankPointRange = 100;
     [SceneName]
     [SerializeField] private string _battleScene;
+
     private List<EnemyData> _enemyBossData = new();
 
     private void Awake()
@@ -61,11 +63,19 @@ public class RankingBattleScript : MonoBehaviour
 
                 if (i == 0)
                 {
-                    _bossImage.sprite = enemyDataHigh[randomIndex].EnemySprite;
+                    _bossImage.sprite = PlayerExperiencePoint.CurrentRankNum switch
+                    {
+                        0 => EnemyDataBase.BossDataList[0].EnemyData.EnemySprite,
+                        1 => EnemyDataBase.BossDataList[1].EnemyData.EnemySprite,
+                        2 => EnemyDataBase.BossDataList[2].EnemyData.EnemySprite,
+                    };
+
+                    //_bossImage.sprite = enemyDataHigh[randomIndex].EnemySprite;
                 }
 
                 button.onClick.AddListener(() => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite));
                 button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
+                button.onClick.AddListener(() => SetFlavorText(enemyDataHigh[randomIndex].FlavorText));
 
                 //TODOÅFFlavorTextÇÃê›íË
                 //ìGè–âÓÅFÇ«Ç±ÇÃçëÅ`Ç∆Ç©
@@ -120,5 +130,10 @@ public class RankingBattleScript : MonoBehaviour
         playerData.WeaponArray = weaponDatas;
         playerData.PlayerRankPoint = 0;
         GameManager.SetPlayerData(playerData);
+    }
+
+    private void SetFlavorText(string text)
+    {
+        _flavorText.text = text;
     }
 }
