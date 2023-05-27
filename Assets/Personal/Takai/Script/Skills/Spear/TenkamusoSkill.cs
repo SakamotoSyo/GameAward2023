@@ -27,6 +27,8 @@ public class TenkamusoSkill : SkillBase
 
     public override bool IsUseCheck(ActorGenerator actor)
     {
+        return true;
+        
         if (actor.PlayerController)
         {
             var hp = actor.PlayerController.PlayerStatus.EquipWeapon.CurrentDurable.Value * 0.3f;
@@ -38,7 +40,7 @@ public class TenkamusoSkill : SkillBase
             return (actor.EnemyController.EnemyStatus.EquipWeapon.CurrentDurable.Value <= hp) ? true : false;
         }
 
-        return false;
+        //return false;
     }
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
