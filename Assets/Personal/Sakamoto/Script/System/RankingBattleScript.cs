@@ -17,7 +17,6 @@ public class RankingBattleScript : MonoBehaviour
     [SerializeField] private string _battleScene;
 
     private List<EnemyData> _enemyBossData = new();
-    private FlavorTextData _flavorTextData = new();
 
     private void Awake()
     {
@@ -28,8 +27,6 @@ public class RankingBattleScript : MonoBehaviour
     {
         StartEnemySelect();
         BossChallengeJudge();
-
-        _flavorTextData.Start();
     }
 
     public void StartEnemySelect()
@@ -78,6 +75,7 @@ public class RankingBattleScript : MonoBehaviour
 
                 button.onClick.AddListener(() => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite));
                 button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
+                button.onClick.AddListener(() => SetFlavorText(enemyDataHigh[randomIndex].FlavorText));
 
                 //TODOÅFFlavorTextÇÃê›íË
                 //ìGè–âÓÅFÇ«Ç±ÇÃçëÅ`Ç∆Ç©
@@ -132,5 +130,10 @@ public class RankingBattleScript : MonoBehaviour
         playerData.WeaponArray = weaponDatas;
         playerData.PlayerRankPoint = 0;
         GameManager.SetPlayerData(playerData);
+    }
+
+    private void SetFlavorText(string text)
+    {
+        _flavorText.text = text;
     }
 }
