@@ -54,7 +54,7 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select");
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
 
         _infoText.text = DataBaseScript.WeaponDescriptionData[_weaponType];
         _infoPanel.SetActive(true);

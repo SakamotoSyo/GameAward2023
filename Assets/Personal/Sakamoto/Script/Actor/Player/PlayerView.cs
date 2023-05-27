@@ -33,6 +33,21 @@ public class PlayerView : MonoBehaviour
 
     public void ChangeWeaponIcon(WeaponType weaponType) 
     {
+        if (weaponType == WeaponType.DualBlades)
+        {
 
+        }
+        else if (weaponType == WeaponType.Hammer)
+        {
+
+        }
+        else if (weaponType == WeaponType.Spear)
+        {
+
+        }
+        else if (weaponType == WeaponType.GreatSword) 
+        {
+
+        }
     }
 }
