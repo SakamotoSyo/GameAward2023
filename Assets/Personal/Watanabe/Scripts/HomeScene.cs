@@ -27,6 +27,7 @@ public class HomeScene : MonoBehaviour
         var point = PlayerExperiencePoint.ExperiencePoint;
         var value = PlayerExperiencePoint.Value;
 
+        //経験値がある程度まで上がったら
         _isChallengablePromotionMatch = point / value > 0.8f;
 
         Instance = this;
