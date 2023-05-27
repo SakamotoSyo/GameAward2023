@@ -121,11 +121,12 @@ public class PlayerEquipWeapon
     {
         for (int i = 0; i < _weaponSkill.WeaponSkillArray.Length; i++)
         {
+            Debug.Log("EpicŠm”F");
             var skill = _skillDataManagement.SearchSkill(_weaponSkill.WeaponSkillArray[i]);
             if (skill != null && skill.Type == SkillType.Epic)
             {
-                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill.name).Forget();
-                Debug.Log("Epic”­“®");
+                _skillDataManagement.OnSkillUse(ActorAttackType.Player, skill.SkillName).Forget();
+                Debug.Log($"{skill.SkillName}Epic”­“®");
             }
         }
     }

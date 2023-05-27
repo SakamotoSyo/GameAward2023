@@ -5,11 +5,17 @@ using System.Linq;
 
 public class EnemyDataBase : MonoBehaviour
 {
-    public static List<EnemyBossData> BossDataList => bossDataList;
-    [SerializeField] private List<EnemyData> _enemyDataList = new();
+    [SerializeField] private List<EnemyData> _enemyDataListA = new();
+    [SerializeField] private List<EnemyData> _enemyDataListB = new();
+    [SerializeField] private List<EnemyData> _enemyDataListC = new();
+
     [SerializeField] private List<EnemyBossData> _bossDataList = new();
+
+
     private static bool isInit = false;
     private static List<EnemyBossData> bossDataList = new();
+
+    public static List<EnemyBossData> BossDataList => bossDataList;
 
     private void Start()
     {
@@ -32,14 +38,23 @@ public class EnemyDataBase : MonoBehaviour
     public EnemyData[] GetRankEnemyArrayData(int playerRank, int RankRange, bool isUp)
     {
         EnemyData[] rankArray;
+        var dataList = PlayerExperiencePoint.CurrentRankNum switch
+        {
+            0 => _enemyDataListC,
+            1 => _enemyDataListB,
+            2 => _enemyDataListA,
+            _ => _enemyDataListA
+        };
+
         if (isUp)
         {
-            rankArray = _enemyDataList.Where(x => playerRank <= x.RankPoint
+
+            rankArray = dataList.Where(x => playerRank <= x.RankPoint
                                      && playerRank + RankRange >= x.RankPoint).ToArray();
         }
         else
         {
-            rankArray = _enemyDataList.Where(x => playerRank - RankRange <= x.RankPoint
+            rankArray = dataList.Where(x => playerRank - RankRange <= x.RankPoint
                                      && playerRank >= x.RankPoint).ToArray();
         }
 

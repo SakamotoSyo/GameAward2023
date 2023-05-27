@@ -7,7 +7,7 @@ public class HunkiSkill : SkillBase
 {
     private PlayableDirector _anim;
     private PlayerController _playerStatus;
-    private bool _playerTurnAgain = false;
+    private bool _playerTurnAgain = true;
 
     public HunkiSkill()
     {
@@ -54,6 +54,7 @@ public class HunkiSkill : SkillBase
 
     public override bool TurnEnd()
     {
+        Debug.Log($"奮起Trueエンド");
         _playerTurnAgain = true;
         return true;
     }

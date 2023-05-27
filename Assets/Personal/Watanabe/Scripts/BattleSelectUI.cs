@@ -164,7 +164,15 @@ public class BattleSelectUI : MonoBehaviour
         }
         else 
         {
-            _battleChangeWeaponCs.ChangeWeaponUiOpen();
+            if (_playerStatus.EquipWeapon.IsEpicSkill2)
+            {
+                _battleStateController.ActorStateEnd();
+            }
+            else 
+            {
+                _battleChangeWeaponCs.ChangeWeaponUiOpen();
+            }
+            
         }
     }
 

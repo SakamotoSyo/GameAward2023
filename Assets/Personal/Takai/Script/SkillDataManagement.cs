@@ -110,9 +110,8 @@ public class SkillDataManagement : MonoBehaviour
         {
             if (s.SkillName == skillName)
             {
-                await s.InEffectSkill(attackType);
-                _skillUsePool.Remove(s);
-                return true;
+                var result = await s.InEffectSkill(attackType);
+                return result;
             }
         }
 

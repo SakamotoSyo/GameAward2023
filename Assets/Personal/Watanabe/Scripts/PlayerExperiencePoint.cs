@@ -41,11 +41,11 @@ public class PlayerExperiencePoint : MonoBehaviour
     private const int RANK_A = 2;
     private const int RANK_S = 3;
 
-    private int _currentRankNum = 0;
-
+    private static int _currentRankNum = 0;
     private static float _value = 0;
 
     public static int ExperiencePoint => _experiencePoint;
+    public static int CurrentRankNum => _currentRankNum;
     public static float Value => _value;
     #endregion
 
