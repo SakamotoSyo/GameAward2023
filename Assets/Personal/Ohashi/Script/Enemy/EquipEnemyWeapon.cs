@@ -73,9 +73,10 @@ public class EquipEnemyWeapon
     public bool AddDamage(int damage, float criticalRate)
     {
         int critical = Random.Range(0, 100);
-        if(critical <= criticalRate)
+        if(critical >= criticalRate)
         {
             Debug.Log("クリティカル");
+            damage = (int)((float)damage * 1.3f);
             _currentDurable.Value -= damage;
             return true;
         }

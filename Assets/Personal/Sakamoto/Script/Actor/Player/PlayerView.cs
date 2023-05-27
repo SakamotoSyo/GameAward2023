@@ -16,7 +16,7 @@ public class PlayerView : MonoBehaviour
         _currentHpText.text = num.ToString();
         _currentHp = num;
         AdjustmentHpBar();
-        Debug.Log($"åªç›ÇÃHpÇÕ{num}");
+        Debug.Log($"åªç›ÇÃHpsasaÇÕ{num}");
     }
 
     public void SetMaxHp(float num) 

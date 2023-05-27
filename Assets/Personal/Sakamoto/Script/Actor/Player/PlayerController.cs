@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Random = UnityEngine.Random; 
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
     public Action GameOverAction;
     public PlayerStatus PlayerStatus => _playerStatus;
+    public PlayerAnimation PlayerAnimation => _playerAnimation;
 
     [SerializeField, Tooltip("ダメージテキストのクラス")]
     private DamageTextController _damegeController;
@@ -29,13 +30,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-       
+        _playerAnimation.Update();
     }
 
     /// <summary>
     /// ダメージを受ける流れ
     /// </summary>
-    public void AddDamage(float damage, float criticalNum) 
+    public void AddDamage(float damage, float criticalNum, bool isSkill = false)
     {
         bool isCritical = CriticalCheck(criticalNum);
         if (isCritical)
@@ -59,8 +60,13 @@ public class PlayerController : MonoBehaviour
             //アニメーションがあったらここでダメージを受ける処理を呼ぶ
             _playerStatus.EquipWeapon.AddDamage(damage);
         }
-        else 
+        else
         {
+            if (!isSkill) 
+            {
+                SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
+            }
+
             _playerStatus.EquipWeapon.AddDamage(damage);
             //武器が壊れたときに入れ替える処理
             if (!_playerStatus.RandomEquipWeponChange())
@@ -69,8 +75,9 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("GameOver");
                 GameOverAction?.Invoke();
             }
-            else 
+            else
             {
+                SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Crash");
                 Debug.Log("入れ替えました");
             }
         }
@@ -79,15 +86,15 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// 通常攻撃
     /// </summary>
-    public float Attack(PlayerAttackType attackType) 
+    public float Attack(PlayerAttackType attackType)
     {
-        switch (attackType) 
+        switch (attackType)
         {
             case PlayerAttackType.ConventionalAttack:
                 return _playerStatus.ConventionalAttack();
                 break;
-           // case PlayerAttackType.Skill1:
-             //   return
+                // case PlayerAttackType.Skill1:
+                //   return
         }
         return 0;
     }
@@ -97,28 +104,28 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="criticalNum"></param>
     /// <returns></returns>
-    private bool CriticalCheck(float criticalNum) 
+    private bool CriticalCheck(float criticalNum)
     {
         int r = Random.Range(0, 100);
-        if (r > criticalNum)
+        if (r < criticalNum)
         {
             return true;
         }
         return false;
     }
 
-    public void EquipWeaponChange(WeaponData weaponData, int arrayNum) 
+    public void EquipWeaponChange(WeaponData weaponData, int arrayNum)
     {
         _playerStatus.EquipWeponChange(weaponData, arrayNum);
         _playerAnimation.WeaponIdle();
     }
 
-    public void SetPlayerStatus(PlayerStatus playerStatus) 
+    public void SetPlayerStatus(PlayerStatus playerStatus)
     {
         _playerStatus = playerStatus;
     }
 
-    public void SavePlayerData() 
+    public void SavePlayerData()
     {
         PlayerSaveData playerSaveData = new PlayerSaveData();
         _playerStatus.SaveStatus(playerSaveData);
@@ -126,13 +133,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Saveされました");
     }
 
-    public void LoadPlayerData(PlayerSaveData playerSaveData) 
+    public void LoadPlayerData(PlayerSaveData playerSaveData)
     {
         _playerStatus.LoadStatus(playerSaveData);
     }
 }
 
-public enum PlayerAttackType 
+public enum PlayerAttackType
 {
     ConventionalAttack,
     CounterAttack,

@@ -24,7 +24,7 @@ public class EnemyAttack
 
         if (_equipWepon.CurrentDurable.Value <= _equipWepon.CurrentDurable.Value / 2)
         {
-            SpecialAttack();
+           await SpecialAttack();
         }
 
         if (_skillArray[index] == 1)
@@ -32,13 +32,13 @@ public class EnemyAttack
             if(_equipWepon.WeaponSkill.WeaponSkillArray[1] != null ||
                 _equipWepon.WeaponSkill.WeaponSkillArray[0] != null)
             {
-                SkillAttack();
+               await SkillAttack();
                 return;
             }
         }
         if(_skillArray[index] == 0)
         {
-            NormalAttack();
+           await NormalAttack();
         }
     }
 
