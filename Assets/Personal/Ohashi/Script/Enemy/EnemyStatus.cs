@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using Cysharp.Threading.Tasks;
+using System;
 
 public class EnemyStatus
 {
@@ -37,7 +38,7 @@ public class EnemyStatus
 
     public async UniTask<bool> IsWeaponsAllBrek()
     {
-        await UniTask.Delay(1);
+        await UniTask.Delay(TimeSpan.FromSeconds(1));
         if(_epicWeapon.WeaponBreakCount >= _weaponDatas.Length)
         {
             return true;

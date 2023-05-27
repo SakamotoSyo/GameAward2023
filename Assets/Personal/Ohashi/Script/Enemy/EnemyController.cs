@@ -64,14 +64,15 @@ public class EnemyController : MonoBehaviour, IAddDamage
             Quaternion.identity);
         damageController.TextInit((int)damage, _enemyStatus.EquipWeapon.AddDamage((int)damage, criticalRate));
         SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
-        if (await _enemyStatus.IsWeaponsAllBrek())
-        {
-            Debug.Log("全部壊れた");
-            return;
-        }
+
         if (_enemyStatus.EquipWeapon.IsWeaponBreak())
         {
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Crash");
+            if (await _enemyStatus.IsWeaponsAllBrek())
+            {
+                Debug.Log("全部壊れた");
+                return;
+            }
             _enemyStatus.EquipChangeWeapon();
         }
     }
