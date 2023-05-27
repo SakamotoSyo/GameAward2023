@@ -41,7 +41,7 @@ public class ActorGenerator : MonoBehaviour
             var enemyObj = Instantiate(enemyData.EnemyPrefab, _enemyInsPos.transform.position, enemyData.EnemyPrefab.transform.rotation);
             enemyObj.transform.SetParent(_enemyInsPos.transform);
             _enemyController = enemyObj.GetComponent<EnemyController>();
-            _enemyController.SetEnemyData(_testEnemyData);
+            _enemyController.SetEnemyData(enemyData);
             SoundManager.Instance.CriAtomBGMPlay("BGM_Battle");
         }
         else 

@@ -107,6 +107,7 @@ public class BattleStateController : MonoBehaviour
 
                 if (result)
                 {
+                    Debug.Log("敵の行動終了");
                     //敵の行動を終了させる
                     _stateMachine.Dispatch((int)BattleEvent.SelectStateToPlayerTrun);
                     ActorStateEnd();
@@ -144,11 +145,12 @@ public class BattleStateController : MonoBehaviour
         var check = await ClearCheck();
         if (check) return;
 
-
+        var saveNum = 0;
         for (int i = 0; i < _actionSequentialList.Count; i++)
         {
             if (!_actionSequentialList[i].alreadyActedOn)
             {
+                saveNum = i;
                 _actionSequentialList[i].alreadyActedOn = true;
                 break;
             }
@@ -157,8 +159,10 @@ public class BattleStateController : MonoBehaviour
         if (_stateMachine.CurrentState == _stateMachine.GetOrAddState<SPlayerAttackState>())
         {
             var result = await _skillManagement.InEffectCheck("奮起", ActorAttackType.Player);
+            Debug.Log($"奮起{result}");
             if (result)
             {
+                _actionSequentialList[saveNum].alreadyActedOn = false;
                 _stateMachine.Dispatch((int)BattleEvent.ReturnPlayer);
             }
             else

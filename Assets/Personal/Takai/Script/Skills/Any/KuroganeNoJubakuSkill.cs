@@ -31,7 +31,7 @@ public class KuroganeNoJubakuSkill : SkillBase
 
     public async override UniTask UseSkill(PlayerController player, EnemyController enemy, ActorAttackType actorType)
     {
-        Debug.Log("Use Skill");
+        Debug.Log("くろがね");
         _playerStatus = player;
         _playerStatus.PlayerStatus.EquipWeapon.EpicSkill2();
         _anim = GetComponent<PlayableDirector>();
