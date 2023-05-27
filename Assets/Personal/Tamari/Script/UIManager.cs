@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// TODO:持っている武器の中からのみ選択できるようにする
+/// </summary>
 public class UIManager : MonoBehaviour
-{
+{   
     WeaponType _weaponType;
 
     GameObject _weaponBase = default;
@@ -78,13 +81,61 @@ public class UIManager : MonoBehaviour
     [SerializeField, Tooltip("選択するパネル")]
     private GameObject _firstPanel = default;
 
+    [SerializeField, Tooltip("大剣のフレーム")]
+    private GameObject _gsFrame = default;
+
+    [SerializeField, Tooltip("双剣のフレーム")]
+    private GameObject _dbFrame = default;
+
+    [SerializeField, Tooltip("ハンマーのフレーム")]
+    private GameObject _hFrame = default;
+
+    [SerializeField, Tooltip("槍のフレーム")]
+    private GameObject _sFrame = default;
+
     private void Start()
     {
         _allPanel.SetActive(false);
         _panelForReset.SetActive(false);
         _panelForSample.SetActive(false);
         _panelForFinish.SetActive(false);
+        ActiveSelectableWeapon();
         _weaponBase = GameObject.Find("MeshManager");
+    }
+
+    private void ActiveSelectableWeapon()
+    {
+        _gsFrame.SetActive(false);
+        _dbFrame.SetActive(false);
+        _hFrame.SetActive(false);
+        _sFrame.SetActive(false);
+
+        for(int i = 0; i < GameManager.PlayerSaveData.WeaponArray.Length; i++)
+        {
+            if (GameManager.PlayerSaveData.WeaponArray[i].WeaponType == WeaponType.GreatSword)
+            {
+                _gsFrame.SetActive(true);
+            }
+            else if (GameManager.PlayerSaveData.WeaponArray[i].WeaponType == WeaponType.DualBlades)
+            {
+                _dbFrame.SetActive(true);
+            }
+            else if (GameManager.PlayerSaveData.WeaponArray[i].WeaponType == WeaponType.Hammer)
+            {
+                _hFrame.SetActive(true);
+            }
+            else if (GameManager.PlayerSaveData.WeaponArray[i].WeaponType == WeaponType.Spear)
+            {
+                _sFrame.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("現在取得している武器はありません");
+                _gsFrame.SetActive(true);
+                break;
+            }
+        }
+
     }
 
     public void OnSelect(int num)
