@@ -55,8 +55,11 @@ public class ActiveWeaponMesh : MonoBehaviour
     [SerializeField, Tooltip("大剣の回転角度")]
     private float _gsRotateAngle = 0;
 
-    [SerializeField, Tooltip("双剣の回転角度")]
-    private float _dbRotateAngle = 0;
+    [SerializeField, Tooltip("双剣(右)の回転角度")]
+    private float _dbRotateAngleR = 0;
+
+    [SerializeField, Tooltip("双剣(左)の回転角度")]
+    private float _dbRotateAngleL = 0;
 
     [SerializeField, Tooltip("ハンマーの回転角度")]
     private float _hRotateAngle = 0;
@@ -224,7 +227,7 @@ public class ActiveWeaponMesh : MonoBehaviour
                 pos.transform.position.y + data.DISY, pos.transform.position.z + 1);
 
             weapon.transform.position = vec;
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngleL);
         }
 
         else if (weapon == _dbImageR[indexNum])
@@ -242,7 +245,7 @@ public class ActiveWeaponMesh : MonoBehaviour
             weapon.transform.position = vec;
 
             weapon.transform.Rotate(0, 180, 0);
-            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngle);
+            parentWeapon.transform.rotation = Quaternion.Euler(0, 0, _dbRotateAngleR);
         }
 
         else if (weapon == _gsImage[indexNum])
