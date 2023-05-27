@@ -87,6 +87,7 @@ public class PlayerStatus
         {
             if (0 < _weaponDatas[i].CurrentDurable)
             {
+                Debug.Log("“ü‚ê‘Ö‚¦‚µ‚µ‚µ‚µ");
                 _equipWeapon.ChangeWeapon(WeaponDatas[i], i);
                 return true;
             }
