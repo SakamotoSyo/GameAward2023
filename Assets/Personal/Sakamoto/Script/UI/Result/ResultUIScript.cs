@@ -25,6 +25,7 @@ public class ResultUIScript : MonoBehaviour
     [SerializeField] private ResultWeaponButton[] _resultUICs = new ResultWeaponButton[4];
     [SerializeField] private Image[] _weaponImage = new Image[4];
     [SerializeField] private Sprite[] _weaponSampleSprite = new Sprite[4];
+    [SerializeField] private Text[] _weaponNameText = new Text[4];
     private WeaponData[] _saveWeaponData;
     private OreData _selectOreData;
     private int _currentSelectWeapon;
@@ -175,22 +176,27 @@ public class ResultUIScript : MonoBehaviour
             if (weaponDatas.Length - 1 < i) 
             {
                 _weaponImage[i].sprite = null;
+                _weaponNameText[i].text = "";
                 _weaponImage[i].color = new Color(1, 1, 1, 0);
             }
             else if (weaponDatas[i].WeaponType == WeaponType.DualBlades)
             {
+                _weaponNameText[i].text = "‘oŒ•";
                 _weaponImage[i].sprite = _weaponSampleSprite[0];
             }
             else if (weaponDatas[i].WeaponType == WeaponType.Hammer)
             {
+                _weaponNameText[i].text = "ƒnƒ“ƒ}[";
                 _weaponImage[i].sprite = _weaponSampleSprite[1];
             }
             else if (weaponDatas[i].WeaponType == WeaponType.GreatSword)
             {
+                _weaponNameText[i].text = "‘åŒ•";
                 _weaponImage[i].sprite = _weaponSampleSprite[2];
             }
             else if (weaponDatas[i].WeaponType == WeaponType.Spear)
             {
+                _weaponNameText[i].text = "‘„";
                 _weaponImage[i].sprite = _weaponSampleSprite[3];
             }
         }
