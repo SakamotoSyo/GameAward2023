@@ -23,6 +23,7 @@ public class ResultUIScript : MonoBehaviour
     [SerializeField] private SkillDataManagement _skillDataManagement;
     [SerializeField] private Sprite[] _oreImage = new Sprite[3];
     [SerializeField] private ResultWeaponButton[] _resultUICs = new ResultWeaponButton[4];
+    [SerializeField] private Button[] _weaponButtonInsPos = new Button[4];
     private WeaponData[] _saveWeaponData;
     private OreData _selectOreData;
     private int _currentSelectWeapon;

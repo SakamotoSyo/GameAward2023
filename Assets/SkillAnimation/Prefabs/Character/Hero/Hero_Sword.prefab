@@ -679,6 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 286998738966185747}
   - component: {fileID: 1913602315260747833}
+  - component: {fileID: 5121247120630168254}
   m_Layer: 0
   m_Name: Hero_Sword
   m_TagString: Sword
@@ -737,6 +738,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5121247120630168254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383596852801953648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 78940380}
 --- !u!1 &1387103393723961506
 GameObject:
   m_ObjectHideFlags: 0
