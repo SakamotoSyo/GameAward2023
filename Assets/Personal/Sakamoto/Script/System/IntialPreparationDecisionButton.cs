@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,14 +13,22 @@ public class IntialPreparationDecisionButton : MonoBehaviour
     {
         if (_preparationScript.WeaponDatas.Count == 2)
         {
-            //SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
+            var sequence = DOTween.Sequence();
 
-            var playerData = new PlayerSaveData();
-            playerData.WeaponArray = _preparationScript.WeaponDatas.ToArray();
-            GameManager.SetPlayerData(playerData);
-            //SceneLoader.LoadScene(_nextScene);
+            sequence.AppendCallback(() =>
+                    {
+                        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
+                    })
+                    .AppendInterval(0.5f)
+                    .AppendCallback(() =>
+                    {
+                        var playerData = new PlayerSaveData();
+                        playerData.WeaponArray = _preparationScript.WeaponDatas.ToArray();
+                        GameManager.SetPlayerData(playerData);
+                        //SceneLoader.LoadScene(_nextScene);
 
-            SceneLoader.LoadScene(_nextScene);
+                        SceneLoader.LoadScene(_nextScene);
+                    });
         }
         else 
         {
