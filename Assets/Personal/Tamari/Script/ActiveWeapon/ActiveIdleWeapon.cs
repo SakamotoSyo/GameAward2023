@@ -78,16 +78,41 @@ public class ActiveIdleWeapon : MonoBehaviour
 
     public void ActiveWeapon()
     {
-        Debug.Log(_gsImage);
-        BaseActiveWeapon(_gsImage, WeaponSaveData.GSData);
-
-        BaseActiveWeapon(_dbImageR, WeaponSaveData.DBData);
-
-        BaseActiveWeapon(_dbImageL, WeaponSaveData.DBData);
-
-        BaseActiveWeapon(_hImage, WeaponSaveData.HData);
-
-        BaseActiveWeapon(_sImage, WeaponSaveData.SData);
+        if(WeaponSaveData.GSData.PREHABNAME == null)
+        {
+            BaseActiveWeapon(_gsImage, WeaponSaveData.GSSampleData);
+            Debug.Log(WeaponSaveData.GSSampleData.PREHABNAME);
+        }
+        else if(WeaponSaveData.GSData.PREHABNAME != null)
+        {
+            BaseActiveWeapon(_gsImage, WeaponSaveData.GSData);
+        }
+        if (WeaponSaveData.DBData.PREHABNAME == null)
+        {
+            BaseActiveWeapon(_dbImageR, WeaponSaveData.DBSampleData);
+            BaseActiveWeapon(_dbImageL, WeaponSaveData.DBSampleData);
+        }
+        else if (WeaponSaveData.DBData.PREHABNAME != null)
+        {
+            BaseActiveWeapon(_dbImageR, WeaponSaveData.DBData);
+            BaseActiveWeapon(_dbImageL, WeaponSaveData.DBData);
+        }
+        if (WeaponSaveData.HData.PREHABNAME == null)
+        {
+            BaseActiveWeapon(_hImage, WeaponSaveData.HSampleData);
+        }
+        else if (WeaponSaveData.HData.PREHABNAME != null)
+        {
+            BaseActiveWeapon(_hImage, WeaponSaveData.HData);
+        }
+        if (WeaponSaveData.SData.PREHABNAME == null)
+        {
+            BaseActiveWeapon(_sImage, WeaponSaveData.SSampleData);
+        }
+        else if (WeaponSaveData.SData.PREHABNAME != null)
+        {
+            BaseActiveWeapon(_sImage, WeaponSaveData.SData);
+        }
     }
     private void BaseActiveWeapon(GameObject weapon, SaveData data)
     {
