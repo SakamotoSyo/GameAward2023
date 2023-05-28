@@ -30,22 +30,30 @@ public class BattleChangeWeapon : MonoBehaviour
         _selectUi.SetActive(false);
         for (int i = 0; i < _weaponButton.Length; i++)
         {
-            if (i < _playerStatus.WeaponDatas.Length - 1)
+
+            var num = i;
+            if (num >= _playerStatus.WeaponDatas.Length) 
             {
-                var num = i;
-                if (_playerStatus.WeaponDatas[i].CurrentDurable <= 0) 
-                {
-                    _weaponButton[i].interactable = false;
-                }
-                else 
-                {
-                    _weaponButton[i].interactable = true;
-                }
+                _weaponButton[i].interactable = false;
+                continue;
+            }
+
+            if (_playerStatus.WeaponDatas[i].CurrentDurable <= 0)
+            {
+                _weaponButton[i].interactable = false;
+            }
+            else
+            {
+                _weaponButton[i].interactable = true;
+            }
+
+            if (_playerStatus.EquipWeapon.WeaponNum != i)
+            {
                 _weaponTypeText[i].text = _playerStatus.WeaponDatas[num].WeaponType.ToString();
                 _weaponButton[i].onClick.RemoveAllListeners();
                 _weaponButton[i].onClick.AddListener(() => OnClickChangeWeapon(_playerStatus.WeaponDatas[num], num));
             }
-            else
+            else 
             {
                 _weaponButton[i].interactable = false;
             }
@@ -63,7 +71,7 @@ public class BattleChangeWeapon : MonoBehaviour
         _battleStateController.ActorStateEnd();
     }
 
-    public void CancelButton() 
+    public void CancelButton()
     {
         _weaponUiPanel.SetActive(false);
         _battleStateController.ActorStateEnd();
