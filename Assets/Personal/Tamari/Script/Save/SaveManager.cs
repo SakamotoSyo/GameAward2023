@@ -16,11 +16,21 @@ public class SaveManager
     const string SOUKENFILEPATH = "Souken.dat";
     const string HAMMERFILEPATH = "Hammer.dat";
     const string YARIFILEPATH = "Yari.dat";
+
+    const string TAIKENSAMPLEFILEPATH = "Assets/SampleSaveData/Taiken.dat";
+    const string SOUKENSAMPLEFILEPATH = "Assets/SampleSaveData/Souken.dat";
+    const string HAMMERSAMPLEFILEPATH = "Assets/SampleSaveData/Hammer.dat";
+    const string YARISAMPLEFILEPATH = "Assets/SampleSaveData/Yari.dat";
 #else
     public const string GREATSWORDFILEPATH = "Taiken.json";
     public const string DUALBLADESFILEPATH = "Souken.json";
     public const string HAMMERFILEPATH = "Hammer.json";
     public const string SPEARFILEPATH = "Yari.json";
+
+    public const string GREATSWORDSAMPLEFILEPATH = "Assets/SampleSaveData/Taiken.json";
+    public const string DUALBLADESSAMPLEFILEPATH = "Assets/SampleSaveData/Souken.json";
+    public const string HAMMERSAMPLEFILEPATH = "Assets/SampleSaveData/Hammer.json";
+    public const string SPEARSAMPLEFILEPATH = "Assets/SampleSaveData/Yari.json";
 #endif
     private SaveData Data;
 

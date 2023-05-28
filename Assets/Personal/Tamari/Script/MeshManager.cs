@@ -289,7 +289,7 @@ public class MeshManager : MonoBehaviour
 
     private void BaseSaveMesh(string fileName, SaveData data)
     {
-        data.PREHABNAME = GameManager.BlacksmithType.ToString();
+        data.PREHABNAME = _weaponType.ToString();
         data.MYVERTICES = _myVertices;
         data.MYTRIANGLES = _myTriangles;
         data.LOWESTPOSINDEX = _lowestPosIndex;
