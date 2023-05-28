@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8933901963626553589}
   - component: {fileID: 3932840076756284175}
   - component: {fileID: 5972576541187272601}
+  - component: {fileID: 2547647257792419615}
   m_Layer: 0
   m_Name: ShippuSkill
   m_TagString: Untagged
@@ -66,6 +67,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 3790589640123401763}
   _playerObj: {fileID: 2682149212190022756}
+--- !u!114 &2547647257792419615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4800717070191167858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 3894327793391061960}
 --- !u!1001 &229780366597345785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -488,6 +502,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3945339834083677694, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
   m_PrefabInstance: {fileID: 229780366597345785}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3894327793391061960 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3835719397119728177, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
+  m_PrefabInstance: {fileID: 229780366597345785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5454444256012476637 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5224822219127910692, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
