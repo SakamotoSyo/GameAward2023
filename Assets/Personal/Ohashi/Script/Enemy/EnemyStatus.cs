@@ -38,7 +38,7 @@ public class EnemyStatus
 
     public async UniTask<bool> IsWeaponsAllBrek()
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(1));
+        await UniTask.Delay(1);
         if(_epicWeapon.WeaponBreakCount >= _weaponDatas.Length)
         {
             return true;
@@ -57,6 +57,7 @@ public class EnemyStatus
             if(weapon.CurrentDurable > 0)
             {
                 await UniTask.Delay(1);
+                Debug.Log("Change");
                 _epicWeapon.ChangeWeapon(weapon);
                 return;
             }
