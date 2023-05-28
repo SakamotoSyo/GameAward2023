@@ -36,32 +36,8 @@ public class BattleSelectUI : MonoBehaviour
         _playerController = _generator.PlayerController;
         _playerStatus = _playerController.PlayerStatus;
         _enemyController = _generator.EnemyController;
-
         _actionUi[0].DOScale(new Vector3(1.2f, 1.2f, 1f), 0.2f);
-
-        for (int i = 0; i < _isAttackable.Length; i++)
-        {
-            _isAttackable[i] = true;
-        }
-
-        var skillName1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
-        var skillName2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
-        var specialSkill = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
-        if (skillName1 == null || _skillDataManagement.IsUseCheck(skillName1,_generator))
-        {
-            _isAttackable[0] = false;
-            _actionUi[1].GetChild(0).GetComponent<Image>().color = Color.gray;
-        }
-        if (skillName2 == null || _skillDataManagement.IsUseCheck(skillName2,_generator))
-        {
-            _isAttackable[2] = false;
-            _actionUi[3].GetChild(0).GetComponent<Image>().color = Color.gray;
-        }
-        if (specialSkill == null || _skillDataManagement.IsUseCheck(specialSkill,_generator))
-        {
-            _isAttackable[1] = false;
-            _actionUi[2].GetComponent<Image>().color = Color.gray;
-        }
+        UseSkillCheck();
     }
 
     private void Update()
@@ -284,6 +260,34 @@ public class BattleSelectUI : MonoBehaviour
         else
         {
             _infoUI.SetActive(false);
+        }
+    }
+
+    public void UseSkillCheck() 
+    {
+
+        for (int i = 0; i < _isAttackable.Length; i++)
+        {
+            _isAttackable[i] = true;
+        }
+
+        var skillName1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
+        var skillName2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
+        var specialSkill = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
+        if (skillName1 == null || _skillDataManagement.IsUseCheck(skillName1, _generator))
+        {
+            _isAttackable[0] = false;
+            _actionUi[1].GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
+        if (skillName2 == null || _skillDataManagement.IsUseCheck(skillName2, _generator))
+        {
+            _isAttackable[2] = false;
+            _actionUi[3].GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
+        if (specialSkill == null || _skillDataManagement.IsUseCheck(specialSkill, _generator))
+        {
+            _isAttackable[1] = false;
+            _actionUi[2].GetComponent<Image>().color = Color.gray;
         }
     }
 }

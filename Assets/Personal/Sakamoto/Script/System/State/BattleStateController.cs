@@ -24,6 +24,7 @@ public class BattleStateController : MonoBehaviour
     [SerializeField] private SkillDataManagement _skillManagement;
     [SerializeField] private GameObject _gameOverTextObj;
     [SerializeField] private GameObject _gameClearObj;
+    [SerializeField] private BattleSelectUI _selectUI;
     private StateMachine<BattleStateController> _stateMachine;
     private List<ActionSequentialData> _actionSequentialList = new();
     private PlayerController _playerController;
@@ -127,6 +128,7 @@ public class BattleStateController : MonoBehaviour
             else if (_actionSequentialList.Count - 1 == i)
             {
                 _skillManagement.TurnCall();
+                _selectUI.UseSkillCheck();
                 ActionSequentialDetermining();
                 await NextActorStateTransition();
             }
