@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3032086080205148909}
   - component: {fileID: 1109788781532418391}
   - component: {fileID: 6483763833722165938}
+  - component: {fileID: 444364417613812167}
   m_Layer: 0
   m_Name: TenkamusoSkill
   m_TagString: Untagged
@@ -69,6 +70,19 @@ MonoBehaviour:
   _playerObj: {fileID: 6361281604404861269}
   _enemyAnim: {fileID: 2302941964595065462}
   _enemyObj: {fileID: 5188563931041913634}
+--- !u!114 &444364417613812167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5169145864101172275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 5437051926592622329}
 --- !u!1001 &5713659623320152760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -407,6 +421,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 559898916182649742, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
   m_PrefabInstance: {fileID: 5713659623320152760}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5437051926592622329 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 305882812309136449, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
+  m_PrefabInstance: {fileID: 5713659623320152760}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6361281604404861269 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1661037498315977709, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
