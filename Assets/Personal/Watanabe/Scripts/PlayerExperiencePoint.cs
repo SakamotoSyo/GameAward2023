@@ -55,6 +55,7 @@ public class PlayerExperiencePoint : MonoBehaviour
         ValueSet(_index);
 
         _experiencePoint = GameManager.PlayerSaveData.PlayerRankPoint;
+        //_experiencePoint = 3000;
 
         _pointValueImage.fillAmount = _beforeBattlePoint / _value;
 
@@ -109,6 +110,8 @@ public class PlayerExperiencePoint : MonoBehaviour
                     //経験値がランク上限までいく
                     if (Mathf.Approximately(_pointValueImage.fillAmount, 1f))
                     {
+                        //GameManager.IsBossClear = true;
+
                         //昇格戦クリアしたら
                         if (GameManager.IsBossClear)
                         {

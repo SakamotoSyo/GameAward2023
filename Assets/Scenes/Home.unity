@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81bf9c16acf24c4a97f6f97e02d3357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isRankUp: 0
+  _isRankUp: 1
   _battleSelectPanel: {fileID: 644910567}
   _cutPanelParent: {fileID: 1326843537}
   _waitSecondCutStaging: 1
@@ -3613,7 +3613,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1718103458}
         m_TargetAssemblyTypeName: Fade, Assembly-CSharp
-        m_MethodName: FadeOut
+        m_MethodName: FadeOutWithSound
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3747,7 +3747,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1718103458}
         m_TargetAssemblyTypeName: Fade, Assembly-CSharp
-        m_MethodName: FadeOut
+        m_MethodName: FadeOutWithSound
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
