@@ -56,7 +56,7 @@ public class PlayerStatus
 
     public void AddRankPoint()
     {
-        _playerRankPoint += 100;
+        _playerRankPoint += 500;
     }
 
     /// <summary>
