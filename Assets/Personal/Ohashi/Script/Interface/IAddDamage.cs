@@ -1,7 +1,8 @@
-﻿public interface IAddDamage
+﻿using Cysharp.Threading.Tasks;
+public interface IAddDamage
 {
     /// <summary>
     /// ダメージを受けた時の処理を書くメソッド
     /// </summary>
-    public void AddDamage(float damage, float criticalRate);
+    public async UniTask AddDamage(float damage, float criticalRate) { }
 }

@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
         }
     }
 
-    public void AddDamage(float damage, float criticalRate)
+    public async UniTask AddDamage(float damage, float criticalRate)
     {
         var damageController = Instantiate(_damegeController,
             _damagePos.position,
@@ -68,6 +68,11 @@ public class EnemyController : MonoBehaviour, IAddDamage
         if (_enemyStatus.EquipWeapon.IsWeaponBreak())
         {
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Crash");
+            if (await _enemyStatus.IsWeaponsAllBrek())
+            {
+                Debug.Log("全部壊れた");
+                return;
+            }
             _enemyStatus.EquipChangeWeapon();
         }
     }
