@@ -31,7 +31,17 @@ public class EnemyPresenter : IStartable, IDisposable
     private void EnemyHealthObserver()
     {
         _enemyStatus.EquipWeapon.CurrentDurable
-            .Subscribe(durable => _enemyView.HealthText(durable, _enemyStatus.EquipWeapon.MaxDurable))
+            .Subscribe(durable => 
+            {
+                if(durable <= 0)
+                {
+                    _enemyView.HealthText(0, _enemyStatus.EquipWeapon.MaxDurable);
+                }
+                else
+                {
+                    _enemyView.HealthText(durable, _enemyStatus.EquipWeapon.MaxDurable);
+                }
+            })
             .AddTo(_compositeDisposable);
     }
 
