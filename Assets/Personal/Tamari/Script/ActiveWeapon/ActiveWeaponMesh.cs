@@ -139,35 +139,79 @@ public class ActiveWeaponMesh : MonoBehaviour
             s.gameObject.SetActive(false);
         }
         
-        // 武器表示をしたいときに呼ぶ
         ActiveWeapon();
     }
 
-    public void ActiveWeapon()
+    private void ActiveWeapon()
     {
-        for(int i = 0; i < _gsImage.Length; i++)
+        if (WeaponSaveData.GSData.PREHABNAME == null)
         {
-            BaseActiveWeapon(_gsImage[i], WeaponSaveData.GSData, i);
+            for (int i = 0; i < _gsImage.Length; i++)
+            {
+                BaseActiveWeapon(_gsImage[i], WeaponSaveData.GSSampleData, i);
+            }
+        }
+        
+        else if(WeaponSaveData.GSData.PREHABNAME != null)
+        {
+            for (int i = 0; i < _gsImage.Length; i++)
+            {
+                BaseActiveWeapon(_gsImage[i], WeaponSaveData.GSData, i);
+            }
         }
 
-        for (int i = 0; i < _dbImageR.Length; i++)
+        if(WeaponSaveData.DBData.PREHABNAME == null)
         {
-            BaseActiveWeapon(_dbImageR[i], WeaponSaveData.DBData, i);
+            for (int i = 0; i < _dbImageR.Length; i++)
+            {
+                BaseActiveWeapon(_dbImageR[i], WeaponSaveData.DBSampleData, i);
+            }
+            for (int i = 0; i < _dbImageL.Length; i++)
+            {
+                BaseActiveWeapon(_dbImageL[i], WeaponSaveData.DBSampleData, i);
+            }
         }
 
-        for (int i = 0; i < _dbImageL.Length; i++)
+        else if(WeaponSaveData.DBData.PREHABNAME != null)
         {
-            BaseActiveWeapon(_dbImageL[i], WeaponSaveData.DBData, i);
+            for (int i = 0; i < _dbImageR.Length; i++)
+            {
+                BaseActiveWeapon(_dbImageR[i], WeaponSaveData.DBData, i);
+            }
+            for (int i = 0; i < _dbImageL.Length; i++)
+            {
+                BaseActiveWeapon(_dbImageL[i], WeaponSaveData.DBData, i);
+            }
         }
 
-        for (int i = 0; i < _hImage.Length; i++)
+        if(WeaponSaveData.HData.PREHABNAME == null)
         {
-            BaseActiveWeapon(_hImage[i], WeaponSaveData.HData, i);
+            for (int i = 0; i < _hImage.Length; i++)
+            {
+                BaseActiveWeapon(_hImage[i], WeaponSaveData.HSampleData, i);
+            }
+        }
+        else if(WeaponSaveData.HData.PREHABNAME != null)
+        {
+            for (int i = 0; i < _hImage.Length; i++)
+            {
+                BaseActiveWeapon(_hImage[i], WeaponSaveData.HData, i);
+            }
         }
 
-        for (int i = 0; i < _sImage.Length; i++)
+        if(WeaponSaveData.SData.PREHABNAME == null)
         {
-            BaseActiveWeapon(_sImage[i], WeaponSaveData.SData, i);
+            for (int i = 0; i < _sImage.Length; i++)
+            {
+                BaseActiveWeapon(_sImage[i], WeaponSaveData.SSampleData, i);
+            }
+        }
+        else if(WeaponSaveData.SData.PREHABNAME != null)
+        {
+            for (int i = 0; i < _sImage.Length; i++)
+            {
+                BaseActiveWeapon(_sImage[i], WeaponSaveData.SData, i);
+            }
         }
     }
 
