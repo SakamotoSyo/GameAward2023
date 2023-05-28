@@ -106,12 +106,21 @@ public class PlayerExperiencePoint : MonoBehaviour
                 })
                 .AppendCallback(() =>
                 {
-                    //経験値がランク上限までいく && 昇格戦クリアしたら
-                    if (Mathf.Approximately(_pointValueImage.fillAmount, 1f) && HomeScene.Instance.IsRankUp)
+                    //経験値がランク上限までいく
+                    if (Mathf.Approximately(_pointValueImage.fillAmount, 1f))
                     {
-                        Debug.Log("rankup");
-                        RankUp();
-                        HomeScene.Instance.IsRankUp = false;
+                        //昇格戦クリアしたら
+                        if (GameManager.IsBossClear)
+                        {
+                            Debug.Log("rankup");
+                            RankUp();
+                            HomeScene.Instance.IsRankUp = false;
+                            GameManager.IsBossClear = false;
+                        }
+                        else
+                        {
+                            HomeScene.Instance.IsRankUp = true;
+                        }
                     }
                 });
     }
