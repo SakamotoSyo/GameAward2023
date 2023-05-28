@@ -10,9 +10,9 @@ public class HomeScene : MonoBehaviour
     [SerializeField] private GameObject _battleSelectPanel = default;
     [SerializeField] private GameObject _cutPanelParent = default;
     [SerializeField] private float _waitSecondCutStaging = 1f;
-    [Tooltip("昇格戦挑戦可か")]
-    [SerializeField] private bool _isChallengablePromotionMatch = false;
 
+    /// <summary> 昇格戦挑戦可か </summary>
+    private bool _isChallengablePromotionMatch = false;
     private bool _isPlayCutMove = false;
     private Image[] _cutPanels = new Image[3];
     private Text[] _cutTexts = new Text[2];
@@ -26,12 +26,6 @@ public class HomeScene : MonoBehaviour
     private void Start()
     {
         SettingsCutPanel();
-
-        var point = PlayerExperiencePoint.ExperiencePoint;
-        var value = PlayerExperiencePoint.Value;
-
-        //経験値がある程度まで上がったらステージボスに挑戦できる
-        //_isChallengablePromotionMatch = point / value > _promotionMatchValue / 10f;
 
         Instance = this;
     }
@@ -59,6 +53,17 @@ public class HomeScene : MonoBehaviour
     /// <summary> カットシーン演出(昇格戦解放時に呼ぶ) </summary>
     public void CutSceneLike()
     {
+        //ボスに挑戦できるかのフラグを設定
+        if (_isRankUp && !GameManager.IsBossClear)
+        {
+            _isChallengablePromotionMatch = true;
+        }
+        else
+        {
+            _isChallengablePromotionMatch = false;
+        }
+
+
         if (!_isChallengablePromotionMatch || _isPlayCutMove)
         {
             _battleSelectPanel.SetActive(true);
