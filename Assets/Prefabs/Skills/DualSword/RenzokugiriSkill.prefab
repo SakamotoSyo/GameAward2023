@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6217122325289415751}
   - component: {fileID: 4442002469781034082}
   - component: {fileID: 5595316009035345724}
+  - component: {fileID: 6109296102150149578}
   m_Layer: 0
   m_Name: RenzokugiriSkill
   m_TagString: Untagged
@@ -69,6 +70,19 @@ MonoBehaviour:
   _playerObj: {fileID: 700419883054104051}
   _enemyAnim: {fileID: 7789250134268487444}
   _enemyObj: {fileID: 8056147027826595451}
+--- !u!114 &6109296102150149578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342180766582988800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 1912871153880279647}
 --- !u!1001 &2750293498513995641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -700,6 +714,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3945339834083677694, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
   m_PrefabInstance: {fileID: 3436479981101101166}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1912871153880279647 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3835719397119728177, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
+  m_PrefabInstance: {fileID: 3436479981101101166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!320 &2492184088270542350 stripped
 PlayableDirector:
   m_CorrespondingSourceObject: {fileID: 947673936156075616, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
