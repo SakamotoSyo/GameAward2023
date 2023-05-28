@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,15 +18,22 @@ public class PlayerController : MonoBehaviour
     private PlayerStatus _playerStatus;
     [SerializeField] private PlayerAnimation _playerAnimation = new();
     private SkillDataManagement _skillDataManagement;
+    [SerializeField] private CinemachineConfiner[] _confiner = new CinemachineConfiner[4];
 
     private bool _isCounter = false;
 
     private void Start()
     {
+        Collider2D camaraCollider = GameObject.Find("CameraCollider").GetComponent<BoxCollider2D>();
         _skillDataManagement = GameObject.Find("SkillDataBase").GetComponent<SkillDataManagement>();
         _playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.DebugSearchSkill());
         _playerStatus.EquipWeapon.Init(_skillDataManagement);
         _playerAnimation.Init(_playerStatus.EquipWeapon);
+
+        for (int i = 0; i < _confiner.Length; i++) 
+        {
+            _confiner[i].m_BoundingShape2D = camaraCollider;
+        }
     }
 
     private void Update()
