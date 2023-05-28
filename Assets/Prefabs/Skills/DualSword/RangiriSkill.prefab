@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8227692693165244626}
   - component: {fileID: 8972732410460031410}
   - component: {fileID: 8188692506361376004}
+  - component: {fileID: 8357618766287994749}
   m_Layer: 0
   m_Name: RangiriSkill
   m_TagString: Untagged
@@ -66,6 +67,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 9077456431987463820}
   _playerObj: {fileID: 1266521325903908432}
+--- !u!114 &8357618766287994749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115675914545305595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 189169250288196092}
 --- !u!1001 &4006838170862699469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -416,6 +430,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3945339834083677694, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
   m_PrefabInstance: {fileID: 4006838170862699469}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &189169250288196092 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3835719397119728177, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
+  m_PrefabInstance: {fileID: 4006838170862699469}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1266521325903908432 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2740634410554150301, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5604914169727293137}
   - component: {fileID: 4931047880066565271}
   - component: {fileID: 4986091564210139445}
+  - component: {fileID: 6299150960754394313}
   m_Layer: 0
   m_Name: ShinsokuranbuSkill
   m_TagString: Untagged
@@ -69,6 +70,19 @@ MonoBehaviour:
   _playerObj: {fileID: 5866565325281730964}
   _enemyAnim: {fileID: 709107109174552287}
   _enemyObj: {fileID: 1185515488159696938}
+--- !u!114 &6299150960754394313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975506960502119884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 4781059279793026616}
 --- !u!1001 &2331612449633788969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -664,6 +678,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3945339834083677694, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
   m_PrefabInstance: {fileID: 8602590440820075529}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4781059279793026616 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3835719397119728177, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
+  m_PrefabInstance: {fileID: 8602590440820075529}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5866565325281730964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2740634410554150301, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}

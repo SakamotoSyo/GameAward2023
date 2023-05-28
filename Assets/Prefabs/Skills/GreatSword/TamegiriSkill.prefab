@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4344626207712122518}
   - component: {fileID: 3339074877588485691}
   - component: {fileID: 1192680994853177770}
+  - component: {fileID: 1671031334406426069}
   m_Layer: 0
   m_Name: TamegiriSkill
   m_TagString: Untagged
@@ -75,6 +76,19 @@ MonoBehaviour:
   _enemyBlueObj: {fileID: 7511034667459739116}
   _enemyGreenAnim: {fileID: 7626238336929153589}
   _enemyGreenObj: {fileID: 8443906480246917777}
+--- !u!114 &1671031334406426069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4949829976122806118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 8753160364288174756}
 --- !u!1001 &7946478482704995795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -484,6 +498,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1383596852801953648, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
   m_PrefabInstance: {fileID: 8753160364228108920}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8753160364288174756 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 78940380, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+  m_PrefabInstance: {fileID: 8753160364228108920}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &8753160364822475881 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 614323729, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
