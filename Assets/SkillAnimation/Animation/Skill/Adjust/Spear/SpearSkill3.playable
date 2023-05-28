@@ -21,7 +21,7 @@ MonoBehaviour:
     volume: 1
     pitch: 0
     AISACValue: 0
-  clipDuration: 0
+  clipDuration: 1.2666666666666666
   cueSheet: SE
   cueName: SE_Skill3
 --- !u!114 &-5244783797721962332
@@ -333,7 +333,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: CriAtomClip
+    m_DisplayName: SE_Skill3
   m_Markers:
     m_Objects: []
   m_AisacControls: 
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030f85c3f73729f4f976f66ffb23b875, type: 3}
   m_Name: AnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 0}
+  m_Clip: {fileID: 7400000, guid: 2f60591576b754e4d9983604f7cb7e42, type: 2}
   m_Position: {x: 0, y: 0, z: 0}
   m_EulerAngles: {x: 0, y: 0, z: 0}
   m_UseTrackMatchFields: 1
