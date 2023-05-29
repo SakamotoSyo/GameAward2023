@@ -76,6 +76,11 @@ public class UIManager : MonoBehaviour
     [SerializeField, Tooltip("完成時に確認用に出すパネル")]
     private GameObject _panelForFinish = default;
 
+    [Header("ホームシーンに戻るときの確認用に出すパネルに必要な情報")]
+
+    [SerializeField, Tooltip("ホームシーンに変えるときに確認用に出すパネル")]
+    private GameObject _panelForBackHome = default;
+
     [Header("武器を選ぶ時に表示するパネル")]
 
     [SerializeField, Tooltip("選択するパネル")]
@@ -99,6 +104,7 @@ public class UIManager : MonoBehaviour
         _panelForReset.SetActive(false);
         _panelForSample.SetActive(false);
         _panelForFinish.SetActive(false);
+        _panelForBackHome.SetActive(false);
         ActiveSelectableWeapon();
         _weaponBase = GameObject.Find("MeshManager");
     }
@@ -110,7 +116,7 @@ public class UIManager : MonoBehaviour
         _hFrame.SetActive(false);
         _sFrame.SetActive(false);
 
-        for(int i = 0; i < GameManager.PlayerSaveData.WeaponArray.Length; i++)
+        for (int i = 0; i < GameManager.PlayerSaveData.WeaponArray.Length; i++)
         {
             if (GameManager.PlayerSaveData.WeaponArray[i].WeaponType == WeaponType.GreatSword)
             {
@@ -232,6 +238,12 @@ public class UIManager : MonoBehaviour
         _panelForFinish.SetActive(flag);
         _weaponBase.gameObject.SetActive(!flag);
     }
+    public void SwitchCheckForBack(bool flag)
+    {
+        _allPanel.SetActive(flag);
+        _panelForBackHome.SetActive(flag);
+        _weaponBase.gameObject.SetActive(!flag);
+    }
 
 
     public async void ChangeScene()
@@ -245,7 +257,7 @@ public class UIManager : MonoBehaviour
         _allPanel.SetActive(true);
         _meshManager.SaveMesh();
         SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith_Finish");
-        await _finishImage.DOFade(1.0f, 5f);
+        await _finishImage.DOFade(1.0f, 3f);
         await UniTask.DelayFrame(10);
         SceneManager.LoadScene(_nextSceneName);
     }
@@ -263,6 +275,19 @@ public class UIManager : MonoBehaviour
 
         _meshManager.CentorPos = _meshManager.FirstCenterPos;
         _meshManager.CreateMesh();
+    }
+
+    public async void BackHome()
+    {
+        if (MeshManager._isFinished)
+        {
+            return;
+        }
+
+        MeshManager._isFinished = true;
+        await _finishImage.DOFade(1.0f, 1.0f);
+        await UniTask.DelayFrame(10);
+        SceneManager.LoadScene("Home");
     }
 
 }
