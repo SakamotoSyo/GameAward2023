@@ -71,15 +71,15 @@ public class BattleSelectUI : MonoBehaviour
             BattleSelect(1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
-        {
-            if (_index == 0 || (_index != 0 && _isAttackable[_index]))
-            {
-                AttackEvent();
-                //_battleChangeWeaponCs.ChangeWeaponUiOpen();
-            }
+        //if (Input.GetKeyDown(KeyCode.Space) && _playerStatus.ChackAnomaly())
+        //{
+        //    if (_index == 0 || (_index != 0 && _isAttackable[_index]))
+        //    {
+        //        AttackEvent();
+        //        //_battleChangeWeaponCs.ChangeWeaponUiOpen();
+        //    }
 
-        }
+        //}
     }
 
     public void BattleSelect(int dir)
@@ -157,7 +157,6 @@ public class BattleSelectUI : MonoBehaviour
 
     public async UniTask NormalAttack()
     {
-        Debug.Log("normal");
         Debug.Log($"プレイヤーの武器のタイプは{_playerStatus.EquipWeapon.WeaponType}です");
         if (_playerStatus.EquipWeapon.WeaponType == WeaponType.GreatSword)
         {
@@ -167,7 +166,6 @@ public class BattleSelectUI : MonoBehaviour
         }
         else if (_playerStatus.EquipWeapon.WeaponType == WeaponType.DualBlades)
         {
-            Debug.Log("総研");
             var skill = _skillDataManagement.SearchSkill("連続斬り");
             _playerController.AddDamage(skill.RequiredPoint, 0, true);
             await _skillDataManagement.OnSkillUse(ActorAttackType.Player, "連続斬り");
@@ -269,22 +267,23 @@ public class BattleSelectUI : MonoBehaviour
         for (int i = 0; i < _isAttackable.Length; i++)
         {
             _isAttackable[i] = true;
+            _actionUi[1].GetChild(0).GetComponent<Image>().color = Color.white;
         }
 
         var skillName1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
         var skillName2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
         var specialSkill = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
-        if (skillName1 == null || _skillDataManagement.IsUseCheck(skillName1, _generator))
+        if (skillName1 == "" || skillName1 == null || _skillDataManagement.IsUseCheck(skillName1, _generator))
         {
             _isAttackable[0] = false;
             _actionUi[1].GetChild(0).GetComponent<Image>().color = Color.gray;
         }
-        if (skillName2 == null || _skillDataManagement.IsUseCheck(skillName2, _generator))
+        if (skillName2 == "" || skillName2 == null || _skillDataManagement.IsUseCheck(skillName2, _generator))
         {
             _isAttackable[2] = false;
             _actionUi[3].GetChild(0).GetComponent<Image>().color = Color.gray;
         }
-        if (specialSkill == null || _skillDataManagement.IsUseCheck(specialSkill, _generator))
+        if (specialSkill == "" || specialSkill == null || _skillDataManagement.IsUseCheck(specialSkill, _generator))
         {
             _isAttackable[1] = false;
             _actionUi[2].GetComponent<Image>().color = Color.gray;
