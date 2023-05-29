@@ -26,7 +26,7 @@ public class RankingBattleScript : MonoBehaviour
     private void Start()
     {
         //StartEnemySelect();
-        BossChallengeJudge();
+         //BossChallengeJudge();
     }
 
     public void StartEnemySelect()
