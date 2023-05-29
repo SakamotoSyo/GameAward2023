@@ -340,6 +340,7 @@ public class ResultUIScript : MonoBehaviour
                 AddWeapon(weaponType);
                 _isBlacksmith = true;
                 GameManager.SetBlacksmithType((WeaponType)Enum.GetValues(typeof(WeaponType)).GetValue(i));
+                break;
                 //SceneLoader.LoadScene(_blacksmithSceneName);
             }
         }
