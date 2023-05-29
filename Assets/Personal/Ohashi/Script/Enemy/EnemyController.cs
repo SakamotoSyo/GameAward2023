@@ -32,9 +32,6 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public EnemyColor EnemyColor => _enemyColor;
 
-    [SerializeField]
-    private Transform[] _damagePosArray;
-
     private void Start()
     {
         _enemyAttack.Init(_enemyStatus.EquipWeapon);
@@ -62,9 +59,13 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public async UniTask AddDamage(float damage, float criticalRate)
     {
-        int index = Random.Range(0, _damagePosArray.Length);
+        float x = Random.Range(0, 4);
+        float y = Random.Range(-3, 2);
+        Vector3 pos = _damagePos.position;
+        pos.x += x;
+        pos.y += y;
         var damageController = Instantiate(_damegeController,
-            _damagePosArray[index].position,
+            pos,
             Quaternion.identity);
         
         damageController.TextInit((int)damage, _enemyStatus.EquipWeapon.AddDamage((int)damage, criticalRate));
