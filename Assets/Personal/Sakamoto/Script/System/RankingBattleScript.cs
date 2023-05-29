@@ -25,7 +25,7 @@ public class RankingBattleScript : MonoBehaviour
 
     private void Start()
     {
-        StartEnemySelect();
+        //StartEnemySelect();
         BossChallengeJudge();
     }
 
@@ -96,39 +96,43 @@ public class RankingBattleScript : MonoBehaviour
 
                 if (i == 0)
                 {
-                    _bossImage.sprite = PlayerExperiencePoint.CurrentRankNum switch
-                    {
-                        0 => EnemyDataBase.BossDataList[0].EnemyData.EnemySprite,
-                        1 => EnemyDataBase.BossDataList[1].EnemyData.EnemySprite,
-                        2 => EnemyDataBase.BossDataList[2].EnemyData.EnemySprite,
-                        _ => default
-                    };
-
                     if (HomeScene.Instance.IsChallengablePromotionMatch)
                     {
+                        _bossImage.sprite = PlayerExperiencePoint.CurrentRankNum switch
+                        {
+                            0 => EnemyDataBase.BossDataList[0].EnemyData.EnemySprite,
+                            1 => EnemyDataBase.BossDataList[1].EnemyData.EnemySprite,
+                            2 => EnemyDataBase.BossDataList[2].EnemyData.EnemySprite,
+                            _ => default
+                        };
+
                         button.onClick.AddListener(
-                            () => SelectEnemy.SetImage(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum].EnemySprite, true));
+                            () => SelectEnemy.SetImage(_bossImage.sprite, true));
                         button.onClick.AddListener(
-                            () => GameManager.SetEnemyData(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum]));
+                            () => GameManager.SetEnemyData(EnemyDataBase.BossDataList[PlayerExperiencePoint.CurrentRankNum].EnemyData));
                         button.onClick.AddListener(
-                            () => SetFlavorText(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum].FlavorText));
+                            () => SetFlavorText(EnemyDataBase.BossDataList[PlayerExperiencePoint.CurrentRankNum].EnemyData.FlavorText));
 
                         continue;
                     }
                     else
                     {
                         button.onClick.AddListener(
-                            () => SelectEnemy.SetImage(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum].EnemySprite, false));
+                            () => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite, false));
                         button.onClick.AddListener(
-                            () => GameManager.SetEnemyData(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum]));
+                            () => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
                         button.onClick.AddListener(
-                            () => SetFlavorText(enemyDataHigh[PlayerExperiencePoint.CurrentRankNum].FlavorText));
+                            () => SetFlavorText(enemyDataHigh[randomIndex].FlavorText));
                     }
                 }
 
-                button.onClick.AddListener(() => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite, false));
-                button.onClick.AddListener(() => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
-                button.onClick.AddListener(() => SetFlavorText(enemyDataHigh[randomIndex].FlavorText));
+                //i > 0 ˆÈ~‚Ìˆ—
+                button.onClick.AddListener(
+                    () => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite, false));
+                button.onClick.AddListener(
+                    () => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
+                button.onClick.AddListener(
+                    () => SetFlavorText(enemyDataHigh[randomIndex].FlavorText));
             }
         }
     }
