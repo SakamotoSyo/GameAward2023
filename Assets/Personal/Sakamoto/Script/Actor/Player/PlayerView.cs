@@ -8,6 +8,8 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private Text _currentHpText;
     [SerializeField] private Text _maxMpText;
     [SerializeField] private Image _currentHpImage;
+    [SerializeField] private Sprite[] _weaponArrayImage = new Sprite[4];
+    [SerializeField] private Image _weaponImage;
     private float _maxHp;
     private float _currentHp;
 
@@ -35,19 +37,19 @@ public class PlayerView : MonoBehaviour
     {
         if (weaponType == WeaponType.DualBlades)
         {
-
+           _weaponImage.sprite = _weaponArrayImage[0];
         }
         else if (weaponType == WeaponType.Hammer)
         {
-
+            _weaponImage.sprite = _weaponArrayImage[1];
         }
         else if (weaponType == WeaponType.Spear)
         {
-
+            _weaponImage.sprite = _weaponArrayImage[2];
         }
         else if (weaponType == WeaponType.GreatSword) 
         {
-
+            _weaponImage.sprite = _weaponArrayImage[3];
         }
     }
 }

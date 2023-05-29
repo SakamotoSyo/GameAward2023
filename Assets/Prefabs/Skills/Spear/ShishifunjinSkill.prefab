@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9042080027911324210}
   - component: {fileID: 2192122320719048169}
   - component: {fileID: 4949242923097516546}
+  - component: {fileID: 6151829208905985817}
   m_Layer: 0
   m_Name: ShishifunjinSkill
   m_TagString: Untagged
@@ -70,6 +71,19 @@ MonoBehaviour:
   _playerObj: {fileID: 7553894647256487687}
   _enemyAnim: {fileID: 7192666627842371077}
   _enemyObj: {fileID: 3757610488825492150}
+--- !u!114 &6151829208905985817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8581325827248449449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 8928198421393555627}
 --- !u!1001 &636355360104744395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -660,19 +674,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6495256281685477828, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.51176655
+      value: 0.5117669
       objectReference: {fileID: 0}
     - target: {fileID: 6495256281685477828, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.19156873
+      value: 0.191569
       objectReference: {fileID: 0}
     - target: {fileID: 6495256281685477828, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.36996317
+      value: 0.3699633
       objectReference: {fileID: 0}
     - target: {fileID: 6495256281685477828, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.2918892
+      value: 0.29188928
       objectReference: {fileID: 0}
     - target: {fileID: 6541606799255400413, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -708,11 +722,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7146946463962820322, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 1.0099654
+      value: 1.0099659
       objectReference: {fileID: 0}
     - target: {fileID: 7146946463962820322, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.5375532
+      value: 0.5375533
       objectReference: {fileID: 0}
     - target: {fileID: 7146946463962820322, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Extent.x
@@ -720,7 +734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7146946463962820322, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.36421394
+      value: 0.36421403
       objectReference: {fileID: 0}
     - target: {fileID: 7435587141165732606, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -779,3 +793,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 559898916182649742, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
   m_PrefabInstance: {fileID: 9212645085681329386}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8928198421393555627 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 305882812309136449, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
+  m_PrefabInstance: {fileID: 9212645085681329386}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

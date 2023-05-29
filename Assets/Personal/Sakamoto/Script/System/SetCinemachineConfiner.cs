@@ -9,8 +9,7 @@ public class SetCinemachineConfiner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var a = GameObject.Find("CameraCollider").GetComponent<PolygonCollider2D>();
-        Debug.Log(a);
-        _confiner.m_BoundingShape2D = a;
+        var collider = GameObject.Find("CameraCollider").GetComponent<PolygonCollider2D>();
+        _confiner.m_BoundingShape2D = collider;
     }
 }
