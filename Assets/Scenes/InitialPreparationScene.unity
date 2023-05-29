@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: 627633409}
   - component: {fileID: 627633408}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: GreatSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -751,12 +751,16 @@ MonoBehaviour:
   _infoPanel: {fileID: 304716137}
   _infoText: {fileID: 28343340}
   _weaponData:
-    OffensivePower: 0
-    WeaponWeight: 0
-    CriticalRate: 0
-    MaxDurable: 0
-    CurrentDurable: 0
-    StatusArray: []
+    OffensivePower: 70000
+    WeaponWeight: 300
+    CriticalRate: 10
+    MaxDurable: 800
+    CurrentDurable: 800
+    StatusArray:
+    - 0
+    - 0
+    - 0
+    - 0
     WeaponSkill:
       _skillArray:
       - 
@@ -2187,17 +2191,21 @@ MonoBehaviour:
   _infoPanel: {fileID: 304716137}
   _infoText: {fileID: 28343340}
   _weaponData:
-    OffensivePower: 0
-    WeaponWeight: 0
-    CriticalRate: 0
-    MaxDurable: 0
-    CurrentDurable: 0
-    StatusArray: []
+    OffensivePower: 550
+    WeaponWeight: 450
+    CriticalRate: 10
+    MaxDurable: 950
+    CurrentDurable: 950
+    StatusArray:
+    - 0
+    - 0
+    - 0
+    - 0
     WeaponSkill:
       _skillArray:
       - 
       - 
-    WeaponType: 0
+    WeaponType: 2
 --- !u!114 &1307090942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2504,17 +2512,21 @@ MonoBehaviour:
   _infoPanel: {fileID: 304716137}
   _infoText: {fileID: 28343340}
   _weaponData:
-    OffensivePower: 0
-    WeaponWeight: 0
-    CriticalRate: 0
-    MaxDurable: 0
-    CurrentDurable: 0
-    StatusArray: []
+    OffensivePower: 400
+    WeaponWeight: 600
+    CriticalRate: 20
+    MaxDurable: 600
+    CurrentDurable: 600
+    StatusArray:
+    - 0
+    - 0
+    - 0
+    - 0
     WeaponSkill:
       _skillArray:
       - 
       - 
-    WeaponType: 0
+    WeaponType: 1
 --- !u!114 &1854168166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2892,17 +2904,21 @@ MonoBehaviour:
   _infoPanel: {fileID: 304716137}
   _infoText: {fileID: 28343340}
   _weaponData:
-    OffensivePower: 0
-    WeaponWeight: 0
-    CriticalRate: 0
-    MaxDurable: 0
-    CurrentDurable: 0
-    StatusArray: []
+    OffensivePower: 400
+    WeaponWeight: 500
+    CriticalRate: 20
+    MaxDurable: 1000
+    CurrentDurable: 1000
+    StatusArray:
+    - 0
+    - 0
+    - 0
+    - 0
     WeaponSkill:
       _skillArray:
       - 
       - 
-    WeaponType: 0
+    WeaponType: 3
 --- !u!114 &2027089524
 MonoBehaviour:
   m_ObjectHideFlags: 0
