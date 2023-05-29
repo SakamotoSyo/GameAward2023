@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1249360177063923940}
   - component: {fileID: 6726504645624603953}
   - component: {fileID: -7121538176124355767}
+  - component: {fileID: 7952946708390515661}
   m_Layer: 0
   m_Name: KyoukaSkill
   m_TagString: Untagged
@@ -79,6 +80,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4afdcb1cbadf954ba8b1cf465429e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7952946708390515661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6625449378565728167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 429740962013690772}
 --- !u!1001 &429740962092561224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -86,6 +100,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3435012257383539944}
     m_Modifications:
+    - target: {fileID: 78940379, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 211100057, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -168,12 +186,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6496404070413082760, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6496404070413082760, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
       propertyPath: m_SceneBindings.Array.data[2].key
       value: 
       objectReference: {fileID: 4611494258722665788, guid: 1a69827a7af0a5947bd97012731ae8a6, type: 2}
+    - target: {fileID: 6496404070413082760, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_SceneBindings.Array.data[3].key
+      value: 
+      objectReference: {fileID: 7053724576450634395, guid: 1a69827a7af0a5947bd97012731ae8a6, type: 2}
+    - target: {fileID: 6496404070413082760, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_SceneBindings.Array.data[2].value
+      value: 
+      objectReference: {fileID: 4757984251341779843}
     - target: {fileID: 7270973247736080503, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -184,6 +210,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+--- !u!114 &429740962013690772 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 78940380, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+  m_PrefabInstance: {fileID: 429740962092561224}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &436040979085440091 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 286998738966185747, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
@@ -264,6 +301,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1090eff8dbe025446bcdebdb9e4fe7e8, type: 3}
+--- !u!114 &4757984251341779843 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1959093373303886085, guid: 1090eff8dbe025446bcdebdb9e4fe7e8, type: 3}
+  m_PrefabInstance: {fileID: 6428845023029666438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4757984252351917291 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1959093374316056173, guid: 1090eff8dbe025446bcdebdb9e4fe7e8, type: 3}

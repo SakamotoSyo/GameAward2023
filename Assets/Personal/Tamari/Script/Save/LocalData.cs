@@ -11,12 +11,12 @@ class LocalData
     static public T Load<T>(string file)
     {
         //ファイルがなかったらnullで返す
-        if (!File.Exists(Application.dataPath + "/" + file))
+        if (!File.Exists(Application.streamingAssetsPath + "/" + file))
         {
             return default(T);
         }
 
-        var arr = File.ReadAllBytes(Application.dataPath + "/" + file);
+        var arr = File.ReadAllBytes(Application.streamingAssetsPath + "/" + file);
 #if RELEASE
         arr = AesDecrypt(arr);
 #endif
@@ -32,12 +32,12 @@ class LocalData
 #if RELEASE
         arr = AesEncrypt(arr);
 #endif
-        File.WriteAllBytes(Application.dataPath + "/" + file, arr);
+        File.WriteAllBytes(Application.streamingAssetsPath + "/" + file, arr);
     }
 
     static public void ResetSaveData(string file)
     {
-        File.Delete(Application.dataPath + "/" + file);
+        File.Delete(Application.streamingAssetsPath + "/" + file);
     }
 
     /// <summary>

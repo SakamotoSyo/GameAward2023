@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using Cysharp.Threading.Tasks;
+using System;
 
 public class EnemyStatus
 {
@@ -56,6 +57,7 @@ public class EnemyStatus
             if(weapon.CurrentDurable > 0)
             {
                 await UniTask.Delay(1);
+                Debug.Log("Change");
                 _epicWeapon.ChangeWeapon(weapon);
                 return;
             }

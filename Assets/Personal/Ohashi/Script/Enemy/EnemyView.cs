@@ -18,13 +18,13 @@ public class EnemyView : MonoBehaviour
     /// </summary>
     public void HealthText(float health, float max)
     {
-        _healthText.text = health.ToString("00");
+        _maxHealthText.text = health.ToString();
         _currentHealthImage.DOFillAmount(health / max, 0.5f);
     }
 
     public void MaxHealthText(float max)
     {
-        _maxHealthText.text = max.ToString("00");
+        _healthText.text = max.ToString();
     }
 
 

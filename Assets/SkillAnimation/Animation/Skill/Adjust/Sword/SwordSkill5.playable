@@ -751,7 +751,7 @@ MonoBehaviour:
   - m_Version: 1
     m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 5281128621828201213}
+    m_Asset: {fileID: 8790459932658836305}
     m_Duration: 3.5999999999999996
     m_TimeScale: 1
     m_ParentTrack: {fileID: 1899845158551509051}
@@ -933,30 +933,6 @@ MonoBehaviour:
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_ApplyOffsets: 0
---- !u!114 &5281128621828201213
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec394b19c2203cb44aec13d50aa7361d, type: 3}
-  m_Name: CriAtomClip
-  m_EditorClassIdentifier: 
-  stopWithoutRelease: 0
-  muted: 0
-  ignoreBlend: 0
-  loopWithinClip: 0
-  stopAtClipEnd: 1
-  templateBehaviour:
-    volume: 1
-    pitch: 0
-    AISACValue: 0
-  clipDuration: 0
-  cueSheet: SE
-  cueName: SE_Sword_Skill5
 --- !u!114 &5296205569077794347
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1215,3 +1191,27 @@ MonoBehaviour:
   m_Loop: 0
   m_Version: 1
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+--- !u!114 &8790459932658836305
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec394b19c2203cb44aec13d50aa7361d, type: 3}
+  m_Name: CriAtomClip
+  m_EditorClassIdentifier: 
+  stopWithoutRelease: 0
+  muted: 0
+  ignoreBlend: 0
+  loopWithinClip: 0
+  stopAtClipEnd: 1
+  templateBehaviour:
+    volume: 1
+    pitch: 0
+    AISACValue: 0
+  clipDuration: 3.48
+  cueSheet: SE
+  cueName: SE_Sword_Skill5

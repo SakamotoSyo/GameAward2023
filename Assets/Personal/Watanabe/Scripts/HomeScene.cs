@@ -4,30 +4,30 @@ using UnityEngine.UI;
 
 public class HomeScene : MonoBehaviour
 {
+    [SerializeField] private RankingBattleScript _rankBattle = default;
+    [SerializeField] private PlayerExperiencePoint _experiencePoint = default;
+
+    private bool _isRankUp = false;
+
     #region カット演出系
     [SerializeField] private GameObject _battleSelectPanel = default;
     [SerializeField] private GameObject _cutPanelParent = default;
     [SerializeField] private float _waitSecondCutStaging = 1f;
-    [Tooltip("昇格戦挑戦可か")]
-    [SerializeField] private bool _isChallengablePromotionMatch = false;
 
-    private bool _isPlayCutMove = false;
+    /// <summary> 昇格戦挑戦可か </summary>
+    private bool _isChallengablePromotionMatch = false;
     private Image[] _cutPanels = new Image[3];
     private Text[] _cutTexts = new Text[2];
     #endregion
 
     public static HomeScene Instance = default;
 
+    public bool IsRankUp { get => _isRankUp; set => _isRankUp = value; }
     public bool IsChallengablePromotionMatch => _isChallengablePromotionMatch;
 
     private void Start()
     {
         SettingsCutPanel();
-
-        var point = PlayerExperiencePoint.ExperiencePoint;
-        var value = PlayerExperiencePoint.Value;
-
-        _isChallengablePromotionMatch = point / value > 0.8f;
 
         Instance = this;
     }
@@ -36,17 +36,14 @@ public class HomeScene : MonoBehaviour
     {
         for (int i = 0; i < _cutPanelParent.transform.childCount; i++)
         {
-            if (i == 0 || i == _cutPanelParent.transform.childCount - 1)
+            if (i == 0)
             {
-                if (i == 0)
-                {
-                    _cutPanels[i] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
-                    _cutPanels[i + 1] = _cutPanels[i].transform.GetChild(i).GetComponent<Image>();
-                }
-                else
-                {
-                    _cutPanels[i - 1] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
-                }
+                _cutPanels[i] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
+                _cutPanels[i + 1] = _cutPanels[i].transform.GetChild(i).GetComponent<Image>();
+            }
+            else if (i == _cutPanelParent.transform.childCount - 1)
+            {
+                _cutPanels[i - 1] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
             }
             else
             {
@@ -58,7 +55,19 @@ public class HomeScene : MonoBehaviour
     /// <summary> カットシーン演出(昇格戦解放時に呼ぶ) </summary>
     public void CutSceneLike()
     {
-        if (!_isChallengablePromotionMatch || _isPlayCutMove)
+        //ボスに挑戦できるかのフラグを設定
+        if (_isRankUp && !GameManager.IsBossClear)
+        {
+            _isChallengablePromotionMatch = true;
+        }
+        else
+        {
+            _isChallengablePromotionMatch = false;
+        }
+        _experiencePoint.RankSetting(GameManager.IsBossClear);
+        _rankBattle.StartEnemySelect();
+
+        if (!_isChallengablePromotionMatch)
         {
             _battleSelectPanel.SetActive(true);
             return;
@@ -68,16 +77,10 @@ public class HomeScene : MonoBehaviour
 
     public void CutMove()
     {
-        if (_isPlayCutMove)
-        {
-            return;
-        }
-
         _battleSelectPanel.SetActive(true);
 
         var sequence = DOTween.Sequence();
 
-        //1, Panel表示
         sequence.Append(_cutPanels[0].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .Join(_cutPanels[1].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .AppendCallback(() =>
@@ -87,7 +90,6 @@ public class HomeScene : MonoBehaviour
                 })
                 .AppendInterval(_waitSecondCutStaging)
 
-                //2, BossImage表示
                 .Append(_cutPanels[2].transform.DOScale(new Vector3(2.2f, 2.2f, 2.2f), 0.2f))
                 .AppendCallback(() =>
                 {
@@ -95,7 +97,6 @@ public class HomeScene : MonoBehaviour
                 })
                 .AppendInterval(_waitSecondCutStaging)
 
-                //3, Text表示
                 .Append(_cutTexts[0].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .Join(_cutTexts[1].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .AppendCallback(() =>
@@ -104,7 +105,6 @@ public class HomeScene : MonoBehaviour
                 })
                 .AppendInterval(_waitSecondCutStaging)
 
-                //4, フェードで消す
                 .AppendCallback(() =>
                 {
                     foreach (var panel in _cutPanels)
@@ -118,7 +118,5 @@ public class HomeScene : MonoBehaviour
                     }
                     Fade.Instance.FadeIn();
                 });
-
-        _isPlayCutMove = true;
     }
 }

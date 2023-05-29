@@ -22,13 +22,13 @@ public class PlayerExperiencePoint : MonoBehaviour
     #region ランクアップに必要な数値関連
     [Header("数値関連")]
     [Tooltip("Cランクの最大値")]
-    [SerializeField] private int _rankCMaxValue = 100;
+    [SerializeField] private int _rankCMaxValue = 2500;
     [Tooltip("Bランクの最大値")]
-    [SerializeField] private int _rankBMaxValue = 200;
+    [SerializeField] private int _rankBMaxValue = 6000;
     [Tooltip("Aランクの最大値")]
-    [SerializeField] private int _rankAMaxValue = 300;
+    [SerializeField] private int _rankAMaxValue = 10000;
     [Tooltip("Sランクの最大値")]
-    [SerializeField] private int _rankSMaxValue = 400;
+    [SerializeField] private int _rankSMaxValue = 15000;
     [SerializeField] private Image _pointValueImage = default;
 
     /// <summary> バトルにいく前の経験値 </summary>
@@ -49,12 +49,13 @@ public class PlayerExperiencePoint : MonoBehaviour
     public static float Value => _value;
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         _index = RankSetting();
         ValueSet(_index);
 
         _experiencePoint = GameManager.PlayerSaveData.PlayerRankPoint;
+        //_experiencePoint = 3000;
 
         _pointValueImage.fillAmount = _beforeBattlePoint / _value;
 
@@ -71,7 +72,7 @@ public class PlayerExperiencePoint : MonoBehaviour
         _image.sprite = _ranks[_index];
     }
 
-    public int RankSetting()
+    private int RankSetting()
     {
         if (_beforeBattlePoint < _rankCMaxValue)
         {
@@ -84,6 +85,27 @@ public class PlayerExperiencePoint : MonoBehaviour
             return RANK_B;
         }
         else if (_beforeBattlePoint < _rankAMaxValue)
+        {
+            _currentRankNum = RANK_A;
+            return RANK_A;
+        }
+        _currentRankNum = RANK_S;
+        return RANK_S;
+    }
+
+    public int RankSetting(bool isBossClear)
+    {
+        if (_beforeBattlePoint < _rankCMaxValue || (_beforeBattlePoint < _rankBMaxValue && !isBossClear))
+        {
+            _currentRankNum = RANK_C;
+            return RANK_C;
+        }
+        else if (_beforeBattlePoint < _rankBMaxValue || (_beforeBattlePoint < _rankAMaxValue && !isBossClear))
+        {
+            _currentRankNum = RANK_B;
+            return RANK_B;
+        }
+        else if (_beforeBattlePoint < _rankAMaxValue || (_beforeBattlePoint < _rankSMaxValue && !isBossClear))
         {
             _currentRankNum = RANK_A;
             return RANK_A;
@@ -106,11 +128,23 @@ public class PlayerExperiencePoint : MonoBehaviour
                 })
                 .AppendCallback(() =>
                 {
-                    //経験値がランク上限までいったら
+                    //経験値がランク上限までいく
                     if (Mathf.Approximately(_pointValueImage.fillAmount, 1f))
                     {
-                        Debug.Log("rankup");
-                        RankUp();
+                        //GameManager.IsBossClear = true;
+
+                        //昇格戦クリアしたら
+                        if (GameManager.IsBossClear)
+                        {
+                            Debug.Log("rankup");
+                            RankUp();
+                            HomeScene.Instance.IsRankUp = false;
+                            GameManager.IsBossClear = false;
+                        }
+                        else
+                        {
+                            HomeScene.Instance.IsRankUp = true;
+                        }
                     }
                 });
     }
@@ -128,6 +162,7 @@ public class PlayerExperiencePoint : MonoBehaviour
         {
             var sequence = DOTween.Sequence();
 
+            //演出実行
             sequence.Append(_rankRect.DOAnchorPos(new Vector3(0f, 0f, 0f), 0.6f))
                     .AppendInterval(_waitSecondForRank)
                     .AppendCallback(() =>
@@ -139,6 +174,8 @@ public class PlayerExperiencePoint : MonoBehaviour
                     {
                         ValueSet(_index);
                         _pointValueImage.fillAmount = _experiencePoint / _value;
+                        //ここで音流す↓(ランク上がったぽいの)
+                        //SoundManager.Instance.CriAtomPlay(CueSheet.SE, "");
                     })
                     .Join(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f) * _scaleValue, 0.2f))
                     .AppendInterval(_waitSecondForRank)
@@ -147,14 +184,15 @@ public class PlayerExperiencePoint : MonoBehaviour
         }
     }
 
+    /// <summary> 自分のランクから、上限値を設定する </summary>
     private void ValueSet(int num)
     {
         _value = num switch
         {
             RANK_C => _rankCMaxValue,
-            RANK_B => _rankCMaxValue + _rankBMaxValue,
-            RANK_A => _rankCMaxValue + _rankBMaxValue + _rankAMaxValue,
-            RANK_S => _rankCMaxValue + _rankBMaxValue + _rankAMaxValue + _rankSMaxValue,
+            RANK_B => _rankBMaxValue,
+            RANK_A => _rankAMaxValue,
+            RANK_S => _rankSMaxValue,
             _ => 1,
         };
     }

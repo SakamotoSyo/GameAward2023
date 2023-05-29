@@ -21,7 +21,7 @@ public class PlayerStatus
         //TODO:Œ±“IŒã‚Åíœ‚·‚é
         for (int i = 0; i < _weaponDatas.Length; i++)
         {
-            _weaponDatas[i] = new(1000, 1000, 50, 1000, WeaponData.AttributeType.None, WeaponType.DualBlades);
+            _weaponDatas[i] = new(10, 1000, 50, 1000, WeaponData.AttributeType.None, WeaponType.DualBlades);
         }
         _equipWeapon.ChangeWeapon(_weaponDatas[0], 0);
 
@@ -56,7 +56,7 @@ public class PlayerStatus
 
     public void AddRankPoint()
     {
-        _playerRankPoint += 100;
+        _playerRankPoint += 500;
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ public class PlayerStatus
     /// <param name="weaponData"></param>
     public void EquipWeponChange(WeaponData weaponData, int arrayNum)
     {
-        if (_equipWeapon.IsEpicSkill2)
+        if (!_equipWeapon.IsEpicSkill2)
         {
             _weaponDatas[_equipWeapon.WeaponNum].UpdateParam(_equipWeapon);
             _equipWeapon.ChangeWeapon(weaponData, arrayNum);

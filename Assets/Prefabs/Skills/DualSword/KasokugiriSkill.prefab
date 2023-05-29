@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 320342275479820051}
   - component: {fileID: 7545805442465005586}
   - component: {fileID: 1917436709357317512}
+  - component: {fileID: 5024192801481817407}
   m_Layer: 0
   m_Name: KasokugiriSkill
   m_TagString: Untagged
@@ -69,6 +70,19 @@ MonoBehaviour:
   _playerObj: {fileID: 8945542511274413021}
   _enemyAnim: {fileID: 8900763398858200911}
   _enemyObj: {fileID: 1189007743178529524}
+--- !u!114 &5024192801481817407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7495692604606296964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 8004996078720359537}
 --- !u!1001 &2633863318298257181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -753,6 +767,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3945339834083677694, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
   m_PrefabInstance: {fileID: 6497643118171522624}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8004996078720359537 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3835719397119728177, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}
+  m_PrefabInstance: {fileID: 6497643118171522624}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8945542511274413021 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2740634410554150301, guid: a4f547a651319b841a1f254d2e85edd2, type: 3}

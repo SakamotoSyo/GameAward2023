@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class ResultUIScript : MonoBehaviour
 {
     [SerializeField] private OreUIScript[] _oreUiCs = new OreUIScript[3];
-    [SerializeField] private OreUIScript _selectWeaponOre; 
+    [SerializeField] private OreUIScript _selectWeaponOre;
     [SerializeField] private Button[] _oreButton = new Button[3];
     [SerializeField] private Button[] _weaponButton = new Button[4];
     [SerializeField] private Button[] _skillSelectButton = new Button[2];
@@ -23,9 +23,13 @@ public class ResultUIScript : MonoBehaviour
     [SerializeField] private SkillDataManagement _skillDataManagement;
     [SerializeField] private Sprite[] _oreImage = new Sprite[3];
     [SerializeField] private ResultWeaponButton[] _resultUICs = new ResultWeaponButton[4];
+    [SerializeField] private Image[] _weaponImage = new Image[4];
+    [SerializeField] private Sprite[] _weaponSampleSprite = new Sprite[4];
+    [SerializeField] private Text[] _weaponNameText = new Text[4];
     private WeaponData[] _saveWeaponData;
     private OreData _selectOreData;
     private int _currentSelectWeapon;
+    private GameObject[] _saveObject = new GameObject[4];
 
     [SceneName]
     [SerializeField] private string _blacksmithSceneName;
@@ -45,10 +49,11 @@ public class ResultUIScript : MonoBehaviour
 
         if (_actorGenerator.EnemyController.EnemyStatus.IsBoss)
         {
+            GameManager.BossClear();
             FindWeaponTypeDontHave();
         }
     }
-    
+
     public void StartResultLottery()
     {
         _oreSelectObj.SetActive(true);
@@ -67,7 +72,7 @@ public class ResultUIScript : MonoBehaviour
             var oreInfo = RarityLottery(i);
             OreData Ore = new OreData(SetEnhanceData(oreInfo.rearity), oreInfo.rearity, oreInfo.randomSkill, oreInfo.oreImage);
             _oreUiCs[i].SetData(Ore);
-            _oreButton[i].onClick.AddListener(() => EnhanceWeaponEvent(Ore)); 
+            _oreButton[i].onClick.AddListener(() => EnhanceWeaponEvent(Ore));
             _oreButton[i].onClick.AddListener(() => SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Ingame"));
         }
     }
@@ -165,9 +170,40 @@ public class ResultUIScript : MonoBehaviour
 
         }
 
+        for (int i = 0; i < _weaponImage.Length; i++)
+        {
+            _weaponImage[i].color = new Color(1, 1, 1, 1);
+            if (weaponDatas.Length - 1 < i) 
+            {
+                _weaponImage[i].sprite = null;
+                _weaponNameText[i].text = "";
+                _weaponImage[i].color = new Color(1, 1, 1, 0);
+            }
+            else if (weaponDatas[i].WeaponType == WeaponType.DualBlades)
+            {
+                _weaponNameText[i].text = "ëoåï";
+                _weaponImage[i].sprite = _weaponSampleSprite[0];
+            }
+            else if (weaponDatas[i].WeaponType == WeaponType.Hammer)
+            {
+                _weaponNameText[i].text = "ÉnÉìÉ}Å[";
+                _weaponImage[i].sprite = _weaponSampleSprite[1];
+            }
+            else if (weaponDatas[i].WeaponType == WeaponType.GreatSword)
+            {
+                _weaponNameText[i].text = "ëÂåï";
+                _weaponImage[i].sprite = _weaponSampleSprite[2];
+            }
+            else if (weaponDatas[i].WeaponType == WeaponType.Spear)
+            {
+                _weaponNameText[i].text = "ëÑ";
+                _weaponImage[i].sprite = _weaponSampleSprite[3];
+            }
+        }
+
     }
 
-    public void SetSaveEnhanceData(WeaponData[] weaponDatas, OreData oredata, int selectButton) 
+    public void SetSaveEnhanceData(WeaponData[] weaponDatas, OreData oredata, int selectButton)
     {
         _resultUICs[_currentSelectWeapon].ActiveOutLine(false);
         _saveWeaponData = weaponDatas;
@@ -182,9 +218,9 @@ public class ResultUIScript : MonoBehaviour
     /// </summary>
     public async void WeaponEnhanceEvent()
     {
-        
+
         var weaponSkill = _saveWeaponData[_currentSelectWeapon].WeaponSkill;
-        if (!_selectOreData.Skill) 
+        if (!_selectOreData.Skill)
         {
             Debug.Log("SkillÇ™Null");
             return;
@@ -226,7 +262,7 @@ public class ResultUIScript : MonoBehaviour
                     SceneLoader.LoadScene(_homeScene);
                 }
 
-                if (!result) 
+                if (!result)
                 {
                     Debug.Log("ïêäÌÇÃéÌóﬁÇ™çáÇÌÇ»Ç©Ç¡ÇΩÇΩÇﬂí«â¡Ç≈Ç´Ç‹ÇπÇÒÇ≈ÇµÇΩ");
                 }
@@ -257,9 +293,9 @@ public class ResultUIScript : MonoBehaviour
         // SceneLoader.LoadScene(_homeScene);
     }
 
-    public void EnterSound() 
+    public void EnterSound()
     {
-                SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
     }
     public void CancelSelectSkill()
     {

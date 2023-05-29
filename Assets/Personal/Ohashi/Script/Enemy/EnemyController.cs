@@ -32,6 +32,9 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public EnemyColor EnemyColor => _enemyColor;
 
+    [SerializeField]
+    private Transform[] _damagePosArray;
+
     private void Start()
     {
         _enemyAttack.Init(_enemyStatus.EquipWeapon);
@@ -57,17 +60,24 @@ public class EnemyController : MonoBehaviour, IAddDamage
         }
     }
 
-    public void AddDamage(float damage, float criticalRate)
+    public async UniTask AddDamage(float damage, float criticalRate)
     {
+        int index = Random.Range(0, _damagePosArray.Length);
         var damageController = Instantiate(_damegeController,
-            _damagePos.position,
+            _damagePosArray[index].position,
             Quaternion.identity);
+        
         damageController.TextInit((int)damage, _enemyStatus.EquipWeapon.AddDamage((int)damage, criticalRate));
         SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
 
         if (_enemyStatus.EquipWeapon.IsWeaponBreak())
         {
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Crash");
+            if (await _enemyStatus.IsWeaponsAllBrek())
+            {
+                Debug.Log("全部壊れた");
+                return;
+            }
             _enemyStatus.EquipChangeWeapon();
         }
     }
