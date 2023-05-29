@@ -109,9 +109,14 @@ public class ActiveWeaponMesh : MonoBehaviour
         _hPos = GameObject.FindGameObjectsWithTag("HammerPos");
         _sPos = GameObject.FindGameObjectsWithTag("SpearPos");
 
-        Debug.Log(_gsImage.Length);
-        Debug.Log(_gsParent.Length);
-        Debug.Log(_gsPos.Length);
+        Debug.Log(_sImage.Length);
+        Debug.Log(_sParent.Length);
+        Debug.Log(_sPos.Length);
+
+        foreach(var name in _sParent)
+        {
+            Debug.Log(name.gameObject.name);
+        }
     }
     private void Start()
     {
