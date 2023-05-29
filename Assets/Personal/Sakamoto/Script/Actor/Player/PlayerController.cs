@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
 using Cinemachine;
+using Cysharp.Threading.Tasks;
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// ƒ_ƒ[ƒW‚ğó‚¯‚é—¬‚ê
     /// </summary>
-    public void AddDamage(float damage, float criticalNum, bool isSkill = false)
+    public async UniTask AddDamage(float damage, float criticalNum, bool isSkill = false)
     {
         bool isCritical = CriticalCheck(criticalNum);
         if (isCritical)
@@ -76,6 +77,8 @@ public class PlayerController : MonoBehaviour
             }
 
             _playerStatus.EquipWeapon.AddDamage(damage);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             //•Ší‚ª‰ó‚ê‚½‚Æ‚«‚É“ü‚ê‘Ö‚¦‚éˆ—
             if (!_playerStatus.RandomEquipWeponChange())
             {
