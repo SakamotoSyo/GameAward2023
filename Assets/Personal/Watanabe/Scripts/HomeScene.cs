@@ -4,7 +4,10 @@ using UnityEngine.UI;
 
 public class HomeScene : MonoBehaviour
 {
-    [SerializeField] private bool _isRankUp = false;
+    [SerializeField] private RankingBattleScript _rankBattle = default;
+    [SerializeField] private PlayerExperiencePoint _experiencePoint = default;
+
+    private bool _isRankUp = false;
 
     #region カット演出系
     [SerializeField] private GameObject _battleSelectPanel = default;
@@ -13,7 +16,6 @@ public class HomeScene : MonoBehaviour
 
     /// <summary> 昇格戦挑戦可か </summary>
     private bool _isChallengablePromotionMatch = false;
-    private bool _isPlayCutMove = false;
     private Image[] _cutPanels = new Image[3];
     private Text[] _cutTexts = new Text[2];
     #endregion
@@ -62,9 +64,10 @@ public class HomeScene : MonoBehaviour
         {
             _isChallengablePromotionMatch = false;
         }
+        _experiencePoint.RankSetting(GameManager.IsBossClear);
+        _rankBattle.StartEnemySelect();
 
-
-        if (!_isChallengablePromotionMatch || _isPlayCutMove)
+        if (!_isChallengablePromotionMatch)
         {
             _battleSelectPanel.SetActive(true);
             return;
@@ -74,11 +77,6 @@ public class HomeScene : MonoBehaviour
 
     public void CutMove()
     {
-        if (_isPlayCutMove)
-        {
-            return;
-        }
-
         _battleSelectPanel.SetActive(true);
 
         var sequence = DOTween.Sequence();
@@ -120,7 +118,5 @@ public class HomeScene : MonoBehaviour
                     }
                     Fade.Instance.FadeIn();
                 });
-
-        _isPlayCutMove = true;
     }
 }

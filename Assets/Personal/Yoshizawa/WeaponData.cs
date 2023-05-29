@@ -45,6 +45,7 @@ public class WeaponData
         CurrentDurable = equipWeaponData.CurrentDurable.Value;
         Attribute = equipWeaponData.Attribute;
         WeaponType = equipWeaponData.WeaponType;
+        WeaponSkill = equipWeaponData.WeaponSkill;
     }
 
     public void EnhanceParam(EnhanceData[] enhanceData) 

@@ -71,6 +71,26 @@ public class Fade : MonoBehaviour
             OnComplete(() => SceneManager.LoadScene(sceneName));
     }
 
+    public void FadeOutWithSound(string sceneName)
+    {
+        var sequence = DOTween.Sequence();
+
+        sequence.AppendCallback(() =>
+                {
+                    _fadeImage.gameObject.SetActive(true);
+                })
+                .AppendCallback(() =>
+                {
+                    SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
+                })
+                .AppendInterval(0.5f)
+                .Append(_fadeImage.DOFade(1f, _fadeSpeed))
+                .AppendCallback(() =>
+                {
+                    SceneManager.LoadScene(sceneName);
+                });
+    }
+
     /// <summary> ランク選択からバトル選択のシーンに遷移する時に呼ぶ </summary>
     public void LoadToRankScene()
     {
