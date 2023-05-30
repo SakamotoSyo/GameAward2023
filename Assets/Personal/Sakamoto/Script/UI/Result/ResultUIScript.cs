@@ -46,18 +46,17 @@ public class ResultUIScript : MonoBehaviour
         {
             StartResultLottery();
         }
-
-        if (_actorGenerator.EnemyController.EnemyStatus.IsBoss)
-        {
-            GameManager.BossClear();
-            FindWeaponTypeDontHave();
-        }
     }
 
     public void StartResultLottery()
     {
         _oreSelectObj.SetActive(true);
         RewardLottery();
+        if (_actorGenerator.EnemyController.EnemyStatus.IsBoss)
+        {
+            GameManager.BossClear();
+            FindWeaponTypeDontHave();
+        }
     }
 
     /// <summary>
@@ -115,7 +114,13 @@ public class ResultUIScript : MonoBehaviour
         WeaponData[] weaponDatas = _actorGenerator.PlayerController.PlayerStatus.WeaponDatas;
         WeaponData weaponData = weaponDatas[Random.Range(0, weaponDatas.Length)];
         var randomNum = Random.Range(0, 100);
-        if (20 < randomNum)
+
+        if (uiNum == 0 && _actorGenerator.EnemyController.EnemyStatus.IsBoss) 
+        {
+            randomSkill = _skillDataManagement.OnSkillCall(WeaponType.Any, SkillType.Epic);
+            rearity = (OreRarity)2;
+        }
+        else if (20 < randomNum)
         {
             randomSkill = _skillDataManagement.OnSkillCall(weaponData.WeaponType, SkillType.Skill);
         }
@@ -216,7 +221,7 @@ public class ResultUIScript : MonoBehaviour
     /// <summary>
     /// ïêäÌÇÃã≠âªÇµÇΩÇ∆Ç´ÇÃButtonEvent
     /// </summary>
-    public async void WeaponEnhanceEvent()
+    public void WeaponEnhanceEvent()
     {
 
         var weaponSkill = _saveWeaponData[_currentSelectWeapon].WeaponSkill;
@@ -225,7 +230,7 @@ public class ResultUIScript : MonoBehaviour
             Debug.Log("SkillÇ™Null");
             return;
         }
-        if (_selectOreData.Skill.Type == SkillType.Skill)
+        if (_selectOreData.Skill.Type == SkillType.Skill || _selectOreData.Skill.Type == SkillType.Epic)
         {
             if (weaponSkill.GetSkillData() == weaponSkill.WeaponSkillArray.Length)
             {
