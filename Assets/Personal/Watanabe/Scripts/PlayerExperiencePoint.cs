@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class PlayerExperiencePoint : MonoBehaviour
 {
+    [SerializeField] private GameObject _blockingPanel = default;
+
     #region ランクアップ演出関連
     [Header("ランクアップ演出関連")]
     [SerializeField] private Sprite[] _ranks = default;
@@ -98,6 +100,8 @@ public class PlayerExperiencePoint : MonoBehaviour
     {
         ValueSet(_currentRankNum);
 
+        _blockingPanel.SetActive(true);
+
         var sequence = DOTween.Sequence();
 
         sequence.Append(_pointValueImage.DOFillAmount(_experiencePoint / _value, 1.5f))
@@ -125,6 +129,10 @@ public class PlayerExperiencePoint : MonoBehaviour
                             HomeScene.Instance.IsRankUp = true;
                         }
                     }
+                })
+                .AppendCallback(() =>
+                {
+                    _blockingPanel.SetActive(false);
                 });
     }
 
