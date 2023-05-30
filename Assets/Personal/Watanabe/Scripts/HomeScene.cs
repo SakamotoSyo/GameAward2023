@@ -41,13 +41,13 @@ public class HomeScene : MonoBehaviour
                 _cutPanels[i] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
                 _cutPanels[i + 1] = _cutPanels[i].transform.GetChild(i).GetComponent<Image>();
             }
-            else if (i == _cutPanelParent.transform.childCount - 1)
+            else if (i == 1)
             {
-                _cutPanels[i - 1] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
+                _cutPanels[2] = _cutPanelParent.transform.GetChild(i).GetComponent<Image>();
             }
             else
             {
-                _cutTexts[i - 1] = _cutPanelParent.transform.GetChild(i).GetComponent<Text>();
+                _cutTexts[i - 2] = _cutPanelParent.transform.GetChild(i).GetComponent<Text>();
             }
         }
     }
@@ -56,7 +56,7 @@ public class HomeScene : MonoBehaviour
     public void CutSceneLike()
     {
         //ボスに挑戦できるかのフラグを設定
-        if (_isRankUp && !GameManager.IsBossClear)
+        if (_isRankUp && !GameManager.IsBossClear && PlayerExperiencePoint.CurrentRankNum != 3)
         {
             _isChallengablePromotionMatch = true;
         }
@@ -89,24 +89,15 @@ public class HomeScene : MonoBehaviour
                 .Join(_cutPanels[1].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .AppendCallback(() =>
                 {
-                    //出現させるのと一緒に音を流す
-                    SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
+                    SoundManager.Instance.CriAtomPlay(CueSheet.ME, "ME_Boss");
                 })
                 .AppendInterval(_waitSecondCutStaging)
 
                 .Append(_cutPanels[2].transform.DOScale(new Vector3(2.2f, 2.2f, 2.2f), 0.2f))
-                .AppendCallback(() =>
-                {
-                    SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
-                })
                 .AppendInterval(_waitSecondCutStaging)
 
                 .Append(_cutTexts[0].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
                 .Join(_cutTexts[1].transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f))
-                .AppendCallback(() =>
-                {
-                    SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
-                })
                 .AppendInterval(_waitSecondCutStaging)
 
                 .AppendCallback(() =>

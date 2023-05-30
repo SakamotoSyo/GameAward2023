@@ -87,6 +87,8 @@ public class PlayerExperiencePoint : MonoBehaviour
         else
         {
             _currentRankNum = RANK_S;
+
+            _currentRank.transform.GetChild(0).gameObject.SetActive(true);
         }
         return _currentRankNum;
     }
