@@ -49,7 +49,23 @@ public class BattleChangeWeapon : MonoBehaviour
 
             if (_playerStatus.EquipWeapon.WeaponNum != i)
             {
-                _weaponTypeText[i].text = _playerStatus.WeaponDatas[num].WeaponType.ToString();
+                if(_playerStatus.WeaponDatas[num].WeaponType == WeaponType.GreatSword)
+                {
+                    _weaponTypeText[i].text = "‘åŒ•";
+                }
+                else if (_playerStatus.WeaponDatas[num].WeaponType == WeaponType.DualBlades)
+                {
+                    _weaponTypeText[i].text = "‘oŒ•";
+                }
+                else if (_playerStatus.WeaponDatas[num].WeaponType == WeaponType.Hammer)
+                {
+                    _weaponTypeText[i].text = "ƒnƒ“ƒ}[";
+                }
+                else if (_playerStatus.WeaponDatas[num].WeaponType == WeaponType.Spear)
+                {
+                    _weaponTypeText[i].text = "‘„";
+                }
+
                 _weaponButton[i].onClick.RemoveAllListeners();
                 _weaponButton[i].onClick.AddListener(() => OnClickChangeWeapon(_playerStatus.WeaponDatas[num], num));
             }
