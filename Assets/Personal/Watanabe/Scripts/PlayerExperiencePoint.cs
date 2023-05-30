@@ -32,7 +32,7 @@ public class PlayerExperiencePoint : MonoBehaviour
     [SerializeField] private Image _pointValueImage = default;
 
     /// <summary> バトルにいく前の経験値 </summary>
-    private int _beforeBattlePoint = 0;
+    private static int _beforeBattlePoint = 0;
     /// <summary> Playerの経験値 </summary>
     private static int _experiencePoint = 0;
 
@@ -42,20 +42,18 @@ public class PlayerExperiencePoint : MonoBehaviour
     private const int RANK_S = 3;
 
     private static int _currentRankNum = 0;
-    private static float _value = 0;
+    private float _value = 0;
 
-    public static int ExperiencePoint => _experiencePoint;
     public static int CurrentRankNum => _currentRankNum;
-    public static float Value => _value;
     #endregion
 
     private void Awake()
     {
+        _experiencePoint = GameManager.PlayerSaveData.PlayerRankPoint;
+        //_experiencePoint = 2500;
+
         _index = RankSetting();
         ValueSet(_index);
-
-        _experiencePoint = GameManager.PlayerSaveData.PlayerRankPoint;
-        //_experiencePoint = 3000;
 
         _pointValueImage.fillAmount = _beforeBattlePoint / _value;
 
@@ -72,46 +70,25 @@ public class PlayerExperiencePoint : MonoBehaviour
         _image.sprite = _ranks[_index];
     }
 
-    private int RankSetting()
+    public int RankSetting()
     {
-        if (_beforeBattlePoint < _rankCMaxValue)
+        if (_beforeBattlePoint <= _rankCMaxValue)
         {
             _currentRankNum = RANK_C;
-            return RANK_C;
         }
-        else if (_beforeBattlePoint < _rankBMaxValue)
+        else if (_beforeBattlePoint <= _rankBMaxValue)
         {
             _currentRankNum = RANK_B;
-            return RANK_B;
         }
-        else if (_beforeBattlePoint < _rankAMaxValue)
+        else if (_beforeBattlePoint <= _rankAMaxValue)
         {
             _currentRankNum = RANK_A;
-            return RANK_A;
         }
-        _currentRankNum = RANK_S;
-        return RANK_S;
-    }
-
-    public int RankSetting(bool isBossClear)
-    {
-        if (_beforeBattlePoint < _rankCMaxValue || (_beforeBattlePoint < _rankBMaxValue && !isBossClear))
+        else
         {
-            _currentRankNum = RANK_C;
-            return RANK_C;
+            _currentRankNum = RANK_S;
         }
-        else if (_beforeBattlePoint < _rankBMaxValue || (_beforeBattlePoint < _rankAMaxValue && !isBossClear))
-        {
-            _currentRankNum = RANK_B;
-            return RANK_B;
-        }
-        else if (_beforeBattlePoint < _rankAMaxValue || (_beforeBattlePoint < _rankSMaxValue && !isBossClear))
-        {
-            _currentRankNum = RANK_A;
-            return RANK_A;
-        }
-        _currentRankNum = RANK_S;
-        return RANK_S;
+        return _currentRankNum;
     }
 
     /// <summary> 経験値の反映 </summary>
@@ -164,6 +141,10 @@ public class PlayerExperiencePoint : MonoBehaviour
 
             //演出実行
             sequence.Append(_rankRect.DOAnchorPos(new Vector3(0f, 0f, 0f), 0.6f))
+                    .AppendCallback(() =>
+                    {
+                        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Lank_Gauge");
+                    })
                     .AppendInterval(_waitSecondForRank)
                     .AppendCallback(() =>
                     {
@@ -173,9 +154,15 @@ public class PlayerExperiencePoint : MonoBehaviour
                     .AppendCallback(() =>
                     {
                         ValueSet(_index);
-                        _pointValueImage.fillAmount = _experiencePoint / _value;
-                        //ここで音流す↓(ランク上がったぽいの)
-                        //SoundManager.Instance.CriAtomPlay(CueSheet.SE, "");
+
+                        if (_experiencePoint > _value)
+                        {
+                            _experiencePoint = (int)_value;
+                        }
+
+                        //_pointValueImage.fillAmount = _experiencePoint / _value;
+                        _pointValueImage.fillAmount = 0f;
+                        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Lankup");
                     })
                     .Join(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f) * _scaleValue, 0.2f))
                     .AppendInterval(_waitSecondForRank)
@@ -200,6 +187,10 @@ public class PlayerExperiencePoint : MonoBehaviour
     /// <summary> バトルに挑む前の経験値を保存しておく </summary>
     public void SetExperiencePoint()
     {
-        _beforeBattlePoint = GameManager.PlayerSaveData.PlayerRankPoint;
+        if (_experiencePoint > _value)
+        {
+            _experiencePoint = (int)_value;
+        }
+        _beforeBattlePoint = _experiencePoint;
     }
 }
