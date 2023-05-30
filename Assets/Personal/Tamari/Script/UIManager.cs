@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
 {   
     WeaponType _weaponType;
 
-    GameObject _weaponBase = default;
+    GameObject _meshManagerObject = default;
 
     private int? _indexNum = null;
 
@@ -28,13 +28,7 @@ public class UIManager : MonoBehaviour
     [Header("常に置いてあるUI")]
 
     [SerializeField]
-    private Button _finishButton = default;
-
-    [SerializeField]
-    private Button _resetButton = default;
-
-    [SerializeField]
-    private Button _sampleCreateButton = default;
+    private GameObject _defaultWindow = default;
 
     [SerializeField]
     private Text _weaponTypeText = default;
@@ -45,31 +39,12 @@ public class UIManager : MonoBehaviour
     private GameObject _allPanel = default;
 
     [SerializeField]
-    private Text _checkTextForReset = default;
-
-    [SerializeField]
     private GameObject _panelForReset = default;
-
-    [SerializeField]
-    private Button _okButtonForReset = default;
-
-    [SerializeField]
-    private Button _cancelButtonForReset = default;
-
 
     [Header("サンプル作成時に確認用に出すパネルに必要な情報")]
 
     [SerializeField]
-    private Text _checkTextForSample = default;
-
-    [SerializeField]
     private GameObject _panelForSample = default;
-
-    [SerializeField]
-    private Button _okButtonForSample = default;
-
-    [SerializeField]
-    private Button _cancelButtonForSample = default;
 
     [Header("完成時に確認用に出すパネルに必要な情報")]
 
@@ -101,12 +76,13 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         _allPanel.SetActive(false);
+        _defaultWindow.SetActive(false);
         _panelForReset.SetActive(false);
         _panelForSample.SetActive(false);
         _panelForFinish.SetActive(false);
         _panelForBackHome.SetActive(false);
         ActiveSelectableWeapon();
-        _weaponBase = GameObject.Find("MeshManager");
+        _meshManagerObject = GameObject.Find("MeshManager");
     }
 
     private void ActiveSelectableWeapon()
@@ -115,6 +91,13 @@ public class UIManager : MonoBehaviour
         _dbFrame.SetActive(false);
         _hFrame.SetActive(false);
         _sFrame.SetActive(false);
+
+        if (GameManager.PlayerSaveData == null)
+        {
+            Debug.Log("所持している武器が無いです");
+            _gsFrame.SetActive(true);
+            return;
+        }
 
         for (int i = 0; i < GameManager.PlayerSaveData.WeaponArray.Length; i++)
         {
@@ -141,7 +124,6 @@ public class UIManager : MonoBehaviour
                 break;
             }
         }
-
     }
 
     public void OnSelect(int num)
@@ -191,58 +173,33 @@ public class UIManager : MonoBehaviour
             _weaponTypeText.text = "槍";
         }
         _firstPanel.SetActive(false);
+        _defaultWindow.SetActive(true);
         _meshManager.CreateMesh();
     }
-    //public void SelectWeapon(string weapon)
-    //{
-    //    if(weapon == WeaponType.GreatSword.ToString())
-    //    {
-    //        _meshManager._weaponType = WeaponType.GreatSword;
-    //        _weaponTypeText.text = "大剣";
-    //    }
-    //    else if(weapon == WeaponType.DualBlades.ToString())
-    //    {
-    //        _meshManager._weaponType = WeaponType.DualBlades;
-    //        _weaponTypeText.text = "双剣";
-    //    }
-    //    else if(weapon == WeaponType.Hammer.ToString())
-    //    {
-    //        _meshManager._weaponType = WeaponType.Hammer;
-    //        _weaponTypeText.text = "ハンマー";
-    //    }
-    //    else if (weapon == WeaponType.Spear.ToString())
-    //    {
-    //        _meshManager._weaponType = WeaponType.Spear;
-    //        _weaponTypeText.text = "やり";
-    //    }
-    //    _firstPanel.SetActive(false);
-    //    _meshManager.CreateMesh();
-    //}
-
     public void SwitchCheckForReset(bool flag)
     {
         _allPanel.SetActive(flag);
         _panelForReset.SetActive(flag);
-        _weaponBase.gameObject.SetActive(!flag);
+        _meshManagerObject.gameObject.SetActive(!flag);
     }
 
     public void SwitchCheckForSample(bool flag)
     {
         _allPanel.SetActive(flag);
         _panelForSample.SetActive(flag);
-        _weaponBase.gameObject.SetActive(!flag);
+        _meshManagerObject.gameObject.SetActive(!flag);
     }
     public void SwitchCheckForFinish(bool flag)
     {
         _allPanel.SetActive(flag);
         _panelForFinish.SetActive(flag);
-        _weaponBase.gameObject.SetActive(!flag);
+        _meshManagerObject.gameObject.SetActive(!flag);
     }
     public void SwitchCheckForBack(bool flag)
     {
         _allPanel.SetActive(flag);
         _panelForBackHome.SetActive(flag);
-        _weaponBase.gameObject.SetActive(!flag);
+        _meshManagerObject.gameObject.SetActive(!flag);
     }
 
 
