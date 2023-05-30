@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     {
         Collider2D camaraCollider = GameObject.Find("CameraCollider").GetComponent<BoxCollider2D>();
         _skillDataManagement = GameObject.Find("SkillDataBase").GetComponent<SkillDataManagement>();
-        _playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.DebugSearchSkill());
+        //_playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.DebugSearchSkill());
         _playerStatus.EquipWeapon.Init(_skillDataManagement);
         _playerAnimation.Init(_playerStatus.EquipWeapon);
 
