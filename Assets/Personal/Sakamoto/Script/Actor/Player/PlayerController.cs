@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isSkill) 
             {
+                _playerAnimation.Damage();
                 SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
             }
 
