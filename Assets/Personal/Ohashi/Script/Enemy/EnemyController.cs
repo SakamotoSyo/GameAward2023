@@ -59,9 +59,15 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public async UniTask AddDamage(float damage, float criticalRate)
     {
+        float x = Random.Range(0, 4);
+        float y = Random.Range(-3, 2);
+        Vector3 pos = _damagePos.position;
+        pos.x += x;
+        pos.y += y;
         var damageController = Instantiate(_damegeController,
-            _damagePos.position,
+            pos,
             Quaternion.identity);
+        
         damageController.TextInit((int)damage, _enemyStatus.EquipWeapon.AddDamage((int)damage, criticalRate));
         SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
 

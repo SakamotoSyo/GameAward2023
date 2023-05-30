@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1615813827477448390}
   - component: {fileID: 6238516158705507562}
   - component: {fileID: 6882409786844964124}
+  - component: {fileID: -5279418041619517804}
   m_Layer: 0
   m_Name: IkishochinSkill
   m_TagString: Untagged
@@ -66,6 +67,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 8334630196029227660}
   _playerObj: {fileID: 5080199206878166915}
+--- !u!114 &-5279418041619517804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209183333625682486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614a1f1b42daf894cbe726bc3a68f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _confiner: {fileID: 6175552480519055407}
 --- !u!1001 &2476821640262429573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -372,19 +386,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6495256281685477828, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.51176655
+      value: 0.5117669
       objectReference: {fileID: 0}
     - target: {fileID: 6495256281685477828, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.19156873
+      value: 0.191569
       objectReference: {fileID: 0}
     - target: {fileID: 6495256281685477828, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.36996317
+      value: 0.3699633
       objectReference: {fileID: 0}
     - target: {fileID: 6495256281685477828, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.2918892
+      value: 0.29188928
       objectReference: {fileID: 0}
     - target: {fileID: 6541606799255400413, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -420,11 +434,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7146946463962820322, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 1.0099654
+      value: 1.0099659
       objectReference: {fileID: 0}
     - target: {fileID: 7146946463962820322, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.5375532
+      value: 0.5375533
       objectReference: {fileID: 0}
     - target: {fileID: 7146946463962820322, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Extent.x
@@ -432,7 +446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7146946463962820322, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.36421394
+      value: 0.36421403
       objectReference: {fileID: 0}
     - target: {fileID: 7435587141165732606, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -481,6 +495,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1661037498315977709, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
   m_PrefabInstance: {fileID: 5876439464465370222}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6175552480519055407 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 305882812309136449, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}
+  m_PrefabInstance: {fileID: 5876439464465370222}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6217333187827918816 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 559898916182649742, guid: 13e1143b1eae636418575c971a8e4ace, type: 3}

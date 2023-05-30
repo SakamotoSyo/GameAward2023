@@ -58,6 +58,12 @@ public class EnemyDataBase : MonoBehaviour
                                      && playerRank >= x.RankPoint).ToArray();
         }
 
+        if (rankArray.Length == 0) 
+        {
+            rankArray = dataList.Where(x => playerRank - RankRange <= x.RankPoint
+                                     && playerRank >= x.RankPoint).ToArray();
+        }
+
         return rankArray;
     }
 

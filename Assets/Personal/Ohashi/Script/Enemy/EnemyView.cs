@@ -13,18 +13,21 @@ public class EnemyView : MonoBehaviour
     [SerializeField]
     private Image _currentHealthImage;
 
+    private float _max;
+
     /// <summary>
     /// エネミーの残り体力をテキストに表示する
     /// </summary>
-    public void HealthText(float health, float max)
+    public void HealthText(float health)
     {
         _maxHealthText.text = health.ToString();
-        _currentHealthImage.DOFillAmount(health / max, 0.5f);
+        _currentHealthImage.DOFillAmount(health / _max, 0.5f);
     }
 
     public void MaxHealthText(float max)
     {
         _healthText.text = max.ToString();
+        _max = max;
     }
 
 

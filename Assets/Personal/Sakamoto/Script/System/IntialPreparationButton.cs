@@ -16,9 +16,9 @@ public class IntialPreparationButton : MonoBehaviour, IPointerEnterHandler, IPoi
 
     private void Start()
     {
-        _weaponData = new WeaponData(1000, 1000, 50, 1000, WeaponData.AttributeType.None, _weaponType);
+        _weaponData = new WeaponData(_weaponData.OffensivePower, _weaponData.WeaponWeight, _weaponData.CriticalRate, _weaponData.MaxDurable, 
+            WeaponData.AttributeType.None, _weaponData.WeaponType);
         _button = GetComponent<Button>();
-
         gameObject.transform.GetChild(1).gameObject.SetActive(false);
     }
 

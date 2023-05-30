@@ -173,7 +173,7 @@ public class ResultUIScript : MonoBehaviour
         for (int i = 0; i < _weaponImage.Length; i++)
         {
             _weaponImage[i].color = new Color(1, 1, 1, 1);
-            if (weaponDatas.Length - 1 < i) 
+            if (weaponDatas.Length - 1 < i)
             {
                 _weaponImage[i].sprite = null;
                 _weaponNameText[i].text = "";
@@ -340,6 +340,7 @@ public class ResultUIScript : MonoBehaviour
                 AddWeapon(weaponType);
                 _isBlacksmith = true;
                 GameManager.SetBlacksmithType((WeaponType)Enum.GetValues(typeof(WeaponType)).GetValue(i));
+                break;
                 //SceneLoader.LoadScene(_blacksmithSceneName);
             }
         }
@@ -385,12 +386,14 @@ public class ResultUIScript : MonoBehaviour
     private void AddWeapon(WeaponType weaponType)
     {
         var playerStatus = _actorGenerator.PlayerController.PlayerStatus;
+        WeaponData[] weapons = new WeaponData[playerStatus.WeaponDatas.Length + 1];
         for (int i = 0; i < playerStatus.WeaponDatas.Length; i++)
         {
-            if (playerStatus.WeaponDatas[i] == null)
-            {
-                playerStatus.WeaponDatas[i] = new(1000, 1000, 50, 1000, WeaponData.AttributeType.None, weaponType);
-            }
+            weapons[i] = playerStatus.WeaponDatas[i];
         }
+
+        weapons[playerStatus.WeaponDatas.Length] = new(1000, 1000, 50, 1000, WeaponData.AttributeType.None, weaponType);
+        playerStatus.ChangeWeponArray(weapons); 
+
     }
 }
