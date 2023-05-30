@@ -128,6 +128,7 @@ public class UIManager : MonoBehaviour
 
     public void OnSelect(int num)
     {
+        // SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
         if (num == 0)
         {
             _indexNum = num;
@@ -178,6 +179,10 @@ public class UIManager : MonoBehaviour
     }
     public void SwitchCheckForReset(bool flag)
     {
+        if (flag)
+        {
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
+        }
         _allPanel.SetActive(flag);
         _panelForReset.SetActive(flag);
         _meshManagerObject.gameObject.SetActive(!flag);
@@ -185,18 +190,30 @@ public class UIManager : MonoBehaviour
 
     public void SwitchCheckForSample(bool flag)
     {
+        if(flag)
+        {
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
+        }
         _allPanel.SetActive(flag);
         _panelForSample.SetActive(flag);
         _meshManagerObject.gameObject.SetActive(!flag);
     }
     public void SwitchCheckForFinish(bool flag)
     {
+        if (flag)
+        {
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
+        }
         _allPanel.SetActive(flag);
         _panelForFinish.SetActive(flag);
         _meshManagerObject.gameObject.SetActive(!flag);
     }
     public void SwitchCheckForBack(bool flag)
     {
+        if (flag)
+        {
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
+        }
         _allPanel.SetActive(flag);
         _panelForBackHome.SetActive(flag);
         _meshManagerObject.gameObject.SetActive(!flag);
@@ -214,13 +231,14 @@ public class UIManager : MonoBehaviour
         _allPanel.SetActive(true);
         _meshManager.SaveMesh();
         SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith_Finish");
-        await _finishImage.DOFade(1.0f, 3f);
+        await _finishImage.DOFade(1.0f, 5f);
         await UniTask.DelayFrame(10);
         SceneManager.LoadScene(_nextSceneName);
     }
 
     public void ResetMeshShape()
     {
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
         if (MeshManager._isFinished)
         {
             return;
@@ -236,6 +254,7 @@ public class UIManager : MonoBehaviour
 
     public async void BackHome()
     {
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
         if (MeshManager._isFinished)
         {
             return;
