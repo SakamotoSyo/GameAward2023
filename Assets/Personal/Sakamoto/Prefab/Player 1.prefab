@@ -1636,7 +1636,7 @@ RectTransform:
   m_GameObject: {fileID: 3024766812457698363}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.90000004, y: 0.90000004, z: 0.90000004}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5466964725498685615}
@@ -1644,8 +1644,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -148, y: -471.63998}
-  m_SizeDelta: {x: 100, y: 99.28}
+  m_AnchoredPosition: {x: -148, y: -468.77}
+  m_SizeDelta: {x: 100, y: 105.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5030100671172254262
 CanvasRenderer:
@@ -6373,6 +6373,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: HammerWeapon
       objectReference: {fileID: 0}
+    - target: {fileID: 2042678633, guid: cd537356aeb67ce46b2555f5331aedcf, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.x
+      value: 653.4796
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042678633, guid: cd537356aeb67ce46b2555f5331aedcf, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.y
+      value: -445.49814
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042678633, guid: cd537356aeb67ce46b2555f5331aedcf, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.z
+      value: -282.62268
+      objectReference: {fileID: 0}
     - target: {fileID: 478702008255509116, guid: cd537356aeb67ce46b2555f5331aedcf, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6731,6 +6743,18 @@ PrefabInstance:
     - target: {fileID: 1428777859, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104116770, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.x
+      value: -258.02267
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104116770, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.y
+      value: -560.765
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104116770, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.z
+      value: -405.09213
       objectReference: {fileID: 0}
     - target: {fileID: 154712587663423066, guid: b993a521e887a2a4bb8a56283dd10d8d, type: 3}
       propertyPath: m_IsActive
