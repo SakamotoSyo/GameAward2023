@@ -59,6 +59,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public async UniTask AddDamage(float damage, float criticalRate)
     {
+        _animator.Play("DamageHit");
         float x = Random.Range(0, 4);
         float y = Random.Range(-3, 2);
         Vector3 pos = _damagePos.position;

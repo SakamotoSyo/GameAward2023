@@ -18,6 +18,8 @@ public class RankingBattleScript : MonoBehaviour
 
     private List<EnemyData> _enemyBossData = new();
 
+    private List<GameObject> _banners = new();
+
     private void Awake()
     {
         PlayerWeaponRecovery();
@@ -31,6 +33,8 @@ public class RankingBattleScript : MonoBehaviour
 
     public void StartEnemySelect()
     {
+        if (_banners.Count > 0) return;
+
         if (GameManager.PlayerSaveData == null)
         {
             PlayerDataInit();
@@ -41,6 +45,7 @@ public class RankingBattleScript : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             var enemyButtonPrefab = Instantiate(_enemyPrefab);
+            _banners.Add(enemyButtonPrefab);
             enemyButtonPrefab.transform.SetParent(_buttonInsPos.transform);
             var button = enemyButtonPrefab.GetComponent<Button>();
 
@@ -67,7 +72,6 @@ public class RankingBattleScript : MonoBehaviour
             }
             else
             {
-                //‚±‚±’¼‚·
                 switch (PlayerExperiencePoint.CurrentRankNum)
                 {
                     case 0:
@@ -90,7 +94,7 @@ public class RankingBattleScript : MonoBehaviour
             }
             enemyButtonPrefab.GetComponent<Image>().sprite = _rankSprite[index];
 
-            if (enemyDataHigh.Length != 0)
+            if (enemyDataHigh.Length > 0)
             {
                 var randomIndex = Random.Range(0, enemyDataHigh.Length);
 
@@ -123,6 +127,8 @@ public class RankingBattleScript : MonoBehaviour
                             () => GameManager.SetEnemyData(enemyDataHigh[randomIndex]));
                         button.onClick.AddListener(
                             () => SetFlavorText(enemyDataHigh[randomIndex].FlavorText));
+
+                        continue;
                     }
                 }
 
