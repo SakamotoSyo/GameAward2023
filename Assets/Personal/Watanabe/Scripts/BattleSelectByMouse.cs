@@ -2,10 +2,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerClickHandler
+public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerClickHandler, IPointerExitHandler
 {
     [SerializeField] private BattleChangeWeapon _changeWeapon;
     [SerializeField] private BattleSelectUI _selectUI = default;
+
+    [SerializeField] private GameObject _skillInfoPanel = default;
     private int _index = 0;
 
     private void Start()
@@ -30,5 +32,10 @@ public class BattleSelectByMouse : MonoBehaviour, IPointerEnterHandler,IPointerC
             Debug.Log("attack");
             _selectUI.AttackEvent();
         }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _skillInfoPanel.SetActive(false);
     }
 }

@@ -41,9 +41,9 @@ public class WeaponSkill
     {
         if (_specialAttack == "") 
         {
-            _specialAttack = specialAttack;
             return true;
         }
+        _specialAttack = specialAttack;
         return false;
     }
 
@@ -51,7 +51,7 @@ public class WeaponSkill
     {
         for (int i = 0; i < _skillArray.Length; i++) 
         {
-            if (_skillArray[i] == null && skill.Weapon == _weaponType) 
+            if (_skillArray[i] == null && (skill.Weapon == _weaponType|| skill.Type == SkillType.Epic)) 
             {
                 _skillArray[i] = skill.SkillName;
                 return true;
