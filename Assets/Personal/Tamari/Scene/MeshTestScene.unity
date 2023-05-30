@@ -748,7 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5404,8 +5404,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345740483}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10000}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10282}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5581,6 +5581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef4a3fad571fc347a058020c2f56a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttons: []
   _finishImage: {fileID: 780664155}
   _meshManager: {fileID: 1118739577}
   _nextSceneName: Home
@@ -5588,9 +5589,13 @@ MonoBehaviour:
   _weaponTypeText: {fileID: 603749083}
   _allPanel: {fileID: 1345740483}
   _panelForReset: {fileID: 1134225835}
+  _resetButton: {fileID: 0}
   _panelForSample: {fileID: 1820565698}
+  _sampleButton: {fileID: 0}
   _panelForFinish: {fileID: 29828369}
+  _finishButton: {fileID: 0}
   _panelForBackHome: {fileID: 1098673347}
+  _backButton: {fileID: 0}
   _firstPanel: {fileID: 2059772202}
   _gsFrame: {fileID: 1088018369}
   _dbFrame: {fileID: 1026884663}
