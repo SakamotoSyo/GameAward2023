@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerView : MonoBehaviour
 {
@@ -25,12 +26,12 @@ public class PlayerView : MonoBehaviour
     {
         _maxMpText.text = num.ToString();
         _maxHp = num;
-        AdjustmentHpBar();
+        //AdjustmentHpBar();
     }
 
     private void AdjustmentHpBar() 
     {
-        _currentHpImage.fillAmount = _currentHp / _maxHp;
+        _currentHpImage.DOFillAmount(_currentHp / _maxHp, 0.5f);
     }
 
     public void ChangeWeaponIcon(WeaponType weaponType) 
