@@ -32,9 +32,9 @@ public class EquipEnemyWeapon
     public float CurrentCriticalRate { get => _currentCriticalRate; set => _currentCriticalRate = value; }
 
     /// <summary>ïêäÌÇÃç≈ëÂëœãvíl</summary>
-    private float _maxDurable;
+    private ReactiveProperty<float> _maxDurable = new();
 
-    public float MaxDurable => _maxDurable;
+    public IReactiveProperty<float> MaxDurable => _maxDurable;
 
     /// <summary>åªç›ÇÃïêäÌÇÃëœãvíl</summary>
     private ReactiveProperty<float> _currentDurable = new();
@@ -101,7 +101,7 @@ public class EquipEnemyWeapon
     {
         _currentOffensivePower = weaponData.OffensivePower;
         _currentCriticalRate = weaponData.CriticalRate;
-        _maxDurable = weaponData.MaxDurable;
+        _maxDurable.Value = weaponData.MaxDurable;
         _currentWeaponWeight = weaponData.WeaponWeight;
         _currentDurable.Value = weaponData.CurrentDurable;
         _weaponType = weaponData.WeaponType;
@@ -117,7 +117,7 @@ public class EquipEnemyWeapon
         _currentOffensivePower += fluctuation.OffensivePower;
         _currentWeaponWeight += fluctuation.WeaponWeight;
         _currentCriticalRate += fluctuation.CriticalRate;
-        _maxDurable += fluctuation.MaxDurable;
+        _maxDurable.Value += fluctuation.MaxDurable;
         _currentDurable.Value += fluctuation.CurrentDurable;
     }
 

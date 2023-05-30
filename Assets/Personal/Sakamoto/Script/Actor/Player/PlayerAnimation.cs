@@ -13,6 +13,7 @@ public class PlayerAnimation
     private string _greatSword;
     private string _hammer;
     private bool _isBattleEnd = false;
+    private bool _isDamage = false;
     private PlayerEquipWeapon _equipWeapon;
     public void Init(PlayerEquipWeapon equipWeapon)
     {
@@ -24,7 +25,11 @@ public class PlayerAnimation
     {
         if (_isBattleEnd) return;
         IdleRelease();
-        if (_equipWeapon.WeaponType == WeaponType.DualBlades)
+        if (_isDamage) 
+        {
+            
+        }
+        else if (_equipWeapon.WeaponType == WeaponType.DualBlades)
         {
             _idleAnim.SetBool(_idleAnimPram[2], true);
         }
@@ -61,6 +66,16 @@ public class PlayerAnimation
         {
             _idleAnim.SetBool(_idleAnimPram[1], true);
         }
+    }
+
+    public async void Damage() 
+    {
+        _isDamage = true;
+        IdleRelease();
+        _idleAnim.SetBool("Damage", _isDamage);
+        await UniTask.WaitUntil(() => _idleAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f);
+        _isDamage = false;
+        _idleAnim.SetBool("Damage", _isDamage);
     }
 
     public void Victory() 

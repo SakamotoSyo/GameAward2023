@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
 using Cinemachine;
+using Cysharp.Threading.Tasks;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         Collider2D camaraCollider = GameObject.Find("CameraCollider").GetComponent<BoxCollider2D>();
         _skillDataManagement = GameObject.Find("SkillDataBase").GetComponent<SkillDataManagement>();
-        _playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.DebugSearchSkill());
+        //_playerStatus.EquipWeapon.SetDebugSkill(_skillDataManagement.DebugSearchSkill());
         _playerStatus.EquipWeapon.Init(_skillDataManagement);
         _playerAnimation.Init(_playerStatus.EquipWeapon);
 
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// ƒ_ƒ[ƒW‚ğó‚¯‚é—¬‚ê
     /// </summary>
-    public void AddDamage(float damage, float criticalNum, bool isSkill = false)
+    public async UniTask AddDamage(float damage, float criticalNum, bool isSkill = false)
     {
         bool isCritical = CriticalCheck(criticalNum);
         if (isCritical)
@@ -72,10 +73,13 @@ public class PlayerController : MonoBehaviour
         {
             if (!isSkill) 
             {
+                _playerAnimation.Damage();
                 SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
             }
 
             _playerStatus.EquipWeapon.AddDamage(damage);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             //•Ší‚ª‰ó‚ê‚½‚Æ‚«‚É“ü‚ê‘Ö‚¦‚éˆ—
             if (!_playerStatus.RandomEquipWeponChange())
             {

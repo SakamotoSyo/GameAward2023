@@ -64,7 +64,11 @@ public class HomeScene : MonoBehaviour
         {
             _isChallengablePromotionMatch = false;
         }
-        _experiencePoint.RankSetting(GameManager.IsBossClear);
+
+        if (!_isChallengablePromotionMatch)
+        {
+            _experiencePoint.RankSetting();
+        }
         _rankBattle.StartEnemySelect();
 
         if (!_isChallengablePromotionMatch)

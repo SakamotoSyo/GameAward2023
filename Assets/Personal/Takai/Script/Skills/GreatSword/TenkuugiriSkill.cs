@@ -37,10 +37,10 @@ public class TenkuugiriSkill : SkillBase
         Debug.Log("Use Skill");
         _playerStatus = player;
         _enemyStatus = enemy;
-
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
         _playerAnim.Play();
+        _enemyStatus.gameObject.transform.Find("HitFromFSkillOfSword").GetComponent<PlayableDirector>().Play();
         var dura = _playerAnim.duration * 0.99f;
         await UniTask.WaitUntil(() => _playerAnim.time >= dura,
             cancellationToken: this.GetCancellationTokenOnDestroy());
