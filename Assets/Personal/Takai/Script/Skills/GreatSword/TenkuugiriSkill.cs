@@ -28,7 +28,7 @@ public class TenkuugiriSkill : SkillBase
     {
         _playerStatus = actor.PlayerController;
         _enemyStatus = actor.EnemyController;
-        
+
         return true;
     }
 
@@ -40,7 +40,8 @@ public class TenkuugiriSkill : SkillBase
         _playerObj.SetActive(true);
         _playerStatus.gameObject.SetActive(false);
         _playerAnim.Play();
-        _enemyStatus.gameObject.transform.Find("HitFromFSkillOfSword").GetComponent<PlayableDirector>().Play();
+        Transform enemyObj = FindDeepChild(_enemyStatus.gameObject.transform, "HitFromFSkillOfSword");
+        enemyObj.GetComponent<PlayableDirector>().Play();
         var dura = _playerAnim.duration * 0.99f;
         await UniTask.WaitUntil(() => _playerAnim.time >= dura,
             cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -79,6 +80,21 @@ public class TenkuugiriSkill : SkillBase
         _playerStatus.PlayerStatus.EquipWeapon.CurrentDurable.Value = 0;
 
         return false;
+    }
+
+    Transform FindDeepChild(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+                return child;
+
+            Transform foundChild = FindDeepChild(child, name);
+            if (foundChild != null)
+                return foundChild;
+        }
+
+        return null;
     }
 
     public override void BattleFinish()
