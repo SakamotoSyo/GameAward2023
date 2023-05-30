@@ -203,4 +203,11 @@ public class PlayerExperiencePoint : MonoBehaviour
         }
         _beforeBattlePoint = _experiencePoint;
     }
+
+    /// <summary> 経験値のリセット </summary>
+    public void ResetExperiencePoint()
+    {
+        _beforeBattlePoint = 0;
+        _experiencePoint = 0;
+    }
 }
