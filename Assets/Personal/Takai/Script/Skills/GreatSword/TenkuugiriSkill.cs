@@ -41,6 +41,7 @@ public class TenkuugiriSkill : SkillBase
         _playerStatus.gameObject.SetActive(false);
         _playerAnim.Play();
         Transform enemyObj = FindDeepChild(_enemyStatus.gameObject.transform, "HitFromFSkillOfSword");
+        await UniTask.Delay(TimeSpan.FromSeconds(0.85f));
         enemyObj.GetComponent<PlayableDirector>().Play();
         var dura = _playerAnim.duration * 0.99f;
         await UniTask.WaitUntil(() => _playerAnim.time >= dura,
