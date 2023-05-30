@@ -38,7 +38,7 @@ public class ResultWeaponButton : MonoBehaviour, IPointerEnterHandler, IPointerE
                 //_statusInfoText.text += _actorGenerator.PlayerController.PlayerStatus.PlayerSkillList;
             }
 
-            if (_weaponData.WeaponType == _oreData.Skill.Weapon) 
+            if ((_weaponData.WeaponType == _oreData.Skill.Weapon || _oreData.Skill.Type == SkillType.Epic)) 
             {
                 _statusInfoText.text += "<color=blue>" + _oreData.Skill.SkillName + "</color>\n";
             }
