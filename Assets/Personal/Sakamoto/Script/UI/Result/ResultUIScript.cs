@@ -394,6 +394,10 @@ public class ResultUIScript : MonoBehaviour
     private void AddWeapon(WeaponType weaponType)
     {
         var playerStatus = _actorGenerator.PlayerController.PlayerStatus;
+        if (_actorGenerator.PlayerController.PlayerStatus.WeaponDatas.Length > 3) 
+        {
+            return;
+        } 
         WeaponData[] weapons = new WeaponData[playerStatus.WeaponDatas.Length + 1];
         for (int i = 0; i < playerStatus.WeaponDatas.Length; i++)
         {
