@@ -9,6 +9,16 @@ public class IntialPreparationScript : MonoBehaviour
     public List<WeaponData> WeaponDatas => _weaponData;
     private List<WeaponData> _weaponData = new();
 
+    private void Start()
+    {
+        SaveManager.Initialize();
+        for (int i = 0; i < SaveManager._weaponFileList.Count; i++)
+        {
+            SaveManager.ResetSaveData(SaveManager._weaponFileList[i]);
+        }
+
+    }
+
     /// <summary>
     /// 武器を配列にいれれることが出来るか確認して入れる
     /// </summary>
