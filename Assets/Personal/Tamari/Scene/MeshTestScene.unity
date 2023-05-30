@@ -1018,8 +1018,9 @@ GameObject:
   m_Component:
   - component: {fileID: 403165797}
   - component: {fileID: 403165796}
+  - component: {fileID: 403165798}
   m_Layer: 0
-  m_Name: Cancel
+  m_Name: ClickEnterOrCancel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1052,6 +1053,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &403165798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403165795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5341d43588323064da5c40b8f79517a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &464859545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2315,7 +2328,6 @@ GameObject:
   - component: {fileID: 776699864}
   - component: {fileID: 776699863}
   - component: {fileID: 776699862}
-  - component: {fileID: 776699865}
   m_Layer: 5
   m_Name: OKButton
   m_TagString: Untagged
@@ -2400,9 +2412,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ClickSound, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 403165798}
+        m_TargetAssemblyTypeName: CreateEnterSound, Assembly-CSharp
+        m_MethodName: EnterSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2450,18 +2462,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776699860}
   m_CullTransparentMesh: 1
---- !u!114 &776699865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 776699860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139e3f7d6d0c1cd4ea9c80933dc651e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &780664152
 GameObject:
   m_ObjectHideFlags: 0
@@ -3148,7 +3148,6 @@ GameObject:
   - component: {fileID: 869535554}
   - component: {fileID: 869535553}
   - component: {fileID: 869535552}
-  - component: {fileID: 869535555}
   m_Layer: 5
   m_Name: OkButton
   m_TagString: Untagged
@@ -3295,18 +3294,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869535550}
   m_CullTransparentMesh: 1
---- !u!114 &869535555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 869535550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139e3f7d6d0c1cd4ea9c80933dc651e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &915734634
 GameObject:
   m_ObjectHideFlags: 0
@@ -4497,7 +4484,6 @@ GameObject:
   - component: {fileID: 1127805338}
   - component: {fileID: 1127805337}
   - component: {fileID: 1127805336}
-  - component: {fileID: 1127805339}
   m_Layer: 5
   m_Name: OkButton
   m_TagString: Untagged
@@ -4632,18 +4618,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127805334}
   m_CullTransparentMesh: 1
---- !u!114 &1127805339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1127805334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139e3f7d6d0c1cd4ea9c80933dc651e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1134225835
 GameObject:
   m_ObjectHideFlags: 0

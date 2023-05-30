@@ -48,7 +48,7 @@ public class CreateSample : MonoBehaviour
                 }
                 return;
         }
-
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
         Debug.Log(GameManager.BlacksmithType + "のさんぷる");
     }
 
