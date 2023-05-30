@@ -391,7 +391,7 @@ MonoBehaviour:
   - {fileID: 5372544863691228873}
   - {fileID: 4343793506980874926}
   m_Bounds:
-    m_Center: {x: 0.3781936, y: -1.4491867, z: 0}
+    m_Center: {x: 0.3781937, y: -1.4491867, z: 0}
     m_Extent: {x: 0.28614748, y: 0.5853697, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -628,8 +628,8 @@ MonoBehaviour:
   - {fileID: 8436461348768130730}
   - {fileID: 809005099990632117}
   m_Bounds:
-    m_Center: {x: 0.37819064, y: -1.4481663, z: 0}
-    m_Extent: {x: 0.33218014, y: 0.44735515, z: 0}
+    m_Center: {x: 0.3781909, y: -1.4481663, z: 0}
+    m_Extent: {x: 0.3321801, y: 0.44735515, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -887,8 +887,8 @@ MonoBehaviour:
   - {fileID: 6181236305059766487}
   - {fileID: 809005099990632117}
   m_Bounds:
-    m_Center: {x: 0.41035476, y: -1.4410574, z: 0}
-    m_Extent: {x: 0.4656549, y: 0.79849005, z: 0}
+    m_Center: {x: 0.41035494, y: -1.4410576, z: 0}
+    m_Extent: {x: 0.465655, y: 0.7984899, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -996,8 +996,8 @@ MonoBehaviour:
   - {fileID: 5412478862314365426}
   - {fileID: 3893045774823591256}
   m_Bounds:
-    m_Center: {x: 0.39709252, y: -1.4469349, z: 0}
-    m_Extent: {x: 0.68141747, y: 1.2843976, z: 0}
+    m_Center: {x: 0.39709258, y: -1.4469348, z: 0}
+    m_Extent: {x: 0.68141747, y: 1.2843975, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -1520,8 +1520,8 @@ MonoBehaviour:
   - {fileID: 809005099990632117}
   - {fileID: 6181236305059766487}
   m_Bounds:
-    m_Center: {x: 0.3970675, y: -1.4420725, z: 0}
-    m_Extent: {x: 0.5664425, y: 0.5959848, z: 0}
+    m_Center: {x: 0.3970674, y: -1.4420726, z: 0}
+    m_Extent: {x: 0.5664425, y: 0.59598494, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -2635,8 +2635,8 @@ MonoBehaviour:
   - {fileID: 8434790374185679470}
   - {fileID: 6364289220541677727}
   m_Bounds:
-    m_Center: {x: 0.39850977, y: -1.4462973, z: 0}
-    m_Extent: {x: 0.2874999, y: 0.58503497, z: 0}
+    m_Center: {x: 0.39851013, y: -1.4462973, z: 0}
+    m_Extent: {x: 0.28750008, y: 0.58503497, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -2833,7 +2833,7 @@ MonoBehaviour:
   - {fileID: 3893045774823591256}
   - {fileID: 7835523257782820523}
   m_Bounds:
-    m_Center: {x: 0.41114235, y: -1.4538325, z: 0}
+    m_Center: {x: 0.4111424, y: -1.4538325, z: 0}
     m_Extent: {x: 0.6858275, y: 1.2900001, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -3368,8 +3368,8 @@ MonoBehaviour:
   - {fileID: 6995758980944165261}
   - {fileID: 6181236305059766487}
   m_Bounds:
-    m_Center: {x: 0.39785752, y: -1.4423524, z: 0}
-    m_Extent: {x: 0.3287875, y: 0.44809997, z: 0}
+    m_Center: {x: 0.39785728, y: -1.4423524, z: 0}
+    m_Extent: {x: 0.32878745, y: 0.44809997, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -3623,6 +3623,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9210112, guid: 18ad7dc80c27b19409e95a1255544a29, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210114, guid: 18ad7dc80c27b19409e95a1255544a29, type: 3}
+      propertyPath: m_InitialState
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 359632490, guid: 18ad7dc80c27b19409e95a1255544a29, type: 3}
@@ -4051,7 +4055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7237482194815421660, guid: 18ad7dc80c27b19409e95a1255544a29, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7347323477459383667, guid: 18ad7dc80c27b19409e95a1255544a29, type: 3}
       propertyPath: m_WrapMode
@@ -4059,7 +4063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7347323477459383667, guid: 18ad7dc80c27b19409e95a1255544a29, type: 3}
       propertyPath: m_InitialState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7347323477459383667, guid: 18ad7dc80c27b19409e95a1255544a29, type: 3}
       propertyPath: m_SceneBindings.Array.size
