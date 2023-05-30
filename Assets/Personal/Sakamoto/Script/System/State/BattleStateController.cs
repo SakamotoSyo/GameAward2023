@@ -199,6 +199,7 @@ public class BattleStateController : MonoBehaviour
 
     public async void GameOver()
     {
+        SoundManager.Instance.CriAtomPlay(CueSheet.ME, "ME_Gameover");
         await _playerController.PlayerAnimation.Lose();
         _gameOverTextObj.SetActive(true);
         _stateMachine.Dispatch((int)BattleEvent.GameOver);

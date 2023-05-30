@@ -8,7 +8,7 @@ public class SBattleEndState : State
     protected override void OnEnter(State currentState)
     {
         Debug.Log("‚«‚½");
-        SoundManager.Instance.CriAtomBGMPlay("BGM_Result");
+        //SoundManager.Instance.CriAtomBGMPlay("BGM_Result");
         Owner.SkillManagement.CallBattleFinish();
         Owner.ResultUIScript.StartResultLottery();
     }
