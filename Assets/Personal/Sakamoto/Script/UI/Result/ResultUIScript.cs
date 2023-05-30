@@ -223,13 +223,16 @@ public class ResultUIScript : MonoBehaviour
     /// </summary>
     public void WeaponEnhanceEvent()
     {
-
         var weaponSkill = _saveWeaponData[_currentSelectWeapon].WeaponSkill;
-        if (!_selectOreData.Skill)
+        if (!_selectOreData.Skill || _selectOreData.Skill.Weapon != _saveWeaponData[_currentSelectWeapon].WeaponType)
         {
             Debug.Log("Skill‚ªNull");
+            _saveWeaponData[_currentSelectWeapon].EnhanceParam(_selectOreData.EnhancedData);
+            _actorGenerator.PlayerController.SavePlayerData();
+            SceneLoader.LoadScene(_homeScene);
             return;
         }
+
         if (_selectOreData.Skill.Type == SkillType.Skill || _selectOreData.Skill.Type == SkillType.Epic)
         {
             if (weaponSkill.GetSkillData() == weaponSkill.WeaponSkillArray.Length)
