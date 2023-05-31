@@ -132,10 +132,14 @@ public class PlayerExperiencePoint : MonoBehaviour
                         else
                         {
                             HomeScene.Instance.IsRankUp = true;
+                            _blockingPanel.SetActive(false);
                         }
                     }
-                })
-                .OnComplete(() => _blockingPanel.SetActive(false));
+                    else
+                    {
+                        _blockingPanel.SetActive(false);
+                    }
+                });
     }
 
     /// <summary> ランクアップ演出 </summary>
@@ -179,7 +183,8 @@ public class PlayerExperiencePoint : MonoBehaviour
                     .Join(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f) * _scaleValue, 0.2f))
                     .AppendInterval(_waitSecondForRank)
                     .Append(_currentRank.transform.DOScale(new Vector3(1f, 1f, 1f), 1.5f))
-                    .Join(_rankRect.DOAnchorPos(_pos, 1.5f));
+                    .Join(_rankRect.DOAnchorPos(_pos, 1.5f))
+                    .OnComplete(() => _blockingPanel.SetActive(false));
         }
     }
 
