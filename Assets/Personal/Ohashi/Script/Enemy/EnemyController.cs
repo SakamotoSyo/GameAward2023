@@ -79,6 +79,7 @@ public class EnemyController : MonoBehaviour, IAddDamage
             damageController.TextInit((int)damage, false);
         }
 
+        _enemyStatus.EquipWeapon.AddDamage((int)damage);
         _animator.Play("DamageHit");
         SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
 
