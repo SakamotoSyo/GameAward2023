@@ -13,6 +13,12 @@ public class EnemyView : MonoBehaviour
     [SerializeField]
     private Image _currentHealthImage;
 
+    [SerializeField] 
+    private Sprite[] _weaponArrayImage = new Sprite[4];
+
+    [SerializeField] 
+    private Image _weaponImage;
+
     private float _max;
 
     /// <summary>
@@ -30,5 +36,23 @@ public class EnemyView : MonoBehaviour
         _max = max;
     }
 
-
+    public void ChangeWeaponIcon(WeaponType weaponType)
+    {
+        if (weaponType == WeaponType.DualBlades)
+        {
+            _weaponImage.sprite = _weaponArrayImage[0];
+        }
+        else if (weaponType == WeaponType.Hammer)
+        {
+            _weaponImage.sprite = _weaponArrayImage[1];
+        }
+        else if (weaponType == WeaponType.Spear)
+        {
+            _weaponImage.sprite = _weaponArrayImage[2];
+        }
+        else if (weaponType == WeaponType.GreatSword)
+        {
+            _weaponImage.sprite = _weaponArrayImage[3];
+        }
+    }
 }

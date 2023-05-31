@@ -50,10 +50,18 @@ public class EnemyPresenter : IStartable, IDisposable
             .AddTo(_compositeDisposable);
     }
 
+    private void EnemyWeaponTypeObserver()
+    {
+        _enemyStatus.EquipWeapon.WeaponTypeOb
+             .Subscribe(_enemyView.ChangeWeaponIcon)
+             .AddTo(_compositeDisposable);
+    }
+
     public void Start()
     {
         EnemyHealthObserver();
         EnemyMaxHealthObserver();
+        EnemyWeaponTypeObserver();
     }
 
     public void Dispose()
