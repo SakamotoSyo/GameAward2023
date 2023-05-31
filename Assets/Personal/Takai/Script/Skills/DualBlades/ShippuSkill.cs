@@ -9,7 +9,7 @@ public class ShippuSkill : SkillBase
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    const float _subtractHpValue = 0.5f;
+    const float _subtractHpValue = 0.05f;
     int _count = 3;
 
     public ShippuSkill()
@@ -61,7 +61,7 @@ public class ShippuSkill : SkillBase
 
     public override bool TurnEnd()
     {
-        if (_count <= 0)
+        if (_count >= 0)
         {
             _count--;
             float durable = _enemyStatus.EnemyStatus.EquipWeapon.CurrentDurable.Value * _subtractHpValue;
