@@ -135,10 +135,7 @@ public class PlayerExperiencePoint : MonoBehaviour
                         }
                     }
                 })
-                .AppendCallback(() =>
-                {
-                    _blockingPanel.SetActive(false);
-                });
+                .OnComplete(() => _blockingPanel.SetActive(false));
     }
 
     /// <summary> ランクアップ演出 </summary>
