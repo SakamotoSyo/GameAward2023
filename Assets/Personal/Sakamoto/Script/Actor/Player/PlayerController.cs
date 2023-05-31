@@ -63,6 +63,11 @@ public class PlayerController : MonoBehaviour
            _damagePos.position,
             Quaternion.identity);
         damageController.TextInit((int)damage, isCritical);
+        if (!isSkill)
+        {
+            _playerAnimation.Damage();
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
+        }
 
         if (_playerStatus.EquipWeapon.DownJudge(damage))
         {
@@ -71,12 +76,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (!isSkill) 
-            {
-                _playerAnimation.Damage();
-                SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
-            }
-
             _playerStatus.EquipWeapon.AddDamage(damage);
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));

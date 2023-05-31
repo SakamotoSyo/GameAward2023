@@ -68,6 +68,7 @@ public class BattleChangeWeapon : MonoBehaviour
 
                 _weaponButton[i].onClick.RemoveAllListeners();
                 _weaponButton[i].onClick.AddListener(() => OnClickChangeWeapon(_playerStatus.WeaponDatas[num], num));
+                _weaponButton[i].onClick.AddListener(() => SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter"));
             }
             else 
             {
@@ -89,6 +90,7 @@ public class BattleChangeWeapon : MonoBehaviour
 
     public void CancelButton()
     {
+        SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Cancel");
         _weaponUiPanel.SetActive(false);
         _battleStateController.ActorStateEnd();
     }
