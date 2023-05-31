@@ -62,7 +62,8 @@ public class SkillDataManagement : MonoBehaviour
         }
 
         int n = Random.Range(0, skills.Count);
-
+        Debug.Log($"SkillTYpe{type}とWeapon{weapon}");
+        Debug.Log(skills.Count);
         return skills[n];
     }
 
@@ -180,7 +181,7 @@ public class SkillDataManagement : MonoBehaviour
     {
         foreach (var s in _skills)
         {
-            if (s.SkillName == name)
+            if (s.SkillName == skillName)
             {
                 return s.IsUseCheck(actor);
             }
