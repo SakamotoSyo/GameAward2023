@@ -9,7 +9,7 @@ public class KudakiuchiSkill : SkillBase
     [SerializeField] private GameObject _playerObj;
     private PlayerController _playerStatus;
     private EnemyController _enemyStatus;
-    const float _subtractValue = 0.2f;
+    const float _subtractValue = 0.1f;
     private bool _isSkill = false;
 
     public KudakiuchiSkill()
