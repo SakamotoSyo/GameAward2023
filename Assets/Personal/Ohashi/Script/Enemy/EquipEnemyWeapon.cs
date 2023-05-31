@@ -57,7 +57,7 @@ public class EquipEnemyWeapon
     public float CurrentWeaponWeight { get => _currentWeaponWeight; set => _currentWeaponWeight = value; }
 
     /// <summary>•Ší‚Ìí—Ş</summary>
-    private ReactiveProperty<WeaponType> _weaponType;
+    private ReactiveProperty<WeaponType> _weaponType = new();
 
     public WeaponType WeaponType => _weaponType.Value;
     public IObservable<WeaponType> WeaponTypeOb => _weaponType;
