@@ -273,17 +273,17 @@ public class BattleSelectUI : MonoBehaviour
         var skillName1 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[0];
         var skillName2 = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.WeaponSkillArray[1];
         var specialSkill = _playerController.PlayerStatus.EquipWeapon.WeaponSkill.SpecialAttack;
-        if (skillName1 == "" || skillName1 == null || _skillDataManagement.IsUseCheck(skillName1, _generator))
+        if (skillName1 == "" || skillName1 == null || !_skillDataManagement.IsUseCheck(skillName1, _generator))
         {
             _isAttackable[0] = false;
             _actionUi[1].GetChild(0).GetComponent<Image>().color = Color.gray;
         }
-        if (skillName2 == "" || skillName2 == null || _skillDataManagement.IsUseCheck(skillName2, _generator))
+        if (skillName2 == "" || skillName2 == null || !_skillDataManagement.IsUseCheck(skillName2, _generator))
         {
             _isAttackable[2] = false;
             _actionUi[3].GetChild(0).GetComponent<Image>().color = Color.gray;
         }
-        if (specialSkill == "" || specialSkill == null || _skillDataManagement.IsUseCheck(specialSkill, _generator))
+        if (specialSkill == "" || specialSkill == null || !_skillDataManagement.IsUseCheck(specialSkill, _generator))
         {
             _isAttackable[1] = false;
             _actionUi[2].GetComponent<Image>().color = Color.gray;
