@@ -16,6 +16,9 @@ public class UIManager : MonoBehaviour
 
     private int? _indexNum = null;
 
+    [SerializeField]
+    private Button[] _buttons = default;
+
     [SerializeField, Tooltip("完成後のフェードイン用Image")]
     Image _finishImage = default;
 
@@ -33,10 +36,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _weaponTypeText = default;
 
-    [Header("リセット時に確認用に出すパネルに必要な情報")]
-
     [SerializeField]
     private GameObject _allPanel = default;
+
+
+    [Header("リセット時に確認用に出すパネルに必要な情報")]
 
     [SerializeField]
     private GameObject _panelForReset = default;
@@ -44,7 +48,7 @@ public class UIManager : MonoBehaviour
     [Header("サンプル作成時に確認用に出すパネルに必要な情報")]
 
     [SerializeField]
-    private GameObject _panelForSample = default;
+    private GameObject _panelForSample = default; 
 
     [Header("完成時に確認用に出すパネルに必要な情報")]
 
@@ -179,6 +183,10 @@ public class UIManager : MonoBehaviour
     }
     public void SwitchCheckForReset(bool flag)
     {
+        if (MeshManager._isFinished)
+        {
+            return;
+        }
         if (flag)
         {
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
@@ -190,7 +198,11 @@ public class UIManager : MonoBehaviour
 
     public void SwitchCheckForSample(bool flag)
     {
-        if(flag)
+        if (MeshManager._isFinished)
+        {
+            return;
+        }
+        if (flag)
         {
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
         }
@@ -200,6 +212,10 @@ public class UIManager : MonoBehaviour
     }
     public void SwitchCheckForFinish(bool flag)
     {
+        if (MeshManager._isFinished)
+        {
+            return;
+        }
         if (flag)
         {
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
@@ -210,6 +226,10 @@ public class UIManager : MonoBehaviour
     }
     public void SwitchCheckForBack(bool flag)
     {
+        if (MeshManager._isFinished)
+        {
+            return;
+        }
         if (flag)
         {
             SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home");
@@ -226,9 +246,10 @@ public class UIManager : MonoBehaviour
         {
             return;
         }
-
+        
         MeshManager._isFinished = true;
         _allPanel.SetActive(true);
+        _panelForFinish.SetActive(false);
         _meshManager.SaveMesh();
         SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Blacksmith_Finish");
         await _finishImage.DOFade(1.0f, 5f);
