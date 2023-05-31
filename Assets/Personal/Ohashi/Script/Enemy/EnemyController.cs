@@ -59,17 +59,27 @@ public class EnemyController : MonoBehaviour, IAddDamage
 
     public async UniTask AddDamage(float damage, float criticalRate)
     {
-        _animator.Play("DamageHit");
         float x = Random.Range(0, 4);
         float y = Random.Range(-3, 2);
+        int critical = Random.Range(0, 100);
         Vector3 pos = _damagePos.position;
         pos.x += x;
         pos.y += y;
         var damageController = Instantiate(_damegeController,
             pos,
             Quaternion.identity);
-        
-        damageController.TextInit((int)damage, _enemyStatus.EquipWeapon.AddDamage((int)damage, criticalRate));
+
+        if (critical >= criticalRate)
+        {
+            damage *= 1.3f;
+            damageController.TextInit((int)damage, true);
+        }
+        else
+        {
+            damageController.TextInit((int)damage, false);
+        }
+
+        _animator.Play("DamageHit");
         SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Damage");
 
         if (_enemyStatus.EquipWeapon.IsWeaponBreak())

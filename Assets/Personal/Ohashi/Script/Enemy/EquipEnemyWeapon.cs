@@ -73,18 +73,9 @@ public class EquipEnemyWeapon
     /// <summary>
     /// 武器へのダメージ
     /// </summary>
-    public bool AddDamage(int damage, float criticalRate)
+    public void AddDamage(int damage)
     {
-        int critical = Random.Range(0, 100);
-        if(critical >= criticalRate)
-        {
-            Debug.Log("クリティカル");
-            damage = (int)((float)damage * 1.3f);
-            _currentDurable.Value -= damage;
-            return true;
-        }
         _currentDurable.Value -= damage;
-        return false;
     }
 
     public bool IsWeaponBreak()
