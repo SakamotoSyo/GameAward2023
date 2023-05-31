@@ -69,6 +69,11 @@ public class PlayerExperiencePoint : MonoBehaviour
         _pos = _rankRect.localPosition;
         _image = _currentRank.GetComponent<Image>();
 
+        if (_index == RANK_S)
+        {
+            _currentRank.transform.GetChild(0).gameObject.SetActive(false);
+        }
+
         _image.sprite = _ranks[_index];
     }
 
