@@ -16,7 +16,15 @@ public class PlayerView : MonoBehaviour
 
     public void SetCurrentHp(float num) 
     {
-        _currentHpText.text = num.ToString();
+        if (num < 0)
+        {
+            _currentHpText.text = "0";
+        }
+        else 
+        {
+            _currentHpText.text = num.ToString();
+        }
+        
         _currentHp = num;
         AdjustmentHpBar();
         Debug.Log($"Œ»Ý‚ÌHpsasa‚Í{num}");
