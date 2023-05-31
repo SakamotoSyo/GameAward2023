@@ -1008,6 +1008,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333225993}
   m_CullTransparentMesh: 1
+--- !u!1 &403165795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 403165797}
+  - component: {fileID: 403165796}
+  - component: {fileID: 403165798}
+  m_Layer: 0
+  m_Name: ClickEnterOrCancel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &403165796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403165795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002be39061fd8c449b73e415798d525b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &403165797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403165795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.6787043, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &403165798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403165795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5341d43588323064da5c40b8f79517a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &464859545
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1153,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchCheckForReset
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 403165796}
+        m_TargetAssemblyTypeName: CreateCancelSound, Assembly-CSharp
+        m_MethodName: CancelSound
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2006,6 +2075,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 403165796}
+        m_TargetAssemblyTypeName: CreateCancelSound, Assembly-CSharp
+        m_MethodName: CancelSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &734562766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2247,7 +2328,6 @@ GameObject:
   - component: {fileID: 776699864}
   - component: {fileID: 776699863}
   - component: {fileID: 776699862}
-  - component: {fileID: 776699865}
   m_Layer: 5
   m_Name: OKButton
   m_TagString: Untagged
@@ -2332,9 +2412,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ClickSound, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 403165798}
+        m_TargetAssemblyTypeName: CreateEnterSound, Assembly-CSharp
+        m_MethodName: EnterSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2382,18 +2462,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776699860}
   m_CullTransparentMesh: 1
---- !u!114 &776699865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 776699860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139e3f7d6d0c1cd4ea9c80933dc651e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &780664152
 GameObject:
   m_ObjectHideFlags: 0
@@ -3080,7 +3148,6 @@ GameObject:
   - component: {fileID: 869535554}
   - component: {fileID: 869535553}
   - component: {fileID: 869535552}
-  - component: {fileID: 869535555}
   m_Layer: 5
   m_Name: OkButton
   m_TagString: Untagged
@@ -3227,18 +3294,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869535550}
   m_CullTransparentMesh: 1
---- !u!114 &869535555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 869535550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139e3f7d6d0c1cd4ea9c80933dc651e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &915734634
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,6 +3382,30 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SwitchCheckForSample
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 403165796}
+        m_TargetAssemblyTypeName: CreateCancelSound, Assembly-CSharp
+        m_MethodName: CancelSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 403165796}
+        m_TargetAssemblyTypeName: CreateCancelSound, Assembly-CSharp
+        m_MethodName: CancelSound
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4405,7 +4484,6 @@ GameObject:
   - component: {fileID: 1127805338}
   - component: {fileID: 1127805337}
   - component: {fileID: 1127805336}
-  - component: {fileID: 1127805339}
   m_Layer: 5
   m_Name: OkButton
   m_TagString: Untagged
@@ -4540,18 +4618,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127805334}
   m_CullTransparentMesh: 1
---- !u!114 &1127805339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1127805334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139e3f7d6d0c1cd4ea9c80933dc651e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1134225835
 GameObject:
   m_ObjectHideFlags: 0
@@ -5103,6 +5169,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 403165796}
+        m_TargetAssemblyTypeName: CreateCancelSound, Assembly-CSharp
+        m_MethodName: CancelSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1255493232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5507,19 +5585,10 @@ MonoBehaviour:
   _meshManager: {fileID: 1118739577}
   _nextSceneName: Home
   _defaultWindow: {fileID: 169540067}
-  _finishButton: {fileID: 196725564}
-  _resetButton: {fileID: 1748480837}
-  _sampleCreateButton: {fileID: 1810314740}
   _weaponTypeText: {fileID: 603749083}
   _allPanel: {fileID: 1345740483}
-  _checkTextForReset: {fileID: 1921739626}
   _panelForReset: {fileID: 1134225835}
-  _okButtonForReset: {fileID: 1127805336}
-  _cancelButtonForReset: {fileID: 464859547}
-  _checkTextForSample: {fileID: 735989795}
   _panelForSample: {fileID: 1820565698}
-  _okButtonForSample: {fileID: 869535552}
-  _cancelButtonForSample: {fileID: 915734636}
   _panelForFinish: {fileID: 29828369}
   _panelForBackHome: {fileID: 1098673347}
   _firstPanel: {fileID: 2059772202}
@@ -5755,6 +5824,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1959093373303886085, guid: 1090eff8dbe025446bcdebdb9e4fe7e8, type: 3}
+      propertyPath: _playOnStart
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1959093374216396004, guid: 1090eff8dbe025446bcdebdb9e4fe7e8, type: 3}
       propertyPath: _cueName
       value: BGM_Smith
