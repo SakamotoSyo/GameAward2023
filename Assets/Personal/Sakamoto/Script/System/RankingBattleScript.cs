@@ -111,6 +111,8 @@ public class RankingBattleScript : MonoBehaviour
                         };
 
                         button.onClick.AddListener(
+                            () => SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home"));
+                        button.onClick.AddListener(
                             () => SelectEnemy.SetImage(_bossImage.sprite, true));
                         button.onClick.AddListener(
                             () => GameManager.SetEnemyData(EnemyDataBase.BossDataList[PlayerExperiencePoint.CurrentRankNum].EnemyData));
@@ -121,6 +123,8 @@ public class RankingBattleScript : MonoBehaviour
                     }
                     else
                     {
+                        button.onClick.AddListener(
+                            () => SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home"));
                         button.onClick.AddListener(
                             () => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite, false));
                         button.onClick.AddListener(
@@ -133,6 +137,8 @@ public class RankingBattleScript : MonoBehaviour
                 }
 
                 //i > 0 ˆÈ~‚Ìˆ—
+                button.onClick.AddListener(
+                    () => SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Select_Home"));
                 button.onClick.AddListener(
                     () => SelectEnemy.SetImage(enemyDataHigh[randomIndex].EnemySprite, false));
                 button.onClick.AddListener(

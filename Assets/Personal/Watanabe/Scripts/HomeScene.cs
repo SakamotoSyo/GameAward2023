@@ -27,6 +27,7 @@ public class HomeScene : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.Instance.CriAtomBGMPlay("BGM_Smith");
         SettingsCutPanel();
 
         Instance = this;
@@ -113,5 +114,17 @@ public class HomeScene : MonoBehaviour
                     }
                     Fade.Instance.FadeIn();
                 });
+    }
+
+    public void PlaySound(bool isCancel)
+    {
+        if (isCancel)
+        {
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Cancel");
+        }
+        else
+        {
+            SoundManager.Instance.CriAtomPlay(CueSheet.SE, "SE_Enter");
+        }
     }
 }
