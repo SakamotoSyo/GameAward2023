@@ -282,6 +282,7 @@ public class UIManager : MonoBehaviour
         }
 
         MeshManager._isFinished = true;
+        _panelForBackHome.SetActive(false);
         await _finishImage.DOFade(1.0f, 1.0f);
         await UniTask.DelayFrame(10);
         SceneManager.LoadScene("Home");
