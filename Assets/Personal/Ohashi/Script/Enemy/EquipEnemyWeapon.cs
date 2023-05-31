@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using System;
 using Cysharp.Threading.Tasks;
+using Random = UnityEngine.Random;
 
 public class EquipEnemyWeapon
 {
@@ -55,9 +57,10 @@ public class EquipEnemyWeapon
     public float CurrentWeaponWeight { get => _currentWeaponWeight; set => _currentWeaponWeight = value; }
 
     /// <summary>ïêäÌÇÃéÌóﬁ</summary>
-    private WeaponType _weaponType;
+    private ReactiveProperty<WeaponType> _weaponType;
 
-    public WeaponType WeaponType => _weaponType;
+    public WeaponType WeaponType => _weaponType.Value;
+    public IObservable<WeaponType> WeaponTypeOb => _weaponType;
 
     private WeaponSkill _weaponSkill;
 
@@ -104,7 +107,7 @@ public class EquipEnemyWeapon
         _maxDurable.Value = weaponData.MaxDurable;
         _currentWeaponWeight = weaponData.WeaponWeight;
         _currentDurable.Value = weaponData.CurrentDurable;
-        _weaponType = weaponData.WeaponType;
+        _weaponType.Value = weaponData.WeaponType;
         _weaponSkill = weaponData.WeaponSkill;
 
         _offensivePower = weaponData.OffensivePower;
